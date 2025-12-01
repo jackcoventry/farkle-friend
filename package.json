@@ -6,12 +6,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "tokens": "node config/style-dictionary.mjs",
     "lint": "eslint"
   },
   "dependencies": {
     "next": "16.0.6",
     "react": "19.2.0",
-    "react-dom": "19.2.0"
+    "react-dom": "19.2.0",
+    "style-dictionary": "^5.1.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
