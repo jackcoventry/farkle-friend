@@ -41,6 +41,6 @@ yarn-error.log*
 next-env.d.ts
 
 # Design tokens
-/src/styles/tokens.css
 /src/styles/tokens.theme.css
+/src/styles/tokens.theme.ts
 /src/styles/tokens.ts

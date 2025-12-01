@@ -3,9 +3,9 @@
  */
 
 @utility font-body {
-  font: var(--font-1);
+  font: var(--font-body-1);
 }
 
 @utility font-heading {
-  font: var(--font-2);
+  font: var(--font-title-1);
 }
