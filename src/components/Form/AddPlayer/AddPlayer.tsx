@@ -5,11 +5,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import z from "zod";
 
+const MINIMUM_USERNAME_LENGTH = 2;
 const AddPlayerFormSchema = z.object({
   username: z
     .string()
     .trim()
-    .min(5, { message: "Username must be at least 2 characters!" }),
+    .min(MINIMUM_USERNAME_LENGTH, {
+      message: `Username must be at least ${MINIMUM_USERNAME_LENGTH} characters!`,
+    }),
 });
 
 export type AddPlayerFormSchemaType = z.infer<typeof AddPlayerFormSchema>;

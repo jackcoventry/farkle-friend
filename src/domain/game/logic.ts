@@ -7,6 +7,7 @@ export function createInitialGameState(): GameState {
 
   return {
     id: gameId,
+    phase: "LOBBY",
     players: [],
     createdAt: now,
     updatedAt: now,
@@ -32,5 +33,25 @@ export function addPlayer(state: GameState, username: string): GameState {
   return withUpdatedAt({
     ...state,
     players: [...state.players, newPlayer],
+  });
+}
+
+export function canStartGame(state: GameState): boolean {
+  return state.phase === "LOBBY" && state.players.length >= 2;
+}
+
+export function startGame(state: GameState): GameState {
+  if (!canStartGame(state)) return state;
+  return withUpdatedAt({
+    ...state,
+    phase: "IN_PROGRESS",
+  });
+}
+
+export function endGame(state: GameState): GameState {
+  if (state.phase !== "IN_PROGRESS") return state;
+  return withUpdatedAt({
+    ...state,
+    phase: "FINISHED",
   });
 }
