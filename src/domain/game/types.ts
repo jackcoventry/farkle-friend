@@ -1,3 +1,5 @@
+export type GameId = string;
+
 export type Player = {
   id: string;
   name: string;
