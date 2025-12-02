@@ -2,7 +2,7 @@ export type GameId = string;
 
 export type Player = {
   id: string;
-  name: string;
+  username: string;
 };
 
 export type GameState = {
