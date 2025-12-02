@@ -74,7 +74,7 @@ const Button = React.forwardRef<
   } = props;
 
   let classes =
-    "button | bg-sun-200 hover:bg-sun-300 rounded-lg flex gap-3 p-4 cursor-pointer";
+    "button | bg-sun-200 hover:bg-sun-300 rounded-lg flex gap-3 p-4 cursor-pointer font-button";
   if (className) classes += ` | ${className}`;
 
   // If iconOnly and no ariaLabel, fall back to children (if string)
