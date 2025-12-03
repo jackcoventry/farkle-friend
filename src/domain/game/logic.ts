@@ -1,5 +1,12 @@
 import { generateId } from "@/utils/generateId";
-import { GameId, GameState, Player, PlayerId, Turn } from "./types";
+import {
+  GameId,
+  GameState,
+  GameSummary,
+  Player,
+  PlayerId,
+  Turn,
+} from "./types";
 
 export function createInitialGameState(): GameState {
   const now = new Date().toISOString();
@@ -47,6 +54,7 @@ export function startGame(state: GameState): GameState {
   return withUpdatedAt({
     ...state,
     phase: "IN_PROGRESS",
+    currentPlayerIndex: 0,
   });
 }
 
@@ -55,6 +63,7 @@ export function endGame(state: GameState): GameState {
   return withUpdatedAt({
     ...state,
     phase: "FINISHED",
+    currentPlayerIndex: null,
   });
 }
 
@@ -90,12 +99,54 @@ export function recordTurn(
     turns,
     currentPlayerIndex: nextIndex,
   };
+  const summary = getGameSummary(nextState);
+  const shouldFinish = summary.isTargetReached;
 
-  // TODO: add this to settings/state
-  if (score >= 1000) {
+  if (shouldFinish) {
     nextState.phase = "FINISHED";
     nextState.currentPlayerIndex = null;
   }
 
   return withUpdatedAt(nextState);
+}
+
+export function computeTotals(state: GameState): Record<PlayerId, number> {
+  const totals: Record<PlayerId, number> = {};
+  for (const p of state.players) {
+    totals[p.id] = 0;
+  }
+  for (const turn of state.turns) {
+    totals[turn.playerId] = (totals[turn.playerId] ?? 0) + turn.score;
+  }
+  return totals;
+}
+
+export function getGameSummary(state: GameState): GameSummary {
+  const totals = computeTotals(state);
+  const playersSummary = state.players?.map((p) => ({
+    playerId: p.id,
+    username: p.username,
+    totalScore: totals[p.id] ?? 0,
+  }));
+
+  let leadingPlayerId: PlayerId | null = null;
+  let leadingScore = -Infinity;
+
+  for (const p of playersSummary) {
+    if (p.totalScore > leadingScore) {
+      leadingScore = p.totalScore;
+      leadingPlayerId = p.playerId;
+    }
+  }
+
+  const target = 2000; // TODO: add to global settings
+  const isTargetReached = playersSummary.some((p) => p.totalScore >= target);
+  const winnerId = isTargetReached ? leadingPlayerId : null;
+
+  return {
+    isTargetReached,
+    leadingPlayerId,
+    players: playersSummary,
+    winnerId,
+  };
 }

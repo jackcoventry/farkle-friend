@@ -24,3 +24,16 @@ export type Turn = {
   turnIndex: number;
   createdAt: string;
 };
+
+export type PlayerScoreSummary = {
+  playerId: PlayerId;
+  username: string;
+  totalScore: number;
+};
+
+export type GameSummary = {
+  isTargetReached: boolean;
+  leadingPlayerId: PlayerId | null;
+  players: PlayerScoreSummary[];
+  winnerId: PlayerId | null;
+};

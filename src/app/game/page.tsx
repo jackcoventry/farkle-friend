@@ -4,7 +4,7 @@ import Button from "@/components/Button/Button";
 import AddPlayerForm, {
   AddPlayerFormSchemaType,
 } from "@/components/Form/AddPlayer/AddPlayer";
-import { canStartGame } from "@/domain/game/logic";
+import { canStartGame, getGameSummary } from "@/domain/game/logic";
 import { useGameState } from "@/hooks/useGameState";
 
 export default function GamePage() {
@@ -19,6 +19,8 @@ export default function GamePage() {
   };
 
   const readyToStart = Boolean(canStartGame(state));
+  const currentPlayer = state.players[state.currentPlayerIndex ?? 0];
+  const summary = getGameSummary(state);
 
   if (state.phase === "LOBBY") {
     return (
@@ -49,22 +51,40 @@ export default function GamePage() {
     );
   }
 
+  if (state.phase === "FINISHED") {
+    const winner =
+      summary.winnerId == null
+        ? null
+        : summary.players.find((p) => p.playerId === summary.winnerId);
+
+    return (
+      <div>
+        <div>
+          <h2>GAME COMPLETE!</h2>
+          <h1>{winner?.username} wins</h1>
+          <h3> Total Score {winner?.totalScore}</h3>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div>
       <h1>FARKLE</h1>
       <h2>Players</h2>
 
-      {state.players.length > 0 ? (
+      {summary.players.length > 0 ? (
         <ul>
-          {state.players.map((player) => (
-            <li key={player.id}>
-              {player.username} - {player.id}
+          {summary.players.map((player) => (
+            <li key={player.playerId}>
+              {player.username} - {player.playerId} ({player.totalScore})
             </li>
           ))}
         </ul>
       ) : null}
 
       <h2>Turns</h2>
+      <h3>{currentPlayer?.username}'s turn</h3>
       {state?.turns?.length > 0 ? (
         <ul>
           {state?.turns?.map((turn) => (
@@ -81,8 +101,8 @@ export default function GamePage() {
         onClick={() =>
           dispatch({
             type: "RECORD_TURN",
-            playerId: "2025123133719",
-            score: 400,
+            playerId: currentPlayer?.id,
+            score: Math.floor(Math.random() * (500 - 100 + 1) + 100),
           })
         }
       >
