@@ -8,7 +8,7 @@ export default function Home() {
         Welcome to Farkle, Friend!
       </h1>
       <Link href="/game">
-        <Button as="span">Start Game</Button>
+        <Button as="inline">Start Game</Button>
       </Link>
     </div>
   );

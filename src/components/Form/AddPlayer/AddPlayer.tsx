@@ -29,6 +29,7 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
     control,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<AddPlayerFormSchemaType>({
     resolver: zodResolver(AddPlayerFormSchema),
     defaultValues: {
@@ -37,11 +38,16 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
     mode: "all",
   });
 
+  const submitHandler = (data: { username: string }) => {
+    onSubmit(data);
+    reset();
+  };
+
   return (
     <div className="form-wrapper | border-sun-300 border-1 p-4 rounded-lg">
       <form
         className="form | gap-4 flex flex-col"
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(submitHandler)}
       >
         <h2 className="font-heading">Add player</h2>
 

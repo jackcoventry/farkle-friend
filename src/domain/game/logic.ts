@@ -9,6 +9,8 @@ export function createInitialGameState(): GameState {
     id: gameId,
     phase: "LOBBY",
     players: [],
+    turns: [],
+    currentPlayerIndex: null,
     createdAt: now,
     updatedAt: now,
   };

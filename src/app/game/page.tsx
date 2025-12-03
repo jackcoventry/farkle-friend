@@ -20,37 +20,50 @@ export default function GamePage() {
 
   const readyToStart = Boolean(canStartGame(state));
 
-  return (
-    <div>
-      <h1 className="p-10 font-body lg:font-heading text-sun-800 bg-sun-100">
-        Current game phase: {state.phase}
-      </h1>
-
+  if (state.phase === "LOBBY") {
+    return (
       <div>
-        {readyToStart ? (
-          <Button onClick={onStartGame}>Start game</Button>
-        ) : (
-          <p>Need more players</p>
-        )}
-      </div>
-
-      {state.players.length > 0 ? (
-        <>
+        <div>
           <h2>Players</h2>
-          <ul>
-            {state.players.map((player) => (
-              <li key={player.id}>{player.username}</li>
-            ))}
-          </ul>
-        </>
-      ) : null}
-      <div></div>
 
-      <div className="grid grid-cols-3 p-8">
-        <div className="col-start-2">
-          <AddPlayerForm onSubmit={onAddPlayerFormSubmit} />
+          {state.players.length > 0 ? (
+            <ul>
+              {state.players.map((player) => (
+                <li key={player.id}>{player.username}</li>
+              ))}
+            </ul>
+          ) : (
+            <p>You need at least two players!</p>
+          )}
+          <Button onClick={onStartGame} disabled={!readyToStart}>
+            Start game
+          </Button>
+        </div>
+
+        <div className="grid grid-cols-3 p-8">
+          <div className="col-start-2">
+            <AddPlayerForm onSubmit={onAddPlayerFormSubmit} />
+          </div>
         </div>
       </div>
+    );
+  }
+
+  return (
+    <div>
+      <h1>FARKLE</h1>
+      <h2>Turns</h2>
+      {state?.turns?.length > 0 ? (
+        <ul>
+          {state?.turns?.map((turn) => (
+            <li key={turn.id}>
+              {turn.createdAt} - {turn.playerId} - {turn.score}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No turns yet</p>
+      )}
     </div>
   );
 }
