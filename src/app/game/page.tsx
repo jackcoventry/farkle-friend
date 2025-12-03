@@ -52,6 +52,18 @@ export default function GamePage() {
   return (
     <div>
       <h1>FARKLE</h1>
+      <h2>Players</h2>
+
+      {state.players.length > 0 ? (
+        <ul>
+          {state.players.map((player) => (
+            <li key={player.id}>
+              {player.username} - {player.id}
+            </li>
+          ))}
+        </ul>
+      ) : null}
+
       <h2>Turns</h2>
       {state?.turns?.length > 0 ? (
         <ul>
@@ -64,6 +76,18 @@ export default function GamePage() {
       ) : (
         <p>No turns yet</p>
       )}
+
+      <Button
+        onClick={() =>
+          dispatch({
+            type: "RECORD_TURN",
+            playerId: "2025123133719",
+            score: 400,
+          })
+        }
+      >
+        Add turn
+      </Button>
     </div>
   );
 }
