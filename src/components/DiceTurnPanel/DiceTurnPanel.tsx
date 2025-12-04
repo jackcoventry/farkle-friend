@@ -54,15 +54,32 @@ export function DiceTurnPanel({
   const handleFinishTurn = () => {
     if (!activeTurn) return;
 
-    const finished = finishActiveTurn(activeTurn);
-    const score = finished.isFarkled ? 0 : finished.tempScore;
+    // Start from the latest activeTurn snapshot
+    let turn = activeTurn;
 
+    // If there is a current roll and selected dice, bank them first
+    if (
+      turn.currentRoll &&
+      selectedIndices.length > 0 &&
+      !turn.isFarkled &&
+      !turn.isComplete
+    ) {
+      turn = bankDiceFromCurrentRoll(turn, selectedIndices);
+    }
+
+    // Mark the turn complete
+    const finished = finishActiveTurn(turn);
+
+    const finalScore = finished.isFarkled ? 0 : finished.tempScore;
+
+    // Push the final score into the main game state
     dispatch({
-      playerId: finished.playerId,
-      score,
       type: "RECORD_TURN",
+      playerId: finished.playerId,
+      score: finalScore,
     });
 
+    // Local cleanup
     setActiveTurn(null);
     setSelectedIndices([]);
   };
