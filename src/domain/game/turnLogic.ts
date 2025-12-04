@@ -45,8 +45,8 @@ export function rollInActiveTurn(turn: ActiveTurn): ActiveTurn {
 }
 
 export function bankDiceFromCurrentRoll(
-  heldIndices: number[],
-  turn: ActiveTurn
+  turn: ActiveTurn,
+  heldIndices: number[]
 ): ActiveTurn {
   if (!turn.currentRoll || turn.isComplete || heldIndices?.length === 0) {
     return turn;

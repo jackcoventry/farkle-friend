@@ -73,8 +73,7 @@ const Button = React.forwardRef<
     ...rest
   } = props;
 
-  let classes =
-    "button | bg-sun-200 hover:bg-sun-300 rounded-lg flex gap-3 p-4 cursor-pointer font-button";
+  let classes = "button | rounded-lg flex gap-3 p-4 font-button";
   if (className) classes += ` | ${className}`;
 
   // If iconOnly and no ariaLabel, fall back to children (if string)
@@ -168,6 +167,11 @@ const Button = React.forwardRef<
     onClick,
     ...buttonRest
   } = rest as ButtonOnlyProps;
+  if (disabled) {
+    classes += ` bg-sun-100 cursor-not-allowed`;
+  } else {
+    classes += ` bg-sun-200 cursor-pointer hover:bg-sun-300`;
+  }
 
   return (
     <button
