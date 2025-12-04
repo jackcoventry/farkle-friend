@@ -53,8 +53,8 @@ export function startGame(state: GameState): GameState {
   if (!canStartGame(state)) return state;
   return withUpdatedAt({
     ...state,
-    phase: "IN_PROGRESS",
     currentPlayerIndex: 0,
+    phase: "IN_PROGRESS",
   });
 }
 
@@ -62,8 +62,18 @@ export function endGame(state: GameState): GameState {
   if (state.phase !== "IN_PROGRESS") return state;
   return withUpdatedAt({
     ...state,
-    phase: "FINISHED",
     currentPlayerIndex: null,
+    phase: "FINISHED",
+  });
+}
+
+// This will reset the game but keep players
+export function resetGame(state: GameState): GameState {
+  return withUpdatedAt({
+    ...state,
+    currentPlayerIndex: null,
+    phase: "LOBBY",
+    turns: [],
   });
 }
 

@@ -4,7 +4,7 @@ import Button from "@/components/Button/Button";
 import AddPlayerForm, {
   AddPlayerFormSchemaType,
 } from "@/components/Form/AddPlayer/AddPlayer";
-import { canStartGame, getGameSummary } from "@/domain/game/logic";
+import { canStartGame, getGameSummary, resetGame } from "@/domain/game/logic";
 import { useGameState } from "@/hooks/useGameState";
 
 export default function GamePage() {
@@ -15,6 +15,11 @@ export default function GamePage() {
   };
 
   const onStartGame = () => {
+    dispatch({ type: "START_GAME" });
+  };
+
+  const onResetGame = () => {
+    dispatch({ type: "RESET_GAME" });
     dispatch({ type: "START_GAME" });
   };
 
@@ -63,6 +68,7 @@ export default function GamePage() {
           <h2>GAME COMPLETE!</h2>
           <h1>{winner?.username} wins</h1>
           <h3> Total Score {winner?.totalScore}</h3>
+          <Button onClick={onResetGame}>Another game with same players?</Button>
         </div>
       </div>
     );
