@@ -4,7 +4,7 @@ import Button from "@/components/Button/Button";
 import AddPlayerForm, {
   AddPlayerFormSchemaType,
 } from "@/components/Form/AddPlayer/AddPlayer";
-import { canStartGame, getGameSummary, resetGame } from "@/domain/game/logic";
+import { canStartGame, getGameSummary } from "@/domain/game/gameLogic";
 import { useGameState } from "@/hooks/useGameState";
 
 export default function GamePage() {

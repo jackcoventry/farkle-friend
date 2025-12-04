@@ -1,5 +1,11 @@
-import { addPlayer, endGame, recordTurn, resetGame, startGame } from "./logic";
-import { GameState, PlayerId } from "./types";
+import {
+  addPlayer,
+  endGame,
+  recordTurn,
+  resetGame,
+  startGame,
+} from "./gameLogic";
+import { GameState, PlayerId } from "./gameTypes";
 
 export type GameAction =
   | { type: "ADD_PLAYER"; username: string }

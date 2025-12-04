@@ -1,9 +1,9 @@
 "use client";
 
 import { useReducer } from "react";
-import type { GameState } from "@/domain/game/types";
-import { createInitialGameState } from "@/domain/game/logic";
-import { reducer } from "@/domain/game/reducer";
+import type { GameState } from "@/domain/game/gameTypes";
+import { createInitialGameState } from "@/domain/game/gameLogic";
+import { reducer } from "@/domain/game/gameReducer";
 
 function createInitialState(): GameState {
   return createInitialGameState();

@@ -6,7 +6,7 @@ import {
   Player,
   PlayerId,
   Turn,
-} from "./types";
+} from "./gameTypes";
 
 export function createInitialGameState(): GameState {
   const now = new Date().toISOString();
