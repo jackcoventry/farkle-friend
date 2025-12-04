@@ -21,7 +21,19 @@ function analyseDice(dice: DieValue[]): DiceAnalysis {
 
   let score = 0;
 
-  // TODO: iterate over dice values to calc score
+  // Count any triple combo's
+  for (let face = 1 as DieValue; face <= 6; face++) {
+    if (counts[face] >= 3) {
+      const tripleScore = face === 1 ? 1000 : face * 100;
+      score += tripleScore;
+      counts[face] -= 3;
+    }
+  }
+
+  // Counts single 1's and 5's
+  score += counts[1] * 100;
+  score += counts[5] * 50;
+
   return { counts, score };
 }
 

@@ -17,7 +17,10 @@ type DiceTurnPanelProps = {
   dispatch: React.Dispatch<GameAction>;
 };
 
-export function DiceTurnPanel({ state, dispatch }: DiceTurnPanelProps) {
+export function DiceTurnPanel({
+  state,
+  dispatch,
+}: Readonly<DiceTurnPanelProps>) {
   const currentIndex = state.currentPlayerIndex ?? 0;
   const currentPlayer = state.players[currentIndex] ?? null;
 
@@ -40,7 +43,12 @@ export function DiceTurnPanel({ state, dispatch }: DiceTurnPanelProps) {
 
   const handleRoll = () => {
     setSelectedIndices([]);
-    setActiveTurn((prev) => (prev ? rollInActiveTurn(prev) : prev));
+    setActiveTurn((prev) => {
+      if (!prev) return prev;
+      if (prev.isComplete || prev.isFarkled) return prev;
+      if (prev.currentRoll !== null) return prev;
+      return rollInActiveTurn(prev);
+    });
   };
 
   const handleFinishTurn = () => {
@@ -72,7 +80,11 @@ export function DiceTurnPanel({ state, dispatch }: DiceTurnPanelProps) {
     setSelectedIndices([]);
   };
 
-  const canRoll = !activeTurn.isFarkled && !activeTurn.isComplete;
+  const canRoll =
+    !activeTurn.isFarkled &&
+    !activeTurn.isComplete &&
+    activeTurn.currentRoll === null;
+
   const canBank =
     !!activeTurn.currentRoll &&
     selectedIndices.length > 0 &&
@@ -91,13 +103,13 @@ export function DiceTurnPanel({ state, dispatch }: DiceTurnPanelProps) {
           {activeTurn.currentRoll.map((value, idx) => {
             const isSelected = selectedIndices.includes(idx);
             return (
-              <button
+              <Button
                 key={`${value}-${idx}`}
                 type="button"
                 onClick={() => toggleDieSelection(idx)}
               >
                 {value} ({isSelected ? "selected" : ""})
-              </button>
+              </Button>
             );
           })}
         </div>
@@ -113,7 +125,7 @@ export function DiceTurnPanel({ state, dispatch }: DiceTurnPanelProps) {
           Bank
         </Button>
         <Button type="button" onClick={handleFinishTurn} disabled={!canFinish}>
-          End turn & Bank
+          {activeTurn.isFarkled ? "End turn" : "Bank & End turn"}
         </Button>
       </div>
     </div>
