@@ -1,14 +1,46 @@
-import { getScoringInfo, rollDice } from "./dice";
-import type { ActiveTurn, DiceRoll } from "./diceTypes";
+import { DieValue, getScoringInfo, rollDice } from "./dice";
+
+export type ActiveTurn = {
+  availableDice: number;
+  currentRoll: DieValue[] | null;
+  isComplete: boolean;
+  isFarkled: boolean;
+  playerId: string;
+  tempScore: number;
+};
 
 export function startActiveTurn(playerId: string): ActiveTurn {
   return {
-    playerId,
     availableDice: 6,
     currentRoll: null,
     isComplete: false,
     isFarkled: false,
+    playerId,
     tempScore: 0,
+  };
+}
+
+// Roll a dice within a player's active turn
+export function rollInActiveTurn(turn: ActiveTurn): ActiveTurn {
+  if (turn.isComplete) return turn;
+
+  const dice = rollDice(turn.availableDice);
+  const scoring = getScoringInfo(dice);
+
+  if (scoring.hasNoScoringDice) {
+    return {
+      ...turn,
+      currentRoll: dice,
+      isComplete: true,
+      isFarkled: true,
+      tempScore: 0,
+    };
+  }
+
+  return {
+    ...turn,
+    currentRoll: dice,
+    isFarkled: false,
   };
 }
 
@@ -18,31 +50,5 @@ export function finishActiveTurn(turn: ActiveTurn): ActiveTurn {
   return {
     ...turn,
     isComplete: true,
-  };
-}
-
-// Roll a dice within a player's active turn
-export function rollInActiveTurn(turn: ActiveTurn): ActiveTurn {
-  if (turn.isComplete) return turn;
-
-  const dice = rollDice(turn.availableDice);
-  const currentRoll: DiceRoll = { dice };
-  const scoringInfo = getScoringInfo(dice);
-
-  if (scoringInfo.hasNoScoringDice) {
-    // TODO: implement
-    return {
-      ...turn,
-      currentRoll,
-      isComplete: true,
-      isFarkled: true,
-      tempScore: 0,
-    };
-  }
-
-  return {
-    ...turn,
-    currentRoll,
-    isFarkled: false,
   };
 }

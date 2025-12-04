@@ -14,11 +14,11 @@ export function createInitialGameState(): GameState {
 
   return {
     id: gameId,
+    createdAt: now,
+    currentPlayerIndex: null,
     phase: "LOBBY",
     players: [],
     turns: [],
-    currentPlayerIndex: null,
-    createdAt: now,
     updatedAt: now,
   };
 }
@@ -30,12 +30,12 @@ function withUpdatedAt<T extends { updatedAt: string }>(state: T): T {
 
 // Helper for the add player reducer action
 export function addPlayer(state: GameState, username: string): GameState {
-  const id = generateId();
+  if (state.phase !== "LOBBY") return state;
   const trimmed = username.trim();
   if (!trimmed) return state;
 
   const newPlayer: Player = {
-    id,
+    id: generateId(),
     username: trimmed,
   };
 
@@ -51,6 +51,7 @@ export function canStartGame(state: GameState): boolean {
 
 export function startGame(state: GameState): GameState {
   if (!canStartGame(state)) return state;
+
   return withUpdatedAt({
     ...state,
     currentPlayerIndex: 0,
@@ -110,9 +111,8 @@ export function recordTurn(
     currentPlayerIndex: nextIndex,
   };
   const summary = getGameSummary(nextState);
-  const shouldFinish = summary.isTargetReached;
 
-  if (shouldFinish) {
+  if (summary.isTargetReached) {
     nextState.phase = "FINISHED";
     nextState.currentPlayerIndex = null;
   }
