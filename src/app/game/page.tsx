@@ -1,6 +1,7 @@
 "use client";
 
 import Button from "@/components/Button/Button";
+import { DiceTurnPanel } from "@/components/DiceTurnPanel/DiceTurnPanel";
 import AddPlayerForm, {
   AddPlayerFormSchemaType,
 } from "@/components/Form/AddPlayer/AddPlayer";
@@ -24,7 +25,6 @@ export default function GamePage() {
   };
 
   const readyToStart = Boolean(canStartGame(state));
-  const currentPlayer = state.players[state.currentPlayerIndex ?? 0];
   const summary = getGameSummary(state);
 
   if (state.phase === "LOBBY") {
@@ -89,31 +89,7 @@ export default function GamePage() {
         </ul>
       ) : null}
 
-      <h2>Turns</h2>
-      <h3>{currentPlayer?.username}'s turn</h3>
-      {state?.turns?.length > 0 ? (
-        <ul>
-          {state?.turns?.map((turn) => (
-            <li key={turn.id}>
-              {turn.createdAt} - {turn.playerId} - {turn.score}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No turns yet</p>
-      )}
-
-      <Button
-        onClick={() =>
-          dispatch({
-            type: "RECORD_TURN",
-            playerId: currentPlayer?.id,
-            score: Math.floor(Math.random() * (500 - 100 + 1) + 100),
-          })
-        }
-      >
-        Add turn
-      </Button>
+      <DiceTurnPanel state={state} dispatch={dispatch} />
     </div>
   );
 }
