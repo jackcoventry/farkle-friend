@@ -5,6 +5,7 @@ import { DiceTurnPanel } from "@/components/DiceTurnPanel/DiceTurnPanel";
 import AddPlayerForm, {
   AddPlayerFormSchemaType,
 } from "@/components/Form/AddPlayer/AddPlayer";
+import { ManualTurn } from "@/components/ManualTurn/ManualTurn";
 import { canStartGame, getGameSummary } from "@/domain/game/gameLogic";
 import { useGameState } from "@/hooks/useGameState";
 
@@ -89,7 +90,8 @@ export default function GamePage() {
         </ul>
       ) : null}
 
-      <DiceTurnPanel state={state} dispatch={dispatch} />
+      <ManualTurn state={state} dispatch={dispatch} />
+      {/* <DiceTurnPanel state={state} dispatch={dispatch} /> */}
     </div>
   );
 }
