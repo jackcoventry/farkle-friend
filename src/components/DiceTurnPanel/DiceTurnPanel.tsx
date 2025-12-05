@@ -11,7 +11,7 @@ import {
 } from "@/domain/game/turnLogic";
 import { useEffect, useState } from "react";
 import Button from "@/components/Button/Button";
-import { scoreSelectedDice } from "@/domain/game/dice";
+import { getScoringCombinations, scoreSelectedDice } from "@/domain/game/dice";
 import type { DieValue } from "@/domain/game/dice";
 
 type DiceTurnPanelProps = {
@@ -126,6 +126,11 @@ export function DiceTurnPanel({
 
   const canFinish = activeTurn.isFarkled || activeTurn.tempScore > 0;
 
+  const currentCombos =
+    activeTurn.currentRoll == null
+      ? []
+      : getScoringCombinations(activeTurn.currentRoll);
+
   return (
     <div>
       <h2>{currentPlayer.username}'s Turn</h2>
@@ -151,6 +156,14 @@ export function DiceTurnPanel({
       ) : (
         <p>Roll the dice!</p>
       )}
+
+      <ul>
+        {currentCombos.slice(0, 5).map((combo, index) => (
+          <li key={index}>
+            [{combo.dice.join(", ")}] → {combo.score} pts
+          </li>
+        ))}
+      </ul>
 
       <div>
         <Button type="button" onClick={handleRoll} disabled={!canRoll}>

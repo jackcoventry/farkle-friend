@@ -95,3 +95,40 @@ export function getScoringInfo(dice: DieValue[]) {
     hasNoScoringDice: score === 0,
   };
 }
+
+export type ScoringCombo = {
+  dice: DieValue[];
+  indices: number[];
+  score: number;
+};
+
+export function getScoringCombinations(roll: DieValue[]): ScoringCombo[] {
+  const n = roll.length;
+  const results: ScoringCombo[] = [];
+
+  if (n === 0) return results;
+
+  const totalMasks = 1 << n;
+
+  for (let mask = 1; mask < totalMasks; mask++) {
+    const indices: number[] = [];
+    const dice: DieValue[] = [];
+
+    for (let i = 0; i < n; i++) {
+      if ((mask & (1 << i)) !== 0) {
+        indices.push(i);
+        dice.push(roll[i]);
+      }
+    }
+
+    if (dice.length === 0) continue;
+
+    const { score, usedCount } = scoreSelectedDiceWithUsage(dice);
+
+    if (score > 0 && usedCount === dice.length) {
+      results.push({ indices, dice, score });
+    }
+  }
+
+  return results;
+}

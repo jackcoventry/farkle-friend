@@ -90,8 +90,8 @@ export default function GamePage() {
         </ul>
       ) : null}
 
-      <ManualTurn state={state} dispatch={dispatch} />
-      {/* <DiceTurnPanel state={state} dispatch={dispatch} /> */}
+      {/* <ManualTurn state={state} dispatch={dispatch} /> */}
+      <DiceTurnPanel state={state} dispatch={dispatch} />
     </div>
   );
 }
