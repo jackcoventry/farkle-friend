@@ -1,4 +1,9 @@
-import { DieValue, getScoringInfo, rollDice, scoreSelectedDice } from "./dice";
+import {
+  DieValue,
+  getScoringInfo,
+  rollDice,
+  scoreSelectedDiceWithUsage,
+} from "./dice";
 
 export type ActiveTurn = {
   availableDice: number;
@@ -48,26 +53,33 @@ export function bankDiceFromCurrentRoll(
   turn: ActiveTurn,
   heldIndices: number[]
 ): ActiveTurn {
-  if (!turn.currentRoll || turn.isComplete || heldIndices?.length === 0) {
+  if (!turn.currentRoll || turn.isComplete) return turn;
+  if (heldIndices.length === 0) return turn;
+
+  const heldDice: DieValue[] = heldIndices
+    .map((i) => turn.currentRoll![i])
+    .filter((v): v is DieValue => v != null);
+
+  if (heldDice.length === 0) return turn;
+
+  const { score, usedCount } = scoreSelectedDiceWithUsage(heldDice);
+
+  if (score <= 0 || usedCount === 0) {
     return turn;
   }
 
-  const heldDice: DieValue[] = heldIndices
-    .map((index) => turn.currentRoll![index])
-    .filter((value): value is DieValue => value !== null);
+  const remainingDiceCount = turn.currentRoll.length - usedCount;
 
-  const score = scoreSelectedDice(heldDice);
-  if (score <= 0) return turn;
-
-  const remainingDice = turn.currentRoll.length - heldDice.length;
-  // Gets next available dice count
-  const nextAvailable = remainingDice === 0 ? 6 : remainingDice;
+  let nextAvailable = remainingDiceCount;
+  if (remainingDiceCount === 0) {
+    nextAvailable = 6;
+  }
 
   return {
     ...turn,
+    tempScore: turn.tempScore + score,
     availableDice: nextAvailable,
     currentRoll: null,
-    tempScore: turn.tempScore + score,
   };
 }
 

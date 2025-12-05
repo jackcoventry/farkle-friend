@@ -11,6 +11,8 @@ import {
 } from "@/domain/game/turnLogic";
 import { useEffect, useState } from "react";
 import Button from "@/components/Button/Button";
+import { scoreSelectedDice } from "@/domain/game/dice";
+import type { DieValue } from "@/domain/game/dice";
 
 type DiceTurnPanelProps = {
   state: GameState;
@@ -41,6 +43,18 @@ export function DiceTurnPanel({
     return <p>No active player</p>;
   }
 
+  const currentRoll = activeTurn.currentRoll;
+
+  const heldDice: DieValue[] =
+    currentRoll && selectedIndices.length > 0
+      ? selectedIndices
+          .map((i) => currentRoll[i])
+          .filter((v): v is DieValue => v !== undefined)
+      : [];
+
+  const selectedScore =
+    heldDice.length > 0 ? scoreSelectedDice(heldDice as any) : 0;
+
   const handleRoll = () => {
     setSelectedIndices([]);
     setActiveTurn((prev) => {
@@ -61,6 +75,7 @@ export function DiceTurnPanel({
     if (
       turn.currentRoll &&
       selectedIndices.length > 0 &&
+      selectedScore > 0 &&
       !turn.isFarkled &&
       !turn.isComplete
     ) {
@@ -69,7 +84,6 @@ export function DiceTurnPanel({
 
     // Mark the turn complete
     const finished = finishActiveTurn(turn);
-
     const finalScore = finished.isFarkled ? 0 : finished.tempScore;
 
     // Push the final score into the main game state
@@ -91,6 +105,9 @@ export function DiceTurnPanel({
   };
 
   const handleBankSelected = () => {
+    if (!currentRoll || selectedIndices.length === 0) return;
+    if (selectedScore <= 0) return;
+
     setActiveTurn((prev) =>
       prev ? bankDiceFromCurrentRoll(prev, selectedIndices) : prev
     );
@@ -98,15 +115,15 @@ export function DiceTurnPanel({
   };
 
   const canRoll =
-    !activeTurn.isFarkled &&
-    !activeTurn.isComplete &&
-    activeTurn.currentRoll === null;
+    !activeTurn.isFarkled && !activeTurn.isComplete && currentRoll === null;
 
   const canBank =
-    !!activeTurn.currentRoll &&
+    !!currentRoll &&
     selectedIndices.length > 0 &&
+    selectedScore > 0 &&
     !activeTurn.isFarkled &&
     !activeTurn.isComplete;
+
   const canFinish = activeTurn.isFarkled || activeTurn.tempScore > 0;
 
   return (
@@ -115,15 +132,16 @@ export function DiceTurnPanel({
       <p>Score this turn: {activeTurn.tempScore}</p>
       <p>NUmber of dice for next roll: {activeTurn.availableDice}</p>
       {activeTurn.isFarkled && <p>You've been farkled!!!!!!</p>}
-      {activeTurn.currentRoll ? (
+      {currentRoll ? (
         <div>
-          {activeTurn.currentRoll.map((value, idx) => {
+          {currentRoll.map((value, idx) => {
             const isSelected = selectedIndices.includes(idx);
             return (
               <Button
                 key={`${value}-${idx}`}
                 type="button"
                 onClick={() => toggleDieSelection(idx)}
+                disabled={activeTurn.isFarkled}
               >
                 {value} ({isSelected ? "selected" : ""})
               </Button>

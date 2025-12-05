@@ -35,7 +35,7 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
     defaultValues: {
       username: "",
     },
-    mode: "all",
+    mode: "onBlur",
   });
 
   const submitHandler = (data: { username: string }) => {
