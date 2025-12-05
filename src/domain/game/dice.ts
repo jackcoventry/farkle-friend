@@ -103,18 +103,18 @@ export type ScoringCombo = {
 };
 
 export function getScoringCombinations(roll: DieValue[]): ScoringCombo[] {
-  const n = roll.length;
-  const results: ScoringCombo[] = [];
+  const rollLength = roll.length;
+  const combosByKey = new Map<string, ScoringCombo>();
 
-  if (n === 0) return results;
+  if (rollLength === 0) return [];
 
-  const totalMasks = 1 << n;
+  const totalMasks = 1 << rollLength;
 
   for (let mask = 1; mask < totalMasks; mask++) {
     const indices: number[] = [];
     const dice: DieValue[] = [];
 
-    for (let i = 0; i < n; i++) {
+    for (let i = 0; i < rollLength; i++) {
       if ((mask & (1 << i)) !== 0) {
         indices.push(i);
         dice.push(roll[i]);
@@ -125,10 +125,22 @@ export function getScoringCombinations(roll: DieValue[]): ScoringCombo[] {
 
     const { score, usedCount } = scoreSelectedDiceWithUsage(dice);
 
-    if (score > 0 && usedCount === dice.length) {
-      results.push({ indices, dice, score });
+    if (score <= 0 || usedCount !== dice.length) continue;
+
+    const sorted = [...dice].sort((a, b) => a - b);
+    const key = `${sorted.join(",")}|${score}`;
+
+    if (!combosByKey.has(key)) {
+      combosByKey.set(key, { indices, dice, score });
     }
   }
+
+  const results = Array.from(combosByKey.values());
+
+  results.sort((a, b) => {
+    if (b.score !== a.score) return b.score - a.score;
+    return b.dice.length - a.dice.length;
+  });
 
   return results;
 }

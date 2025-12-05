@@ -71,6 +71,14 @@ export function DiceTurnPanel({
     // Start from the latest activeTurn snapshot
     let turn = activeTurn;
 
+    if (
+      !turn.isFarkled &&
+      turn.currentRoll !== null &&
+      selectedIndices.length === 0
+    ) {
+      return;
+    }
+
     // If there is a current roll and selected dice, bank them first
     if (
       turn.currentRoll &&
@@ -124,7 +132,10 @@ export function DiceTurnPanel({
     !activeTurn.isFarkled &&
     !activeTurn.isComplete;
 
-  const canFinish = activeTurn.isFarkled || activeTurn.tempScore > 0;
+  const canFinish =
+    !activeTurn.isComplete &&
+    (activeTurn.isFarkled ||
+      (activeTurn.currentRoll === null && activeTurn.tempScore > 0));
 
   const currentCombos =
     activeTurn.currentRoll == null
@@ -160,7 +171,8 @@ export function DiceTurnPanel({
       <ul>
         {currentCombos.slice(0, 5).map((combo, index) => (
           <li key={index}>
-            [{combo.dice.join(", ")}] → {combo.score} pts
+            [{combo.dice.toSorted((a, b) => b - a).join(", ")}] → {combo.score}{" "}
+            pts
           </li>
         ))}
       </ul>
