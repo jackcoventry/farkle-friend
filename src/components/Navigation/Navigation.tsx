@@ -1,4 +1,4 @@
-import React, { useState, ReactNode, useId } from "react";
+import React, { useState, ReactNode, useId, useRef, useCallback } from "react";
 
 export type NavLinkRenderProps = {
   ariaCurrent?: "page" | "step" | "location" | "date" | "time" | "true";
@@ -30,8 +30,77 @@ function Navigation({
   const navId = useId();
   const menuId = `${navId}-menu`;
 
+  const navRef = useRef<HTMLElement | null>(null);
+  const toggleRef = useRef<HTMLButtonElement | null>(null);
+
   const handleVisibility = () => {
     setOpen(!open);
+  };
+
+  const getFocusableChain = useCallback((): HTMLElement[] => {
+    const chain: HTMLElement[] = [];
+
+    if (toggleRef.current) chain.push(toggleRef.current);
+
+    if (navRef.current) {
+      const selector = [
+        "a[href]:not([tabindex='-1'])",
+        "button:not([disabled]):not([tabindex='-1'])",
+        "input:not([disabled]):not([tabindex='-1'])",
+        "select:not([disabled]):not([tabindex='-1'])",
+        "textarea:not([disabled]):not([tabindex='-1'])",
+        "[tabindex]:not([tabindex='-1'])",
+      ].join(",");
+
+      const nodes = Array.from(
+        navRef.current.querySelectorAll<HTMLElement>(selector)
+      );
+
+      for (const el of nodes) {
+        if (el !== toggleRef.current) chain.push(el);
+      }
+    }
+
+    return chain;
+  }, []);
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
+    const { key, shiftKey } = event;
+
+    if (!open) {
+      if (key === "Escape" && document.activeElement === toggleRef.current) {
+        event.preventDefault();
+        setOpen(false);
+      }
+      return;
+    }
+
+    if (key === "Escape") {
+      event.preventDefault();
+      setOpen(false);
+      toggleRef.current?.focus();
+      return;
+    }
+
+    if (key !== "Tab") return;
+
+    const focusables = getFocusableChain();
+    if (!focusables.length) return;
+
+    const activeEl = document.activeElement as HTMLElement | null;
+    const currentIndex = activeEl ? focusables.indexOf(activeEl) : -1;
+
+    // If focus isn't currently inside the chain, let browser behavior stand.
+    if (currentIndex === -1) return;
+
+    // Focus trap:
+    if (!shiftKey && currentIndex === focusables.length - 1) {
+      event.preventDefault();
+      focusables[0].focus();
+    } else if (shiftKey && currentIndex === 0) {
+      event.preventDefault();
+      focusables?.at(-1)?.focus();
+    }
   };
 
   return (
@@ -44,20 +113,26 @@ function Navigation({
             aria-expanded={open}
             className="absolute right-0 h-full w-[100px] cursor-pointer"
             onClick={handleVisibility}
+            onKeyDown={handleKeyDown}
+            ref={toggleRef}
+            type="button"
           >
             Menu
           </button>
         ) : null}
+
+        {open ? (
+          <nav
+            aria-label={ariaLabel}
+            data-open={open ? "true" : "false"}
+            id={menuId}
+            onKeyDown={handleKeyDown}
+            ref={navRef}
+          >
+            <ul>{children}</ul>
+          </nav>
+        ) : null}
       </header>
-      {open ? (
-        <nav
-          aria-label={ariaLabel}
-          data-open={open ? "true" : "false"}
-          id={menuId}
-        >
-          <ul>{children}</ul>
-        </nav>
-      ) : null}
     </NavContext.Provider>
   );
 }

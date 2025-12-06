@@ -20,6 +20,9 @@ const Template: Story = {
       <NavItem>
         <NavLink href="/">Home</NavLink>
       </NavItem>
+      <NavItem>
+        <NavLink href="/">About</NavLink>
+      </NavItem>
     </Navigation>
   ),
 };
