@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="splash-screen h-dvh flex items-center justify-center bg-sun-100">
+    <div className="splash-screen h-dvh flex items-center justify-center bg-gray-800">
       <div className="flex flex-col gap-2 items-center">
         <div className="bg-white rounded-full w-[200px] h-[200px] mb-4">
           <img src="/dice.svg" className="h-full" alt="Two illustrated dice" />

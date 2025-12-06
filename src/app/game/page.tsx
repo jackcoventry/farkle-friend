@@ -5,6 +5,7 @@ import { DiceTurnPanel } from "@/components/DiceTurnPanel/DiceTurnPanel";
 import AddPlayerForm, {
   AddPlayerFormSchemaType,
 } from "@/components/Form/AddPlayer/AddPlayer";
+import GameShell from "@/components/GameShell/GameShell";
 import { ManualTurn } from "@/components/ManualTurn/ManualTurn";
 import { canStartGame, getGameSummary } from "@/domain/game/gameLogic";
 import { useGameState } from "@/hooks/useGameState";
@@ -30,30 +31,32 @@ export default function GamePage() {
 
   if (state.phase === "LOBBY") {
     return (
-      <div>
-        <div>
-          <h2>Players</h2>
+      <GameShell>
+        <GameShell.Sidebar>
+          {" "}
+          <div>
+            <h2>Players</h2>
 
-          {state.players.length > 0 ? (
-            <ul>
-              {state.players.map((player) => (
-                <li key={player.id}>{player.username}</li>
-              ))}
-            </ul>
-          ) : (
-            <p>You need at least two players!</p>
-          )}
-          <Button onClick={onStartGame} disabled={!readyToStart}>
-            Start game
-          </Button>
-        </div>
-
-        <div className="grid grid-cols-3 p-8">
-          <div className="col-start-2">
+            {state.players.length > 0 ? (
+              <ul>
+                {state.players.map((player) => (
+                  <li key={player.id}>{player.username}</li>
+                ))}
+              </ul>
+            ) : (
+              <p>You need at least two players!</p>
+            )}
+            <Button onClick={onStartGame} disabled={!readyToStart}>
+              Start game
+            </Button>
+          </div>
+        </GameShell.Sidebar>
+        <GameShell.Body>
+          <div>
             <AddPlayerForm onSubmit={onAddPlayerFormSubmit} />
           </div>
-        </div>
-      </div>
+        </GameShell.Body>
+      </GameShell>
     );
   }
 
