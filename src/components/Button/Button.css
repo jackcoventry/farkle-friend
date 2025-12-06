@@ -1,0 +1,30 @@
+.button[data-size="large"]:hover {
+  transform: rotate(3deg);
+}
+
+.button[data-size="large"],
+.button[data-size="large"]:after {
+  transition: transform ease-in-out 0.2s;
+}
+
+.button[data-size="large"]:after {
+  background: var(--color-sun-500);
+  border-radius: var(--radius-lg);
+  content: "";
+  display: block;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: -1;
+}
+
+.button[data-size="large"]:hover:after {
+  transform: rotate(5deg);
+}
+
+.button[data-size="large"] .content {
+  position: relative;
+  z-index: 1;
+}

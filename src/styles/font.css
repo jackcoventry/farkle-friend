@@ -18,6 +18,14 @@
   font: var(--font-title-3);
 }
 
-@utility font-button {
+@utility font-button-small {
   font: var(--font-button-1);
+}
+
+@utility font-button {
+  font: var(--font-button-2);
+}
+
+@utility font-button-large {
+  font: var(--font-button-3);
 }

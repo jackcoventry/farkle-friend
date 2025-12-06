@@ -1,4 +1,5 @@
 import React from "react";
+import "./Button.css";
 
 /* -----------------------------
    COMMON PROPS
@@ -10,7 +11,7 @@ type CommonProps = {
   icon?: string;
   iconOnly?: boolean;
   iconPosition?: "left" | "right";
-  size?: "default" | "small";
+  size?: "default" | "small" | "large";
   variant?: "primary" | "secondary";
 };
 
@@ -75,8 +76,11 @@ const Button = React.forwardRef<
     ...rest
   } = props;
 
-  let classes = "button | rounded-lg flex gap-3 p-4 font-button";
+  let classes = "button | rounded-lg flex gap-3 relative";
   if (className) classes += ` | ${className}`;
+  if (size === "small") classes += " font-button-small py-2 px-4";
+  if (size === "default") classes += " font-button py-2 px-5";
+  if (size === "large") classes += " font-button-large py-3 px-6";
 
   // If iconOnly and no ariaLabel, fall back to children (if string)
   let computedAriaLabel = ariaLabel;

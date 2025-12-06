@@ -28,7 +28,7 @@
       "3": {
         "$type": "fontFamily",
         "$value": [
-          "Barriecito",
+          "Kirang Haerang",
           "system-ui",
           "-apple-system",
           "Segoe UI",
@@ -169,7 +169,7 @@
           "fontFamily": "{font.family.3}",
           "fontWeight": "{font.weight.1}",
           "fontSize": "{font.size.clamp}",
-          "lineHeight": "{font.line-height.1}"
+          "lineHeight": "{font.line-height.4}"
         },
         "$extensions": {
           "$targetElement": "h3"
@@ -194,7 +194,23 @@
       "$type": "typography",
       "1": {
         "$value": {
-          "fontFamily": "{font.family.2}",
+          "fontFamily": "{font.family.3}",
+          "fontWeight": "{font.weight.1}",
+          "fontSize": "{font.size.2}",
+          "lineHeight": "{font.line-height.1}"
+        }
+      },
+      "2": {
+        "$value": {
+          "fontFamily": "{font.family.3}",
+          "fontWeight": "{font.weight.1}",
+          "fontSize": "{font.size.3}",
+          "lineHeight": "{font.line-height.1}"
+        }
+      },
+      "3": {
+        "$value": {
+          "fontFamily": "{font.family.3}",
           "fontWeight": "{font.weight.1}",
           "fontSize": "{font.size.4}",
           "lineHeight": "{font.line-height.1}"

@@ -12,6 +12,10 @@ const meta: Meta<ButtonProps> = {
       options: ["button", "inline", "a"],
       control: { type: "radio" },
     },
+    size: {
+      options: ["small", "default", "large"],
+      control: { type: "radio" },
+    },
   },
 };
 export default meta;
