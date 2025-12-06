@@ -7,6 +7,7 @@ export type GameId = string;
 export type Player = {
   id: PlayerId;
   username: string;
+  avatar: number;
 };
 
 export type GameState = {
@@ -32,6 +33,7 @@ export type PlayerScoreSummary = {
   playerId: PlayerId;
   totalScore: number;
   username: string;
+  avatar: number;
 };
 
 export type GameSummary = {

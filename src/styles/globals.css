@@ -17,3 +17,10 @@
     opacity: 1;
   }
 }
+
+.avatar-list-input:checked + .avatar-list-image,
+.avatar-list-input:focus-visible + .avatar-list-image {
+  box-shadow:
+    0 0 0 2px white,
+    0 0 0 6px var(--color-red-700);
+}

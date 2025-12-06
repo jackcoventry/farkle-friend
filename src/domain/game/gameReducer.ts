@@ -8,7 +8,7 @@ import {
 import { GameState, PlayerId } from "./gameTypes";
 
 export type GameAction =
-  | { type: "ADD_PLAYER"; username: string }
+  | { type: "ADD_PLAYER"; username: string; avatar: number }
   | { type: "START_GAME" }
   | { type: "END_GAME" }
   | { type: "RESET_GAME" }
@@ -17,7 +17,7 @@ export type GameAction =
 export function reducer(state: GameState, action: GameAction): GameState {
   switch (action.type) {
     case "ADD_PLAYER":
-      return addPlayer(state, action.username);
+      return addPlayer(state, action.username, action.avatar);
     case "START_GAME":
       return startGame(state);
     case "END_GAME":

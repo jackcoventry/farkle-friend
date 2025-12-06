@@ -14,7 +14,11 @@ export default function GamePage() {
   const { state, dispatch } = useGameState();
 
   const onAddPlayerFormSubmit = (data: AddPlayerFormSchemaType) => {
-    dispatch({ type: "ADD_PLAYER", username: data.username });
+    dispatch({
+      type: "ADD_PLAYER",
+      username: data.username,
+      avatar: data.avatar,
+    });
   };
 
   const onStartGame = () => {
@@ -33,14 +37,16 @@ export default function GamePage() {
     return (
       <GameShell>
         <GameShell.Sidebar>
-          {" "}
           <div>
             <h2>Players</h2>
 
             {state.players.length > 0 ? (
               <ul>
                 {state.players.map((player) => (
-                  <li key={player.id}>{player.username}</li>
+                  <li key={player.id}>
+                    <h3>{player.username}</h3>
+                    <img src={`/avatar/${player.avatar}.svg`} />
+                  </li>
                 ))}
               </ul>
             ) : (

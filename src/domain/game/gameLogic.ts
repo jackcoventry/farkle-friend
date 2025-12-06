@@ -29,7 +29,11 @@ function withUpdatedAt<T extends { updatedAt: string }>(state: T): T {
 }
 
 // Helper for the add player reducer action
-export function addPlayer(state: GameState, username: string): GameState {
+export function addPlayer(
+  state: GameState,
+  username: string,
+  avatar: number
+): GameState {
   if (state.phase !== "LOBBY") return state;
   const trimmed = username.trim();
   if (!trimmed) return state;
@@ -37,6 +41,7 @@ export function addPlayer(state: GameState, username: string): GameState {
   const newPlayer: Player = {
     id: generateId(),
     username: trimmed,
+    avatar,
   };
 
   return withUpdatedAt({
@@ -136,6 +141,7 @@ export function getGameSummary(state: GameState): GameSummary {
   const playersSummary = state.players?.map((p) => ({
     playerId: p.id,
     username: p.username,
+    avatar: p.avatar,
     totalScore: totals[p.id] ?? 0,
   }));
 
