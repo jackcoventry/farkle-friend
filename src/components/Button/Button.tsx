@@ -1,5 +1,8 @@
 import React from "react";
 
+/* -----------------------------
+   COMMON PROPS
+----------------------------- */
 type CommonProps = {
   ariaLabel?: string;
   children?: React.ReactNode;
@@ -29,12 +32,11 @@ type ButtonOnlyProps = {
 ----------------------------- */
 type AnchorOnlyProps = {
   as: "a";
+  disabled?: never;
   href: string;
   onClick?: React.MouseEventHandler<HTMLAnchorElement>;
   rel?: string;
   target?: React.HTMLAttributeAnchorTarget;
-
-  disabled?: never;
   type?: never;
 } & Omit<
   React.AnchorHTMLAttributes<HTMLAnchorElement>,
@@ -54,7 +56,7 @@ type InlineOnlyProps = {
 /* -----------------------------
    ALL POSSIBLE PROPS
 ----------------------------- */
-type ButtonProps = CommonProps &
+export type ButtonProps = CommonProps &
   (ButtonOnlyProps | AnchorOnlyProps | InlineOnlyProps);
 
 const Button = React.forwardRef<
@@ -87,6 +89,8 @@ const Button = React.forwardRef<
   ----------------------------- */
   if (props.as === "inline") {
     const inlineRest = rest as InlineOnlyProps;
+
+    classes += " bg-sun-200 hover:bg-sun-300";
 
     return (
       <span
@@ -125,6 +129,8 @@ const Button = React.forwardRef<
       rest as AnchorOnlyProps;
 
     const relSafe = target === "_blank" ? rel || "noopener noreferrer" : rel;
+
+    classes += " bg-sun-200 cursor-pointer hover:bg-sun-300";
 
     return (
       <a
@@ -168,9 +174,9 @@ const Button = React.forwardRef<
     ...buttonRest
   } = rest as ButtonOnlyProps;
   if (disabled) {
-    classes += ` bg-sun-100 cursor-not-allowed`;
+    classes += " bg-sun-100 cursor-not-allowed";
   } else {
-    classes += ` bg-sun-200 cursor-pointer hover:bg-sun-300`;
+    classes += " bg-sun-200 cursor-pointer hover:bg-sun-300";
   }
 
   return (

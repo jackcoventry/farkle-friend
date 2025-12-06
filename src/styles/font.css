@@ -14,6 +14,10 @@
   font: var(--font-title-2);
 }
 
+@utility font-sub-heading {
+  font: var(--font-title-3);
+}
+
 @utility font-button {
   font: var(--font-button-1);
 }

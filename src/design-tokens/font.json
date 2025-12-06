@@ -24,6 +24,18 @@
           "Arial",
           "sans-serif"
         ]
+      },
+      "3": {
+        "$type": "fontFamily",
+        "$value": [
+          "Barriecito",
+          "system-ui",
+          "-apple-system",
+          "Segoe UI",
+          "Helvetica Neue",
+          "Arial",
+          "sans-serif"
+        ]
       }
     },
     "size": {
@@ -117,9 +129,9 @@
       },
       "3": {
         "$value": {
-          "fontFamily": "{font.family.2}",
+          "fontFamily": "{font.family.3}",
           "fontWeight": "{font.weight.1}",
-          "fontSize": "{font.size.3}",
+          "fontSize": "{font.size.5}",
           "lineHeight": "{font.line-height.1}"
         },
         "$extensions": {
