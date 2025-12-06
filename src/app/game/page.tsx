@@ -7,6 +7,7 @@ import AddPlayerForm, {
 } from "@/components/Form/AddPlayer/AddPlayer";
 import GameShell from "@/components/GameShell/GameShell";
 import { ManualTurn } from "@/components/ManualTurn/ManualTurn";
+import PlayerList from "@/components/PlayerList/PlayerList";
 import { canStartGame, getGameSummary } from "@/domain/game/gameLogic";
 import { useGameState } from "@/hooks/useGameState";
 
@@ -40,18 +41,11 @@ export default function GamePage() {
           <div>
             <h2>Players</h2>
 
-            {state.players.length > 0 ? (
-              <ul>
-                {state.players.map((player) => (
-                  <li key={player.id}>
-                    <h3>{player.username}</h3>
-                    <img src={`/avatar/${player.avatar}.svg`} />
-                  </li>
-                ))}
-              </ul>
-            ) : (
+            <PlayerList players={state.players} />
+
+            {state.players.length === 0 ? (
               <p>You need at least two players!</p>
-            )}
+            ) : null}
             <Button onClick={onStartGame} disabled={!readyToStart}>
               Start game
             </Button>
