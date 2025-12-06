@@ -16,13 +16,16 @@ export function NavLink({
 }: Readonly<NavLinkProps>) {
   const renderLink = useNavRenderLink();
   const classes = ["nav-link", className ?? ""].filter(Boolean).join(" ");
+  const ariaCurrent = isActive ? "page" : undefined;
 
   if (renderLink) {
-    return <>{renderLink({ href, children, className: classes })}</>;
+    return (
+      <>{renderLink({ href, children, className: classes, ariaCurrent })}</>
+    );
   }
 
   return (
-    <a href={href} className={classes}>
+    <a href={href} className={classes} aria-current={ariaCurrent}>
       {children}
     </a>
   );
