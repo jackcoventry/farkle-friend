@@ -79,22 +79,23 @@ export default function GamePage() {
   }
 
   return (
-    <div>
-      <h1>FARKLE</h1>
-      <h2>Players</h2>
+    <GameShell>
+      <GameShell.Sidebar>
+        <div>
+          <h2>Players</h2>
 
-      {summary.players.length > 0 ? (
-        <ul>
-          {summary.players.map((player) => (
-            <li key={player.playerId}>
-              {player.username} - {player.playerId} ({player.totalScore})
-            </li>
-          ))}
-        </ul>
-      ) : null}
-
-      {/* <ManualTurn state={state} dispatch={dispatch} /> */}
-      <DiceTurnPanel state={state} dispatch={dispatch} />
-    </div>
+          <PlayerList
+            players={summary.players}
+            activePlayerId={state.players[state.currentPlayerIndex ?? 0].id}
+          />
+        </div>
+      </GameShell.Sidebar>
+      <GameShell.Body>
+        <div>
+          {/* <ManualTurn state={state} dispatch={dispatch} /> */}
+          <DiceTurnPanel state={state} dispatch={dispatch} />
+        </div>
+      </GameShell.Body>
+    </GameShell>
   );
 }
