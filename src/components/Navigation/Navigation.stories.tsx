@@ -30,4 +30,7 @@ const Template: Story = {
 export const Default = {
   ...Template,
   args: {},
+  parameters: {
+    layout: "fullscreen",
+  },
 };

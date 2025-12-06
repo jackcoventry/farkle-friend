@@ -111,28 +111,39 @@ function Navigation({
           <button
             aria-controls={menuId}
             aria-expanded={open}
-            className="absolute right-0 h-full w-[100px] cursor-pointer"
+            aria-label={open ? "Close" : "Open"}
+            className="absolute right-0 h-[50px] w-[50px] cursor-pointer z-50 items-center justify-center flex hover:bg-amber-200"
             onClick={handleVisibility}
             onKeyDown={handleKeyDown}
             ref={toggleRef}
             type="button"
           >
-            Menu
+            <svg
+              className="text-amber-900"
+              width="1.25em"
+              height="1.25em"
+              fill="currentColor"
+            >
+              <use
+                xlinkHref={`/icons/icons.svg#${open ? "close" : "three-dots-vertical"}`}
+              />
+            </svg>
           </button>
         ) : null}
-
-        {open ? (
-          <nav
-            aria-label={ariaLabel}
-            data-open={open ? "true" : "false"}
-            id={menuId}
-            onKeyDown={handleKeyDown}
-            ref={navRef}
-          >
-            <ul>{children}</ul>
-          </nav>
-        ) : null}
       </header>
+
+      {open ? (
+        <nav
+          aria-label={ariaLabel}
+          className="fixed w-[300px] top-0 right-0 bg-amber-100 h-full z-40 pt-[84px]"
+          data-open={open ? "true" : "false"}
+          id={menuId}
+          onKeyDown={handleKeyDown}
+          ref={navRef}
+        >
+          <ul>{children}</ul>
+        </nav>
+      ) : null}
     </NavContext.Provider>
   );
 }
