@@ -66,6 +66,10 @@
       "6": {
         "$type": "dimension",
         "$value": "110px"
+      },
+      "clamp": {
+        "$type": "dimension",
+        "$value": "clamp(3rem, -0.875rem + 8.333vw, 10rem)"
       }
     },
     "line-height": {
@@ -159,6 +163,17 @@
         "$extensions": {
           "$targetElement": "h5"
         }
+      },
+      "mega": {
+        "$value": {
+          "fontFamily": "{font.family.3}",
+          "fontWeight": "{font.weight.1}",
+          "fontSize": "{font.size.clamp}",
+          "lineHeight": "{font.line-height.1}"
+        },
+        "$extensions": {
+          "$targetElement": "h3"
+        }
       }
     },
     "body": {
@@ -181,7 +196,7 @@
         "$value": {
           "fontFamily": "{font.family.2}",
           "fontWeight": "{font.weight.1}",
-          "fontSize": "{font.size.2}",
+          "fontSize": "{font.size.4}",
           "lineHeight": "{font.line-height.1}"
         }
       }
