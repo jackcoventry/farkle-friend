@@ -30,16 +30,9 @@ export type Turn = {
   turnIndex: number;
 };
 
-export type PlayerScoreSummary = {
-  playerId: PlayerId;
-  totalScore: number;
-  username: string;
-  avatar: number;
-};
-
 export type GameSummary = {
   isTargetReached: boolean;
   leadingPlayerId: PlayerId | null;
-  players: PlayerScoreSummary[];
+  players: Player[];
   winnerId: PlayerId | null;
 };

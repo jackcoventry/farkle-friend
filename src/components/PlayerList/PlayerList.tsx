@@ -12,7 +12,7 @@ function PlayerList({
   return (
     <ul className="player-list">
       {players.map((player) => {
-        const classes = `flex p-2 gap-3 ${player.playerId === activePlayerId ? "border-l-4 border-red-300 bg-amber-100 hover:bg-amber-50" : "bg-gray-50 : hover:bg-gray-100"}`;
+        const classes = `flex p-2 gap-3 ${player.id === activePlayerId ? "border-l-4 border-red-300 bg-amber-100 hover:bg-amber-50" : "bg-gray-50 : hover:bg-gray-100"}`;
         return (
           <li key={player.id} className={classes}>
             <img
@@ -22,7 +22,7 @@ function PlayerList({
             />
             <div className="flex flex-col justify-center">
               <h3 className="font-body">
-                {player.username} - {player.playerId}
+                {player.username} - {player.id}
               </h3>
               {!!player.totalScore && (
                 <span className="block text-amber-600">

@@ -139,7 +139,7 @@ export function computeTotals(state: GameState): Record<PlayerId, number> {
 export function getGameSummary(state: GameState): GameSummary {
   const totals = computeTotals(state);
   const playersSummary = state.players?.map((p) => ({
-    playerId: p.id,
+    id: p.id,
     username: p.username,
     avatar: p.avatar,
     totalScore: totals[p.id] ?? 0,
@@ -151,7 +151,7 @@ export function getGameSummary(state: GameState): GameSummary {
   for (const p of playersSummary) {
     if (p.totalScore > leadingScore) {
       leadingScore = p.totalScore;
-      leadingPlayerId = p.playerId;
+      leadingPlayerId = p.id;
     }
   }
 

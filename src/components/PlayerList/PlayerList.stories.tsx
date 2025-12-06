@@ -17,7 +17,7 @@ type Story = StoryObj<typeof PlayerList>;
 function data(showScores: boolean = false) {
   return [
     {
-      playerId: "1",
+      id: "1",
       username: "Wallace",
       avatar: 3,
       ...(showScores
@@ -27,7 +27,7 @@ function data(showScores: boolean = false) {
         : null),
     },
     {
-      playerId: "2",
+      id: "2",
       username: "Gromit",
       avatar: 1,
       ...(showScores

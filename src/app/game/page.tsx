@@ -64,7 +64,7 @@ export default function GamePage() {
     const winner =
       summary.winnerId == null
         ? null
-        : summary.players.find((p) => p.playerId === summary.winnerId);
+        : summary.players.find((p) => p.id === summary.winnerId);
 
     return (
       <div>
