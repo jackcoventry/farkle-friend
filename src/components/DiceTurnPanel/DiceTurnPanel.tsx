@@ -16,6 +16,7 @@ import type { DieValue } from "@/domain/game/dice";
 import DiceIcon from "@/components/DiceIcon/DiceIcon";
 import NextPlayerSplash from "@/components/NextPlayerSplash/NextPlayerSplash";
 import "./DiceTurnPanel.css";
+import { getGameSummary } from "@/domain/game/gameLogic";
 
 type DiceTurnPanelProps = {
   state: GameState;
@@ -26,8 +27,10 @@ export function DiceTurnPanel({
   state,
   dispatch,
 }: Readonly<DiceTurnPanelProps>) {
+  const summary = getGameSummary(state);
+
   const currentIndex = state.currentPlayerIndex ?? 0;
-  const currentPlayer = state.players[currentIndex] ?? null;
+  const currentPlayer = summary.players[currentIndex] ?? null;
 
   const [activeTurn, setActiveTurn] = useState<ActiveTurn | null>(null);
   const [selectedIndices, setSelectedIndices] = useState<number[]>([]);
@@ -50,7 +53,7 @@ export function DiceTurnPanel({
     }
   }, [state.phase, currentPlayer?.id]);
 
-  useEffect(handlePlayerChange, [currentPlayer]);
+  useEffect(handlePlayerChange, [state.currentPlayerIndex]);
 
   if (!currentPlayer || !activeTurn) {
     return <p>No active player</p>;
@@ -163,23 +166,15 @@ export function DiceTurnPanel({
       <div className="flex gap-4">
         <div>
           <h3 className="text-white flex gap-4">
-            <span className="font-sub-heading flex">SCORE:</span>
+            <span className="font-sub-heading flex">ROUND SCORE:</span>
             <span className="font-sub-heading flex">
-              Round: {activeTurn.tempScore || 0}
-            </span>
-            <span className="font-sub-heading flex">
-              Total: {currentPlayer.totalScore || 0}
+              {activeTurn.tempScore || 0}
             </span>
           </h3>
         </div>
         <div className="ml-auto">
           <div>
-            <span
-              style={{
-                display: "flex",
-                gap: 5,
-              }}
-            >
+            <span className="flex gap-1">
               {[...new Array(activeTurn.availableDice).keys()].map((e) => (
                 <DiceIcon key={e} count={e + 1} className="w-[40px]" />
               ))}
@@ -202,8 +197,9 @@ export function DiceTurnPanel({
                   onClick={() => toggleDieSelection(idx)}
                   disabled={activeTurn.isFarkled}
                   style={{
-                    width: 100,
+                    animationDelay: `${idx * 0.05}s`,
                   }}
+                  className="animate-bounce-in opacity-0 w-[100px]"
                 >
                   <DiceIcon
                     count={value}
@@ -213,7 +209,9 @@ export function DiceTurnPanel({
               );
             })}
           </div>
-        ) : null}
+        ) : (
+          <h2 className="text-white font-mega">ROLL BABY, ROLL!</h2>
+        )}
 
         {/* 
 
@@ -234,7 +232,7 @@ export function DiceTurnPanel({
           type="button"
           onClick={handleRoll}
           disabled={!canRoll}
-          className="grow-1 justify-center"
+          className={`grow-1 justify-center ${canRoll ? "animate-bounce" : ""}`}
           size="large"
         >
           Roll dice
@@ -243,7 +241,7 @@ export function DiceTurnPanel({
           type="button"
           onClick={handleBankSelected}
           disabled={!canBank}
-          className="grow-1 justify-center"
+          className={`grow-1 justify-center ${canBank ? "animate-bounce" : ""}`}
           size="large"
         >
           Bank
@@ -252,7 +250,7 @@ export function DiceTurnPanel({
           type="button"
           onClick={handleFinishTurn}
           disabled={!canFinish}
-          className="grow-1 justify-center"
+          className={`grow-1 justify-center ${canFinish ? "animate-bounce" : ""}`}
           size="large"
         >
           {activeTurn.isFarkled ? "End turn" : "Bank & End turn"}

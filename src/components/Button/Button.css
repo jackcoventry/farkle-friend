@@ -1,13 +1,13 @@
-.button[data-size="large"]:hover {
+.button[data-size="large"]:not([disabled]):hover {
   transform: rotate(3deg);
 }
 
-.button[data-size="large"],
-.button[data-size="large"]:after {
+.button[data-size="large"]:not([disabled]),
+.button[data-size="large"]:not([disabled]):after {
   transition: transform ease-in-out 0.2s;
 }
 
-.button[data-size="large"]:after {
+.button[data-size="large"]:not([disabled]):after {
   background: var(--color-sun-500);
   border-radius: var(--radius-lg);
   content: "";
@@ -20,11 +20,11 @@
   z-index: -1;
 }
 
-.button[data-size="large"]:hover:after {
+.button[data-size="large"]:not([disabled]):hover:after {
   transform: rotate(5deg);
 }
 
-.button[data-size="large"] .content {
+.button[data-size="large"]:not([disabled]) .content {
   position: relative;
   z-index: 1;
 }
