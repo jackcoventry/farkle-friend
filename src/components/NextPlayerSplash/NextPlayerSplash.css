@@ -2,41 +2,10 @@
   width: 200px;
 }
 
-.splash-background {
-  display: block;
-  height: 2000px;
-  overflow: hidden;
-  position: absolute;
-  width: 2000px;
-}
-
 .splash-content {
   --animate-duration: 1s;
   animation-duration: calc(var(--animate-duration) * 0.75);
   animation-name: bounceIn;
-  background-color: white;
-  width: 500px;
-}
-
-.splash-wrapper {
-  align-items: center;
-  display: flex;
-  height: 100dvh;
-  justify-content: center;
-  overflow: hidden;
-  position: fixed;
-  width: 100dvw;
-}
-
-.splash-spinner {
-  display: block;
-  height: 100%;
-  left: 0;
-  overflow: hidden;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  z-index: -1;
 }
 
 .splash-spinner::after {

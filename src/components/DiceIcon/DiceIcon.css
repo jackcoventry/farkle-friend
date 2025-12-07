@@ -4,8 +4,21 @@
   border: 1px solid var(--color-black);
   border-radius: 10%;
   display: grid;
-  flex-grow: 1;
   position: relative;
+}
+
+.dice-icon[data-state="disabled"] {
+  background-color: var(--color-gray-400);
+}
+
+.dice-icon[data-state="disabled"] .dice-dot {
+  background-color: var(--color-gray-200);
+}
+
+.dice-icon[data-state="active"] {
+  box-shadow:
+    0 0 0 2px white,
+    0 0 0 6px var(--color-red-700);
 }
 
 .dice-dot {

@@ -1,15 +1,23 @@
 import "./DiceIcon.css";
 
 type DiceIconProps = {
+  className?: string;
   count: number;
+  state?: "default" | "disabled" | "active";
+  variant?: "default";
 };
 
-function DiceIcon({ count = 1 }: Readonly<DiceIconProps>) {
+function DiceIcon({ className, count = 1, state }: Readonly<DiceIconProps>) {
+  let classes = "dice-icon";
+  if (className) {
+    classes += ` ${className}`;
+  }
   return (
     <div
-      className="dice-icon"
-      data-count={count}
       aria-label={`A dice with ${count} spot${count === 1 ? "" : "s"}`}
+      className={classes}
+      data-count={count}
+      data-state={state}
     >
       {[...new Array(count).keys()].map((e) => (
         <span className="dice-dot" key={e} />

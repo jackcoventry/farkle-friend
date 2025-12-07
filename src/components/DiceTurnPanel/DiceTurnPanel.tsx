@@ -15,6 +15,7 @@ import { getScoringCombinations, scoreSelectedDice } from "@/domain/game/dice";
 import type { DieValue } from "@/domain/game/dice";
 import DiceIcon from "@/components/DiceIcon/DiceIcon";
 import NextPlayerSplash from "@/components/NextPlayerSplash/NextPlayerSplash";
+import "./DiceTurnPanel.css";
 
 type DiceTurnPanelProps = {
   state: GameState;
@@ -155,56 +156,69 @@ export function DiceTurnPanel({
       : getScoringCombinations(activeTurn.currentRoll);
 
   return (
-    <div>
+    <div className="dice-turn-panel | grid gap-3 h-full">
       {/* TODO: add to modal */}
       {showPlayerSwitch && <NextPlayerSplash player={currentPlayer} />}
 
-      <div>
+      <div className="flex gap-4">
         <div>
-          <h2>{currentPlayer.username}'s Turn</h2>
+          <h3 className="text-white flex gap-4">
+            <span className="font-sub-heading flex">SCORE:</span>
+            <span className="font-sub-heading flex">
+              Round: {activeTurn.tempScore || 0}
+            </span>
+            <span className="font-sub-heading flex">
+              Total: {currentPlayer.totalScore || 0}
+            </span>
+          </h3>
         </div>
-        <div>
-          <p>
-            SCORE: This turn {activeTurn.tempScore || 0} Total
-            {currentPlayer.totalScore || 0}
-          </p>
-        </div>
-        <div>
-          <p>
+        <div className="ml-auto">
+          <div>
             <span
               style={{
                 display: "flex",
-                width: 300,
+                gap: 5,
               }}
             >
-              {activeTurn.availableDice} left
               {[...new Array(activeTurn.availableDice).keys()].map((e) => (
-                <DiceIcon key={e} count={e + 1} />
+                <DiceIcon key={e} count={e + 1} className="w-[40px]" />
               ))}
             </span>
-          </p>
+          </div>
         </div>
       </div>
 
-      {activeTurn.isFarkled && <p>You've been farkled!!!!!!</p>}
-      {currentRoll ? (
-        <div>
-          {currentRoll.map((value, idx) => {
-            const isSelected = selectedIndices.includes(idx);
-            return (
-              <Button
-                key={`${value}-${idx}`}
-                type="button"
-                onClick={() => toggleDieSelection(idx)}
-                disabled={activeTurn.isFarkled}
-              >
-                {value} ({isSelected ? "selected" : ""})
-              </Button>
-            );
-          })}
-        </div>
-      ) : null}
+      <div className="flex items-center justify-center">
+        {activeTurn.isFarkled ? (
+          <p className="text-white font-mega">You've been farkled!!!!!!</p>
+        ) : currentRoll ? (
+          <div className="flex gap-3">
+            {currentRoll.map((value, idx) => {
+              const isSelected = selectedIndices.includes(idx);
+              return (
+                <button
+                  key={`${value}-${idx}`}
+                  type="button"
+                  onClick={() => toggleDieSelection(idx)}
+                  disabled={activeTurn.isFarkled}
+                  style={{
+                    width: 100,
+                  }}
+                >
+                  <DiceIcon
+                    count={value}
+                    state={isSelected ? "active" : "default"}
+                  />
+                </button>
+              );
+            })}
+          </div>
+        ) : null}
 
+        {/* 
+
+      TODO: Enable this in settings
+      
       <ul>
         {currentCombos.slice(0, 5).map((combo, index) => (
           <li key={index}>
@@ -212,16 +226,35 @@ export function DiceTurnPanel({
             pts
           </li>
         ))}
-      </ul>
+      </ul> */}
+      </div>
 
-      <div>
-        <Button type="button" onClick={handleRoll} disabled={!canRoll}>
+      <div className="flex gap-2">
+        <Button
+          type="button"
+          onClick={handleRoll}
+          disabled={!canRoll}
+          className="grow-1 justify-center"
+          size="large"
+        >
           Roll dice
         </Button>
-        <Button type="button" onClick={handleBankSelected} disabled={!canBank}>
+        <Button
+          type="button"
+          onClick={handleBankSelected}
+          disabled={!canBank}
+          className="grow-1 justify-center"
+          size="large"
+        >
           Bank
         </Button>
-        <Button type="button" onClick={handleFinishTurn} disabled={!canFinish}>
+        <Button
+          type="button"
+          onClick={handleFinishTurn}
+          disabled={!canFinish}
+          className="grow-1 justify-center"
+          size="large"
+        >
           {activeTurn.isFarkled ? "End turn" : "Bank & End turn"}
         </Button>
       </div>

@@ -36,7 +36,7 @@ export function rollInActiveTurn(turn: ActiveTurn): ActiveTurn {
     return {
       ...turn,
       currentRoll: dice,
-      isComplete: true,
+      isComplete: false,
       isFarkled: true,
       tempScore: 0,
     };

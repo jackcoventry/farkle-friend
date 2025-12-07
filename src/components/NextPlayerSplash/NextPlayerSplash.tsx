@@ -9,23 +9,23 @@ function NextPlayerSplash({ player }: Readonly<NextPlayerSplashProps>) {
   if (!player) return;
 
   return (
-    <div className="splash-wrapper">
-      <div className="splash-background">
-        <div className="splash-spinner" />
-        <div className="splash-track" data-size="small" data-speed="fast" />
-        <div className="splash-track" data-size="medium" data-speed="medium" />
-        <div className="splash-track" data-size="large" data-speed="slow" />
+    <div className="splash-wrapper | flex h-dvh w-dvw justify-center items-center overflow-hidden fixed">
+      <div className="splash-background | block h-[2000px] w-[2000px] overflow-hidden absolute">
+        <div className="splash-spinner | block h-full w-full left-0 top-0 overflow-hidden absolute -z-0" />
       </div>
 
-      <div className="splash-content">
-        <h2 className="font-mega">{player.username}'s turn!</h2>
-        <img
-          src={`/avatar/${player.avatar}.svg`}
-          alt="The user's selected avatar of a playful illustration"
-          className="splash-avatar"
-        />
+      <div className="splash-content | bg-white w-[500px] p-8 flex flex-col gap-4 text-center shadow-lg rounded-2xl">
+        <h2 className="font-heading">{player.username}'s turn!</h2>
+        <figure className="rounded-full overflow-hidden w-[200px] mx-auto my-4">
+          <img
+            src={`/avatar/${player.avatar}.svg`}
+            alt="The user's selected avatar of a playful illustration"
+            className="splash-avatar | "
+          />
+        </figure>
 
-        <p>Current score: {player.totalScore}</p>
+        <p className="font-sub-heading">Current score:</p>
+        <p className="font-mega">{player.totalScore}</p>
       </div>
     </div>
   );
