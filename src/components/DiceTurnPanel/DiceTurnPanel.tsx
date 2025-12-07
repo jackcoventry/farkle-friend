@@ -13,6 +13,8 @@ import { useEffect, useState } from "react";
 import Button from "@/components/Button/Button";
 import { getScoringCombinations, scoreSelectedDice } from "@/domain/game/dice";
 import type { DieValue } from "@/domain/game/dice";
+import DiceIcon from "@/components/DiceIcon/DiceIcon";
+import NextPlayerSplash from "@/components/NextPlayerSplash/NextPlayerSplash";
 
 type DiceTurnPanelProps = {
   state: GameState;
@@ -28,6 +30,14 @@ export function DiceTurnPanel({
 
   const [activeTurn, setActiveTurn] = useState<ActiveTurn | null>(null);
   const [selectedIndices, setSelectedIndices] = useState<number[]>([]);
+  const [showPlayerSwitch, setShowPlayerSwitch] = useState<boolean>(false);
+
+  const handlePlayerChange = () => {
+    setShowPlayerSwitch(true);
+    setTimeout(() => {
+      setShowPlayerSwitch(false);
+    }, 2000);
+  };
 
   useEffect(() => {
     if (state.phase === "IN_PROGRESS" && currentPlayer) {
@@ -38,6 +48,8 @@ export function DiceTurnPanel({
       setSelectedIndices([]);
     }
   }, [state.phase, currentPlayer?.id]);
+
+  useEffect(handlePlayerChange, [currentPlayer]);
 
   if (!currentPlayer || !activeTurn) {
     return <p>No active player</p>;
@@ -144,10 +156,34 @@ export function DiceTurnPanel({
 
   return (
     <div>
+      {/* TODO: add to modal */}
+      {showPlayerSwitch && <NextPlayerSplash player={currentPlayer} />}
+
       <div>
-        <h2>{currentPlayer.username}'s Turn</h2>
-        <p>Score this turn: {activeTurn.tempScore}</p>
-        <p>{activeTurn.availableDice} left</p>
+        <div>
+          <h2>{currentPlayer.username}'s Turn</h2>
+        </div>
+        <div>
+          <p>
+            SCORE: This turn {activeTurn.tempScore || 0} Total
+            {currentPlayer.totalScore || 0}
+          </p>
+        </div>
+        <div>
+          <p>
+            <span
+              style={{
+                display: "flex",
+                width: 300,
+              }}
+            >
+              {activeTurn.availableDice} left
+              {[...new Array(activeTurn.availableDice).keys()].map((e) => (
+                <DiceIcon key={e} count={e + 1} />
+              ))}
+            </span>
+          </p>
+        </div>
       </div>
 
       {activeTurn.isFarkled && <p>You've been farkled!!!!!!</p>}
@@ -167,9 +203,7 @@ export function DiceTurnPanel({
             );
           })}
         </div>
-      ) : (
-        <p>Roll the dice!</p>
-      )}
+      ) : null}
 
       <ul>
         {currentCombos.slice(0, 5).map((combo, index) => (

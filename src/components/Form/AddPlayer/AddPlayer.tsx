@@ -14,15 +14,9 @@ const AddPlayerFormSchema = z.object({
     .min(MINIMUM_USERNAME_LENGTH, {
       message: `Username must be at least ${MINIMUM_USERNAME_LENGTH} characters!`,
     }),
-  avatar: z
-    .number()
-    .int()
-    .min(avatarValues[0], {
-      message: "Please select an avatar!",
-    })
-    .max(avatarValues[avatarValues.length - 1], {
-      message: "Please select an avatar!",
-    }),
+  avatar: z.number({
+    error: "Pick something!",
+  }),
 });
 
 export type AddPlayerFormSchemaType = z.infer<typeof AddPlayerFormSchema>;

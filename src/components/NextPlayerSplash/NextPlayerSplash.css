@@ -1,0 +1,120 @@
+.splash-avatar {
+  width: 200px;
+}
+
+.splash-background {
+  display: block;
+  height: 2000px;
+  overflow: hidden;
+  position: absolute;
+  width: 2000px;
+}
+
+.splash-content {
+  --animate-duration: 1s;
+  animation-duration: calc(var(--animate-duration) * 0.75);
+  animation-name: bounceIn;
+  background-color: white;
+  width: 500px;
+}
+
+.splash-wrapper {
+  align-items: center;
+  display: flex;
+  height: 100dvh;
+  justify-content: center;
+  overflow: hidden;
+  position: fixed;
+  width: 100dvw;
+}
+
+.splash-spinner {
+  display: block;
+  height: 100%;
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: -1;
+}
+
+.splash-spinner::after {
+  --splash-spinner-color-primary: var(--color-green-50);
+  --splash-spinner-color-secondary: var(--color-white);
+
+  animation: splash-spinner 3s linear infinite;
+  background-image: conic-gradient(
+    var(--splash-spinner-color-primary) 0,
+    var(--splash-spinner-color-primary) 10%,
+    var(--splash-spinner-color-secondary) 10%,
+    var(--splash-spinner-color-secondary) 20%,
+    var(--splash-spinner-color-primary) 20%,
+    var(--splash-spinner-color-primary) 30%,
+    var(--splash-spinner-color-secondary) 30%,
+    var(--splash-spinner-color-secondary) 40%,
+    var(--splash-spinner-color-primary) 40%,
+    var(--splash-spinner-color-primary) 50%,
+    var(--splash-spinner-color-secondary) 50%,
+    var(--splash-spinner-color-secondary) 60%,
+    var(--splash-spinner-color-primary) 60%,
+    var(--splash-spinner-color-primary) 70%,
+    var(--splash-spinner-color-secondary) 70%,
+    var(--splash-spinner-color-secondary) 80%,
+    var(--splash-spinner-color-primary) 80%,
+    var(--splash-spinner-color-primary) 90%,
+    var(--splash-spinner-color-secondary) 90%,
+    var(--splash-spinner-color-secondary) 100%
+  );
+  content: "";
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+@keyframes splash-spinner {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bounceIn {
+  from,
+  20%,
+  40%,
+  60%,
+  80%,
+  to {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  20% {
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+
+  40% {
+    transform: scale3d(0.9, 0.9, 0.9);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
+
+  80% {
+    transform: scale3d(0.97, 0.97, 0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+}
