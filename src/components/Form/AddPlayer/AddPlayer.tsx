@@ -17,8 +17,12 @@ const AddPlayerFormSchema = z.object({
   avatar: z
     .number()
     .int()
-    .min(avatarValues[0])
-    .max(avatarValues[avatarValues.length - 1]),
+    .min(avatarValues[0], {
+      message: "Please select an avatar!",
+    })
+    .max(avatarValues[avatarValues.length - 1], {
+      message: "Please select an avatar!",
+    }),
 });
 
 export type AddPlayerFormSchemaType = z.infer<typeof AddPlayerFormSchema>;

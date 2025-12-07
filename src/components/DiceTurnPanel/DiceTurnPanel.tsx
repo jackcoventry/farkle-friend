@@ -144,9 +144,12 @@ export function DiceTurnPanel({
 
   return (
     <div>
-      <h2>{currentPlayer.username}'s Turn</h2>
-      <p>Score this turn: {activeTurn.tempScore}</p>
-      <p>NUmber of dice for next roll: {activeTurn.availableDice}</p>
+      <div>
+        <h2>{currentPlayer.username}'s Turn</h2>
+        <p>Score this turn: {activeTurn.tempScore}</p>
+        <p>{activeTurn.availableDice} left</p>
+      </div>
+
       {activeTurn.isFarkled && <p>You've been farkled!!!!!!</p>}
       {currentRoll ? (
         <div>

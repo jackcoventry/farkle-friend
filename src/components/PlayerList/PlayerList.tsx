@@ -21,9 +21,7 @@ function PlayerList({
               alt="The user's selected avatar of a playful illustration"
             />
             <div className="flex flex-col justify-center">
-              <h3 className="font-body">
-                {player.username} - {player.id}
-              </h3>
+              <h3 className="font-body">{player.username}</h3>
               {!!player.totalScore && (
                 <span className="block text-amber-600">
                   {player.totalScore}

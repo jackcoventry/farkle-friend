@@ -1,0 +1,74 @@
+.dice-icon {
+  aspect-ratio: 1/1;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-black);
+  border-radius: 10%;
+  display: grid;
+  flex-grow: 1;
+  position: relative;
+}
+
+.dice-dot {
+  background-color: var(--color-red-600);
+  border-radius: 100%;
+  display: block;
+  height: 25%;
+  position: absolute;
+  width: 25%;
+}
+
+/* Centered dice-dot */
+.dice-icon[data-count="1"] .dice-dot,
+.dice-icon[data-count="3"] .dice-dot:nth-child(3),
+.dice-icon[data-count="5"] .dice-dot:nth-child(5) {
+  align-self: center;
+  justify-self: center;
+}
+
+/* Top Left */
+.dice-icon[data-count="2"] .dice-dot:nth-child(1),
+.dice-icon[data-count="4"] .dice-dot:nth-child(3),
+.dice-icon[data-count="5"] .dice-dot:nth-child(3),
+.dice-icon[data-count="6"] .dice-dot:nth-child(3) {
+  top: 10%;
+  left: 10%;
+}
+
+/* Top Right */
+.dice-icon[data-count="3"] .dice-dot:nth-child(1),
+.dice-icon[data-count="4"] .dice-dot:nth-child(1),
+.dice-icon[data-count="5"] .dice-dot:nth-child(1),
+.dice-icon[data-count="6"] .dice-dot:nth-child(1) {
+  top: 10%;
+  right: 10%;
+}
+
+/* Bottom Right */
+.dice-icon[data-count="2"] .dice-dot:nth-child(2),
+.dice-icon[data-count="4"] .dice-dot:nth-child(4),
+.dice-icon[data-count="5"] .dice-dot:nth-child(4),
+.dice-icon[data-count="6"] .dice-dot:nth-child(4) {
+  bottom: 10%;
+  right: 10%;
+}
+
+/* Bottom Left */
+.dice-icon[data-count="3"] .dice-dot:nth-child(2),
+.dice-icon[data-count="4"] .dice-dot:nth-child(2),
+.dice-icon[data-count="5"] .dice-dot:nth-child(2),
+.dice-icon[data-count="6"] .dice-dot:nth-child(2) {
+  bottom: 10%;
+  left: 10%;
+}
+
+/* Centre Left */
+.dice-icon[data-count="6"] .dice-dot:nth-child(5) {
+  align-self: center;
+  left: 10%;
+}
+
+/* Centre Right */
+.dice-icon[data-count="6"] .dice-dot:nth-child(6) {
+  align-self: center;
+  right: 10%;
+}
