@@ -1,6 +1,13 @@
-import type { Preview } from "@storybook/react-vite";
+import type { Decorator, Preview } from "@storybook/react-vite";
+import { ModalStackProvider } from "../src/components/Modal/ModalStackContext";
 
 import "@/styles/globals.css";
+
+const withModalStack: Decorator = (Story) => (
+  <ModalStackProvider>
+    <Story />
+  </ModalStackProvider>
+);
 
 const preview: Preview = {
   parameters: {
@@ -12,6 +19,7 @@ const preview: Preview = {
       },
     },
   },
+  decorators: [withModalStack],
 };
 
 export default preview;

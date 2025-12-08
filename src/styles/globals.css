@@ -70,3 +70,13 @@
 .player-list li:not(:last-child) {
   border-bottom: 1px solid var(--color-sun-200);
 }
+
+.modal {
+  transition: opacity 200ms ease-out;
+}
+
+.modal__dialog {
+  max-height: calc(100dvh - var(--spacing-5));
+  max-width: 1200px;
+  width: fit-content;
+}
