@@ -71,8 +71,51 @@
   border-bottom: 1px solid var(--color-sun-200);
 }
 
-.modal {
+/***
+  Modal
+***/
+
+@property --splash-spinner-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.modal[data-variant="splash"] {
+  --splash-spinner-angle: 0turn;
+  --splash-spinner-color-primary: var(--color-green-50);
+  --splash-spinner-color-secondary: var(--color-white);
   transition: opacity 200ms ease-out;
+  background-image: conic-gradient(
+    from var(--splash-spinner-angle),
+    var(--splash-spinner-color-primary) 0,
+    var(--splash-spinner-color-primary) 10%,
+    var(--splash-spinner-color-secondary) 10%,
+    var(--splash-spinner-color-secondary) 20%,
+    var(--splash-spinner-color-primary) 20%,
+    var(--splash-spinner-color-primary) 30%,
+    var(--splash-spinner-color-secondary) 30%,
+    var(--splash-spinner-color-secondary) 40%,
+    var(--splash-spinner-color-primary) 40%,
+    var(--splash-spinner-color-primary) 50%,
+    var(--splash-spinner-color-secondary) 50%,
+    var(--splash-spinner-color-secondary) 60%,
+    var(--splash-spinner-color-primary) 60%,
+    var(--splash-spinner-color-primary) 70%,
+    var(--splash-spinner-color-secondary) 70%,
+    var(--splash-spinner-color-secondary) 80%,
+    var(--splash-spinner-color-primary) 80%,
+    var(--splash-spinner-color-primary) 90%,
+    var(--splash-spinner-color-secondary) 90%,
+    var(--splash-spinner-color-secondary) 100%
+  );
+  animation: splash-spin 4s linear infinite;
+}
+
+@keyframes splash-spin {
+  to {
+    --splash-spinner-angle: 1turn;
+  }
 }
 
 .modal__dialog {

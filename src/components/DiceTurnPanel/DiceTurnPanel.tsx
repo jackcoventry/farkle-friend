@@ -17,6 +17,7 @@ import DiceIcon from "@/components/DiceIcon/DiceIcon";
 import NextPlayerSplash from "@/components/NextPlayerSplash/NextPlayerSplash";
 import "./DiceTurnPanel.css";
 import { getGameSummary } from "@/domain/game/gameLogic";
+import Modal from "../Modal/Modal";
 
 type DiceTurnPanelProps = {
   state: GameState;
@@ -160,8 +161,13 @@ export function DiceTurnPanel({
 
   return (
     <div className="dice-turn-panel | grid gap-3 h-full">
-      {/* TODO: add to modal */}
-      {showPlayerSwitch && <NextPlayerSplash player={currentPlayer} />}
+      {showPlayerSwitch && (
+        <Modal isOpen={true} ariaLabel="My simple modal" variant="splash">
+          <Modal.Body>
+            <NextPlayerSplash player={currentPlayer} />
+          </Modal.Body>
+        </Modal>
+      )}
 
       <div className="flex gap-4">
         <div>

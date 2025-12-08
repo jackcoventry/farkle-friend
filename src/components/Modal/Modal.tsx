@@ -23,6 +23,8 @@ const FOCUSABLE_SELECTORS = [
   '[tabindex]:not([tabindex="-1"])',
 ].join(", ");
 
+type ModalVariant = "modal" | "splash";
+
 type ModalContextValue = {
   titleId: string;
   close: () => void;
@@ -47,6 +49,7 @@ type ModalRootProps = {
    */
   ariaLabel?: string;
   id?: string;
+  variant?: ModalVariant;
 };
 
 function ModalRoot({
@@ -55,6 +58,7 @@ function ModalRoot({
   children,
   ariaLabel,
   id,
+  variant = "modal",
 }: ModalRootProps) {
   const dialogRef = useRef<HTMLDivElement | null>(null);
   const lastFocusedRef = useRef<HTMLElement | null>(null);
@@ -141,6 +145,7 @@ function ModalRoot({
   if (typeof document === "undefined") return null; // SSR / tests safety
 
   const close = () => onClose?.();
+  const variantAttr = variant ?? "modal";
   const contextValue: ModalContextValue = {
     titleId,
     close,
@@ -153,6 +158,7 @@ function ModalRoot({
   return createPortal(
     <div
       id={id}
+      data-variant={variantAttr}
       onClick={handleOverlayClick}
       role="none"
       className={rootClasses}

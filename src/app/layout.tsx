@@ -1,3 +1,6 @@
+"use client";
+
+import { ModalStackProvider } from "@/components/Modal/ModalStackContext";
 import "@/styles/globals.css";
 
 export default function RootLayout({
@@ -19,7 +22,9 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <ModalStackProvider>{children}</ModalStackProvider>
+      </body>
     </html>
   );
 }
