@@ -16,9 +16,9 @@ import type { DieValue } from "@/domain/game/dice";
 import DiceIcon from "@/components/DiceIcon/DiceIcon";
 import Splash from "@/components/Modal/Splash";
 import { getGameSummary } from "@/domain/game/gameLogic";
-import Modal from "../Modal/Modal";
-import Farkled from "../Modal/Farkled";
+import Modal from "@/components/Modal/Modal";
 import "./DiceTurnPanel.css";
+import { AvatarId, avatarSet } from "@/components/Form/AddPlayer/AddPlayer";
 
 type DiceTurnPanelProps = {
   state: GameState;
@@ -161,6 +161,7 @@ export function DiceTurnPanel({
     activeTurn.currentRoll == null
       ? []
       : getScoringCombinations(activeTurn.currentRoll);
+  const avatar = avatarSet[currentPlayer.avatar as AvatarId];
 
   return (
     <div className="dice-turn-panel | grid gap-3 h-full overflow-hidden">
@@ -171,7 +172,22 @@ export function DiceTurnPanel({
           variant="splash"
         >
           <Modal.Body>
-            <Splash player={currentPlayer} />
+            <Splash
+              title={`${currentPlayer.username}'s turn`}
+              image={
+                <figure
+                  className={`rounded-full overflow-hidden w-[200px] h-[200px] mx-auto my-4 p-6 flex items-center justify-center ${avatar.color}`}
+                >
+                  <img
+                    src={avatar.image}
+                    alt="The user's selected avatar of a playful illustration"
+                    className="splash-avatar | w-[200px] h-[200px]"
+                  />
+                </figure>
+              }
+              subtitle="Current score:"
+              text={currentPlayer?.totalScore?.toString() || "0"}
+            />
           </Modal.Body>
         </Modal>
       )}
@@ -179,7 +195,10 @@ export function DiceTurnPanel({
       {activeTurn.isFarkled && (
         <Modal isOpen={true} ariaLabel="You've been farkled!" variant="splash">
           <Modal.Body>
-            <Farkled>
+            <Splash
+              title="You've been farkled!"
+              image={<div className="font-mega mt-6">❌</div>}
+            >
               <Button
                 type="button"
                 onClick={handleFinishTurn}
@@ -189,7 +208,7 @@ export function DiceTurnPanel({
               >
                 End turn
               </Button>
-            </Farkled>
+            </Splash>
           </Modal.Body>
         </Modal>
       )}
@@ -216,7 +235,7 @@ export function DiceTurnPanel({
 
       <div className="flex items-center justify-center">
         {currentRoll ? (
-          <div className="flex gap-3">
+          <div className="flex gap-5">
             {currentRoll.map((value, idx) => {
               const isSelected = selectedIndices.includes(idx);
               return (
@@ -228,7 +247,7 @@ export function DiceTurnPanel({
                   style={{
                     animationDelay: `${idx * 0.05}s`,
                   }}
-                  className="animate-bounce-in opacity-0 w-[100px]"
+                  className="animate-bounce-in cursor-pointer opacity-0 w-[100px] hover:scale-115 transition-transform hover:z-10"
                 >
                   <DiceIcon
                     count={value}
@@ -239,7 +258,9 @@ export function DiceTurnPanel({
             })}
           </div>
         ) : (
-          <h2 className="text-white font-mega">ROLL BABY, ROLL!</h2>
+          <h2 className="text-white font-mega animate-pulse">
+            ROLL BABY, ROLL!
+          </h2>
         )}
 
         {/* 

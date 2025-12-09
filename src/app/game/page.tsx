@@ -4,11 +4,13 @@ import Button from "@/components/Button/Button";
 import { DiceTurnPanel } from "@/components/DiceTurnPanel/DiceTurnPanel";
 import AddPlayerForm, {
   AddPlayerFormSchemaType,
+  AvatarId,
+  avatarSet,
 } from "@/components/Form/AddPlayer/AddPlayer";
 import GameShell from "@/components/GameShell/GameShell";
 import { ManualTurn } from "@/components/ManualTurn/ManualTurn";
 import Modal from "@/components/Modal/Modal";
-import WinnerSplash from "@/components/Modal/Winner";
+import Splash from "@/components/Modal/Splash";
 import PlayerList from "@/components/PlayerList/PlayerList";
 import { canStartGame, getGameSummary } from "@/domain/game/gameLogic";
 import { useGameState } from "@/hooks/useGameState";
@@ -54,7 +56,11 @@ export default function GamePage() {
                 You need at least two players to play!
               </p>
             ) : (
-              <Button onClick={onStartGame} className="w-full justify-center">
+              <Button
+                onClick={onStartGame}
+                className="w-full justify-center"
+                disabled={!readyToStart}
+              >
                 Start game
               </Button>
             )}
@@ -75,10 +81,35 @@ export default function GamePage() {
         ? null
         : summary.players.find((p) => p.id === summary.winnerId);
 
+    const avatar =
+      avatarSet[
+        state.players[state.currentPlayerIndex ?? 0].avatar as AvatarId
+      ];
+
     return (
       <Modal isOpen={true} ariaLabel="Game finished" variant="splash">
         <Modal.Body>
-          <WinnerSplash player={winner!} />
+          <Splash
+            title={`${winner?.username} wins!`}
+            image={
+              <figure
+                className={`splash-avatar-crown rounded-full overflow-hidden w-[200px] h-[200px] mx-auto my-4 p-6 flex items-center justify-center ${avatar.color}`}
+              >
+                <img
+                  src={avatar.image}
+                  alt="The user's selected avatar of a playful illustration"
+                  className="splash-avatar | w-[200px] h-[200px]"
+                />
+              </figure>
+            }
+          >
+            <Button onClick={onResetGame} className="justify-center">
+              Another game?
+            </Button>
+            <Button as="a" href="/game" className="justify-center">
+              New players
+            </Button>
+          </Splash>
         </Modal.Body>
       </Modal>
     );
