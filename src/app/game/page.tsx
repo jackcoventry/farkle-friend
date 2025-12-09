@@ -7,6 +7,8 @@ import AddPlayerForm, {
 } from "@/components/Form/AddPlayer/AddPlayer";
 import GameShell from "@/components/GameShell/GameShell";
 import { ManualTurn } from "@/components/ManualTurn/ManualTurn";
+import Modal from "@/components/Modal/Modal";
+import WinnerSplash from "@/components/Modal/Winner";
 import PlayerList from "@/components/PlayerList/PlayerList";
 import { canStartGame, getGameSummary } from "@/domain/game/gameLogic";
 import { useGameState } from "@/hooks/useGameState";
@@ -74,14 +76,11 @@ export default function GamePage() {
         : summary.players.find((p) => p.id === summary.winnerId);
 
     return (
-      <div>
-        <div>
-          <h2>GAME COMPLETE!</h2>
-          <h1>{winner?.username} wins</h1>
-          <h3> Total Score {winner?.totalScore}</h3>
-          <Button onClick={onResetGame}>Another game with same players?</Button>
-        </div>
-      </div>
+      <Modal isOpen={true} ariaLabel="Game finished" variant="splash">
+        <Modal.Body>
+          <WinnerSplash player={winner!} />
+        </Modal.Body>
+      </Modal>
     );
   }
 

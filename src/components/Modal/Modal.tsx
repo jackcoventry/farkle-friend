@@ -226,6 +226,8 @@ function ModalCloseButton({
       aria-label={ariaLabel}
       iconOnly
       icon="close"
+      className="justify-end mb-4 ml-auto"
+      variant="primary"
     />
   );
 }

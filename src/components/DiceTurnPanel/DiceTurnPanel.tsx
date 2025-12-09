@@ -14,9 +14,10 @@ import Button from "@/components/Button/Button";
 import { getScoringCombinations, scoreSelectedDice } from "@/domain/game/dice";
 import type { DieValue } from "@/domain/game/dice";
 import DiceIcon from "@/components/DiceIcon/DiceIcon";
-import NextPlayerSplash from "@/components/NextPlayerSplash/NextPlayerSplash";
+import Splash from "@/components/Modal/Splash";
 import { getGameSummary } from "@/domain/game/gameLogic";
 import Modal from "../Modal/Modal";
+import Farkled from "../Modal/Farkled";
 import "./DiceTurnPanel.css";
 
 type DiceTurnPanelProps = {
@@ -164,9 +165,31 @@ export function DiceTurnPanel({
   return (
     <div className="dice-turn-panel | grid gap-3 h-full overflow-hidden">
       {showPlayerSwitch && (
-        <Modal isOpen={true} ariaLabel="My simple modal" variant="splash">
+        <Modal
+          isOpen={true}
+          ariaLabel={`${currentPlayer.username}'s turn`}
+          variant="splash"
+        >
           <Modal.Body>
-            <NextPlayerSplash player={currentPlayer} />
+            <Splash player={currentPlayer} />
+          </Modal.Body>
+        </Modal>
+      )}
+
+      {activeTurn.isFarkled && (
+        <Modal isOpen={true} ariaLabel="You've been farkled!" variant="splash">
+          <Modal.Body>
+            <Farkled>
+              <Button
+                type="button"
+                onClick={handleFinishTurn}
+                disabled={!canFinish}
+                className="justify-center"
+                size="large"
+              >
+                End turn
+              </Button>
+            </Farkled>
           </Modal.Body>
         </Modal>
       )}
@@ -192,9 +215,7 @@ export function DiceTurnPanel({
       </div>
 
       <div className="flex items-center justify-center">
-        {activeTurn.isFarkled ? (
-          <p className="text-white font-mega">You've been farkled!!!!!!</p>
-        ) : currentRoll ? (
+        {currentRoll ? (
           <div className="flex gap-3">
             {currentRoll.map((value, idx) => {
               const isSelected = selectedIndices.includes(idx);
