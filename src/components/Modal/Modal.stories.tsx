@@ -123,7 +123,7 @@ const WinnerTemplate: Story = {
               title={`${player.username} wins!`}
               image={
                 <figure
-                  className={`splash-avatar-crown rounded-full overflow-hidden w-[200px] h-[200px] mx-auto my-4 p-6 flex items-center justify-center ${avatar.color}`}
+                  className={`splash-avatar-crown relative rounded-full w-[200px] h-[200px] mx-auto my-4 p-6 flex items-center justify-center ${avatar.color}`}
                 >
                   <img
                     src={avatar.image}

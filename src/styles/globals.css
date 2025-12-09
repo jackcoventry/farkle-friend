@@ -141,3 +141,16 @@ body {
   max-width: 1200px;
   width: fit-content;
 }
+
+.splash-avatar-crown::after {
+  background-image: url("../../public/crown.svg");
+  background-repeat: no-repeat;
+  background-size: 100px 50px;
+  content: "";
+  height: 50px;
+  left: -27px;
+  position: absolute;
+  top: -3px;
+  transform: rotate(-44deg);
+  width: 100px;
+}
