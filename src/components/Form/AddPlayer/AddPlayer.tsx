@@ -12,7 +12,7 @@ const AddPlayerFormSchema = z.object({
     .string()
     .trim()
     .min(MINIMUM_USERNAME_LENGTH, {
-      message: `Username must be at least ${MINIMUM_USERNAME_LENGTH} characters!`,
+      message: `Name must be at least ${MINIMUM_USERNAME_LENGTH} characters!`,
     }),
   avatar: z.number({
     error: "Pick something!",
@@ -49,12 +49,12 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
   };
 
   return (
-    <div className="form-wrapper | border-sun-300 border-1 p-4 rounded-lg bg-white">
+    <div className="form-wrapper | border-sun-300 border-1 p-4 rounded-lg bg-white self-center">
       <form
         className="form | gap-4 flex flex-col"
         onSubmit={handleSubmit(submitHandler)}
       >
-        <h2 className="font-heading">Add player</h2>
+        <h2 className="font-heading text-center">Add player</h2>
 
         <Controller
           name="username"
@@ -63,7 +63,7 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
             <input
               className="border-1 border-sun-300 p-4 rounded-sm"
               {...field}
-              placeholder="Type something..."
+              placeholder="Enter a name..."
               data-valid={errors?.username ? "false" : "true"}
             />
           )}
@@ -76,11 +76,15 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
           control={control}
           render={({ field, fieldState }) => (
             <fieldset aria-invalid={!!fieldState.error || undefined}>
-              <legend>Choose an avatar</legend>
+              <legend className="mb-3">Choose an avatar</legend>
 
               <div className="flex gap-3">
                 {avatarValues.map((option) => (
-                  <label key={option} aria-label={`Avatar ${option}`}>
+                  <label
+                    key={option}
+                    aria-label={`Avatar ${option}`}
+                    className="cursor-pointer hover:opacity-85"
+                  >
                     <input
                       type="radio"
                       value={option}

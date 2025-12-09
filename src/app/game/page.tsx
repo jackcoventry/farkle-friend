@@ -38,21 +38,28 @@ export default function GamePage() {
     return (
       <GameShell>
         <GameShell.Sidebar>
-          <div>
-            <h2>Players</h2>
+          <div className="h-full">
+            <h2 className="font-heading mb-2">Players</h2>
 
-            <PlayerList players={state.players} />
+            {state.players.length > 0 ? (
+              <div className="my-6 overflow-auto">
+                <PlayerList players={state.players} />
+              </div>
+            ) : null}
 
             {state.players.length === 0 ? (
-              <p>You need at least two players!</p>
-            ) : null}
-            <Button onClick={onStartGame} disabled={!readyToStart}>
-              Start game
-            </Button>
+              <p className="font-body">
+                You need at least two players to play!
+              </p>
+            ) : (
+              <Button onClick={onStartGame} className="w-full justify-center">
+                Start game
+              </Button>
+            )}
           </div>
         </GameShell.Sidebar>
         <GameShell.Body>
-          <div>
+          <div className="max-w-[400px] m-auto flex h-full">
             <AddPlayerForm onSubmit={onAddPlayerFormSubmit} />
           </div>
         </GameShell.Body>
@@ -82,12 +89,14 @@ export default function GamePage() {
     <GameShell>
       <GameShell.Sidebar>
         <div>
-          <h2>Players</h2>
+          <h2 className="font-heading mb-2">Players</h2>
 
-          <PlayerList
-            players={summary.players}
-            activePlayerId={state.players[state.currentPlayerIndex ?? 0].id}
-          />
+          <div className="my-6 overflow-auto">
+            <PlayerList
+              players={summary.players}
+              activePlayerId={state.players[state.currentPlayerIndex ?? 0].id}
+            />
+          </div>
         </div>
       </GameShell.Sidebar>
       <GameShell.Body>

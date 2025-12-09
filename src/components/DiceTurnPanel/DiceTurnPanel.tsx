@@ -15,9 +15,9 @@ import { getScoringCombinations, scoreSelectedDice } from "@/domain/game/dice";
 import type { DieValue } from "@/domain/game/dice";
 import DiceIcon from "@/components/DiceIcon/DiceIcon";
 import NextPlayerSplash from "@/components/NextPlayerSplash/NextPlayerSplash";
-import "./DiceTurnPanel.css";
 import { getGameSummary } from "@/domain/game/gameLogic";
 import Modal from "../Modal/Modal";
+import "./DiceTurnPanel.css";
 
 type DiceTurnPanelProps = {
   state: GameState;
@@ -154,13 +154,15 @@ export function DiceTurnPanel({
     (activeTurn.isFarkled ||
       (activeTurn.currentRoll === null && activeTurn.tempScore > 0));
 
+  // List possible combinations for current roll
+  // TODO: add visibility in settings
   const currentCombos =
     activeTurn.currentRoll == null
       ? []
       : getScoringCombinations(activeTurn.currentRoll);
 
   return (
-    <div className="dice-turn-panel | grid gap-3 h-full">
+    <div className="dice-turn-panel | grid gap-3 h-full overflow-hidden">
       {showPlayerSwitch && (
         <Modal isOpen={true} ariaLabel="My simple modal" variant="splash">
           <Modal.Body>

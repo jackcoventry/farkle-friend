@@ -4,7 +4,7 @@
       "1": {
         "$type": "fontFamily",
         "$value": [
-          "Dela Gothic One",
+          "DynaPuff",
           "system-ui",
           "-apple-system",
           "Segoe UI",
@@ -110,9 +110,9 @@
       "$type": "typography",
       "1": {
         "$value": {
-          "fontFamily": "{font.family.2}",
-          "fontWeight": "{font.weight.2}",
-          "fontSize": "{font.size.6}",
+          "fontFamily": "{font.family.1}",
+          "fontWeight": "{font.weight.1}",
+          "fontSize": "{font.size.4}",
           "lineHeight": "{font.line-height.4}"
         },
         "$extensions": {
@@ -124,7 +124,7 @@
         "$value": {
           "fontFamily": "{font.family.2}",
           "fontWeight": "{font.weight.1}",
-          "fontSize": "{font.size.5}",
+          "fontSize": "{font.size.3}",
           "lineHeight": "{font.line-height.4}"
         },
         "$extensions": {
@@ -142,28 +142,6 @@
           "$targetElement": "h3"
         }
       },
-      "4": {
-        "$value": {
-          "fontFamily": "{font.family.2}",
-          "fontWeight": "{font.weight.2}",
-          "fontSize": "{font.size.2}",
-          "lineHeight": "{font.line-height.1}"
-        },
-        "$extensions": {
-          "$targetElement": "h4"
-        }
-      },
-      "5": {
-        "$value": {
-          "fontFamily": "{font.family.2}",
-          "fontWeight": "{font.weight.1}",
-          "fontSize": "{font.size.2}",
-          "lineHeight": "{font.line-height.1}"
-        },
-        "$extensions": {
-          "$targetElement": "h5"
-        }
-      },
       "mega": {
         "$value": {
           "fontFamily": "{font.family.3}",
@@ -172,7 +150,7 @@
           "lineHeight": "{font.line-height.4}"
         },
         "$extensions": {
-          "$targetElement": "h3"
+          "$targetElement": "h1"
         }
       }
     },
@@ -213,25 +191,6 @@
           "fontFamily": "{font.family.3}",
           "fontWeight": "{font.weight.1}",
           "fontSize": "{font.size.4}",
-          "lineHeight": "{font.line-height.1}"
-        }
-      }
-    },
-    "label": {
-      "$type": "typography",
-      "1": {
-        "$value": {
-          "fontFamily": "{font.family.2}",
-          "fontWeight": "{font.weight.1}",
-          "fontSize": "{font.size.1}",
-          "lineHeight": "{font.line-height.1}"
-        }
-      },
-      "2": {
-        "$value": {
-          "fontFamily": "{font.family.2}",
-          "fontWeight": "{font.weight.2}",
-          "fontSize": "{font.size.1}",
           "lineHeight": "{font.line-height.1}"
         }
       }

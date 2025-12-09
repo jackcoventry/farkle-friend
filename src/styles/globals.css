@@ -2,6 +2,10 @@
 @import "./tokens.theme.css";
 @import "./font.css";
 
+body {
+  font: var(--font-body-1);
+}
+
 .splash-screen {
   animation: slide-in ease-in 0.5s forwards;
   animation-delay: 0.5s;

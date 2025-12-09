@@ -2,20 +2,24 @@
  * Global typography utilities
  */
 
-@utility font-body {
-  font: var(--font-body-1);
-}
-
 @utility font-mega {
   font: var(--font-title-mega);
 }
 
 @utility font-heading {
+  font: var(--font-title-1);
+}
+
+@utility font-heading-2 {
   font: var(--font-title-2);
 }
 
 @utility font-sub-heading {
   font: var(--font-title-3);
+}
+
+@utility font-body {
+  font: var(--font-body-1);
 }
 
 @utility font-button-small {
