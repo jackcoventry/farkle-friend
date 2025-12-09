@@ -6,6 +6,48 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import z from "zod";
 
 export const avatarValues = [1, 2, 3, 4, 5, 6] as const;
+
+type AvatarSet = {
+  [key in (typeof avatarValues)[number]]: {
+    name: string;
+    color: string;
+    image: string;
+  };
+};
+
+export const avatarSet = {
+  1: {
+    name: "Burger",
+    color: "bg-red-500",
+    image: "/avatar/food/burger.svg",
+  },
+  2: {
+    name: "Hot dog",
+    color: "bg-blue-500",
+    image: "/avatar/food/hotdog.svg",
+  },
+  3: {
+    name: "Noodles",
+    color: "bg-green-500",
+    image: "/avatar/food/noodles.svg",
+  },
+  4: {
+    name: "Pie",
+    color: "bg-orange-500",
+    image: "/avatar/food/pie.svg",
+  },
+  5: {
+    name: "Sandwich",
+    color: "bg-yellow-500",
+    image: "/avatar/food/sandwich.svg",
+  },
+  6: {
+    name: "Soup",
+    color: "bg-purple-500",
+    image: "/avatar/food/soup.svg",
+  },
+} as AvatarSet;
+
 const MINIMUM_USERNAME_LENGTH = 2;
 const AddPlayerFormSchema = z.object({
   username: z
@@ -78,29 +120,32 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
             <fieldset aria-invalid={!!fieldState.error || undefined}>
               <legend className="mb-3">Choose an avatar</legend>
 
-              <div className="flex gap-3">
-                {avatarValues.map((option) => (
-                  <label
-                    key={option}
-                    aria-label={`Avatar ${option}`}
-                    className="cursor-pointer hover:opacity-85"
-                  >
-                    <input
-                      type="radio"
-                      value={option}
-                      name={field.name}
-                      checked={field.value === option}
-                      onChange={() => field.onChange(option)}
-                      onBlur={field.onBlur}
-                      ref={field.ref}
-                      className="avatar-list-input | sr-only"
-                    />
-                    <img
-                      src={`/avatar/${option}.svg`}
-                      className="avatar-list-image"
-                    />
-                  </label>
-                ))}
+              <div className="flex gap-3 grid grid-cols-3">
+                {avatarValues.map((option) => {
+                  const avatar = avatarSet[option];
+                  const classes = `avatar-list-image | cursor-pointer hover:opacity-85 rounded-full overflow-hidden w-[100px] h-[100px] p-4 flex items-center justify-center ${avatar.color}`;
+                  return (
+                    <label key={option} aria-label={`Avatar ${avatar.name}`}>
+                      <input
+                        type="radio"
+                        value={option}
+                        name={field.name}
+                        checked={field.value === option}
+                        onChange={() => field.onChange(option)}
+                        onBlur={field.onBlur}
+                        ref={field.ref}
+                        className="avatar-list-input | sr-only"
+                      />
+                      <div className={classes}>
+                        <img
+                          src={avatar.image}
+                          alt={`Avatar ${avatar.name}`}
+                          className="w-dvh"
+                        />
+                      </div>
+                    </label>
+                  );
+                })}
               </div>
 
               {fieldState.error && <p>{fieldState.error.message}</p>}

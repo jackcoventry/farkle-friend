@@ -1,4 +1,5 @@
 import { Player } from "@/domain/game/gameTypes";
+import { avatarSet } from "@/components/Form/AddPlayer/AddPlayer";
 
 type NextPlayerSplashProps = {
   player: Player;
@@ -8,11 +9,13 @@ function NextPlayerSplash({ player }: Readonly<NextPlayerSplashProps>) {
   if (!player) return;
 
   return (
-    <div className="animate-bounce-in bg-white w-[500px] p-8 flex flex-col gap-4 text-center shadow-lg rounded-2xl">
+    <div className="animate-bounce-in bg-white w-[500px] p-8 flex flex-col gap-4 text-center rounded-3xl">
       <h2 className="font-heading">{player.username}'s turn!</h2>
-      <figure className="rounded-full overflow-hidden w-[200px] mx-auto my-4">
+      <figure
+        className={`rounded-full overflow-hidden w-[200px] h-[200px] mx-auto my-4 p-6 flex items-center justify-center ${avatarSet[player.avatar].color}`}
+      >
         <img
-          src={`/avatar/${player.avatar}.svg`}
+          src={avatarSet[player.avatar].image}
           alt="The user's selected avatar of a playful illustration"
           className="splash-avatar | w-[200px]"
         />
