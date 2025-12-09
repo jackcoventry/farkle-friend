@@ -13,7 +13,7 @@ function PlayerList({
   return (
     <ul className="player-list">
       {players.map((player) => {
-        const classes = `flex p-2 gap-3 ${player.id === activePlayerId ? "border-l-4 border-red-300 bg-amber-100 hover:bg-amber-50" : "bg-gray-50 : hover:bg-gray-100"}`;
+        const classes = `flex p-3 gap-3 ${player.id === activePlayerId ? "border-l-4 border-red-300 bg-amber-100 hover:bg-amber-50" : "hover:bg-gray-100"}`;
         const avatar = avatarSet[player.avatar as AvatarId];
 
         return (

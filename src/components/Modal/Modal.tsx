@@ -24,6 +24,7 @@ const FOCUSABLE_SELECTORS = [
 ].join(", ");
 
 type ModalVariant = "modal" | "splash";
+type ThemeVariant = "default" | "warning" | "success";
 
 type ModalContextValue = {
   titleId: string;
@@ -49,6 +50,7 @@ type ModalRootProps = {
    */
   ariaLabel?: string;
   id?: string;
+  theme?: ThemeVariant;
   variant?: ModalVariant;
 };
 
@@ -59,6 +61,7 @@ function ModalRoot({
   ariaLabel,
   id,
   variant = "modal",
+  theme = "default",
 }: ModalRootProps) {
   const dialogRef = useRef<HTMLDivElement | null>(null);
   const lastFocusedRef = useRef<HTMLElement | null>(null);
@@ -146,6 +149,7 @@ function ModalRoot({
 
   const close = () => onClose?.();
   const variantAttr = variant ?? "modal";
+  const themeAttr = theme ?? "default";
   const contextValue: ModalContextValue = {
     titleId,
     close,
@@ -159,6 +163,7 @@ function ModalRoot({
     <div
       id={id}
       data-variant={variantAttr}
+      data-theme={themeAttr}
       onClick={handleOverlayClick}
       role="none"
       className={rootClasses}

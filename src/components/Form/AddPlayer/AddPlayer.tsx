@@ -37,7 +37,7 @@ export const avatarSet = {
 export type AvatarSet = typeof avatarSet;
 export type AvatarId = keyof typeof avatarSet & number;
 
-const MINIMUM_USERNAME_LENGTH = 2;
+const MINIMUM_USERNAME_LENGTH = 1;
 const AddPlayerFormSchema = z.object({
   username: z
     .string()
@@ -92,15 +92,15 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
           control={control}
           render={({ field }) => (
             <input
-              className="border-1 border-sun-300 p-4 rounded-sm"
+              className={`border-1 p-4 rounded-sm ${errors?.username ? "border-red-500" : "border-gray-800"}`}
               {...field}
-              placeholder="Enter a name..."
+              placeholder="Enter your name..."
               data-valid={errors?.username ? "false" : "true"}
             />
           )}
         />
 
-        {errors?.username?.message && <p>{errors?.username?.message}</p>}
+        {/* {errors?.username?.message && <p>{errors?.username?.message}</p>} */}
 
         <Controller
           name="avatar"

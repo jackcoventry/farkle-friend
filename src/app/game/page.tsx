@@ -52,7 +52,7 @@ export default function GamePage() {
               </div>
             ) : null}
 
-            {state.players.length === 0 ? (
+            {state.players.length <= 1 ? (
               <p className="font-body">
                 You need at least two players to play!
               </p>

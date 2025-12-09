@@ -85,10 +85,24 @@ body {
   initial-value: 0deg;
 }
 
-.modal[data-variant="splash"] {
-  --splash-spinner-angle: 0turn;
+:root {
   --splash-spinner-color-primary: var(--color-green-50);
   --splash-spinner-color-secondary: var(--color-white);
+}
+
+.modal[data-theme="warning"] {
+  --splash-spinner-color-primary: var(--color-red-50);
+  --splash-spinner-color-secondary: var(--color-white);
+}
+
+.modal[data-theme="success"] {
+  --splash-spinner-color-primary: var(--color-yellow-50);
+  --splash-spinner-color-secondary: var(--color-white);
+}
+
+.modal[data-variant="splash"] {
+  --splash-spinner-angle: 0turn;
+
   transition: opacity 200ms ease-out;
   background-image: conic-gradient(
     from var(--splash-spinner-angle),

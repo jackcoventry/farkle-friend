@@ -17,9 +17,9 @@ import DiceIcon from "@/components/DiceIcon/DiceIcon";
 import Splash from "@/components/Modal/Splash";
 import { getGameSummary } from "@/domain/game/gameLogic";
 import Modal from "@/components/Modal/Modal";
-import "./DiceTurnPanel.css";
 import { AvatarId, avatarSet } from "@/components/Form/AddPlayer/AddPlayer";
 import RichButton from "../RichButton/RichButton";
+import "./DiceTurnPanel.css";
 
 type DiceTurnPanelProps = {
   state: GameState;

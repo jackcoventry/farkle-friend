@@ -9,7 +9,12 @@ const meta: Meta<typeof Modal> = {
   title: "Components/Modal",
   component: Modal,
   tags: ["autodocs"],
-  args: {},
+  argTypes: {
+    theme: {
+      options: ["default", "warning", "success"],
+      control: { type: "radio" },
+    },
+  },
 };
 export default meta;
 
@@ -65,6 +70,7 @@ const NextPlayerTemplate: Story = {
           onClose={() => setOpen(false)}
           ariaLabel="My simple modal"
           variant="splash"
+          theme="default"
         >
           <Modal.Body>
             <Splash
@@ -110,6 +116,7 @@ const WinnerTemplate: Story = {
           onClose={() => setOpen(false)}
           ariaLabel="My simple modal"
           variant="splash"
+          theme="success"
         >
           <Modal.Body>
             <Splash
@@ -152,6 +159,7 @@ const FarkledTemplate: Story = {
           onClose={() => setOpen(false)}
           ariaLabel="My simple modal"
           variant="splash"
+          theme="warning"
         >
           <Modal.Body>
             <Splash
