@@ -82,6 +82,8 @@ const Button = React.forwardRef<
   if (size === "default") classes += " font-button py-2 px-5";
   if (size === "large") classes += " font-button-large py-3 px-6";
 
+  if (iconPosition === "left") classes += " flex-row-reverse";
+
   // If iconOnly and no ariaLabel, fall back to children (if string)
   let computedAriaLabel = ariaLabel;
   if (!computedAriaLabel && iconOnly && typeof children === "string") {

@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import Button from "@/components/Button/Button";
 import type { ButtonProps } from "@/components/Button/Button";
+import icons from "@/design-tokens/icons.json";
 
 const meta: Meta<ButtonProps> = {
   title: "Components/Button",
@@ -15,6 +16,14 @@ const meta: Meta<ButtonProps> = {
     size: {
       options: ["small", "default", "large"],
       control: { type: "radio" },
+    },
+    iconPosition: {
+      options: ["left", "right", "top"],
+      control: { type: "radio" },
+    },
+    icon: {
+      options: icons.icons,
+      control: { type: "select" },
     },
   },
 };

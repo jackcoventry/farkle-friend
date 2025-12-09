@@ -154,7 +154,10 @@ const FarkledTemplate: Story = {
           variant="splash"
         >
           <Modal.Body>
-            <Splash title="You've been farkled!" image={"❌"}>
+            <Splash
+              title="You've been farkled!"
+              image={<div className="font-mega mt-6">❌</div>}
+            >
               <Button onClick={() => {}} className="justify-center">
                 End turn
               </Button>

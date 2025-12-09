@@ -153,7 +153,7 @@ function ModalRoot({
 
   const ariaLabelledBy = ariaLabel ? undefined : titleId;
   const rootClasses = `modal | items-center justify-center bg-black/25 flex inset-0 fixed z-50${isOpen ? " opacity-100 pointer-events-auto" : " opacity-0 pointer-events-none"}`;
-  const dialogClasses = `modal__dialog | flex flex-col outline-none overflow-hidden w-full`;
+  const dialogClasses = `modal__dialog | flex flex-col outline-none w-full`;
 
   return createPortal(
     <div
