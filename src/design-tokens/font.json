@@ -172,7 +172,7 @@
       "$type": "typography",
       "1": {
         "$value": {
-          "fontFamily": "{font.family.3}",
+          "fontFamily": "{font.family.1}",
           "fontWeight": "{font.weight.1}",
           "fontSize": "{font.size.2}",
           "lineHeight": "{font.line-height.1}"
@@ -180,7 +180,7 @@
       },
       "2": {
         "$value": {
-          "fontFamily": "{font.family.3}",
+          "fontFamily": "{font.family.1}",
           "fontWeight": "{font.weight.1}",
           "fontSize": "{font.size.3}",
           "lineHeight": "{font.line-height.1}"
@@ -188,7 +188,7 @@
       },
       "3": {
         "$value": {
-          "fontFamily": "{font.family.3}",
+          "fontFamily": "{font.family.1}",
           "fontWeight": "{font.weight.1}",
           "fontSize": "{font.size.4}",
           "lineHeight": "{font.line-height.1}"

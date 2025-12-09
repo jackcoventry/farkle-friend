@@ -2,3 +2,7 @@
   display: grid;
   grid-template-columns: 400px 1fr;
 }
+
+.game-shell__body {
+  background-image: url("../../styles/images/pattern-1.png");
+}

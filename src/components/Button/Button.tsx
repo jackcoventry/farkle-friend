@@ -76,7 +76,7 @@ const Button = React.forwardRef<
     ...rest
   } = props;
 
-  let classes = "button | rounded-lg flex gap-3 relative";
+  let classes = "button | rounded-lg flex gap-3 relative text-white";
   if (className) classes += ` | ${className}`;
   if (size === "small") classes += " font-button-small py-2 px-4";
   if (size === "default") classes += " font-button py-2 px-5";
@@ -96,7 +96,7 @@ const Button = React.forwardRef<
   if (props.as === "inline") {
     const inlineRest = rest as InlineOnlyProps;
 
-    classes += " bg-sun-200 hover:bg-sun-300";
+    classes += " bg-red-500 hover:bg-red-600";
 
     return (
       <span
@@ -109,7 +109,7 @@ const Button = React.forwardRef<
         {...inlineRest}
       >
         {children && !iconOnly && (
-          <span className="content | ">{children}</span>
+          <span className="content | align-center">{children}</span>
         )}
         {icon && (
           <span>
@@ -136,7 +136,7 @@ const Button = React.forwardRef<
 
     const relSafe = target === "_blank" ? rel || "noopener noreferrer" : rel;
 
-    classes += " bg-sun-200 cursor-pointer hover:bg-sun-300";
+    classes += " bg-red-500 cursor-pointer hover:bg-red-600";
 
     return (
       <a
@@ -152,7 +152,7 @@ const Button = React.forwardRef<
         {...anchorRest}
       >
         {children && !iconOnly && (
-          <span className="content | ">{children}</span>
+          <span className="content | align-center">{children}</span>
         )}
         {icon && (
           <span>
@@ -180,9 +180,9 @@ const Button = React.forwardRef<
     ...buttonRest
   } = rest as ButtonOnlyProps;
   if (disabled) {
-    classes += " bg-sun-100 cursor-not-allowed";
+    classes += " bg-gray-500 cursor-not-allowed";
   } else {
-    classes += " bg-sun-200 cursor-pointer hover:bg-sun-300";
+    classes += " bg-red-500 cursor-pointer hover:bg-red-600";
   }
 
   return (
@@ -198,7 +198,9 @@ const Button = React.forwardRef<
       ref={ref as React.Ref<HTMLButtonElement>}
       {...buttonRest}
     >
-      {children && !iconOnly && <span className="content">{children}</span>}
+      {children && !iconOnly && (
+        <span className="content | align-center">{children}</span>
+      )}
       {icon && (
         <span className="icon">
           <svg

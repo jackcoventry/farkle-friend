@@ -20,7 +20,7 @@ function Splash({
       <h2 className="font-heading">{title}</h2>
       {image}
       {subtitle && <p className="font-sub-heading">{subtitle}</p>}
-      {text && <p className="font-mega">{text}</p>}
+      {text && <p className="font-mega | text-red-500">{text}</p>}
       {children}
     </div>
   );

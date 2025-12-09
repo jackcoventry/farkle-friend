@@ -19,6 +19,7 @@ import { getGameSummary } from "@/domain/game/gameLogic";
 import Modal from "@/components/Modal/Modal";
 import "./DiceTurnPanel.css";
 import { AvatarId, avatarSet } from "@/components/Form/AddPlayer/AddPlayer";
+import RichButton from "../RichButton/RichButton";
 
 type DiceTurnPanelProps = {
   state: GameState;
@@ -278,33 +279,30 @@ export function DiceTurnPanel({
       </div>
 
       <div className="flex gap-2">
-        <Button
-          type="button"
+        <RichButton
           onClick={handleRoll}
           disabled={!canRoll}
-          className={`grow-1 justify-center ${canRoll ? "animate-bounce" : ""}`}
-          size="large"
+          className={`grow-1 justify-center`}
+          icon="dice"
         >
           Roll dice
-        </Button>
-        <Button
-          type="button"
+        </RichButton>
+        <RichButton
           onClick={handleBankSelected}
           disabled={!canBank}
-          className={`grow-1 justify-center ${canBank ? "animate-bounce" : ""}`}
-          size="large"
+          className={`grow-1 justify-center`}
+          icon="bank"
         >
           Bank
-        </Button>
-        <Button
-          type="button"
+        </RichButton>
+        <RichButton
           onClick={handleFinishTurn}
           disabled={!canFinish}
-          className={`grow-1 justify-center ${canFinish ? "animate-bounce" : ""}`}
-          size="large"
+          className={`grow-1 justify-center`}
+          icon="rocket"
         >
-          {activeTurn.isFarkled ? "End turn" : "Bank & End turn"}
-        </Button>
+          End turn
+        </RichButton>
       </div>
     </div>
   );

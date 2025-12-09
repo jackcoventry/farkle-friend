@@ -2,6 +2,7 @@
 
 import Button from "@/components/Button/Button";
 import { DiceTurnPanel } from "@/components/DiceTurnPanel/DiceTurnPanel";
+import Footer from "@/components/Footer/Footer";
 import AddPlayerForm, {
   AddPlayerFormSchemaType,
   AvatarId,
@@ -42,7 +43,7 @@ export default function GamePage() {
     return (
       <GameShell>
         <GameShell.Sidebar>
-          <div className="h-full">
+          <div className="flex flex-col h-full">
             <h2 className="font-heading mb-2">Players</h2>
 
             {state.players.length > 0 ? (
@@ -64,6 +65,7 @@ export default function GamePage() {
                 Start game
               </Button>
             )}
+            <Footer />
           </div>
         </GameShell.Sidebar>
         <GameShell.Body>
@@ -118,7 +120,7 @@ export default function GamePage() {
   return (
     <GameShell>
       <GameShell.Sidebar>
-        <div>
+        <div className="flex flex-col h-full">
           <h2 className="font-heading mb-2">Players</h2>
 
           <div className="my-6 overflow-auto">
@@ -127,6 +129,8 @@ export default function GamePage() {
               activePlayerId={state.players[state.currentPlayerIndex ?? 0].id}
             />
           </div>
+
+          <Footer />
         </div>
       </GameShell.Sidebar>
       <GameShell.Body>

@@ -8,7 +8,7 @@
 }
 
 .button[data-size="large"]:not([disabled]):after {
-  background: var(--color-sun-500);
+  background: var(--color-red-300);
   border-radius: var(--radius-lg);
   content: "";
   display: block;

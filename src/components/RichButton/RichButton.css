@@ -1,0 +1,12 @@
+.rich-button:not([disabled]):hover img {
+  animation: up-and-down 0.5s infinite alternate;
+}
+
+@keyframes up-and-down {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-5%);
+  }
+}

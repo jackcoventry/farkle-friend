@@ -69,7 +69,7 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
     resolver: zodResolver(AddPlayerFormSchema),
     defaultValues: {
       username: "",
-      avatar: undefined,
+      avatar: 1,
     },
     mode: "onBlur",
   });
@@ -80,9 +80,9 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
   };
 
   return (
-    <div className="form-wrapper | border-sun-300 border-1 p-4 rounded-lg bg-white self-center">
+    <div className="form-wrapper | border-sun-300 border-1 p-6 rounded-lg bg-white self-center">
       <form
-        className="form | gap-4 flex flex-col"
+        className="form | gap-6 flex flex-col"
         onSubmit={handleSubmit(submitHandler)}
       >
         <h2 className="font-heading text-center">Add player</h2>
@@ -142,12 +142,7 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
           )}
         />
 
-        <Button
-          type="submit"
-          className="justify-center"
-          icon="plus"
-          iconPosition="right"
-        >
+        <Button type="submit" className="justify-center">
           Submit
         </Button>
       </form>
