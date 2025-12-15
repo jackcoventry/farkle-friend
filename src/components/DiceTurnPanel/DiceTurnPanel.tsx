@@ -32,17 +32,6 @@ export function DiceTurnPanel({
     onCommitScore: commitTurnScore,
   });
 
-  const [showPlayerSwitch, setShowPlayerSwitch] = useState<boolean>(false);
-
-  const handlePlayerChange = () => {
-    setShowPlayerSwitch(true);
-    setTimeout(() => {
-      setShowPlayerSwitch(false);
-    }, 2000);
-  };
-
-  useEffect(handlePlayerChange, [state.currentPlayerIndex]);
-
   if (!currentPlayer || !dice.activeTurn) {
     return <p>No active player</p>;
   }
@@ -55,58 +44,9 @@ export function DiceTurnPanel({
     dice.activeTurn.currentRoll == null
       ? []
       : getScoringCombinations(dice.activeTurn.currentRoll);
-  const avatar = avatarSet[currentPlayer.avatar as AvatarId];
 
   return (
     <div className="dice-turn-panel | grid gap-3 h-full overflow-hidden">
-      {showPlayerSwitch && (
-        <Modal
-          isOpen={true}
-          ariaLabel={`${currentPlayer.username}'s turn`}
-          variant="splash"
-        >
-          <Modal.Body>
-            <Splash
-              title={`${currentPlayer.username}'s turn`}
-              image={
-                <figure
-                  className={`rounded-full overflow-hidden w-[200px] h-[200px] mx-auto my-4 p-6 flex items-center justify-center ${avatar.color}`}
-                >
-                  <img
-                    src={avatar.image}
-                    alt="The user's selected avatar of a playful illustration"
-                    className="splash-avatar | w-[200px] h-[200px]"
-                  />
-                </figure>
-              }
-              subtitle="Current score:"
-              text={currentPlayer?.totalScore?.toString() || "0"}
-            />
-          </Modal.Body>
-        </Modal>
-      )}
-
-      {dice.activeTurn.isFarkled && (
-        <Modal isOpen={true} ariaLabel="You've been farkled!" variant="splash">
-          <Modal.Body>
-            <Splash
-              title="You've been farkled!"
-              image={<div className="font-mega mt-6">❌</div>}
-            >
-              <Button
-                type="button"
-                onClick={dice.finishTurn}
-                disabled={!dice.canFinish}
-                className="justify-center"
-                size="large"
-              >
-                End turn
-              </Button>
-            </Splash>
-          </Modal.Body>
-        </Modal>
-      )}
-
       <div className="flex gap-4">
         <div>
           <h3 className="text-white flex gap-4">

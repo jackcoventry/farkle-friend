@@ -14,7 +14,9 @@ import Modal from "@/components/Modal/Modal";
 import Splash from "@/components/Modal/Splash";
 import PlayerList from "@/components/PlayerList/PlayerList";
 import { canStartGame, getGameSummary } from "@/domain/game/gameLogic";
+import { useTurnController } from "@/domain/game/useTurnController";
 import { useGameState } from "@/hooks/useGameState";
+import { useEffect, useState } from "react";
 
 export default function GamePage() {
   const { state, dispatch } = useGameState();
@@ -38,6 +40,18 @@ export default function GamePage() {
 
   const readyToStart = Boolean(canStartGame(state));
   const summary = getGameSummary(state);
+  const { currentPlayer } = useTurnController(state, dispatch);
+  const [showPlayerSwitch, setShowPlayerSwitch] = useState<boolean>(false);
+  const avatar = avatarSet[currentPlayer?.avatar as AvatarId];
+
+  const handlePlayerChange = () => {
+    setShowPlayerSwitch(true);
+    setTimeout(() => {
+      setShowPlayerSwitch(false);
+    }, 2000);
+  };
+
+  useEffect(handlePlayerChange, [state.currentPlayerIndex]);
 
   if (state.phase === "LOBBY") {
     return (
@@ -134,6 +148,33 @@ export default function GamePage() {
         </div>
       </GameShell.Sidebar>
       <GameShell.Body>
+        {showPlayerSwitch && (
+          <Modal
+            isOpen={true}
+            ariaLabel={`${currentPlayer.username}'s turn`}
+            variant="splash"
+          >
+            <Modal.Body>
+              <Splash
+                title={`${currentPlayer.username}'s turn`}
+                image={
+                  <figure
+                    className={`rounded-full overflow-hidden w-[200px] h-[200px] mx-auto my-4 p-6 flex items-center justify-center ${avatar.color}`}
+                  >
+                    <img
+                      src={avatar.image}
+                      alt="The user's selected avatar of a playful illustration"
+                      className="splash-avatar | w-[200px] h-[200px]"
+                    />
+                  </figure>
+                }
+                subtitle="Current score:"
+                text={currentPlayer?.totalScore?.toString() || "0"}
+              />
+            </Modal.Body>
+          </Modal>
+        )}
+
         <ManualTurn state={state} dispatch={dispatch} />
         {/* <DiceTurnPanel state={state} dispatch={dispatch} /> */}
       </GameShell.Body>
