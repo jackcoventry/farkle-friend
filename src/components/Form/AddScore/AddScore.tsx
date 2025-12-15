@@ -18,9 +18,10 @@ export type AddScoreFormResult = {
 
 type AddScoreFormProps = {
   onSubmit: SubmitHandler<AddScoreSchemaType>;
+  onFarkle: () => void;
 };
 
-function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
+function AddScoreForm({ onSubmit, onFarkle }: Readonly<AddScoreFormProps>) {
   const {
     control,
     handleSubmit,
@@ -64,13 +65,16 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
 
         {errors?.value?.message && <p>{errors?.value?.message}</p>}
 
-        <Button
-          type="submit"
-          className="justify-center"
-          icon="plus"
-          iconPosition="right"
-        >
+        <Button type="submit" className="justify-center">
           Submit score
+        </Button>
+
+        <Button
+          type="button"
+          onClick={onFarkle}
+          className="grow-1 justify-center"
+        >
+          Farkled!
         </Button>
       </form>
     </div>

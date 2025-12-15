@@ -134,8 +134,8 @@ export default function GamePage() {
         </div>
       </GameShell.Sidebar>
       <GameShell.Body>
-        {/* <ManualTurn state={state} dispatch={dispatch} /> */}
-        <DiceTurnPanel state={state} dispatch={dispatch} />
+        <ManualTurn state={state} dispatch={dispatch} />
+        {/* <DiceTurnPanel state={state} dispatch={dispatch} /> */}
       </GameShell.Body>
     </GameShell>
   );

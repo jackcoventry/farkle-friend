@@ -9,7 +9,7 @@ import DiceIcon from "@/components/DiceIcon/DiceIcon";
 import Splash from "@/components/Modal/Splash";
 import Modal from "@/components/Modal/Modal";
 import { AvatarId, avatarSet } from "@/components/Form/AddPlayer/AddPlayer";
-import RichButton from "../RichButton/RichButton";
+import RichButton from "@/components/RichButton/RichButton";
 import { useTurnController } from "@/domain/game/useTurnController";
 import { useDiceTurnController } from "@/domain/game/useDiceTurnController";
 
