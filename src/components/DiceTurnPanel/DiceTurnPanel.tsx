@@ -2,23 +2,17 @@
 
 import { GameAction } from "@/domain/game/gameReducer";
 import { GameState } from "@/domain/game/gameTypes";
-import {
-  ActiveTurn,
-  bankDiceFromCurrentRoll,
-  finishActiveTurn,
-  rollInActiveTurn,
-  startActiveTurn,
-} from "@/domain/game/turnLogic";
 import { useEffect, useState } from "react";
 import Button from "@/components/Button/Button";
-import { getScoringCombinations, scoreSelectedDice } from "@/domain/game/dice";
-import type { DieValue } from "@/domain/game/dice";
+import { getScoringCombinations } from "@/domain/game/dice";
 import DiceIcon from "@/components/DiceIcon/DiceIcon";
 import Splash from "@/components/Modal/Splash";
-import { getGameSummary } from "@/domain/game/gameLogic";
 import Modal from "@/components/Modal/Modal";
 import { AvatarId, avatarSet } from "@/components/Form/AddPlayer/AddPlayer";
 import RichButton from "../RichButton/RichButton";
+import { useTurnController } from "@/domain/game/useTurnController";
+import { useDiceTurnController } from "@/domain/game/useDiceTurnController";
+
 import "./DiceTurnPanel.css";
 
 type DiceTurnPanelProps = {
@@ -30,13 +24,14 @@ export function DiceTurnPanel({
   state,
   dispatch,
 }: Readonly<DiceTurnPanelProps>) {
-  const summary = getGameSummary(state);
+  const { currentPlayer, commitTurnScore } = useTurnController(state, dispatch);
 
-  const currentIndex = state.currentPlayerIndex ?? 0;
-  const currentPlayer = summary.players[currentIndex] ?? null;
+  const dice = useDiceTurnController({
+    phase: state.phase,
+    playerId: currentPlayer?.id ?? null,
+    onCommitScore: commitTurnScore,
+  });
 
-  const [activeTurn, setActiveTurn] = useState<ActiveTurn | null>(null);
-  const [selectedIndices, setSelectedIndices] = useState<number[]>([]);
   const [showPlayerSwitch, setShowPlayerSwitch] = useState<boolean>(false);
 
   const handlePlayerChange = () => {
@@ -46,122 +41,20 @@ export function DiceTurnPanel({
     }, 2000);
   };
 
-  useEffect(() => {
-    if (state.phase === "IN_PROGRESS" && currentPlayer) {
-      setActiveTurn(startActiveTurn(currentPlayer.id));
-      setSelectedIndices([]);
-    } else {
-      setActiveTurn(null);
-      setSelectedIndices([]);
-    }
-  }, [state.phase, currentPlayer?.id]);
-
   useEffect(handlePlayerChange, [state.currentPlayerIndex]);
 
-  if (!currentPlayer || !activeTurn) {
+  if (!currentPlayer || !dice.activeTurn) {
     return <p>No active player</p>;
   }
 
-  const currentRoll = activeTurn.currentRoll;
-
-  const heldDice: DieValue[] =
-    currentRoll && selectedIndices.length > 0
-      ? selectedIndices
-          .map((i) => currentRoll[i])
-          .filter((v): v is DieValue => v !== undefined)
-      : [];
-
-  const selectedScore =
-    heldDice.length > 0 ? scoreSelectedDice(heldDice as any) : 0;
-
-  const handleRoll = () => {
-    setSelectedIndices([]);
-    setActiveTurn((prev) => {
-      if (!prev) return prev;
-      if (prev.isComplete || prev.isFarkled) return prev;
-      if (prev.currentRoll !== null) return prev;
-      return rollInActiveTurn(prev);
-    });
-  };
-
-  const handleFinishTurn = () => {
-    if (!activeTurn) return;
-
-    // Start from the latest activeTurn snapshot
-    let turn = activeTurn;
-
-    if (
-      !turn.isFarkled &&
-      turn.currentRoll !== null &&
-      selectedIndices.length === 0
-    ) {
-      return;
-    }
-
-    // If there is a current roll and selected dice, bank them first
-    if (
-      turn.currentRoll &&
-      selectedIndices.length > 0 &&
-      selectedScore > 0 &&
-      !turn.isFarkled &&
-      !turn.isComplete
-    ) {
-      turn = bankDiceFromCurrentRoll(turn, selectedIndices);
-    }
-
-    // Mark the turn complete
-    const finished = finishActiveTurn(turn);
-    const finalScore = finished.isFarkled ? 0 : finished.tempScore;
-
-    // Push the final score into the main game state
-    dispatch({
-      type: "RECORD_TURN",
-      playerId: finished.playerId,
-      score: finalScore,
-    });
-
-    // Local cleanup
-    setActiveTurn(null);
-    setSelectedIndices([]);
-  };
-
-  const toggleDieSelection = (index: number) => {
-    setSelectedIndices((prev) =>
-      prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
-    );
-  };
-
-  const handleBankSelected = () => {
-    if (!currentRoll || selectedIndices.length === 0) return;
-    if (selectedScore <= 0) return;
-
-    setActiveTurn((prev) =>
-      prev ? bankDiceFromCurrentRoll(prev, selectedIndices) : prev
-    );
-    setSelectedIndices([]);
-  };
-
-  const canRoll =
-    !activeTurn.isFarkled && !activeTurn.isComplete && currentRoll === null;
-
-  const canBank =
-    !!currentRoll &&
-    selectedIndices.length > 0 &&
-    selectedScore > 0 &&
-    !activeTurn.isFarkled &&
-    !activeTurn.isComplete;
-
-  const canFinish =
-    !activeTurn.isComplete &&
-    (activeTurn.isFarkled ||
-      (activeTurn.currentRoll === null && activeTurn.tempScore > 0));
+  const currentRoll = dice.activeTurn.currentRoll;
 
   // List possible combinations for current roll
   // TODO: add visibility in settings
   const currentCombos =
-    activeTurn.currentRoll == null
+    dice.activeTurn.currentRoll == null
       ? []
-      : getScoringCombinations(activeTurn.currentRoll);
+      : getScoringCombinations(dice.activeTurn.currentRoll);
   const avatar = avatarSet[currentPlayer.avatar as AvatarId];
 
   return (
@@ -193,7 +86,7 @@ export function DiceTurnPanel({
         </Modal>
       )}
 
-      {activeTurn.isFarkled && (
+      {dice.activeTurn.isFarkled && (
         <Modal isOpen={true} ariaLabel="You've been farkled!" variant="splash">
           <Modal.Body>
             <Splash
@@ -202,8 +95,8 @@ export function DiceTurnPanel({
             >
               <Button
                 type="button"
-                onClick={handleFinishTurn}
-                disabled={!canFinish}
+                onClick={dice.finishTurn}
+                disabled={!dice.canFinish}
                 className="justify-center"
                 size="large"
               >
@@ -219,14 +112,14 @@ export function DiceTurnPanel({
           <h3 className="text-white flex gap-4">
             <span className="font-sub-heading flex">ROUND SCORE:</span>
             <span className="font-sub-heading flex">
-              {activeTurn.tempScore || 0}
+              {dice.activeTurn.tempScore || 0}
             </span>
           </h3>
         </div>
         <div className="ml-auto">
           <div>
             <span className="flex gap-1">
-              {[...new Array(activeTurn.availableDice).keys()].map((e) => (
+              {[...new Array(dice.activeTurn.availableDice).keys()].map((e) => (
                 <DiceIcon key={e} count={e + 1} className="w-[40px]" />
               ))}
             </span>
@@ -238,13 +131,13 @@ export function DiceTurnPanel({
         {currentRoll ? (
           <div className="flex gap-5">
             {currentRoll.map((value, idx) => {
-              const isSelected = selectedIndices.includes(idx);
+              const isSelected = dice.selectedIndices.includes(idx);
               return (
                 <button
                   key={`${value}-${idx}`}
                   type="button"
-                  onClick={() => toggleDieSelection(idx)}
-                  disabled={activeTurn.isFarkled}
+                  onClick={() => dice.toggleDieSelection(idx)}
+                  disabled={dice?.activeTurn?.isFarkled}
                   style={{
                     animationDelay: `${idx * 0.05}s`,
                   }}
@@ -280,24 +173,24 @@ export function DiceTurnPanel({
 
       <div className="flex gap-2">
         <RichButton
-          onClick={handleRoll}
-          disabled={!canRoll}
+          onClick={dice.roll}
+          disabled={!dice.canRoll}
           className={`grow-1 justify-center`}
           icon="dice"
         >
           Roll dice
         </RichButton>
         <RichButton
-          onClick={handleBankSelected}
-          disabled={!canBank}
+          onClick={dice.bankSelected}
+          disabled={!dice.canBank}
           className={`grow-1 justify-center`}
           icon="bank"
         >
           Bank
         </RichButton>
         <RichButton
-          onClick={handleFinishTurn}
-          disabled={!canFinish}
+          onClick={dice.finishTurn}
+          disabled={!dice.canFinish}
           className={`grow-1 justify-center`}
           icon="rocket"
         >
