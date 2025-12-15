@@ -13,8 +13,6 @@ import RichButton from "@/components/RichButton/RichButton";
 import { useTurnController } from "@/domain/game/useTurnController";
 import { useDiceTurnController } from "@/domain/game/useDiceTurnController";
 
-import "./DiceTurnPanel.css";
-
 type DiceTurnPanelProps = {
   state: GameState;
   dispatch: React.Dispatch<GameAction>;
@@ -46,7 +44,7 @@ export function DiceTurnPanel({
       : getScoringCombinations(dice.activeTurn.currentRoll);
 
   return (
-    <div className="dice-turn-panel | grid gap-3 h-full overflow-hidden">
+    <div className="turn-frame | grid gap-3 h-full overflow-hidden">
       <div className="flex gap-4">
         <div>
           <h3 className="text-white flex gap-4">

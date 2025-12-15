@@ -43,6 +43,7 @@ export default function GamePage() {
   const { currentPlayer } = useTurnController(state, dispatch);
   const [showPlayerSwitch, setShowPlayerSwitch] = useState<boolean>(false);
   const avatar = avatarSet[currentPlayer?.avatar as AvatarId];
+  const mode = "manual";
 
   const handlePlayerChange = () => {
     setShowPlayerSwitch(true);
@@ -175,8 +176,11 @@ export default function GamePage() {
           </Modal>
         )}
 
-        <ManualTurn state={state} dispatch={dispatch} />
-        {/* <DiceTurnPanel state={state} dispatch={dispatch} /> */}
+        {mode === "dice" ? (
+          <DiceTurnPanel state={state} dispatch={dispatch} />
+        ) : (
+          <ManualTurn state={state} dispatch={dispatch} />
+        )}
       </GameShell.Body>
     </GameShell>
   );

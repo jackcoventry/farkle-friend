@@ -154,3 +154,19 @@ body {
   transform: rotate(-44deg);
   width: 100px;
 }
+
+.turn-frame {
+  grid-template-rows: 60px 1fr 170px;
+}
+
+@layer utilities {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+}

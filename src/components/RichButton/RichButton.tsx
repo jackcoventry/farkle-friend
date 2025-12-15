@@ -2,7 +2,7 @@ import React from "react";
 import { DynamicImage } from "@/components/DynamicImage/DynamicImage";
 import "./RichButton.css";
 
-export type Icons = "dice" | "rocket" | "bank";
+export type Icons = "dice" | "rocket" | "bank" | "cancel";
 export type RichButtonProps = {
   ariaLabel?: string;
   children?: React.ReactNode;
@@ -10,14 +10,23 @@ export type RichButtonProps = {
   disabled?: boolean;
   icon?: Icons;
   onClick?: React.MouseEventHandler<HTMLElement>;
+  type?: "button" | "submit" | "reset";
 };
 
 const RichButton = React.forwardRef<
   HTMLButtonElement,
   Readonly<RichButtonProps>
 >(function RichButtonRoot(props: RichButtonProps, ref) {
-  const { ariaLabel, children, className, disabled, icon, onClick, ...rest } =
-    props;
+  const {
+    ariaLabel,
+    children,
+    className,
+    disabled,
+    icon,
+    onClick,
+    type = "button",
+    ...rest
+  } = props;
 
   return (
     <button
@@ -26,6 +35,7 @@ const RichButton = React.forwardRef<
       onClick={onClick}
       className={`rich-button | ${disabled ? " cursor-not-allowed" : " hover:opacity-85 cursor-pointer"} ${className ? ` ${className}` : ""}`}
       ref={ref as React.Ref<HTMLButtonElement>}
+      type={type}
       {...rest}
     >
       {icon && (

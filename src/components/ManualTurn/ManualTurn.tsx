@@ -37,16 +37,5 @@ export function ManualTurn({ state, dispatch }: Readonly<ManualTurnProps>) {
     commitTurnScore(currentPlayer.id, parsedScore);
   };
 
-  const handleFarkle = () => {
-    if (!currentPlayer) return;
-    commitTurnScore(currentPlayer.id, 0);
-  };
-
-  return (
-    <div>
-      <h1>Enter score for {currentPlayer.username}</h1>
-      <p>Turn #{state.turns.length + 1}</p>
-      <AddScoreForm onSubmit={onAddScoreFormSubmit} onFarkle={handleFarkle} />
-    </div>
-  );
+  return <AddScoreForm onSubmit={onAddScoreFormSubmit} />;
 }

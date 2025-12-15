@@ -1,11 +1,13 @@
 import dice from "../../../public/dice.svg";
 import rocket from "../../../public/rocket.svg";
 import bank from "../../../public/bank.svg";
+import cancel from "../../../public/cancel.svg";
 
 export const imageMap = {
   dice,
   rocket,
   bank,
+  cancel,
 } as const;
 
 export type ImageKey = keyof typeof imageMap;

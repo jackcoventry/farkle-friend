@@ -1,6 +1,6 @@
 "use client";
 
-import Button from "@/components/Button/Button";
+import RichButton from "@/components/RichButton/RichButton";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import z from "zod";
@@ -18,10 +18,9 @@ export type AddScoreFormResult = {
 
 type AddScoreFormProps = {
   onSubmit: SubmitHandler<AddScoreSchemaType>;
-  onFarkle: () => void;
 };
 
-function AddScoreForm({ onSubmit, onFarkle }: Readonly<AddScoreFormProps>) {
+function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
   const {
     control,
     handleSubmit,
@@ -41,19 +40,21 @@ function AddScoreForm({ onSubmit, onFarkle }: Readonly<AddScoreFormProps>) {
   };
 
   return (
-    <div className="form-wrapper | border-sun-300 border-1 p-4 rounded-lg">
-      <form
-        className="form | gap-4 flex flex-col"
-        onSubmit={handleSubmit(submitHandler)}
-      >
-        <h2 className="font-heading">Add score</h2>
+    <form
+      className="turn-frame | grid gap-3 h-full"
+      onSubmit={handleSubmit(submitHandler)}
+    >
+      <div>
+        <h2 className="text-white font-heading">Enter your score below!</h2>
+      </div>
 
+      <div className="flex items-center">
         <Controller
           name="value"
           control={control}
           render={({ field }) => (
             <input
-              className="border-1 border-sun-300 p-4 rounded-sm"
+              className="border-0 border-b-2 p-4 text-white font-mega w-full text-center appearance-none"
               {...field}
               placeholder="Enter your score..."
               data-valid={errors?.value ? "false" : "true"}
@@ -62,22 +63,14 @@ function AddScoreForm({ onSubmit, onFarkle }: Readonly<AddScoreFormProps>) {
             />
           )}
         />
+      </div>
 
-        {errors?.value?.message && <p>{errors?.value?.message}</p>}
-
-        <Button type="submit" className="justify-center">
+      <div className="w-full flex justify-center">
+        <RichButton type="submit" className="justify-center" icon="dice">
           Submit score
-        </Button>
-
-        <Button
-          type="button"
-          onClick={onFarkle}
-          className="grow-1 justify-center"
-        >
-          Farkled!
-        </Button>
-      </form>
-    </div>
+        </RichButton>
+      </div>
+    </form>
   );
 }
 
