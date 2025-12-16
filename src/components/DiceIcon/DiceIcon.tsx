@@ -4,10 +4,15 @@ type DiceIconProps = {
   className?: string;
   count: number;
   state?: "default" | "disabled" | "active";
-  variant?: "default";
+  variant?: "default" | "medieval";
 };
 
-function DiceIcon({ className, count = 1, state }: Readonly<DiceIconProps>) {
+function DiceIcon({
+  className,
+  count = 1,
+  state,
+  variant = "medieval",
+}: Readonly<DiceIconProps>) {
   let classes = "dice-icon";
   if (className) {
     classes += ` ${className}`;
@@ -18,6 +23,7 @@ function DiceIcon({ className, count = 1, state }: Readonly<DiceIconProps>) {
       className={classes}
       data-count={count}
       data-state={state}
+      data-variant={variant}
     >
       {[...new Array(count).keys()].map((e) => (
         <span className="dice-dot" key={e} />
