@@ -1,9 +1,13 @@
 "use client";
 
+import Modal from "@/components/Modal/Modal";
 import RichButton from "@/components/RichButton/RichButton";
 import { zodResolver } from "@hookform/resolvers/zod";
+import React from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import z from "zod";
+import ScoreGenerator from "../ScoreGenerator/ScoreGenerator";
+import { DieValue, scoreSelectedDice } from "@/domain/game/dice";
 
 const AddScoreSchema = z.object({
   value: z.number().min(0, {
@@ -26,12 +30,13 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
     handleSubmit,
     formState: { errors },
     reset,
+    setValue,
   } = useForm<AddScoreSchemaType>({
     resolver: zodResolver(AddScoreSchema),
     defaultValues: {
       value: 0,
     },
-    mode: "onBlur",
+    mode: "onChange",
   });
 
   const submitHandler = (data: { value: number }) => {
@@ -39,38 +44,71 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
     reset();
   };
 
+  const [showCalculator, setShowCalculator] = React.useState(false);
+
+  const onChange = (selectedItems: DieValue[]) => {
+    const score = scoreSelectedDice(selectedItems);
+    setValue("value", score, {
+      shouldDirty: true,
+      shouldTouch: true,
+      shouldValidate: true,
+    });
+    setShowCalculator(false);
+  };
+
   return (
-    <form
-      className="turn-frame | grid gap-3 h-full"
-      onSubmit={handleSubmit(submitHandler)}
-    >
-      <div>
-        <h2 className="text-white font-heading">Enter your score below!</h2>
-      </div>
+    <>
+      <form
+        className="turn-frame | grid gap-3 h-full"
+        onSubmit={handleSubmit(submitHandler)}
+      >
+        <div>
+          <h2 className="text-white font-heading">
+            Enter your score below or use the calculator!
+          </h2>
+        </div>
 
-      <div className="flex items-center">
-        <Controller
-          name="value"
-          control={control}
-          render={({ field }) => (
-            <input
-              className="border-0 border-b-2 p-4 text-white font-mega w-full text-center appearance-none"
-              {...field}
-              placeholder="Enter your score..."
-              data-valid={errors?.value ? "false" : "true"}
-              type="number"
-              onChange={(value) => field.onChange(value.target.valueAsNumber)}
-            />
-          )}
-        />
-      </div>
+        <div className="flex items-center">
+          <Controller
+            name="value"
+            control={control}
+            render={({ field }) => (
+              <input
+                className="border-0 border-b-2 p-4 text-white font-mega w-full text-center appearance-none"
+                {...field}
+                placeholder="Enter your score..."
+                data-valid={errors?.value ? "false" : "true"}
+                type="number"
+                onChange={(value) => field.onChange(value.target.valueAsNumber)}
+                value={field.value}
+              />
+            )}
+          />
+        </div>
 
-      <div className="w-full flex justify-center">
-        <RichButton type="submit" className="justify-center" icon="dice">
-          Submit score
-        </RichButton>
-      </div>
-    </form>
+        <div className="w-full flex justify-center gap-4">
+          <RichButton type="submit" className="justify-center" icon="dice">
+            Submit score
+          </RichButton>
+          <RichButton
+            className="justify-center"
+            icon="rocket"
+            onClick={() => setShowCalculator(true)}
+          >
+            Calculate
+          </RichButton>
+        </div>
+      </form>
+      <Modal
+        isOpen={Boolean(showCalculator)}
+        ariaLabel="Calculate dice score"
+        variant="modal"
+      >
+        <Modal.Body className="grid max-h-dvh h-full mx-auto justify-center bg-white p-7 rounded-2xl">
+          <ScoreGenerator onChange={onChange} />
+        </Modal.Body>
+      </Modal>
+    </>
   );
 }
 

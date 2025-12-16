@@ -190,6 +190,7 @@ function ModalRoot({
 
 type ModalSlot = {
   children: ReactNode;
+  className?: string;
 };
 
 /**
@@ -240,8 +241,8 @@ function ModalCloseButton({
 /**
  * <Modal.Body> — content area
  */
-function ModalBody({ children }: Readonly<ModalSlot>) {
-  return <div>{children}</div>;
+function ModalBody({ children, className }: Readonly<ModalSlot>) {
+  return <div className={className}>{children}</div>;
 }
 
 /**

@@ -16,10 +16,14 @@ function ScoreGenerator({ onChange }: Readonly<ScoreGeneratorProps>) {
     setSelectedItems([...selectedItems, die]);
     setTimeout(() => setClicked(undefined), 200);
   };
+  const handleSubmit = () => {
+    onChange(selectedItems as DieValue[]);
+    setSelectedItems([]);
+  };
 
   return (
     <>
-      <div className="max-w-[300px] w-full grid grid-cols-2 gap-5 mx-auto">
+      <div className="grid grid-cols-3 gap-5 mx-auto h-[200px] w-[300px]">
         {dies.map((die) => {
           const classes = `enabled:hover:opacity-50 enabled:hover:scale-110 enabled:cursor-pointer transition-transform disabled:grayscale-50 disabled:cursor-not-allowed ${die === clicked ? "enabled:hover:scale-120 " : ""}`;
           return (
@@ -35,17 +39,16 @@ function ScoreGenerator({ onChange }: Readonly<ScoreGeneratorProps>) {
         })}
       </div>
 
-      {selectedItems.length > 0 ? (
-        <div className="mt-8 flex flex-col items-center gap-4">
-          <p className="font-heading">{selectedItems.toString()}</p>
-          <RichButton
-            icon="bank"
-            onClick={() => onChange(selectedItems as DieValue[])}
-          >
-            Save selection
-          </RichButton>
-        </div>
-      ) : null}
+      <div className="mt-8 flex flex-col items-center gap-4">
+        <p className="font-heading">{selectedItems.toString()}</p>
+        <RichButton
+          icon="bank"
+          disabled={selectedItems.length === 0}
+          onClick={handleSubmit}
+        >
+          Save selection
+        </RichButton>
+      </div>
     </>
   );
 }
