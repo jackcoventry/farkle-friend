@@ -1,4 +1,4 @@
-import DiceIcon from "../DiceIcon/DiceIcon";
+import DiceIcon from "@/components/DiceIcon/DiceIcon";
 
 type RulesInfoRowProps = {
   dice?: number[];
@@ -25,7 +25,6 @@ function RulesInfoRow({
             <DiceIcon count={die} />
           </span>
         ))}
-
         <span>=</span>
         <span>{points} points</span>
       </div>
