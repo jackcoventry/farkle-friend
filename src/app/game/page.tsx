@@ -13,13 +13,13 @@ import { ManualTurn } from "@/components/ManualTurn/ManualTurn";
 import Modal from "@/components/Modal/Modal";
 import Splash from "@/components/Modal/Splash";
 import PlayerList from "@/components/PlayerList/PlayerList";
-import { canStartGame, getGameSummary } from "@/domain/game/gameLogic";
+import { getGameSummary } from "@/domain/game/gameLogic";
 import { useTurnController } from "@/domain/game/useTurnController";
-import { useGameState } from "@/hooks/useGameState";
+import { useGame } from "@/domain/game/GameProvider";
 import { useEffect, useState } from "react";
 
 export default function GamePage() {
-  const { state, dispatch } = useGameState();
+  const { state, dispatch } = useGame();
 
   const onAddPlayerFormSubmit = (data: AddPlayerFormSchemaType) => {
     dispatch({
@@ -29,16 +29,11 @@ export default function GamePage() {
     });
   };
 
-  const onStartGame = () => {
-    dispatch({ type: "START_GAME" });
-  };
-
   const onResetGame = () => {
     dispatch({ type: "RESET_GAME" });
     dispatch({ type: "START_GAME" });
   };
 
-  const readyToStart = Boolean(canStartGame(state));
   const summary = getGameSummary(state);
   const { currentPlayer } = useTurnController(state, dispatch);
   const [showPlayerSwitch, setShowPlayerSwitch] = useState<boolean>(false);
@@ -66,20 +61,6 @@ export default function GamePage() {
                 <PlayerList players={state.players} />
               </div>
             ) : null}
-
-            {state.players.length <= 1 ? (
-              <p className="font-body">
-                You need at least two players to play!
-              </p>
-            ) : (
-              <Button
-                onClick={onStartGame}
-                className="w-full justify-center"
-                disabled={!readyToStart}
-              >
-                Start game
-              </Button>
-            )}
             <Footer />
           </div>
         </GameShell.Sidebar>

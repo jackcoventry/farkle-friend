@@ -1,6 +1,8 @@
 "use client";
 
 import Button from "@/components/Button/Button";
+import { canStartGame } from "@/domain/game/gameLogic";
+import { useGame } from "@/domain/game/GameProvider";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import z from "zod";
@@ -79,72 +81,107 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
     reset();
   };
 
+  const { state, dispatch } = useGame();
+  const readyToStart = Boolean(canStartGame(state));
+
+  const onStartGame = () => {
+    dispatch({ type: "START_GAME" });
+  };
+
+  const avatarsInUse = state.players.reduce((acc: number[], currentItem) => {
+    acc.push(currentItem?.avatar);
+    return acc;
+  }, []);
+
+  const maxPlayersReached = Boolean(state.players.length === 6);
+
   return (
     <div className="form-wrapper | border-sun-300 border-1 p-6 rounded-lg bg-white self-center">
       <form
         className="form | gap-6 flex flex-col"
         onSubmit={handleSubmit(submitHandler)}
       >
-        <h2 className="font-heading text-center">Add player</h2>
-
-        <Controller
-          name="username"
-          control={control}
-          render={({ field }) => (
-            <input
-              className={`border-1 p-4 rounded-sm ${errors?.username ? "border-red-500" : "border-gray-800"}`}
-              {...field}
-              placeholder="Enter your name..."
-              data-valid={errors?.username ? "false" : "true"}
+        {!maxPlayersReached && (
+          <>
+            <h2 className="font-heading text-center">Add player</h2>
+            <Controller
+              name="username"
+              control={control}
+              render={({ field }) => (
+                <input
+                  className={`border-1 py-4 px-5 rounded-4xl ${errors?.username ? "border-red-500" : "border-gray-800"}`}
+                  {...field}
+                  placeholder="Enter your name..."
+                  data-valid={errors?.username ? "false" : "true"}
+                />
+              )}
             />
-          )}
-        />
 
-        {/* {errors?.username?.message && <p>{errors?.username?.message}</p>} */}
+            <Controller
+              name="avatar"
+              control={control}
+              render={({ field, fieldState }) => (
+                <fieldset aria-invalid={!!fieldState.error || undefined}>
+                  <legend className="mb-4">Choose an avatar</legend>
 
-        <Controller
-          name="avatar"
-          control={control}
-          render={({ field, fieldState }) => (
-            <fieldset aria-invalid={!!fieldState.error || undefined}>
-              <legend className="mb-3">Choose an avatar</legend>
+                  <div className="flex gap-4 grid grid-cols-3">
+                    {avatarValues.map((option) => {
+                      const avatar = avatarSet[option];
+                      const classes = `avatar-list-image | cursor-pointer enabled:hover:opacity-85 rounded-full overflow-hidden w-[100px] h-[100px] p-4 flex items-center justify-center ${avatar.color}`;
+                      return (
+                        <label
+                          key={option}
+                          aria-label={`Avatar ${avatar.name}`}
+                        >
+                          <input
+                            type="radio"
+                            value={option}
+                            name={field.name}
+                            checked={field.value === option}
+                            onChange={() => field.onChange(option)}
+                            onBlur={field.onBlur}
+                            ref={field.ref}
+                            className="avatar-list-input | sr-only"
+                            disabled={avatarsInUse.includes(option)}
+                          />
+                          <div className={classes}>
+                            <img
+                              src={avatar.image}
+                              alt={`Avatar ${avatar.name}`}
+                              className="w-dvh"
+                            />
+                          </div>
+                        </label>
+                      );
+                    })}
+                  </div>
 
-              <div className="flex gap-3 grid grid-cols-3">
-                {avatarValues.map((option) => {
-                  const avatar = avatarSet[option];
-                  const classes = `avatar-list-image | cursor-pointer hover:opacity-85 rounded-full overflow-hidden w-[100px] h-[100px] p-4 flex items-center justify-center ${avatar.color}`;
-                  return (
-                    <label key={option} aria-label={`Avatar ${avatar.name}`}>
-                      <input
-                        type="radio"
-                        value={option}
-                        name={field.name}
-                        checked={field.value === option}
-                        onChange={() => field.onChange(option)}
-                        onBlur={field.onBlur}
-                        ref={field.ref}
-                        className="avatar-list-input | sr-only"
-                      />
-                      <div className={classes}>
-                        <img
-                          src={avatar.image}
-                          alt={`Avatar ${avatar.name}`}
-                          className="w-dvh"
-                        />
-                      </div>
-                    </label>
-                  );
-                })}
-              </div>
+                  {fieldState.error && <p>{fieldState.error.message}</p>}
+                </fieldset>
+              )}
+            />
 
-              {fieldState.error && <p>{fieldState.error.message}</p>}
-            </fieldset>
-          )}
-        />
+            <Button
+              type="submit"
+              className="justify-center"
+              disabled={maxPlayersReached}
+            >
+              Add
+            </Button>
+          </>
+        )}
 
-        <Button type="submit" className="justify-center">
-          Submit
-        </Button>
+        {state.players.length <= 1 ? (
+          <p className="font-body">You need at least two players to play!</p>
+        ) : (
+          <Button
+            onClick={onStartGame}
+            className="w-full justify-center"
+            disabled={!readyToStart}
+          >
+            Start game
+          </Button>
+        )}
       </form>
     </div>
   );

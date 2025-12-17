@@ -43,7 +43,7 @@ function useModalContext(componentName: string): ModalContextValue {
 
 type ModalRootProps = {
   isOpen: boolean;
-  onClose: () => void;
+  onClose?: () => void;
   children: ReactNode;
   /**
    * Optional accessible name fallback when no <Modal.Title> is used.

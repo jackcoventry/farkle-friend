@@ -1,6 +1,7 @@
 "use client";
 
 import { ModalStackProvider } from "@/components/Modal/ModalStackContext";
+import { GameProvider } from "@/domain/game/GameProvider";
 import "@/styles/globals.css";
 
 export default function RootLayout({
@@ -23,7 +24,9 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <ModalStackProvider>{children}</ModalStackProvider>
+        <ModalStackProvider>
+          <GameProvider>{children}</GameProvider>
+        </ModalStackProvider>
       </body>
     </html>
   );

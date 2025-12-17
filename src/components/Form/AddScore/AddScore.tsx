@@ -87,15 +87,15 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
         </div>
 
         <div className="w-full flex justify-center gap-4">
-          <RichButton type="submit" className="justify-center" icon="dice">
-            Submit score
-          </RichButton>
           <RichButton
             className="justify-center"
             icon="rocket"
             onClick={() => setShowCalculator(true)}
           >
-            Calculate
+            Calculator
+          </RichButton>
+          <RichButton type="submit" className="justify-center" icon="dice">
+            Submit score
           </RichButton>
         </div>
       </form>

@@ -39,8 +39,8 @@ function ScoreGenerator({ onChange }: Readonly<ScoreGeneratorProps>) {
         })}
       </div>
 
-      <div className="mt-8 flex flex-col items-center gap-4">
-        <p className="font-heading">{selectedItems.toString()}</p>
+      <div className="mt-4 flex flex-col items-center gap-4">
+        <p className="font-heading h-[36px]">{selectedItems.toString()}</p>
         <RichButton
           icon="bank"
           disabled={selectedItems.length === 0}
