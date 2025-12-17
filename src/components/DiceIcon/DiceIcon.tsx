@@ -11,7 +11,7 @@ function DiceIcon({
   className,
   count = 1,
   state,
-  variant = "medieval",
+  variant = "default",
 }: Readonly<DiceIconProps>) {
   let classes = "dice-icon";
   if (className) {
