@@ -1,11 +1,14 @@
 import type { Decorator, Preview } from "@storybook/react-vite";
 import { ModalStackProvider } from "../src/components/Modal/ModalStackContext";
+import { GameProvider } from "../src/domain/game/GameProvider";
 
 import "@/styles/globals.css";
 
-const withModalStack: Decorator = (Story) => (
+const withProviderStack: Decorator = (Story) => (
   <ModalStackProvider>
-    <Story />
+    <GameProvider>
+      <Story />
+    </GameProvider>
   </ModalStackProvider>
 );
 
@@ -19,7 +22,7 @@ const preview: Preview = {
       },
     },
   },
-  decorators: [withModalStack],
+  decorators: [withProviderStack],
 };
 
 export default preview;

@@ -39,9 +39,11 @@ export type GameSummary = {
 };
 
 export type DiceStyle = "default" | "medieval" | undefined;
+export type GameMode = "dice" | "manual" | undefined;
 
 export type GameSettings = {
   diceStyle: DiceStyle;
+  mode: GameMode;
   targetScore: number;
   showComboSuggestions: boolean;
 };

@@ -118,6 +118,7 @@ export default function GamePage() {
       <GameShell.Sidebar>
         <div className="flex flex-col h-full">
           <h2 className="font-heading mb-2">Players</h2>
+          <p>{state.settings.targetScore || "non"}</p>
 
           <div className="my-6 overflow-auto">
             <PlayerList
@@ -157,7 +158,7 @@ export default function GamePage() {
           </Modal>
         )}
 
-        {mode === "dice" ? (
+        {state.settings.mode === "dice" ? (
           <DiceTurnPanel state={state} dispatch={dispatch} />
         ) : (
           <ManualTurn state={state} dispatch={dispatch} />
