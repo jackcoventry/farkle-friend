@@ -5,14 +5,15 @@ import {
   resetGame,
   startGame,
 } from "./gameLogic";
-import { GameState, PlayerId } from "./gameTypes";
+import { GameSettings, GameState, PlayerId } from "./gameTypes";
 
 export type GameAction =
   | { type: "ADD_PLAYER"; username: string; avatar: number }
   | { type: "START_GAME" }
   | { type: "END_GAME" }
   | { type: "RESET_GAME" }
-  | { type: "RECORD_TURN"; playerId: PlayerId; score: number };
+  | { type: "RECORD_TURN"; playerId: PlayerId; score: number }
+  | { type: "UPDATE_SETTINGS"; settings: Partial<GameSettings> };
 
 export function reducer(state: GameState, action: GameAction): GameState {
   switch (action.type) {
@@ -26,6 +27,16 @@ export function reducer(state: GameState, action: GameAction): GameState {
       return resetGame(state);
     case "RECORD_TURN":
       return recordTurn(state, action.playerId, action.score);
+    case "UPDATE_SETTINGS": {
+      if (state.phase !== "LOBBY") return state; // settings should be locked once game started
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          ...action.settings,
+        },
+      };
+    }
     default:
       return state;
   }

@@ -1,10 +1,11 @@
+import { DiceStyle } from "@/domain/game/gameTypes";
 import "./DiceIcon.css";
 
 type DiceIconProps = {
   className?: string;
   count: number;
   state?: "default" | "disabled" | "active";
-  variant?: "default" | "medieval";
+  variant?: DiceStyle;
 };
 
 function DiceIcon({

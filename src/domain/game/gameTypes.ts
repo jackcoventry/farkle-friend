@@ -17,6 +17,7 @@ export type GameState = {
   currentPlayerIndex: number | null;
   phase: GamePhase;
   players: Player[];
+  settings: GameSettings;
   turns: Turn[];
   updatedAt: string;
 };
@@ -35,4 +36,12 @@ export type GameSummary = {
   leadingPlayerId: PlayerId | null;
   players: Player[];
   winnerId: PlayerId | null;
+};
+
+export type DiceStyle = "default" | "medieval" | undefined;
+
+export type GameSettings = {
+  diceStyle: DiceStyle;
+  targetScore: number;
+  showComboSuggestions: boolean;
 };

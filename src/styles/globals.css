@@ -64,6 +64,10 @@ body {
   animation: bounce-in 0.4s ease-out forwards;
 }
 
+.animate-fade-in {
+  animation: slide-in 0.4s ease-out forwards;
+}
+
 .avatar-list-input:checked + .avatar-list-image,
 .avatar-list-input:focus-visible + .avatar-list-image {
   box-shadow:

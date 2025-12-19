@@ -37,7 +37,6 @@ export function DiceTurnPanel({
   const currentRoll = dice.activeTurn.currentRoll;
 
   // List possible combinations for current roll
-  // TODO: add visibility in settings
   const currentCombos =
     dice.activeTurn.currentRoll == null
       ? []
@@ -95,18 +94,16 @@ export function DiceTurnPanel({
           </h2>
         )}
 
-        {/* 
-
-      TODO: Enable this in settings
-      
-      <ul>
-        {currentCombos.slice(0, 5).map((combo, index) => (
-          <li key={index}>
-            [{combo.dice.toSorted((a, b) => b - a).join(", ")}] → {combo.score}{" "}
-            pts
-          </li>
-        ))}
-      </ul> */}
+        {state.settings.showComboSuggestions ? (
+          <ul>
+            {currentCombos.slice(0, 5).map((combo, index) => (
+              <li key={index}>
+                [{combo.dice.toSorted((a, b) => b - a).join(", ")}] →{" "}
+                {combo.score} pts
+              </li>
+            ))}
+          </ul>
+        ) : null}
       </div>
 
       <div className="flex gap-2">

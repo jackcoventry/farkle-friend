@@ -18,6 +18,11 @@ export function createInitialGameState(): GameState {
     currentPlayerIndex: null,
     phase: "LOBBY",
     players: [],
+    settings: {
+      diceStyle: "default",
+      targetScore: 10000,
+      showComboSuggestions: false,
+    },
     turns: [],
     updatedAt: now,
   };
@@ -155,7 +160,7 @@ export function getGameSummary(state: GameState): GameSummary {
     }
   }
 
-  const target = 2000; // TODO: add to global settings
+  const target = state?.settings?.targetScore;
   const isTargetReached = playersSummary.some((p) => p.totalScore >= target);
   const winnerId = isTargetReached ? leadingPlayerId : null;
 
