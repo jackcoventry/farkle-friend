@@ -1,6 +1,7 @@
 import Modal from "@/components/Modal/Modal";
 import RulesInfo from "@/components/RulesInfo/RulesInfo";
 import { useState } from "react";
+import Button from "@/components/Button/Button";
 import "./Footer.css";
 
 function Footer() {
@@ -12,13 +13,18 @@ function Footer() {
 
   return (
     <>
-      <footer className="mt-auto">
-        <span className="font-sub-heading text-center">FARKLE!</span>
-        <span className="block">Built by Jack Coventry</span>
+      <footer className="mt-auto flex">
         <div>
-          <button type="button" onClick={handleShowRulesModal}>
-            Game Rules
-          </button>
+          <span className="font-sub-heading text-center">FARKLE!</span>
+          <span className="block">Built by Jack Coventry</span>
+        </div>
+        <div className="ml-auto mt-auto">
+          <Button
+            type="button"
+            onClick={handleShowRulesModal}
+            icon="question-circle"
+            iconOnly
+          />
         </div>
       </footer>
       <Modal

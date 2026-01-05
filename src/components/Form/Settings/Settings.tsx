@@ -1,6 +1,7 @@
 "use client";
 
 import Button from "@/components/Button/Button";
+import Pill from "@/components/Pill/Pill";
 import { useGame } from "@/domain/game/GameProvider";
 import { DiceStyle, GameMode } from "@/domain/game/gameTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -69,21 +70,25 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
             <fieldset aria-invalid={!!fieldState.error || undefined}>
               <legend className="mb-4">Dice Style</legend>
 
-              <div className="flex gap-4 grid grid-cols-3">
+              <div className="gap-4 grid grid-cols-3">
                 {diceStyles.map((option) => {
+                  const id = `${option}_${field.name}`;
                   return (
-                    <label key={option}>
-                      <input
-                        type="radio"
-                        value={option}
-                        name={field.name}
-                        checked={field.value === option}
-                        onChange={() => field.onChange(option)}
-                        onBlur={field.onBlur}
-                        ref={field.ref}
-                      />
-                      {option}
-                    </label>
+                    <Pill key={option}>
+                      <Pill.Control>
+                        <input
+                          type="radio"
+                          value={option}
+                          name={field.name}
+                          id={id}
+                          checked={field.value === option}
+                          onChange={() => field.onChange(option)}
+                          onBlur={field.onBlur}
+                          ref={field.ref}
+                        />
+                      </Pill.Control>
+                      <Pill.Label htmlFor={id}>{option}</Pill.Label>
+                    </Pill>
                   );
                 })}
               </div>
@@ -100,21 +105,26 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
             <fieldset aria-invalid={!!fieldState.error || undefined}>
               <legend className="mb-4">Mode</legend>
 
-              <div className="flex gap-4 grid grid-cols-3">
+              <div className="gap-4 grid grid-cols-3">
                 {modes.map((option) => {
+                  const id = `${option}_${field.name}`;
+
                   return (
-                    <label key={option}>
-                      <input
-                        type="radio"
-                        value={option}
-                        name={field.name}
-                        checked={field.value === option}
-                        onChange={() => field.onChange(option)}
-                        onBlur={field.onBlur}
-                        ref={field.ref}
-                      />
-                      {option}
-                    </label>
+                    <Pill key={option}>
+                      <Pill.Control>
+                        <input
+                          type="radio"
+                          value={option}
+                          name={field.name}
+                          id={id}
+                          checked={field.value === option}
+                          onChange={() => field.onChange(option)}
+                          onBlur={field.onBlur}
+                          ref={field.ref}
+                        />
+                      </Pill.Control>
+                      <Pill.Label htmlFor={id}>{option}</Pill.Label>
+                    </Pill>
                   );
                 })}
               </div>
@@ -128,14 +138,17 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
           name="targetScore"
           control={control}
           render={({ field }) => (
-            <input
-              className={`border-1 py-4 px-5 rounded-4xl ${errors?.targetScore ? "border-red-500" : "border-gray-800"}`}
-              {...field}
-              placeholder="Enter your name..."
-              data-valid={errors?.targetScore ? "false" : "true"}
-              type="number"
-              onChange={(value) => field.onChange(value.target.valueAsNumber)}
-            />
+            <>
+              <label>Point target</label>
+              <input
+                className={`border-1 py-4 px-5 rounded-4xl ${errors?.targetScore ? "border-red-500" : "border-gray-800"}`}
+                {...field}
+                placeholder="Enter your name..."
+                data-valid={errors?.targetScore ? "false" : "true"}
+                type="number"
+                onChange={(value) => field.onChange(value.target.valueAsNumber)}
+              />
+            </>
           )}
         />
 
@@ -145,27 +158,38 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
           render={({ field }) => (
             <>
               <p>Show combo suggestions</p>
-              <label>
-                <input
-                  type="radio"
-                  checked={field.value === true}
-                  onChange={() => field.onChange(true)}
-                />
-                Yes
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  checked={field.value === false}
-                  onChange={() => field.onChange(false)}
-                />
-                No
-              </label>
+              <Pill>
+                <Pill.Control>
+                  <input
+                    type="radio"
+                    checked={field.value === true}
+                    onChange={() => field.onChange(true)}
+                    name="showCombo"
+                    id="showCombo_yes"
+                  />
+                </Pill.Control>
+                <Pill.Label htmlFor="showCombo_yes">Yes</Pill.Label>
+              </Pill>
+
+              <Pill>
+                <Pill.Control>
+                  <input
+                    type="radio"
+                    checked={field.value === false}
+                    onChange={() => field.onChange(false)}
+                    name="showCombo"
+                    id="showCombo_no"
+                  />
+                </Pill.Control>
+                <Pill.Label htmlFor="showCombo_no">No</Pill.Label>
+              </Pill>
             </>
           )}
         />
 
-        <Button type="submit">Save</Button>
+        <Button type="submit" className="justify-center">
+          Save
+        </Button>
       </form>
     </div>
   );
