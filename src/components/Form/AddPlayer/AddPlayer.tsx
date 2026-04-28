@@ -1,10 +1,10 @@
 "use client";
 
+import { AvatarImage } from "@/components/AvatarImage/AvatarImage";
 import Button from "@/components/Button/Button";
 import { canStartGame } from "@/domain/game/gameLogic";
 import { useGame } from "@/domain/game/GameProvider";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Image from "next/image";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import z from "zod";
 
@@ -183,12 +183,10 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
                             disabled={isAvatarInUse}
                           />
                           <div className={classes}>
-                            <Image
-                              src={avatar.image}
+                            <AvatarImage
+                              avatar={avatar}
                               alt={`Avatar ${avatar.name}`}
-                              width={100}
-                              height={100}
-                              style={{ height: "auto", width: "100%" }}
+                              className="h-auto w-full"
                             />
                           </div>
                         </label>

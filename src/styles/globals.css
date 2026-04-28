@@ -188,7 +188,7 @@ body {
 }
 
 .turn-frame {
-  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  grid-template-rows: auto auto minmax(0, 1fr) auto auto;
 }
 
 @media (max-width: 900px) {

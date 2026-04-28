@@ -1,10 +1,10 @@
 "use client";
 
+import { AvatarImage } from "@/components/AvatarImage/AvatarImage";
 import { AvatarId, avatarSet } from "@/components/Form/AddPlayer/AddPlayer";
 import Modal from "@/components/Modal/Modal";
 import Splash from "@/components/Modal/Splash";
 import type { Player } from "@/domain/game/gameTypes";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 
 type PlayerSwitchSplashProps = {
@@ -41,13 +41,10 @@ export function PlayerSwitchSplash({
             <figure
               className={`rounded-full overflow-hidden w-[200px] h-[200px] mx-auto my-4 p-6 flex items-center justify-center ${avatar.color}`}
             >
-              <Image
-                src={avatar.image}
+              <AvatarImage
+                avatar={avatar}
                 alt={`${currentPlayer.username}'s ${avatar.name} avatar`}
-                width={200}
-                height={200}
                 className="splash-avatar"
-                style={{ height: 200, width: 200 }}
               />
             </figure>
           }

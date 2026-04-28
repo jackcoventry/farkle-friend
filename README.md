@@ -23,10 +23,19 @@ npm run preview
 `npm run preview` serves the exported `out/` directory locally. `npm run start`
 is kept as the same static preview command for hosts that expect it.
 
+## Vercel
+
+The repo includes `vercel.json` for static-first Vercel deployment:
+
+- Framework preset: Next.js
+- Build command: `npm run build`
+- Output directory: `out`
+
 ## Checks
 
 ```bash
 npm run lint
 npm test
 npm run test:e2e
+npm run test:e2e:static
 ```

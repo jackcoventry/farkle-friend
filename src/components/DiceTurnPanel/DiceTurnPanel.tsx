@@ -197,6 +197,9 @@ export function DiceTurnPanel({
           {isFarkled ? "Score 0 and end turn" : "End turn"}
         </RichButton>
       </div>
+      <p className="rounded-lg bg-white/80 px-4 py-2 text-center text-sm text-gray-800">
+        Shortcuts: 1-6 select dice, R roll, B bank, Enter end.
+      </p>
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import { AvatarImage } from "@/components/AvatarImage/AvatarImage";
 import Button from "@/components/Button/Button";
 import {
   AvatarId,
@@ -6,7 +7,6 @@ import {
 import Modal from "@/components/Modal/Modal";
 import Splash from "@/components/Modal/Splash";
 import type { Player } from "@/domain/game/gameTypes";
-import Image from "next/image";
 
 type GameFinishedModalProps = {
   onResetGame: () => void;
@@ -31,13 +31,10 @@ export function GameFinishedModal({
               className={`splash-avatar-crown relative rounded-full w-[200px] h-[200px] mx-auto my-4 p-6 flex items-center justify-center ${avatar?.color ?? "bg-gray-500"}`}
             >
               {avatar ? (
-                <Image
-                  src={avatar.image}
+                <AvatarImage
+                  avatar={avatar}
                   alt={`${winner?.username}'s ${avatar.name} avatar`}
-                  width={200}
-                  height={200}
                   className="splash-avatar"
-                  style={{ height: 200, width: 200 }}
                 />
               ) : null}
             </figure>

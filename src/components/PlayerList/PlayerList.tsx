@@ -1,6 +1,6 @@
+import { AvatarImage } from "@/components/AvatarImage/AvatarImage";
 import { Player } from "@/domain/game/gameTypes";
 import { AvatarId, avatarSet } from "@/components/Form/AddPlayer/AddPlayer";
-import Image from "next/image";
 
 type PlayerListProps = {
   activePlayerId?: string;
@@ -47,12 +47,10 @@ function PlayerList({
             <div
               className={`flex h-[60px] w-[60px] shrink-0 items-center justify-center rounded-full border-2 border-white p-2 ring ${avatar.color}`}
             >
-              <Image
-                src={avatar.image}
+              <AvatarImage
+                avatar={avatar}
                 alt={`${player.username}'s ${avatar.name} avatar`}
-                width={60}
-                height={60}
-                style={{ height: "auto", width: "100%" }}
+                className="h-auto w-full"
               />
             </div>
             <div className="flex min-w-0 flex-1 flex-col justify-center">
