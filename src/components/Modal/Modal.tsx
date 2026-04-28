@@ -199,9 +199,13 @@ function ModalHeader({ children }: Readonly<ModalSlot>) {
 /**
  * <Modal.Title> — accessible title, wires up aria-labelledby via titleId
  */
-function ModalTitle({ children }: Readonly<ModalSlot>) {
+function ModalTitle({ children, className }: Readonly<ModalSlot>) {
   const { titleId } = useModalContext("Modal.Title");
-  return <h2 id={titleId}>{children}</h2>;
+  return (
+    <h2 id={titleId} className={className}>
+      {children}
+    </h2>
+  );
 }
 
 /**

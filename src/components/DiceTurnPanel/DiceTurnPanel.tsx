@@ -7,6 +7,8 @@ import DiceIcon from "@/components/DiceIcon/DiceIcon";
 import RichButton from "@/components/RichButton/RichButton";
 import { useTurnController } from "@/domain/game/useTurnController";
 import { useDiceTurnController } from "@/domain/game/useDiceTurnController";
+import { getDiceTurnCopy } from "@/domain/game/diceTurnPresenter";
+import { useEffect } from "react";
 
 type DiceTurnPanelProps = {
   state: GameState;
@@ -25,12 +27,27 @@ export function DiceTurnPanel({
     onCommitScore: commitTurnScore,
   });
 
+  useDiceKeyboardShortcuts({
+    canBank: dice.canBank,
+    canFinish: dice.canFinish,
+    canRoll: dice.canRoll,
+    currentRollLength: dice.currentRoll?.length ?? 0,
+    onBank: dice.bankSelected,
+    onFinish: dice.finishTurn,
+    onRoll: dice.roll,
+    onToggleDie: dice.toggleDieSelection,
+  });
+
   if (!currentPlayer || !dice.activeTurn) {
     return <p>No active player</p>;
   }
 
   const currentRoll = dice.activeTurn.currentRoll;
   const isFarkled = dice.activeTurn.isFarkled;
+  const isHotDice =
+    dice.activeTurn.currentRoll === null &&
+    dice.activeTurn.availableDice === 6 &&
+    dice.activeTurn.tempScore > 0;
 
   // List possible combinations for current roll
   const currentCombos =
@@ -38,18 +55,12 @@ export function DiceTurnPanel({
       ? []
       : getScoringCombinations(dice.activeTurn.currentRoll);
   const hasSelectedDice = dice.selectedIndices.length > 0;
-  const selectedStatus =
-    hasSelectedDice && dice.selectedHasInvalidDice
-      ? "Selection includes dice that do not score."
-      : hasSelectedDice && dice.selectedScore > 0
-        ? `${dice.selectedScore} points selected.`
-        : hasSelectedDice
-          ? "Selected dice do not score."
-          : "Select scoring dice to bank them.";
-  const turnHeadline = getTurnHeadline({
+  const turnCopy = getDiceTurnCopy({
     canRoll: dice.canRoll,
     hasSelectedDice,
     isFarkled,
+    isHotDice,
+    selectedHasInvalidDice: dice.selectedHasInvalidDice,
     selectedScore: dice.selectedScore,
     tempScore: dice.activeTurn.tempScore,
     usesAllDice: dice.selectedUsesAllDice,
@@ -86,7 +97,7 @@ export function DiceTurnPanel({
         aria-live="polite"
       >
         <span className="font-heading-2">Selected:</span>{" "}
-        <span>{selectedStatus}</span>
+        <span>{turnCopy.selectedStatus}</span>
       </div>
 
       <div className="flex min-h-0 flex-col items-center justify-center gap-4 overflow-auto">
@@ -96,9 +107,18 @@ export function DiceTurnPanel({
             className="max-w-[520px] rounded-lg border-2 border-red-200 bg-white p-5 text-center shadow-lg"
           >
             <h2 className="font-heading text-red-700">Farkle!</h2>
-            <p className="mt-2">
-              No scoring dice were rolled. This turn scores 0 points.
-            </p>
+            <p className="mt-2">{turnCopy.detail}</p>
+          </div>
+        ) : null}
+
+        {isHotDice ? (
+          <div
+            role="status"
+            aria-live="polite"
+            className="max-w-[520px] rounded-lg border-2 border-yellow-300 bg-white p-5 text-center shadow-lg"
+          >
+            <h2 className="font-heading text-red-700">{turnCopy.title}</h2>
+            <p className="mt-2">{turnCopy.detail}</p>
           </div>
         ) : null}
 
@@ -129,14 +149,15 @@ export function DiceTurnPanel({
               );
             })}
           </div>
-        ) : (
+        ) : !isHotDice ? (
           <div className="max-w-[620px] rounded-lg bg-white/90 p-5 text-center shadow-lg">
             <p className="font-sub-heading text-red-600">
               {currentPlayer.username}&apos;s turn
             </p>
-            <h2 className="font-heading">{turnHeadline}</h2>
+            <h2 className="font-heading">{turnCopy.title}</h2>
+            <p className="mt-2">{turnCopy.detail}</p>
           </div>
-        )}
+        ) : null}
 
         {state.settings.showComboSuggestions && currentCombos.length > 0 ? (
           <ul className="rounded-lg bg-white/90 p-3">
@@ -180,29 +201,83 @@ export function DiceTurnPanel({
   );
 }
 
-type TurnHeadlineArgs = {
+type DiceKeyboardShortcutsArgs = {
+  canBank: boolean;
+  canFinish: boolean;
   canRoll: boolean;
-  hasSelectedDice: boolean;
-  isFarkled: boolean;
-  selectedScore: number;
-  tempScore: number;
-  usesAllDice: boolean;
+  currentRollLength: number;
+  onBank: () => void;
+  onFinish: () => void;
+  onRoll: () => void;
+  onToggleDie: (index: number) => void;
 };
 
-function getTurnHeadline({
+function useDiceKeyboardShortcuts({
+  canBank,
+  canFinish,
   canRoll,
-  hasSelectedDice,
-  isFarkled,
-  selectedScore,
-  tempScore,
-  usesAllDice,
-}: TurnHeadlineArgs): string {
-  if (isFarkled) return "This turn scores 0";
-  if (hasSelectedDice && selectedScore > 0 && usesAllDice) {
-    return `Bank ${selectedScore} or keep choosing`;
-  }
-  if (hasSelectedDice) return "Choose only scoring dice";
-  if (canRoll && tempScore > 0) return "Bank your turn or roll again";
-  if (canRoll) return "Start your turn";
-  return "Choose scoring dice";
+  currentRollLength,
+  onBank,
+  onFinish,
+  onRoll,
+  onToggleDie,
+}: DiceKeyboardShortcutsArgs) {
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (shouldIgnoreShortcut(event)) return;
+
+      const key = event.key.toLowerCase();
+      const dieNumber = Number(key);
+
+      if (Number.isInteger(dieNumber) && dieNumber >= 1 && dieNumber <= 6) {
+        if (dieNumber <= currentRollLength) {
+          event.preventDefault();
+          onToggleDie(dieNumber - 1);
+        }
+        return;
+      }
+
+      if (key === "r" && canRoll) {
+        event.preventDefault();
+        onRoll();
+        return;
+      }
+
+      if (key === "b" && canBank) {
+        event.preventDefault();
+        onBank();
+        return;
+      }
+
+      if (event.key === "Enter" && canFinish) {
+        event.preventDefault();
+        onFinish();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [
+    canBank,
+    canFinish,
+    canRoll,
+    currentRollLength,
+    onBank,
+    onFinish,
+    onRoll,
+    onToggleDie,
+  ]);
+}
+
+function shouldIgnoreShortcut(event: KeyboardEvent): boolean {
+  if (event.altKey || event.ctrlKey || event.metaKey) return true;
+
+  const target = event.target;
+  if (!(target instanceof HTMLElement)) return false;
+
+  return (
+    target.isContentEditable ||
+    target.matches("input, textarea, select, button, a")
+  );
 }

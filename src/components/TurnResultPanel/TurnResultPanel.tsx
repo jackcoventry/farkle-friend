@@ -1,6 +1,9 @@
+"use client";
+
 import Button from "@/components/Button/Button";
 import type { Player, TurnResult } from "@/domain/game/gameTypes";
 import { formatScore } from "@/utils/formatScore";
+import { useEffect, useId, useRef } from "react";
 
 type TurnResultPanelProps = {
   currentPlayer: Player;
@@ -16,12 +19,35 @@ export function TurnResultPanel({
   result,
 }: Readonly<TurnResultPanelProps>) {
   const actionText = result.isGameWinner ? "Show winner" : "Next player";
+  const titleId = useId();
+  const panelRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    panelRef.current?.focus();
+  }, [result.playerId, result.score]);
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
+    if (event.key !== "Enter") return;
+    if (event.target !== event.currentTarget) return;
+
+    event.preventDefault();
+    onAdvanceTurn();
+  };
 
   return (
-    <section className="m-auto flex w-full max-w-[560px] flex-col gap-5 rounded-lg bg-white p-6 text-center shadow-lg">
+    <section
+      ref={panelRef}
+      aria-labelledby={titleId}
+      aria-live="polite"
+      className="m-auto flex w-full max-w-[560px] flex-col gap-5 rounded-lg bg-white p-6 text-center shadow-lg outline-none focus-visible:ring-4 focus-visible:ring-red-300"
+      onKeyDown={handleKeyDown}
+      tabIndex={-1}
+    >
       <div>
         <p className="font-sub-heading text-red-600">Turn complete</p>
-        <h2 className="font-heading">{currentPlayer.username}</h2>
+        <h2 id={titleId} className="font-heading">
+          {currentPlayer.username}
+        </h2>
       </div>
       <dl className="grid gap-3 text-left sm:grid-cols-3">
         <div className="rounded-lg bg-gray-100 p-4">

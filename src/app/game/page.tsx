@@ -11,6 +11,7 @@ import { ConfirmGameActionModal } from "@/components/GameActions/ConfirmGameActi
 import type { ConfirmGameAction } from "@/components/GameActions/ConfirmGameActionModal";
 import { GameActions } from "@/components/GameActions/GameActions";
 import { GameFinishedModal } from "@/components/GameFinishedModal/GameFinishedModal";
+import { GameSetupSummary } from "@/components/GameSetupSummary/GameSetupSummary";
 import GameShell from "@/components/GameShell/GameShell";
 import { ManualTurn } from "@/components/ManualTurn/ManualTurn";
 import PlayerList from "@/components/PlayerList/PlayerList";
@@ -92,6 +93,7 @@ export default function GamePage() {
                 />
               </div>
             ) : null}
+            <GameSetupSummary settings={state.settings} />
             <Footer />
           </div>
         </GameShell.Sidebar>
@@ -133,7 +135,12 @@ export default function GamePage() {
               />
             </div>
 
-            <TurnHistory players={summary.players} turns={state.turns} />
+            <TurnHistory
+              leadingPlayerId={summary.leadingPlayerId}
+              players={summary.players}
+              targetScore={state.settings.targetScore}
+              turns={state.turns}
+            />
 
             <GameActions
               onQuit={() => setConfirmAction("quit")}

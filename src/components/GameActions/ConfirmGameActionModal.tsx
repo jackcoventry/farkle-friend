@@ -17,20 +17,18 @@ export function ConfirmGameActionModal({
   if (!action) return null;
 
   const isRestart = action === "restart";
-
   return (
     <Modal
       isOpen={true}
       onClose={onClose}
-      ariaLabel={isRestart ? "Restart game" : "Quit game"}
       variant="modal"
       theme="warning"
     >
       <Modal.Body className="rounded-lg bg-white p-6 shadow-lg">
         <div className="flex max-w-[460px] flex-col gap-4 text-center">
-          <h2 className="font-heading">
+          <Modal.Title className="font-heading">
             {isRestart ? "Restart this game?" : "Quit this game?"}
-          </h2>
+          </Modal.Title>
           <p>
             Current scores and turn progress will be lost. Players and settings
             will be kept.
