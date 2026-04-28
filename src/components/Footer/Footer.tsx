@@ -23,14 +23,17 @@ function Footer() {
             type="button"
             onClick={handleShowRulesModal}
             icon="question-circle"
-            iconOnly
-          />
+            ariaLabel="View rules and scoring"
+            className="items-center"
+          >
+            Rules & scoring
+          </Button>
         </div>
       </footer>
       <Modal
         isOpen={showRulesModal}
         onClose={() => setShowRulesModal(false)}
-        ariaLabel="Game finished"
+        ariaLabel="Game rules and scoring"
         variant="modal"
       >
         <Modal.Body>

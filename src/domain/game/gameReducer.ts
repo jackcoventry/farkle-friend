@@ -1,5 +1,6 @@
 import {
   addPlayer,
+  advanceTurn,
   endGame,
   removePlayer,
   recordTurn,
@@ -12,6 +13,7 @@ export type GameAction =
   | { type: "ADD_PLAYER"; username: string; avatar: number }
   | { type: "REMOVE_PLAYER"; playerId: PlayerId }
   | { type: "START_GAME" }
+  | { type: "ADVANCE_TURN" }
   | { type: "END_GAME" }
   | { type: "RESET_GAME" }
   | { type: "RECORD_TURN"; playerId: PlayerId; score: number }
@@ -25,6 +27,8 @@ export function reducer(state: GameState, action: GameAction): GameState {
       return removePlayer(state, action.playerId);
     case "START_GAME":
       return startGame(state);
+    case "ADVANCE_TURN":
+      return advanceTurn(state);
     case "END_GAME":
       return endGame(state);
     case "RESET_GAME":

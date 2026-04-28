@@ -63,20 +63,20 @@ export default function Home() {
             ))}
           </h1>
           <div
-            className="opacity-0 animate-bounce-in flex gap-4"
+            className="opacity-0 animate-bounce-in flex w-full max-w-[520px] flex-col gap-4 px-5 sm:flex-row sm:justify-center sm:px-0"
             style={{
               animationDelay: "1.45s",
             }}
           >
             <Link href="/game">
-              <Button as="inline" size="large" className="inline-block">
+              <Button as="inline" size="large" className="block w-full text-center">
                 Start Game
               </Button>
             </Link>
 
             <Button
               size="large"
-              className="inline-block"
+              className="block w-full text-center"
               onClick={handleSettingsOpen}
             >
               Settings

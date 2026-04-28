@@ -16,6 +16,7 @@ export type GameState = {
   createdAt: string;
   currentPlayerIndex: number | null;
   phase: GamePhase;
+  pendingTurnResult: TurnResult | null;
   players: Player[];
   settings: GameSettings;
   turns: Turn[];
@@ -29,6 +30,15 @@ export type Turn = {
   playerId: PlayerId;
   score: number;
   turnIndex: number;
+};
+
+export type TurnResult = {
+  isGameWinner: boolean;
+  newTotal: number;
+  nextPlayerId: PlayerId | null;
+  playerId: PlayerId;
+  previousTotal: number;
+  score: number;
 };
 
 export type GameSummary = {

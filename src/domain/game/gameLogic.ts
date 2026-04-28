@@ -16,6 +16,7 @@ export function createInitialGameState(): GameState {
     id: gameId,
     createdAt: now,
     currentPlayerIndex: null,
+    pendingTurnResult: null,
     phase: "LOBBY",
     players: [],
     settings: {
@@ -83,6 +84,7 @@ export function startGame(state: GameState): GameState {
   return withUpdatedAt({
     ...state,
     currentPlayerIndex: 0,
+    pendingTurnResult: null,
     phase: "IN_PROGRESS",
   });
 }
@@ -92,6 +94,7 @@ export function endGame(state: GameState): GameState {
   return withUpdatedAt({
     ...state,
     currentPlayerIndex: null,
+    pendingTurnResult: null,
     phase: "FINISHED",
   });
 }
@@ -101,8 +104,32 @@ export function resetGame(state: GameState): GameState {
   return withUpdatedAt({
     ...state,
     currentPlayerIndex: null,
+    pendingTurnResult: null,
     phase: "LOBBY",
     turns: [],
+  });
+}
+
+export function advanceTurn(state: GameState): GameState {
+  if (state.phase !== "IN_PROGRESS" || !state.pendingTurnResult) return state;
+
+  if (state.pendingTurnResult.isGameWinner) {
+    return withUpdatedAt({
+      ...state,
+      currentPlayerIndex: null,
+      pendingTurnResult: null,
+      phase: "FINISHED",
+    });
+  }
+
+  const nextPlayerIndex = state.players.findIndex(
+    (player) => player.id === state.pendingTurnResult?.nextPlayerId
+  );
+
+  return withUpdatedAt({
+    ...state,
+    currentPlayerIndex: nextPlayerIndex >= 0 ? nextPlayerIndex : 0,
+    pendingTurnResult: null,
   });
 }
 
@@ -113,6 +140,8 @@ export function recordTurn(
 ): GameState {
   // Return if a game is not in progress
   if (state.phase !== "IN_PROGRESS") return state;
+
+  if (state.pendingTurnResult) return state;
 
   // Return if the player's id doesn't exist in the state
   if (!state.players.some((p) => p.id === playerId)) return state;
@@ -129,23 +158,29 @@ export function recordTurn(
     createdAt: new Date().toISOString(),
   };
 
-  const turns = [...state.turns, turn];
   const currentIndex = state.currentPlayerIndex ?? 0;
   const nextIndex =
     state.players.length > 0 ? (currentIndex + 1) % state.players.length : null;
+  const turns = [...state.turns, turn];
+  const previousTotals = computeTotals(state);
   const nextState: GameState = {
     ...state,
     turns,
-    currentPlayerIndex: nextIndex,
   };
   const summary = getGameSummary(nextState);
+  const newTotal = summary.players.find((p) => p.id === playerId)?.totalScore ?? 0;
 
-  if (summary.isTargetReached) {
-    nextState.phase = "FINISHED";
-    nextState.currentPlayerIndex = null;
-  }
-
-  return withUpdatedAt(nextState);
+  return withUpdatedAt({
+    ...nextState,
+    pendingTurnResult: {
+      isGameWinner: summary.isTargetReached,
+      newTotal,
+      nextPlayerId: nextIndex == null ? null : state.players[nextIndex]?.id ?? null,
+      playerId,
+      previousTotal: previousTotals[playerId] ?? 0,
+      score: turn.score,
+    },
+  });
 }
 
 export function computeTotals(state: GameState): Record<PlayerId, number> {

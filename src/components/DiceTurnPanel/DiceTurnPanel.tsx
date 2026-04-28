@@ -37,6 +37,23 @@ export function DiceTurnPanel({
     dice.activeTurn.currentRoll == null
       ? []
       : getScoringCombinations(dice.activeTurn.currentRoll);
+  const hasSelectedDice = dice.selectedIndices.length > 0;
+  const selectedStatus =
+    hasSelectedDice && dice.selectedHasInvalidDice
+      ? "Selection includes dice that do not score."
+      : hasSelectedDice && dice.selectedScore > 0
+        ? `${dice.selectedScore} points selected.`
+        : hasSelectedDice
+          ? "Selected dice do not score."
+          : "Select scoring dice to bank them.";
+  const turnHeadline = getTurnHeadline({
+    canRoll: dice.canRoll,
+    hasSelectedDice,
+    isFarkled,
+    selectedScore: dice.selectedScore,
+    tempScore: dice.activeTurn.tempScore,
+    usesAllDice: dice.selectedUsesAllDice,
+  });
 
   return (
     <div className="turn-frame | grid gap-3 h-full overflow-hidden">
@@ -58,6 +75,18 @@ export function DiceTurnPanel({
             </span>
           </div>
         </div>
+      </div>
+
+      <div
+        className={`rounded-lg px-4 py-3 ${
+          dice.selectedHasInvalidDice
+            ? "bg-red-50 text-red-800"
+            : "bg-white/90 text-gray-900"
+        }`}
+        aria-live="polite"
+      >
+        <span className="font-heading-2">Selected:</span>{" "}
+        <span>{selectedStatus}</span>
       </div>
 
       <div className="flex min-h-0 flex-col items-center justify-center gap-4 overflow-auto">
@@ -101,9 +130,12 @@ export function DiceTurnPanel({
             })}
           </div>
         ) : (
-          <h2 className="text-white font-mega animate-pulse">
-            ROLL BABY, ROLL!
-          </h2>
+          <div className="max-w-[620px] rounded-lg bg-white/90 p-5 text-center shadow-lg">
+            <p className="font-sub-heading text-red-600">
+              {currentPlayer.username}&apos;s turn
+            </p>
+            <h2 className="font-heading">{turnHeadline}</h2>
+          </div>
         )}
 
         {state.settings.showComboSuggestions && currentCombos.length > 0 ? (
@@ -133,7 +165,7 @@ export function DiceTurnPanel({
           className={`grow-1 justify-center`}
           icon="bank"
         >
-          Bank
+          {dice.selectedScore > 0 ? `Bank ${dice.selectedScore}` : "Bank"}
         </RichButton>
         <RichButton
           onClick={dice.finishTurn}
@@ -146,4 +178,31 @@ export function DiceTurnPanel({
       </div>
     </div>
   );
+}
+
+type TurnHeadlineArgs = {
+  canRoll: boolean;
+  hasSelectedDice: boolean;
+  isFarkled: boolean;
+  selectedScore: number;
+  tempScore: number;
+  usesAllDice: boolean;
+};
+
+function getTurnHeadline({
+  canRoll,
+  hasSelectedDice,
+  isFarkled,
+  selectedScore,
+  tempScore,
+  usesAllDice,
+}: TurnHeadlineArgs): string {
+  if (isFarkled) return "This turn scores 0";
+  if (hasSelectedDice && selectedScore > 0 && usesAllDice) {
+    return `Bank ${selectedScore} or keep choosing`;
+  }
+  if (hasSelectedDice) return "Choose only scoring dice";
+  if (canRoll && tempScore > 0) return "Bank your turn or roll again";
+  if (canRoll) return "Start your turn";
+  return "Choose scoring dice";
 }

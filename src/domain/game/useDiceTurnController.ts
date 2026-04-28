@@ -8,7 +8,7 @@ import {
   rollInActiveTurn,
   startActiveTurn,
 } from "@/domain/game/turnLogic";
-import { scoreSelectedDice } from "@/domain/game/dice";
+import { scoreSelectedDiceWithUsage } from "@/domain/game/dice";
 import type { DieValue } from "@/domain/game/dice";
 
 type Args = {
@@ -51,9 +51,15 @@ export function useDiceTurnController({
       .filter((v): v is DieValue => v !== undefined);
   }, [currentRoll, selectedIndices]);
 
-  const selectedScore = useMemo(() => {
-    return heldDice.length > 0 ? scoreSelectedDice(heldDice) : 0;
+  const selectedScoring = useMemo(() => {
+    return heldDice.length > 0
+      ? scoreSelectedDiceWithUsage(heldDice)
+      : { score: 0, usedCount: 0 };
   }, [heldDice]);
+  const selectedScore = selectedScoring.score;
+  const selectedUsesAllDice =
+    heldDice.length > 0 && selectedScoring.usedCount === heldDice.length;
+  const selectedHasInvalidDice = selectedScore > 0 && !selectedUsesAllDice;
 
   const toggleDieSelection = (index: number) => {
     setSelectedState((prev) => {
@@ -133,6 +139,7 @@ export function useDiceTurnController({
     !!currentRoll &&
     selectedIndices.length > 0 &&
     selectedScore > 0 &&
+    selectedUsesAllDice &&
     !turnForPlayer.isFarkled &&
     !turnForPlayer.isComplete;
 
@@ -146,7 +153,9 @@ export function useDiceTurnController({
     activeTurn: turnForPlayer,
     currentRoll,
     selectedIndices,
+    selectedHasInvalidDice,
     selectedScore,
+    selectedUsesAllDice,
 
     canRoll,
     canBank,

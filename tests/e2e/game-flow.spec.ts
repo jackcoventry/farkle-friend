@@ -25,6 +25,9 @@ test("players can start a manual game, score turns, and reset for new players", 
 
   await page.getByLabel("Turn score").fill("50");
   await page.getByRole("button", { name: "Submit score" }).click();
+  await expect(page.getByText("New total")).toBeVisible();
+  await expect(page.getByText("Next up: Grace.")).toBeVisible();
+  await page.getByRole("button", { name: "Next player" }).click();
 
   await expect(
     page.getByRole("dialog", { name: "Grace's turn" })
@@ -33,6 +36,8 @@ test("players can start a manual game, score turns, and reset for new players", 
 
   await page.getByLabel("Turn score").fill("500");
   await page.getByRole("button", { name: "Submit score" }).click();
+  await expect(page.getByText("Grace reached the target score.")).toBeVisible();
+  await page.getByRole("button", { name: "Show winner" }).click();
 
   await expect(page.getByRole("dialog", { name: "Game finished" })).toBeVisible();
   await expect(page.getByText("Grace wins!")).toBeVisible();
