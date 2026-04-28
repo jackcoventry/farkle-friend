@@ -68,6 +68,8 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
     handleSubmit,
     formState: { errors },
     reset,
+    setError,
+    setValue,
   } = useForm<AddPlayerFormSchemaType>({
     resolver: zodResolver(AddPlayerFormSchema),
     defaultValues: {
@@ -77,24 +79,41 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
     mode: "onBlur",
   });
 
+  const { state, dispatch } = useGame();
+  const avatarsInUse = state.players.reduce((acc: number[], currentItem) => {
+    acc.push(currentItem?.avatar);
+    return acc;
+  }, []);
+  const maxPlayersReached = Boolean(state.players.length === 6);
   const submitHandler = (data: { username: string; avatar: number }) => {
+    const duplicateName = state.players.some(
+      (player) =>
+        player.username.trim().toLowerCase() ===
+        data.username.trim().toLowerCase()
+    );
+
+    if (duplicateName) {
+      setError("username", {
+        message: "That player name is already in use.",
+        type: "validate",
+      });
+      return;
+    }
+
     onSubmit(data);
     reset();
+    const nextAvailableAvatar =
+      avatarValues.find(
+        (avatar) => avatar !== data.avatar && !avatarsInUse.includes(avatar)
+      ) ?? 1;
+    setValue("avatar", nextAvailableAvatar);
   };
 
-  const { state, dispatch } = useGame();
   const readyToStart = Boolean(canStartGame(state));
 
   const onStartGame = () => {
     dispatch({ type: "START_GAME" });
   };
-
-  const avatarsInUse = state.players.reduce((acc: number[], currentItem) => {
-    acc.push(currentItem?.avatar);
-    return acc;
-  }, []);
-
-  const maxPlayersReached = Boolean(state.players.length === 6);
 
   return (
     <div className="form-wrapper | border-sun-300 border-1 p-6 rounded-lg bg-white self-center">
@@ -119,7 +138,16 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
                     {...field}
                     placeholder="Enter your name..."
                     data-valid={errors?.username ? "false" : "true"}
+                    aria-invalid={errors?.username ? "true" : undefined}
+                    aria-describedby={
+                      errors?.username ? "player-name-error" : undefined
+                    }
                   />
+                  {errors?.username ? (
+                    <p id="player-name-error" className="text-red-700">
+                      {errors.username.message}
+                    </p>
+                  ) : null}
                 </>
               )}
             />
@@ -134,11 +162,14 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
                   <div className="flex gap-4 grid grid-cols-3">
                     {avatarValues.map((option) => {
                       const avatar = avatarSet[option];
+                      const isAvatarInUse = avatarsInUse.includes(option);
                       const classes = `avatar-list-image | cursor-pointer enabled:hover:opacity-85 rounded-full overflow-hidden w-[100px] h-[100px] p-4 flex items-center justify-center ${avatar.color}`;
                       return (
                         <label
                           key={option}
-                          aria-label={`Avatar ${avatar.name}`}
+                          aria-label={`Avatar ${avatar.name}${
+                            isAvatarInUse ? " unavailable" : ""
+                          }`}
                         >
                           <input
                             type="radio"
@@ -149,7 +180,7 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
                             onBlur={field.onBlur}
                             ref={field.ref}
                             className="avatar-list-input | sr-only"
-                            disabled={avatarsInUse.includes(option)}
+                            disabled={isAvatarInUse}
                           />
                           <div className={classes}>
                             <Image
@@ -158,6 +189,7 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
                               width={100}
                               height={100}
                               className="h-auto w-full"
+                              style={{ height: "auto" }}
                             />
                           </div>
                         </label>

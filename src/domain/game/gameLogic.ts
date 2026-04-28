@@ -43,6 +43,13 @@ export function addPlayer(
   if (state.phase !== "LOBBY") return state;
   const trimmed = username.trim();
   if (!trimmed) return state;
+  if (
+    state.players.some(
+      (player) => player.username.toLowerCase() === trimmed.toLowerCase()
+    )
+  ) {
+    return state;
+  }
 
   const newPlayer: Player = {
     id: generateId(),
@@ -53,6 +60,16 @@ export function addPlayer(
   return withUpdatedAt({
     ...state,
     players: [...state.players, newPlayer],
+  });
+}
+
+export function removePlayer(state: GameState, playerId: PlayerId): GameState {
+  if (state.phase !== "LOBBY") return state;
+  if (!state.players.some((player) => player.id === playerId)) return state;
+
+  return withUpdatedAt({
+    ...state,
+    players: state.players.filter((player) => player.id !== playerId),
   });
 }
 

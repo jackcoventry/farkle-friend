@@ -2,6 +2,25 @@
   animation: up-and-down 0.5s infinite alternate;
 }
 
+.rich-button {
+  min-width: 0;
+}
+
+.rich-button > span:last-child {
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .rich-button > span:first-child {
+    height: 72px;
+    width: 72px;
+  }
+
+  .rich-button > span:last-child {
+    padding-inline: var(--spacing-4);
+  }
+}
+
 @keyframes up-and-down {
   from {
     transform: translateY(0);

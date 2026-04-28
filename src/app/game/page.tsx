@@ -39,6 +39,10 @@ export default function GamePage() {
     dispatch({ type: "RESET_GAME" });
   };
 
+  const onRemovePlayer = (playerId: string) => {
+    dispatch({ type: "REMOVE_PLAYER", playerId });
+  };
+
   const summary = getGameSummary(state);
   const { currentPlayer } = useTurnController(state, dispatch);
   const avatar = avatarSet[currentPlayer?.avatar as AvatarId];
@@ -52,7 +56,10 @@ export default function GamePage() {
 
             {state.players.length > 0 ? (
               <div className="my-6 overflow-auto">
-                <PlayerList players={state.players} />
+                <PlayerList
+                  players={state.players}
+                  onRemovePlayer={onRemovePlayer}
+                />
               </div>
             ) : null}
             <Footer />
@@ -91,6 +98,7 @@ export default function GamePage() {
                     width={200}
                     height={200}
                     className="splash-avatar"
+                    style={{ height: 200, width: 200 }}
                   />
                 ) : null}
               </figure>
@@ -188,6 +196,7 @@ function PlayerSwitchSplash({
                 width={200}
                 height={200}
                 className="splash-avatar"
+                style={{ height: 200, width: 200 }}
               />
             </figure>
           }

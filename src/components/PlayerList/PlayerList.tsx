@@ -4,11 +4,13 @@ import Image from "next/image";
 
 type PlayerListProps = {
   activePlayerId?: string;
+  onRemovePlayer?: (playerId: string) => void;
   players: Player[];
 };
 
 function PlayerList({
   activePlayerId,
+  onRemovePlayer,
   players = [],
 }: Readonly<PlayerListProps>) {
   return (
@@ -25,6 +27,7 @@ function PlayerList({
               alt={`${player.username}'s ${avatar.name} avatar`}
               width={60}
               height={60}
+              style={{ height: 60, width: 60 }}
             />
             <div className="flex flex-col justify-center">
               <h3 className="font-heading-2">{player.username}</h3>
@@ -32,6 +35,16 @@ function PlayerList({
                 <span className="block text-red-500">{player.totalScore}</span>
               )}
             </div>
+            {onRemovePlayer ? (
+              <button
+                type="button"
+                aria-label={`Remove ${player.username}`}
+                className="ml-auto self-center rounded-lg px-3 py-2 text-sm text-red-700 hover:bg-red-100 focus-visible:outline-2 focus-visible:outline-red-700"
+                onClick={() => onRemovePlayer(player.id)}
+              >
+                Remove
+              </button>
+            ) : null}
           </li>
         );
       })}

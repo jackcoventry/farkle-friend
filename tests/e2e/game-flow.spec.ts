@@ -7,7 +7,7 @@ test("players can start a manual game, score turns, and reset for new players", 
 
   await page.getByRole("button", { name: "Settings" }).click();
   await page.getByLabel("manual").check();
-  await page.getByLabel("Point target").fill("100");
+  await page.getByLabel("Point target").fill("500");
   await page.getByRole("button", { name: "Save" }).click();
 
   await page.getByRole("link", { name: "Start Game" }).click();
@@ -31,7 +31,7 @@ test("players can start a manual game, score turns, and reset for new players", 
   ).toBeVisible();
   await page.waitForTimeout(2100);
 
-  await page.getByLabel("Turn score").fill("100");
+  await page.getByLabel("Turn score").fill("500");
   await page.getByRole("button", { name: "Submit score" }).click();
 
   await expect(page.getByRole("dialog", { name: "Game finished" })).toBeVisible();

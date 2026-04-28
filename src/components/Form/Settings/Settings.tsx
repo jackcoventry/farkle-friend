@@ -10,11 +10,18 @@ import z from "zod";
 
 export const diceStyles = ["default", "medieval"] as const;
 export const modes = ["dice", "manual"] as const;
+const targetScorePresets = [5000, 10000, 20000] as const;
+const minTargetScore = 500;
+const maxTargetScore = 50000;
 
 const SettingsFormSchema = z.object({
   diceStyle: z.enum(diceStyles),
   mode: z.enum(modes),
-  targetScore: z.number(),
+  targetScore: z
+    .number()
+    .int("Target score must be a whole number.")
+    .min(minTargetScore, `Target score must be at least ${minTargetScore}.`)
+    .max(maxTargetScore, `Target score must be ${maxTargetScore} or less.`),
   showComboSuggestions: z.boolean(),
 });
 
@@ -35,6 +42,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
     handleSubmit,
     formState: { errors },
     reset,
+    setValue,
   } = useForm<SettingsFormSchemaType>({
     resolver: zodResolver(SettingsFormSchema),
     defaultValues: {
@@ -137,8 +145,8 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
         <Controller
           name="targetScore"
           control={control}
-          render={({ field }) => (
-            <>
+          render={({ field, fieldState }) => (
+            <div className="grid gap-3">
               <label htmlFor="target-score">Point target</label>
               <input
                 id="target-score"
@@ -146,11 +154,42 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
                 {...field}
                 placeholder="Enter target score..."
                 data-valid={errors?.targetScore ? "false" : "true"}
+                aria-invalid={fieldState.error ? "true" : undefined}
+                aria-describedby={
+                  fieldState.error ? "target-score-error" : undefined
+                }
                 type="number"
-                min={1}
+                min={minTargetScore}
+                max={maxTargetScore}
+                step={50}
                 onChange={(value) => field.onChange(value.target.valueAsNumber)}
               />
-            </>
+
+              <div className="flex flex-wrap gap-2">
+                {targetScorePresets.map((preset) => (
+                  <button
+                    key={preset}
+                    type="button"
+                    className="rounded-lg border border-gray-800 px-3 py-2 hover:bg-gray-100"
+                    onClick={() =>
+                      setValue("targetScore", preset, {
+                        shouldDirty: true,
+                        shouldTouch: true,
+                        shouldValidate: true,
+                      })
+                    }
+                  >
+                    {preset.toLocaleString()}
+                  </button>
+                ))}
+              </div>
+
+              {fieldState.error ? (
+                <p id="target-score-error" className="text-red-700">
+                  {fieldState.error.message}
+                </p>
+              ) : null}
+            </div>
           )}
         />
 
@@ -158,33 +197,35 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
           control={control}
           name="showComboSuggestions"
           render={({ field }) => (
-            <fieldset>
+            <fieldset className="grid gap-3">
               <legend>Show combo suggestions</legend>
-              <Pill>
-                <Pill.Control>
-                  <input
-                    type="radio"
-                    checked={field.value === true}
-                    onChange={() => field.onChange(true)}
-                    name="showCombo"
-                    id="showCombo_yes"
-                  />
-                </Pill.Control>
-                <Pill.Label htmlFor="showCombo_yes">Yes</Pill.Label>
-              </Pill>
+              <div className="flex flex-wrap gap-4">
+                <Pill>
+                  <Pill.Control>
+                    <input
+                      type="radio"
+                      checked={field.value === true}
+                      onChange={() => field.onChange(true)}
+                      name="showCombo"
+                      id="showCombo_yes"
+                    />
+                  </Pill.Control>
+                  <Pill.Label htmlFor="showCombo_yes">Yes</Pill.Label>
+                </Pill>
 
-              <Pill>
-                <Pill.Control>
-                  <input
-                    type="radio"
-                    checked={field.value === false}
-                    onChange={() => field.onChange(false)}
-                    name="showCombo"
-                    id="showCombo_no"
-                  />
-                </Pill.Control>
-                <Pill.Label htmlFor="showCombo_no">No</Pill.Label>
-              </Pill>
+                <Pill>
+                  <Pill.Control>
+                    <input
+                      type="radio"
+                      checked={field.value === false}
+                      onChange={() => field.onChange(false)}
+                      name="showCombo"
+                      id="showCombo_no"
+                    />
+                  </Pill.Control>
+                  <Pill.Label htmlFor="showCombo_no">No</Pill.Label>
+                </Pill>
+              </div>
             </fieldset>
           )}
         />

@@ -1,8 +1,30 @@
 .game-shell {
   display: grid;
   grid-template-columns: 400px 1fr;
+  min-height: 100dvh;
 }
 
 .game-shell__body {
   background-image: url("../../styles/images/pattern-1.png");
+  min-width: 0;
+  overflow: auto;
+}
+
+@media (max-width: 900px) {
+  .game-shell {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+
+  .game-shell__sidebar {
+    max-height: 38dvh;
+    overflow: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .game-shell__sidebar,
+  .game-shell__body {
+    padding: var(--spacing-4);
+  }
 }

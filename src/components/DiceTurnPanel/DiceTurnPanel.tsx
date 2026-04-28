@@ -30,6 +30,7 @@ export function DiceTurnPanel({
   }
 
   const currentRoll = dice.activeTurn.currentRoll;
+  const isFarkled = dice.activeTurn.isFarkled;
 
   // List possible combinations for current roll
   const currentCombos =
@@ -39,7 +40,7 @@ export function DiceTurnPanel({
 
   return (
     <div className="turn-frame | grid gap-3 h-full overflow-hidden">
-      <div className="flex gap-4">
+      <div className="flex flex-wrap gap-4">
         <div>
           <h3 className="text-white flex gap-4" aria-live="polite">
             <span className="font-sub-heading flex">ROUND SCORE:</span>
@@ -59,9 +60,21 @@ export function DiceTurnPanel({
         </div>
       </div>
 
-      <div className="flex items-center justify-center">
+      <div className="flex min-h-0 flex-col items-center justify-center gap-4 overflow-auto">
+        {isFarkled ? (
+          <div
+            role="alert"
+            className="max-w-[520px] rounded-lg border-2 border-red-200 bg-white p-5 text-center shadow-lg"
+          >
+            <h2 className="font-heading text-red-700">Farkle!</h2>
+            <p className="mt-2">
+              No scoring dice were rolled. This turn scores 0 points.
+            </p>
+          </div>
+        ) : null}
+
         {currentRoll ? (
-          <div className="flex gap-5">
+          <div className="flex flex-wrap justify-center gap-4 sm:gap-5">
             {currentRoll.map((value, idx) => {
               const isSelected = dice.selectedIndices.includes(idx);
               return (
@@ -77,7 +90,7 @@ export function DiceTurnPanel({
                   style={{
                     animationDelay: `${idx * 0.05}s`,
                   }}
-                  className="animate-bounce-in cursor-pointer opacity-0 w-[100px] hover:scale-115 transition-transform hover:z-10"
+                  className="animate-bounce-in w-[72px] cursor-pointer opacity-0 transition-transform hover:z-10 hover:scale-115 sm:w-[100px]"
                 >
                   <DiceIcon
                     count={value}
@@ -93,8 +106,8 @@ export function DiceTurnPanel({
           </h2>
         )}
 
-        {state.settings.showComboSuggestions ? (
-          <ul>
+        {state.settings.showComboSuggestions && currentCombos.length > 0 ? (
+          <ul className="rounded-lg bg-white/90 p-3">
             {currentCombos.slice(0, 5).map((combo, index) => (
               <li key={index}>
                 [{combo.dice.toSorted((a, b) => b - a).join(", ")}] →{" "}
@@ -105,7 +118,7 @@ export function DiceTurnPanel({
         ) : null}
       </div>
 
-      <div className="flex gap-2">
+      <div className="flex flex-col gap-2 sm:flex-row">
         <RichButton
           onClick={dice.roll}
           disabled={!dice.canRoll}
@@ -128,7 +141,7 @@ export function DiceTurnPanel({
           className={`grow-1 justify-center`}
           icon="rocket"
         >
-          End turn
+          {isFarkled ? "Score 0 and end turn" : "End turn"}
         </RichButton>
       </div>
     </div>

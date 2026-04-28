@@ -182,8 +182,55 @@ body {
   width: 100px;
 }
 
+.splash-avatar {
+  height: 200px;
+  width: 200px;
+}
+
 .turn-frame {
-  grid-template-rows: 60px 1fr 170px;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+
+@media (max-width: 900px) {
+  .turn-frame {
+    min-height: 620px;
+  }
+}
+
+@media (max-width: 600px) {
+  .form-wrapper {
+    width: min(100%, 420px);
+  }
+
+  .modal__dialog {
+    width: calc(100dvw - var(--spacing-5));
+  }
+
+  .font-mega {
+    font-size: clamp(3rem, 18vw, 7rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .animate-bounce-in,
+  .animate-fade-in,
+  .splash-screen {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .modal[data-variant="splash"] {
+    animation: none !important;
+  }
 }
 
 @layer utilities {
