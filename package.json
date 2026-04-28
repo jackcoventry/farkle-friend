@@ -10,6 +10,7 @@
     "icon:tokens": "node src/scripts/generate-icons.mjs",
     "icons": "npm run icon:tokens && svg-sprite --config svg.json --log=info \"src/icons/*.svg\"",
     "lint": "eslint",
+    "test": "vitest run",
     "storybook": "storybook dev -p 6006"
   },
   "dependencies": {
@@ -31,6 +32,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.0.6",
+    "jsdom": "^29.1.0",
     "react-hook-form": "^7.67.0",
     "svg-sprite": "^2.0.4",
     "tailwindcss": "^4",
