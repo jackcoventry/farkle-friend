@@ -44,14 +44,17 @@ function PlayerList({
             className={classes}
             aria-current={isActive ? "step" : undefined}
           >
-            <Image
-              src={avatar.image}
-              className={`w-[60px] h-[60px] rounded-full p-2 border-white border-2 ring ${avatar.color}`}
-              alt={`${player.username}'s ${avatar.name} avatar`}
-              width={60}
-              height={60}
-              style={{ height: 60, width: 60 }}
-            />
+            <div
+              className={`flex h-[60px] w-[60px] shrink-0 items-center justify-center rounded-full border-2 border-white p-2 ring ${avatar.color}`}
+            >
+              <Image
+                src={avatar.image}
+                alt={`${player.username}'s ${avatar.name} avatar`}
+                width={60}
+                height={60}
+                style={{ height: "auto", width: "100%" }}
+              />
+            </div>
             <div className="flex min-w-0 flex-1 flex-col justify-center">
               <div className="flex min-w-0 items-baseline gap-2">
                 <h3 className="font-heading-2 truncate">{player.username}</h3>
