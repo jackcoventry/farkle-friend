@@ -2,13 +2,8 @@
 
 import { GameAction } from "@/domain/game/gameReducer";
 import { GameState } from "@/domain/game/gameTypes";
-import { useEffect, useState } from "react";
-import Button from "@/components/Button/Button";
 import { getScoringCombinations } from "@/domain/game/dice";
 import DiceIcon from "@/components/DiceIcon/DiceIcon";
-import Splash from "@/components/Modal/Splash";
-import Modal from "@/components/Modal/Modal";
-import { AvatarId, avatarSet } from "@/components/Form/AddPlayer/AddPlayer";
 import RichButton from "@/components/RichButton/RichButton";
 import { useTurnController } from "@/domain/game/useTurnController";
 import { useDiceTurnController } from "@/domain/game/useDiceTurnController";
@@ -75,6 +70,10 @@ export function DiceTurnPanel({
                   type="button"
                   onClick={() => dice.toggleDieSelection(idx)}
                   disabled={dice?.activeTurn?.isFarkled}
+                  aria-pressed={isSelected}
+                  aria-label={`${isSelected ? "Deselect" : "Select"} die ${
+                    idx + 1
+                  } showing ${value}`}
                   style={{
                     animationDelay: `${idx * 0.05}s`,
                   }}

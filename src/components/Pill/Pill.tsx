@@ -1,8 +1,18 @@
 import React from "react";
 import "./Pill.css";
 
-export default function Pill({ children }) {
-  let control, label;
+type PillProps = {
+  children: React.ReactNode;
+};
+
+type PillLabelProps = {
+  children: React.ReactNode;
+  htmlFor: string;
+};
+
+export default function Pill({ children }: Readonly<PillProps>) {
+  let control: React.ReactElement | undefined;
+  let label: React.ReactElement | undefined;
 
   React.Children.forEach(children, (child) => {
     if (!React.isValidElement(child)) return;
@@ -19,11 +29,14 @@ export default function Pill({ children }) {
   );
 }
 
-Pill.Control = function PillControl({ children }) {
+Pill.Control = function PillControl({ children }: Readonly<PillProps>) {
   return <span className="pill-control">{children}</span>;
 };
 
-Pill.Label = function PillLabel({ children, htmlFor }) {
+Pill.Label = function PillLabel({
+  children,
+  htmlFor,
+}: Readonly<PillLabelProps>) {
   return (
     <label htmlFor={htmlFor} className="pill-label">
       {children}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState, useCallback } from "react";
+import { useMemo, useState } from "react";
 import type { ActiveTurn } from "@/domain/game/turnLogic";
 import {
   bankDiceFromCurrentRoll,
@@ -23,20 +23,26 @@ export function useDiceTurnController({
   onCommitScore,
 }: Args) {
   const [activeTurn, setActiveTurn] = useState<ActiveTurn | null>(null);
-  const [selectedIndices, setSelectedIndices] = useState<number[]>([]);
+  const [selectedState, setSelectedState] = useState<{
+    playerId: string | null;
+    indices: number[];
+  }>({ playerId: null, indices: [] });
 
-  // Start / reset turn when player changes
-  useEffect(() => {
-    if (phase === "IN_PROGRESS" && playerId) {
-      setActiveTurn(startActiveTurn(playerId));
-      setSelectedIndices([]);
-    } else {
-      setActiveTurn(null);
-      setSelectedIndices([]);
-    }
-  }, [phase, playerId]);
+  const turnForPlayer = useMemo(() => {
+    if (phase !== "IN_PROGRESS" || !playerId) return null;
+    if (activeTurn?.playerId === playerId) return activeTurn;
+    return startActiveTurn(playerId);
+  }, [activeTurn, phase, playerId]);
 
-  const currentRoll = activeTurn?.currentRoll ?? null;
+  const selectedIndices = useMemo(
+    () => (selectedState.playerId === playerId ? selectedState.indices : []),
+    [playerId, selectedState.indices, selectedState.playerId]
+  );
+  const currentRoll = turnForPlayer?.currentRoll ?? null;
+
+  const setSelectedIndices = (indices: number[]) => {
+    setSelectedState({ playerId, indices });
+  };
 
   const heldDice: DieValue[] = useMemo(() => {
     if (!currentRoll || selectedIndices.length === 0) return [];
@@ -49,36 +55,45 @@ export function useDiceTurnController({
     return heldDice.length > 0 ? scoreSelectedDice(heldDice) : 0;
   }, [heldDice]);
 
-  const toggleDieSelection = useCallback((index: number) => {
-    setSelectedIndices((prev) =>
-      prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
-    );
-  }, []);
+  const toggleDieSelection = (index: number) => {
+    setSelectedState((prev) => {
+      const indices = prev.playerId === playerId ? prev.indices : [];
+      return {
+        playerId,
+        indices: indices.includes(index)
+        ? indices.filter((i) => i !== index)
+          : [...indices, index],
+      };
+    });
+  };
 
-  const roll = useCallback(() => {
+  const roll = () => {
     setSelectedIndices([]);
     setActiveTurn((prev) => {
-      if (!prev) return prev;
-      if (prev.isComplete || prev.isFarkled) return prev;
-      if (prev.currentRoll !== null) return prev;
-      return rollInActiveTurn(prev);
+      if (!playerId || phase !== "IN_PROGRESS") return null;
+      const turn = prev?.playerId === playerId ? prev : startActiveTurn(playerId);
+      if (turn.isComplete || turn.isFarkled) return turn;
+      if (turn.currentRoll !== null) return turn;
+      return rollInActiveTurn(turn);
     });
-  }, []);
+  };
 
-  const bankSelected = useCallback(() => {
+  const bankSelected = () => {
     if (!currentRoll || selectedIndices.length === 0) return;
     if (selectedScore <= 0) return;
 
-    setActiveTurn((prev) =>
-      prev ? bankDiceFromCurrentRoll(prev, selectedIndices) : prev
-    );
+    setActiveTurn((prev) => {
+      const turn =
+        prev?.playerId === playerId ? prev : turnForPlayer;
+      return turn ? bankDiceFromCurrentRoll(turn, selectedIndices) : turn;
+    });
     setSelectedIndices([]);
-  }, [currentRoll, selectedIndices, selectedScore]);
+  };
 
-  const finishTurn = useCallback(() => {
-    if (!activeTurn || !playerId) return;
+  const finishTurn = () => {
+    if (!turnForPlayer || !playerId) return;
 
-    let turn = activeTurn;
+    let turn = turnForPlayer;
 
     if (
       !turn.isFarkled &&
@@ -105,30 +120,30 @@ export function useDiceTurnController({
 
     setActiveTurn(null);
     setSelectedIndices([]);
-  }, [activeTurn, playerId, selectedIndices, selectedScore, onCommitScore]);
+  };
 
   const canRoll =
-    !!activeTurn &&
-    !activeTurn.isFarkled &&
-    !activeTurn.isComplete &&
-    activeTurn.currentRoll === null;
+    !!turnForPlayer &&
+    !turnForPlayer.isFarkled &&
+    !turnForPlayer.isComplete &&
+    turnForPlayer.currentRoll === null;
 
   const canBank =
-    !!activeTurn &&
+    !!turnForPlayer &&
     !!currentRoll &&
     selectedIndices.length > 0 &&
     selectedScore > 0 &&
-    !activeTurn.isFarkled &&
-    !activeTurn.isComplete;
+    !turnForPlayer.isFarkled &&
+    !turnForPlayer.isComplete;
 
   const canFinish =
-    !!activeTurn &&
-    !activeTurn.isComplete &&
-    (activeTurn.isFarkled ||
-      (activeTurn.currentRoll === null && activeTurn.tempScore > 0));
+    !!turnForPlayer &&
+    !turnForPlayer.isComplete &&
+    (turnForPlayer.isFarkled ||
+      (turnForPlayer.currentRoll === null && turnForPlayer.tempScore > 0));
 
   return {
-    activeTurn,
+    activeTurn: turnForPlayer,
     currentRoll,
     selectedIndices,
     selectedScore,
