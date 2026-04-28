@@ -74,7 +74,7 @@ function ModalRoot({
   const getFocusableElements = useCallback((): HTMLElement[] => {
     if (!dialogRef.current) return [];
     return Array.from(
-      dialogRef.current.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTORS)
+      dialogRef.current.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTORS),
     ).filter((el) => !el.hasAttribute("disabled") && el.tabIndex !== -1);
   }, []);
 
@@ -93,11 +93,7 @@ function ModalRoot({
 
     lastFocusedRef.current = document.activeElement as HTMLElement | null;
 
-    const raf = requestAnimationFrame(() => {
-      focusFirstElement();
-    });
-
-    return () => cancelAnimationFrame(raf);
+    focusFirstElement();
   }, [isOpen, isTopMost, focusFirstElement]);
 
   // Restore focus when closed
@@ -156,7 +152,7 @@ function ModalRoot({
   };
 
   const ariaLabelledBy = ariaLabel ? undefined : titleId;
-  const rootClasses = `modal | items-center justify-center bg-black/25 flex inset-0 fixed z-50${isOpen ? " opacity-100 pointer-events-auto" : " opacity-0 pointer-events-none"}`;
+  const rootClasses = `modal modal__overlay | items-center justify-center bg-black/25 flex inset-0 fixed z-50${isOpen ? " opacity-100 pointer-events-auto" : " opacity-0 pointer-events-none"}`;
   const dialogClasses = `modal__dialog | flex flex-col outline-none w-full`;
 
   return createPortal(
@@ -184,7 +180,7 @@ function ModalRoot({
         </ModalContext.Provider>
       </div>
     </div>,
-    document.body
+    document.body,
   );
 }
 
@@ -229,7 +225,7 @@ function ModalCloseButton({
     <Button
       type="button"
       onClick={handleClose}
-      aria-label={ariaLabel}
+      ariaLabel={ariaLabel}
       iconOnly
       icon="close"
       className="justify-end mb-4 ml-auto"

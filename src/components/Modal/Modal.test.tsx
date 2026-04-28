@@ -22,7 +22,7 @@ describe("Modal (compound API)", () => {
         <Modal.Body>
           <button>Inside</button>
         </Modal.Body>
-      </Modal>
+      </Modal>,
     );
 
     // Role-based queries should respect aria-hidden="true"
@@ -40,7 +40,7 @@ describe("Modal (compound API)", () => {
         <Modal.Body>
           <button>Inside</button>
         </Modal.Body>
-      </Modal>
+      </Modal>,
     );
 
     const dialog = screen.getByRole("dialog", { name: "My modal title" });
@@ -56,7 +56,7 @@ describe("Modal (compound API)", () => {
         <Modal.Body>
           <button>Inside</button>
         </Modal.Body>
-      </Modal>
+      </Modal>,
     );
 
     const dialog = screen.getByRole("dialog", { name: "Aria label only" });
@@ -75,7 +75,7 @@ describe("Modal (compound API)", () => {
         <Modal.Body>
           <button>Inside</button>
         </Modal.Body>
-      </Modal>
+      </Modal>,
     );
 
     const dialog = screen.getByRole("dialog", { name: "My modal" });
@@ -89,7 +89,7 @@ describe("Modal (compound API)", () => {
     const user = userEvent.setup();
     const onClose = vi.fn();
 
-    const { container } = renderWithProvider(
+    renderWithProvider(
       <Modal isOpen onClose={onClose} ariaLabel="My modal">
         <Modal.Header>
           <Modal.Title>My modal</Modal.Title>
@@ -98,11 +98,11 @@ describe("Modal (compound API)", () => {
         <Modal.Body>
           <button>Inside</button>
         </Modal.Body>
-      </Modal>
+      </Modal>,
     );
 
     const dialog = screen.getByRole("dialog", { name: "My modal" });
-    const overlay = container.querySelector(".hoam-modal__overlay");
+    const overlay = document.querySelector(".modal__overlay");
     expect(overlay).not.toBeNull();
 
     // Click inside the dialog: SHOULD NOT close
@@ -156,7 +156,7 @@ describe("Modal (compound API)", () => {
     await user.click(openButton);
 
     const firstFocusable = await screen.findByRole("button", {
-      name: "First focusable",
+      name: "Close dialog",
     });
     expect(firstFocusable).toHaveFocus();
 
@@ -178,7 +178,7 @@ describe("Modal (compound API)", () => {
         <Modal.Body>
           <button>Inside</button>
         </Modal.Body>
-      </Modal>
+      </Modal>,
     );
 
     const closeButton = screen.getByRole("button", { name: "Close dialog" });

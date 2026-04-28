@@ -45,7 +45,7 @@ const TemplateForGroup: Story = {
       {args.count ? (
         <>
           {[...new Array(args.count).keys()].map((e) => (
-            <DiceIcon count={e + 1} />
+            <DiceIcon key={e} count={e + 1} />
           ))}
         </>
       ) : null}

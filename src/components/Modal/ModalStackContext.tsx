@@ -84,17 +84,18 @@ export function ModalStackProvider({
 export function useModalStack(id: string, active: boolean) {
   const ctx = useContext(ModalStackContext);
 
+  const hasProvider = ctx !== null;
   const register = ctx?.register;
   const unregister = ctx?.unregister;
 
   useEffect(() => {
-    if (!ctx || !active || !register || !unregister) return;
+    if (!hasProvider || !active || !register || !unregister) return;
 
     register(id);
     return () => {
       unregister(id);
     };
-  }, [active, id, register, unregister]);
+  }, [active, hasProvider, id, register, unregister]);
 
   const isTopMost = ctx?.isTop ? ctx.isTop(id) : true;
 

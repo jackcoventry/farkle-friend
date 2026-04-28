@@ -2,14 +2,16 @@
 
 import Button from "@/components/Button/Button";
 import DiceIcon from "@/components/DiceIcon/DiceIcon";
-import Settings from "@/components/Form/Settings/Settings";
+import Settings, {
+  SettingsFormSchemaType,
+} from "@/components/Form/Settings/Settings";
 import Modal from "@/components/Modal/Modal";
 import { useGame } from "@/domain/game/GameProvider";
 import Link from "next/link";
 import { useState } from "react";
 
 export default function Home() {
-  const { state, dispatch } = useGame();
+  const { dispatch } = useGame();
 
   const title = "FARKLE!".split("");
   const [settingsOpen, setSettingsOpen] = useState<boolean>(false);
@@ -20,8 +22,7 @@ export default function Home() {
     setSettingsOpen(false);
   };
 
-  const onSubmit = (data) => {
-    console.log("data", data);
+  const onSubmit = (data: SettingsFormSchemaType) => {
     dispatch({
       type: "UPDATE_SETTINGS",
       settings: data,
@@ -82,7 +83,11 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <Modal isOpen={settingsOpen} onClose={handleSettingsClose}>
+      <Modal
+        isOpen={settingsOpen}
+        onClose={handleSettingsClose}
+        ariaLabel="Settings"
+      >
         <Modal.Body>
           <Settings onSubmit={onSubmit} />
         </Modal.Body>

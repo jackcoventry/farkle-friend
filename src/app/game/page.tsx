@@ -34,20 +34,13 @@ export default function GamePage() {
     dispatch({ type: "START_GAME" });
   };
 
-  const summary = getGameSummary(state);
-  const { currentPlayer } = useTurnController(state, dispatch);
-  const [showPlayerSwitch, setShowPlayerSwitch] = useState<boolean>(false);
-  const avatar = avatarSet[currentPlayer?.avatar as AvatarId];
-  const mode = "manual";
-
-  const handlePlayerChange = () => {
-    setShowPlayerSwitch(true);
-    setTimeout(() => {
-      setShowPlayerSwitch(false);
-    }, 2000);
+  const onResetPlayers = () => {
+    dispatch({ type: "RESET_GAME" });
   };
 
-  useEffect(handlePlayerChange, [state.currentPlayerIndex]);
+  const summary = getGameSummary(state);
+  const { currentPlayer } = useTurnController(state, dispatch);
+  const avatar = avatarSet[currentPlayer?.avatar as AvatarId];
 
   if (state.phase === "LOBBY") {
     return (
@@ -79,32 +72,31 @@ export default function GamePage() {
         ? null
         : summary.players.find((p) => p.id === summary.winnerId);
 
-    const avatar =
-      avatarSet[
-        state.players[state.currentPlayerIndex ?? 0].avatar as AvatarId
-      ];
+    const avatar = avatarSet[winner?.avatar as AvatarId];
 
     return (
       <Modal isOpen={true} ariaLabel="Game finished" variant="splash">
         <Modal.Body>
           <Splash
-            title={`${winner?.username} wins!`}
+            title={winner ? `${winner.username} wins!` : "Game finished"}
             image={
               <figure
-                className={`splash-avatar-crown relative rounded-full w-[200px] h-[200px] mx-auto my-4 p-6 flex items-center justify-center ${avatar.color}`}
+                className={`splash-avatar-crown relative rounded-full w-[200px] h-[200px] mx-auto my-4 p-6 flex items-center justify-center ${avatar?.color ?? "bg-gray-500"}`}
               >
-                <img
-                  src={avatar.image}
-                  alt="The user's selected avatar of a playful illustration"
-                  className="splash-avatar | w-[200px] h-[200px]"
-                />
+                {avatar ? (
+                  <img
+                    src={avatar.image}
+                    alt={`${winner?.username}'s ${avatar.name} avatar`}
+                    className="splash-avatar | w-[200px] h-[200px]"
+                  />
+                ) : null}
               </figure>
             }
           >
             <Button onClick={onResetGame} className="justify-center">
               Another game?
             </Button>
-            <Button as="a" href="/game" className="justify-center">
+            <Button onClick={onResetPlayers} className="justify-center">
               New players
             </Button>
           </Splash>
@@ -131,39 +123,73 @@ export default function GamePage() {
         </div>
       </GameShell.Sidebar>
       <GameShell.Body>
-        {showPlayerSwitch && (
-          <Modal
-            isOpen={true}
-            ariaLabel={`${currentPlayer.username}'s turn`}
-            variant="splash"
-          >
-            <Modal.Body>
-              <Splash
-                title={`${currentPlayer.username}'s turn`}
-                image={
-                  <figure
-                    className={`rounded-full overflow-hidden w-[200px] h-[200px] mx-auto my-4 p-6 flex items-center justify-center ${avatar.color}`}
-                  >
-                    <img
-                      src={avatar.image}
-                      alt="The user's selected avatar of a playful illustration"
-                      className="splash-avatar | w-[200px] h-[200px]"
-                    />
-                  </figure>
-                }
-                subtitle="Current score:"
-                text={currentPlayer?.totalScore?.toString() || "0"}
-              />
-            </Modal.Body>
-          </Modal>
-        )}
+        {currentPlayer && avatar ? (
+          <PlayerSwitchSplash
+            key={`${currentPlayer.id}-${state.currentPlayerIndex}`}
+            currentPlayer={currentPlayer}
+            avatar={avatar}
+          />
+        ) : null}
 
-        {state.settings.mode === "dice" ? (
-          <DiceTurnPanel state={state} dispatch={dispatch} />
+        {currentPlayer ? (
+          state.settings.mode === "dice" ? (
+            <DiceTurnPanel state={state} dispatch={dispatch} />
+          ) : (
+            <ManualTurn state={state} dispatch={dispatch} />
+          )
         ) : (
-          <ManualTurn state={state} dispatch={dispatch} />
+          <p>No active player</p>
         )}
       </GameShell.Body>
     </GameShell>
+  );
+}
+
+type PlayerSwitchSplashProps = {
+  avatar: (typeof avatarSet)[AvatarId];
+  currentPlayer: NonNullable<ReturnType<typeof useTurnController>["currentPlayer"]>;
+};
+
+function PlayerSwitchSplash({
+  avatar,
+  currentPlayer,
+}: Readonly<PlayerSwitchSplashProps>) {
+  const [isOpen, setIsOpen] = useState(true);
+
+  useEffect(() => {
+    const timeout = window.setTimeout(() => {
+      setIsOpen(false);
+    }, 2000);
+
+    return () => window.clearTimeout(timeout);
+  }, []);
+
+  if (!isOpen) return null;
+
+  return (
+    <Modal
+      isOpen={true}
+      ariaLabel={`${currentPlayer.username}'s turn`}
+      variant="splash"
+    >
+      <Modal.Body>
+        <Splash
+          title={`${currentPlayer.username}'s turn`}
+          image={
+            <figure
+              className={`rounded-full overflow-hidden w-[200px] h-[200px] mx-auto my-4 p-6 flex items-center justify-center ${avatar.color}`}
+            >
+              <img
+                src={avatar.image}
+                alt={`${currentPlayer.username}'s ${avatar.name} avatar`}
+                className="splash-avatar | w-[200px] h-[200px]"
+              />
+            </figure>
+          }
+          subtitle="Current score:"
+          text={currentPlayer?.totalScore?.toString() || "0"}
+        />
+      </Modal.Body>
+    </Modal>
   );
 }
