@@ -188,8 +188,7 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
                               alt={`Avatar ${avatar.name}`}
                               width={100}
                               height={100}
-                              className="h-auto w-full"
-                              style={{ height: "auto" }}
+                              style={{ height: "auto", width: "100%" }}
                             />
                           </div>
                         </label>

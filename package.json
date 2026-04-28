@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "node config/static-server.mjs out",
     "tokens": "node config/style-dictionary.mjs",
     "icon:tokens": "node src/scripts/generate-icons.mjs",
     "icons": "npm run icon:tokens && svg-sprite --config svg.json --log=info \"src/icons/*.svg\"",

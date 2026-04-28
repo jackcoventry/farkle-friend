@@ -1,5 +1,11 @@
 export type GamePhase = "LOBBY" | "IN_PROGRESS" | "FINISHED";
 
+export type GameFlowState =
+  | "LOBBY"
+  | "TURN_ACTIVE"
+  | "TURN_RESULT"
+  | "FINISHED";
+
 export type PlayerId = string;
 
 export type GameId = string;
