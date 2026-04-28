@@ -17,10 +17,11 @@ The project is configured for static export. Production builds are written to
 
 ```bash
 npm run build
-npm run start
+npm run preview
 ```
 
-`npm run start` serves the exported `out/` directory locally.
+`npm run preview` serves the exported `out/` directory locally. `npm run start`
+is kept as the same static preview command for hosts that expect it.
 
 ## Checks
 

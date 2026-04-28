@@ -3,6 +3,7 @@ import { createServer } from "node:http";
 import { extname, join, normalize, resolve } from "node:path";
 
 const root = resolve(process.argv[2] ?? "out");
+const host = process.env.HOST ?? "127.0.0.1";
 const port = Number(process.env.PORT ?? 3000);
 
 const contentTypes = {
@@ -56,6 +57,6 @@ const server = createServer((request, response) => {
   createReadStream(filePath).pipe(response);
 });
 
-server.listen(port, () => {
-  console.log(`Serving ${root} at http://localhost:${port}`);
+server.listen(port, host, () => {
+  console.log(`Serving ${root} at http://${host}:${port}`);
 });

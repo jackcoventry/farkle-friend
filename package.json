@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "preview": "node config/static-server.mjs out",
     "start": "node config/static-server.mjs out",
     "tokens": "node config/style-dictionary.mjs",
     "icon:tokens": "node src/scripts/generate-icons.mjs",

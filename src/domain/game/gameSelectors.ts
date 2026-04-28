@@ -44,6 +44,17 @@ export function getPlayerNameMap(players: Player[]): Map<PlayerId, string> {
   return new Map(players.map((player) => [player.id, player.username]));
 }
 
+export function getBiggestTurn(turns: Turn[]): Turn | null {
+  return turns.reduce<Turn | null>((biggest, turn) => {
+    if (!biggest || turn.score > biggest.score) return turn;
+    return biggest;
+  }, null);
+}
+
+export function getLastFarkle(turns: Turn[]): Turn | null {
+  return turns.findLast((turn) => turn.score === 0) ?? null;
+}
+
 export function shouldWarnBeforeUnload(state: GameState): boolean {
   return state.phase === "IN_PROGRESS" && state.players.length > 0;
 }
