@@ -2,6 +2,24 @@
 @import "./tokens.theme.css";
 @import "./font.css";
 
+:root {
+  --font-family-1: var(--font-dynapuff), system-ui, -apple-system, "Segoe UI",
+    "Helvetica Neue", Arial, sans-serif;
+  --font-family-2: var(--font-outfit), system-ui, -apple-system, "Segoe UI",
+    "Helvetica Neue", Arial, sans-serif;
+  --font-family-3: var(--font-kirang-haerang), system-ui, -apple-system,
+    "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-title-1: 400 32px/1.1 var(--font-family-1);
+  --font-title-2: 400 24px/1.1 var(--font-family-2);
+  --font-title-3: 400 40px/1.5 var(--font-family-3);
+  --font-title-mega: 400 clamp(3rem, -0.875rem + 8.333vw, 10rem) / 1.1
+    var(--font-family-3);
+  --font-body-1: 400 18px/1.5 var(--font-family-2);
+  --font-button-1: 400 18px/1.5 var(--font-family-1);
+  --font-button-2: 400 24px/1.5 var(--font-family-1);
+  --font-button-3: 400 32px/1.5 var(--font-family-1);
+}
+
 body {
   font: var(--font-body-1);
 }

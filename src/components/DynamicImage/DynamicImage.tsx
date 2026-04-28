@@ -2,6 +2,7 @@ import dice from "../../../public/dice.svg";
 import rocket from "../../../public/rocket.svg";
 import bank from "../../../public/bank.svg";
 import cancel from "../../../public/cancel.svg";
+import Image from "next/image";
 
 export const imageMap = {
   dice,
@@ -24,5 +25,5 @@ export function DynamicImage({
   name,
 }: Readonly<DynamicImageProps>) {
   const src = imageMap[name];
-  return <img src={src.src} alt={alt ?? name} className={className} />;
+  return <Image src={src} alt={alt ?? name} className={className} />;
 }

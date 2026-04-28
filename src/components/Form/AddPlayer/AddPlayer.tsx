@@ -4,6 +4,7 @@ import Button from "@/components/Button/Button";
 import { canStartGame } from "@/domain/game/gameLogic";
 import { useGame } from "@/domain/game/GameProvider";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Image from "next/image";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import z from "zod";
 
@@ -108,12 +109,18 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
               name="username"
               control={control}
               render={({ field }) => (
-                <input
-                  className={`border-1 py-4 px-5 rounded-4xl ${errors?.username ? "border-red-500" : "border-gray-800"}`}
-                  {...field}
-                  placeholder="Enter your name..."
-                  data-valid={errors?.username ? "false" : "true"}
-                />
+                <>
+                  <label htmlFor="player-name" className="sr-only">
+                    Player name
+                  </label>
+                  <input
+                    id="player-name"
+                    className={`border-1 py-4 px-5 rounded-4xl ${errors?.username ? "border-red-500" : "border-gray-800"}`}
+                    {...field}
+                    placeholder="Enter your name..."
+                    data-valid={errors?.username ? "false" : "true"}
+                  />
+                </>
               )}
             />
 
@@ -145,10 +152,12 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
                             disabled={avatarsInUse.includes(option)}
                           />
                           <div className={classes}>
-                            <img
+                            <Image
                               src={avatar.image}
                               alt={`Avatar ${avatar.name}`}
-                              className="w-dvh"
+                              width={100}
+                              height={100}
+                              className="h-auto w-full"
                             />
                           </div>
                         </label>

@@ -4,6 +4,7 @@ import { Meta, StoryObj } from "@storybook/react-vite";
 import Splash from "@/components/Modal/Splash";
 import Button from "@/components/Button/Button";
 import { AvatarId, avatarSet } from "@/components/Form/AddPlayer/AddPlayer";
+import Image from "next/image";
 
 const meta: Meta<typeof Modal> = {
   title: "Components/Modal",
@@ -76,10 +77,12 @@ function NextPlayerModalStory() {
               <figure
                 className={`rounded-full overflow-hidden w-[200px] h-[200px] mx-auto my-4 p-6 flex items-center justify-center ${avatar.color}`}
               >
-                <img
+                <Image
                   src={avatar.image}
                   alt={`${player.username}'s ${avatar.name} avatar`}
-                  className="splash-avatar | w-[200px] h-[200px]"
+                  width={200}
+                  height={200}
+                  className="splash-avatar"
                 />
               </figure>
             }
@@ -120,10 +123,12 @@ function WinnerModalStory() {
               <figure
                 className={`splash-avatar-crown relative rounded-full w-[200px] h-[200px] mx-auto my-4 p-6 flex items-center justify-center ${avatar.color}`}
               >
-                <img
+                <Image
                   src={avatar.image}
                   alt={`${player.username}'s ${avatar.name} avatar`}
-                  className="splash-avatar | w-[200px] h-[200px]"
+                  width={200}
+                  height={200}
+                  className="splash-avatar"
                 />
               </figure>
             }

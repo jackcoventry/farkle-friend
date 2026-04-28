@@ -27,6 +27,7 @@ export default function Home() {
       type: "UPDATE_SETTINGS",
       settings: data,
     });
+    setSettingsOpen(false);
   };
 
   return (

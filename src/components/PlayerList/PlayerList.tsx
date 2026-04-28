@@ -1,5 +1,6 @@
 import { Player } from "@/domain/game/gameTypes";
 import { AvatarId, avatarSet } from "@/components/Form/AddPlayer/AddPlayer";
+import Image from "next/image";
 
 type PlayerListProps = {
   activePlayerId?: string;
@@ -18,10 +19,12 @@ function PlayerList({
 
         return (
           <li key={player.id} className={classes}>
-            <img
+            <Image
               src={avatar.image}
               className={`w-[60px] h-[60px] rounded-full p-2 border-white border-2 ring ${avatar.color}`}
-              alt="The user's selected avatar of a playful illustration"
+              alt={`${player.username}'s ${avatar.name} avatar`}
+              width={60}
+              height={60}
             />
             <div className="flex flex-col justify-center">
               <h3 className="font-heading-2">{player.username}</h3>

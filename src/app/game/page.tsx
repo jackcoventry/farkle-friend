@@ -16,6 +16,7 @@ import PlayerList from "@/components/PlayerList/PlayerList";
 import { getGameSummary } from "@/domain/game/gameLogic";
 import { useTurnController } from "@/domain/game/useTurnController";
 import { useGame } from "@/domain/game/GameProvider";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export default function GamePage() {
@@ -84,10 +85,12 @@ export default function GamePage() {
                 className={`splash-avatar-crown relative rounded-full w-[200px] h-[200px] mx-auto my-4 p-6 flex items-center justify-center ${avatar?.color ?? "bg-gray-500"}`}
               >
                 {avatar ? (
-                  <img
+                  <Image
                     src={avatar.image}
                     alt={`${winner?.username}'s ${avatar.name} avatar`}
-                    className="splash-avatar | w-[200px] h-[200px]"
+                    width={200}
+                    height={200}
+                    className="splash-avatar"
                   />
                 ) : null}
               </figure>
@@ -179,10 +182,12 @@ function PlayerSwitchSplash({
             <figure
               className={`rounded-full overflow-hidden w-[200px] h-[200px] mx-auto my-4 p-6 flex items-center justify-center ${avatar.color}`}
             >
-              <img
+              <Image
                 src={avatar.image}
                 alt={`${currentPlayer.username}'s ${avatar.name} avatar`}
-                className="splash-avatar | w-[200px] h-[200px]"
+                width={200}
+                height={200}
+                className="splash-avatar"
               />
             </figure>
           }

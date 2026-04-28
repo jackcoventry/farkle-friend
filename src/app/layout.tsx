@@ -1,8 +1,22 @@
-"use client";
-
-import { ModalStackProvider } from "@/components/Modal/ModalStackContext";
-import { GameProvider } from "@/domain/game/GameProvider";
+import { DynaPuff, Kirang_Haerang, Outfit } from "next/font/google";
+import { Providers } from "./providers";
 import "@/styles/globals.css";
+
+const dynaPuff = DynaPuff({
+  subsets: ["latin"],
+  variable: "--font-dynapuff",
+});
+
+const kirangHaerang = Kirang_Haerang({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-kirang-haerang",
+});
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  variable: "--font-outfit",
+});
 
 export default function RootLayout({
   children,
@@ -10,23 +24,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&family=Kirang+Haerang&family=Outfit:wght@100..900&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html
+      lang="en"
+      className={`${dynaPuff.variable} ${kirangHaerang.variable} ${outfit.variable}`}
+    >
       <body>
-        <ModalStackProvider>
-          <GameProvider>{children}</GameProvider>
-        </ModalStackProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
