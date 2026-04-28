@@ -139,13 +139,15 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
           control={control}
           render={({ field }) => (
             <>
-              <label>Point target</label>
+              <label htmlFor="target-score">Point target</label>
               <input
+                id="target-score"
                 className={`border-1 py-4 px-5 rounded-4xl ${errors?.targetScore ? "border-red-500" : "border-gray-800"}`}
                 {...field}
-                placeholder="Enter your name..."
+                placeholder="Enter target score..."
                 data-valid={errors?.targetScore ? "false" : "true"}
                 type="number"
+                min={1}
                 onChange={(value) => field.onChange(value.target.valueAsNumber)}
               />
             </>
@@ -156,8 +158,8 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
           control={control}
           name="showComboSuggestions"
           render={({ field }) => (
-            <>
-              <p>Show combo suggestions</p>
+            <fieldset>
+              <legend>Show combo suggestions</legend>
               <Pill>
                 <Pill.Control>
                   <input
@@ -183,7 +185,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
                 </Pill.Control>
                 <Pill.Label htmlFor="showCombo_no">No</Pill.Label>
               </Pill>
-            </>
+            </fieldset>
           )}
         />
 

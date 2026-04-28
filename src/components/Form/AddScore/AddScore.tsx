@@ -73,15 +73,24 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
             name="value"
             control={control}
             render={({ field }) => (
-              <input
-                className="border-0 border-b-2 p-4 text-white font-mega w-full text-center appearance-none"
-                {...field}
-                placeholder="Enter your score..."
-                data-valid={errors?.value ? "false" : "true"}
-                type="number"
-                onChange={(value) => field.onChange(value.target.valueAsNumber)}
-                value={field.value}
-              />
+              <>
+                <label htmlFor="turn-score" className="sr-only">
+                  Turn score
+                </label>
+                <input
+                  id="turn-score"
+                  className="border-0 border-b-2 p-4 text-white font-mega w-full text-center appearance-none"
+                  {...field}
+                  placeholder="Enter your score..."
+                  data-valid={errors?.value ? "false" : "true"}
+                  type="number"
+                  min={0}
+                  onChange={(value) =>
+                    field.onChange(value.target.valueAsNumber)
+                  }
+                  value={field.value}
+                />
+              </>
             )}
           />
         </div>

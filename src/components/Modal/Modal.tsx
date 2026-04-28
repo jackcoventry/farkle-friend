@@ -141,7 +141,7 @@ function ModalRoot({
     }
   };
 
-  if (typeof document === "undefined") return null; // SSR / tests safety
+  if (!isOpen || typeof document === "undefined") return null;
 
   const close = () => onClose?.();
   const variantAttr = variant ?? "modal";
@@ -152,7 +152,8 @@ function ModalRoot({
   };
 
   const ariaLabelledBy = ariaLabel ? undefined : titleId;
-  const rootClasses = `modal modal__overlay | items-center justify-center bg-black/25 flex inset-0 fixed z-50${isOpen ? " opacity-100 pointer-events-auto" : " opacity-0 pointer-events-none"}`;
+  const rootClasses =
+    "modal modal__overlay | items-center justify-center bg-black/25 flex inset-0 fixed z-50 opacity-100 pointer-events-auto";
   const dialogClasses = `modal__dialog | flex flex-col outline-none w-full`;
 
   return createPortal(
@@ -168,7 +169,6 @@ function ModalRoot({
         ref={dialogRef}
         role="dialog"
         aria-modal="true"
-        aria-hidden={isOpen ? undefined : true}
         aria-label={ariaLabel}
         aria-labelledby={ariaLabelledBy}
         tabIndex={-1}

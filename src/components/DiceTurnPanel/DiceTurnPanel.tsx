@@ -41,7 +41,7 @@ export function DiceTurnPanel({
     <div className="turn-frame | grid gap-3 h-full overflow-hidden">
       <div className="flex gap-4">
         <div>
-          <h3 className="text-white flex gap-4">
+          <h3 className="text-white flex gap-4" aria-live="polite">
             <span className="font-sub-heading flex">ROUND SCORE:</span>
             <span className="font-sub-heading flex">
               {dice.activeTurn.tempScore || 0}
