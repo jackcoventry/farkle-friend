@@ -20,6 +20,7 @@ export function createInitialGameState(): GameState {
     players: [],
     settings: {
       diceStyle: "default",
+      mode: "dice",
       targetScore: 10000,
       showComboSuggestions: false,
     },
@@ -99,8 +100,8 @@ export function recordTurn(
   // Return if the player's id doesn't exist in the state
   if (!state.players.some((p) => p.id === playerId)) return state;
 
-  // Return if the score in infinite
-  if (!Number.isFinite(score)) return state;
+  // Return if the score is invalid
+  if (!Number.isFinite(score) || score < 0) return state;
 
   const turn: Turn = {
     id: generateId(),

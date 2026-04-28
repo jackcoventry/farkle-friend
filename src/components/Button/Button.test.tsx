@@ -112,7 +112,7 @@ describe("Button (polymorphic)", () => {
   it("renders a <span> when as='inline' with presentational attributes", () => {
     render(<Button as="inline">Inline label</Button>);
 
-    const span = screen.getByText("Inline label").closest("span");
+    const span = screen.getByText("Inline label").closest(".button");
     expect(span).not.toBeNull();
     if (!span) return;
 

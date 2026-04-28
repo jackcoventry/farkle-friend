@@ -124,7 +124,7 @@ describe("Nav", () => {
       await user.click(button);
       expect(button).toHaveAttribute("aria-expanded", "true");
 
-      let nav = screen.getByLabelText("Main navigation");
+      const nav = screen.getByLabelText("Main navigation");
       expect(nav).toHaveAttribute("data-open", "true");
 
       // Close again

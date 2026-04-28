@@ -12,7 +12,7 @@ export default meta;
 type Story = StoryObj<typeof RulesInfo>;
 
 const Template: Story = {
-  render: (args) => (
+  render: () => (
     <div>
       <RulesInfo />
     </div>

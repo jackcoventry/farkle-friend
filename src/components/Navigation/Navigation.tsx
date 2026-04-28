@@ -106,12 +106,12 @@ function Navigation({
   return (
     <NavContext.Provider value={renderLink}>
       <header className="p-3 justify-center flex relative items-center">
-        <span className="font-sub-heading">FARKLE!</span>
-        {/* {children ? (
+        <span className="font-sub-heading">FARKLE FRIEND!</span>
+        {children ? (
           <button
             aria-controls={menuId}
             aria-expanded={open}
-            aria-label={open ? "Close" : "Open"}
+            aria-label={open ? "Close menu" : "Open menu"}
             className="absolute right-0 h-[50px] w-[50px] cursor-pointer z-50 items-center justify-center flex hover:bg-amber-200"
             onClick={handleVisibility}
             onKeyDown={handleKeyDown}
@@ -129,10 +129,10 @@ function Navigation({
               />
             </svg>
           </button>
-        ) : null} */}
+        ) : null}
       </header>
 
-      {/* {open ? (
+      {open ? (
         <nav
           aria-label={ariaLabel}
           className="fixed w-[300px] top-0 right-0 bg-amber-100 h-full z-40 pt-[84px]"
@@ -143,7 +143,7 @@ function Navigation({
         >
           <ul>{children}</ul>
         </nav>
-      ) : null} */}
+      ) : null}
     </NavContext.Provider>
   );
 }

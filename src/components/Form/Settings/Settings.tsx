@@ -28,7 +28,7 @@ type SettingsFormProps = {
 };
 
 function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
-  const { state, dispatch } = useGame();
+  const { state } = useGame();
 
   const {
     control,

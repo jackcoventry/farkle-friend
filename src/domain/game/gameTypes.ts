@@ -38,8 +38,8 @@ export type GameSummary = {
   winnerId: PlayerId | null;
 };
 
-export type DiceStyle = "default" | "medieval" | undefined;
-export type GameMode = "dice" | "manual" | undefined;
+export type DiceStyle = "default" | "medieval";
+export type GameMode = "dice" | "manual";
 
 export type GameSettings = {
   diceStyle: DiceStyle;

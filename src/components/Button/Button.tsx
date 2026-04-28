@@ -94,7 +94,8 @@ const Button = React.forwardRef<
       INLINE SPAN
   ----------------------------- */
   if (props.as === "inline") {
-    const inlineRest = rest as InlineOnlyProps;
+    const { as, ...inlineRest } = rest as InlineOnlyProps;
+    void as;
 
     classes += " bg-red-500 hover:bg-red-600";
 
@@ -131,8 +132,9 @@ const Button = React.forwardRef<
       ANCHOR
   ----------------------------- */
   if (props.as === "a") {
-    const { href, target, rel, onClick, ...anchorRest } =
+    const { as, href, target, rel, onClick, ...anchorRest } =
       rest as AnchorOnlyProps;
+    void as;
 
     const relSafe = target === "_blank" ? rel || "noopener noreferrer" : rel;
 
@@ -146,6 +148,7 @@ const Button = React.forwardRef<
         data-size={size}
         data-variant={variant}
         href={href}
+        onClick={onClick}
         rel={relSafe}
         target={target}
         ref={ref as React.Ref<HTMLAnchorElement>}

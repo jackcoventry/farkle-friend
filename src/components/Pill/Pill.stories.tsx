@@ -21,9 +21,9 @@ const Template: Story = {
     >
       <Pill {...args}>
         <Pill.Control>
-          <input type="checkbox" />
+          <input id="story-pill" type="checkbox" />
         </Pill.Control>
-        <Pill.Label>Sup</Pill.Label>
+        <Pill.Label htmlFor="story-pill">Sup</Pill.Label>
       </Pill>
     </div>
   ),

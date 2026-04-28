@@ -64,7 +64,7 @@ export function bankDiceFromCurrentRoll(
 
   const { score, usedCount } = scoreSelectedDiceWithUsage(heldDice);
 
-  if (score <= 0 || usedCount === 0) {
+  if (score <= 0 || usedCount !== heldDice.length) {
     return turn;
   }
 

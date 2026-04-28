@@ -15,7 +15,9 @@ export function NavLink({
   isActive,
 }: Readonly<NavLinkProps>) {
   const renderLink = useNavRenderLink();
-  const classes = ["nav-link", className ?? ""].filter(Boolean).join(" ");
+  const classes = ["nav-link", isActive ? "nav-link--active" : "", className ?? ""]
+    .filter(Boolean)
+    .join(" ");
   const ariaCurrent = isActive ? "page" : undefined;
 
   if (renderLink) {
