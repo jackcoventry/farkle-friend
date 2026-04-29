@@ -23,6 +23,7 @@ const SettingsFormSchema = z.object({
     .min(minTargetScore, `Target score must be at least ${minTargetScore}.`)
     .max(maxTargetScore, `Target score must be ${maxTargetScore} or less.`),
   showComboSuggestions: z.boolean(),
+  tableFeedback: z.boolean(),
 });
 
 export type SettingsFormSchemaType = z.infer<typeof SettingsFormSchema>;
@@ -50,6 +51,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
       mode: state.settings.mode,
       targetScore: state.settings.targetScore,
       showComboSuggestions: state.settings.showComboSuggestions,
+      tableFeedback: state.settings.tableFeedback,
     },
     mode: "onBlur",
   });
@@ -59,6 +61,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
     mode: GameMode;
     targetScore: number;
     showComboSuggestions: boolean;
+    tableFeedback: boolean;
   }) => {
     onSubmit(data);
     reset();
@@ -224,6 +227,47 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
                     />
                   </Pill.Control>
                   <Pill.Label htmlFor="showCombo_no">No</Pill.Label>
+                </Pill>
+              </div>
+            </fieldset>
+          )}
+        />
+
+        <Controller
+          control={control}
+          name="tableFeedback"
+          render={({ field }) => (
+            <fieldset className="grid gap-3">
+              <legend>Sound & haptics</legend>
+              <p className="text-sm text-gray-700">
+                Adds restrained roll, bank, and Farkle feedback when your browser
+                allows it.
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <Pill>
+                  <Pill.Control>
+                    <input
+                      type="radio"
+                      checked={field.value === true}
+                      onChange={() => field.onChange(true)}
+                      name="tableFeedback"
+                      id="tableFeedback_yes"
+                    />
+                  </Pill.Control>
+                  <Pill.Label htmlFor="tableFeedback_yes">On</Pill.Label>
+                </Pill>
+
+                <Pill>
+                  <Pill.Control>
+                    <input
+                      type="radio"
+                      checked={field.value === false}
+                      onChange={() => field.onChange(false)}
+                      name="tableFeedback"
+                      id="tableFeedback_no"
+                    />
+                  </Pill.Control>
+                  <Pill.Label htmlFor="tableFeedback_no">Off</Pill.Label>
                 </Pill>
               </div>
             </fieldset>

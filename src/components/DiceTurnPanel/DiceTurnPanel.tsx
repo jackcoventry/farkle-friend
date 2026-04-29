@@ -15,6 +15,11 @@ type DiceTurnPanelProps = {
   dispatch: React.Dispatch<GameAction>;
 };
 
+type FeedbackWindow = Window & {
+  AudioContext?: typeof AudioContext;
+  webkitAudioContext?: typeof AudioContext;
+};
+
 export function DiceTurnPanel({
   state,
   dispatch,
@@ -27,35 +32,19 @@ export function DiceTurnPanel({
     onCommitScore: commitTurnScore,
   });
 
-  useDiceKeyboardShortcuts({
-    canBank: dice.canBank,
-    canFinish: dice.canFinish,
-    canRoll: dice.canRoll,
-    currentRollLength: dice.activeTurn?.isFarkled
-      ? 0
-      : dice.currentRoll?.length ?? 0,
-    onBank: dice.bankSelected,
-    onFinish: dice.finishTurn,
-    onRoll: dice.roll,
-    onToggleDie: dice.toggleDieSelection,
-  });
-
-  if (!currentPlayer || !dice.activeTurn) {
-    return <p>No active player</p>;
-  }
-
-  const currentRoll = dice.activeTurn.currentRoll;
-  const isFarkled = dice.activeTurn.isFarkled;
+  const activeTurn = dice.activeTurn;
+  const currentRoll = activeTurn?.currentRoll ?? null;
+  const isFarkled = activeTurn?.isFarkled ?? false;
   const isHotDice =
-    dice.activeTurn.currentRoll === null &&
-    dice.activeTurn.availableDice === 6 &&
-    dice.activeTurn.tempScore > 0;
+    activeTurn?.currentRoll === null &&
+    activeTurn.availableDice === 6 &&
+    activeTurn.tempScore > 0;
 
   // List possible combinations for current roll
   const currentCombos =
-    dice.activeTurn.currentRoll == null
+    activeTurn?.currentRoll == null
       ? []
-      : getScoringCombinations(dice.activeTurn.currentRoll);
+      : getScoringCombinations(activeTurn.currentRoll);
   const hasSelectedDice = dice.selectedIndices.length > 0;
   const turnCopy = getDiceTurnCopy({
     canRoll: dice.canRoll,
@@ -64,9 +53,67 @@ export function DiceTurnPanel({
     isHotDice,
     selectedHasInvalidDice: dice.selectedHasInvalidDice,
     selectedScore: dice.selectedScore,
-    tempScore: dice.activeTurn.tempScore,
+    tempScore: activeTurn?.tempScore ?? 0,
     usesAllDice: dice.selectedUsesAllDice,
   });
+  const tableFeedbackEnabled = state.settings.tableFeedback;
+
+  const playFeedback = (type: "bank" | "farkle" | "roll") => {
+    if (!tableFeedbackEnabled || typeof window === "undefined") return;
+
+    if ("vibrate" in navigator) {
+      navigator.vibrate(type === "farkle" ? [70, 30, 70] : 35);
+    }
+
+    const feedbackWindow = window as FeedbackWindow;
+    const AudioContextCtor =
+      feedbackWindow.AudioContext ?? feedbackWindow.webkitAudioContext;
+    if (!AudioContextCtor) return;
+
+    const context = new AudioContextCtor();
+    const oscillator = context.createOscillator();
+    const gain = context.createGain();
+
+    oscillator.frequency.value =
+      type === "farkle" ? 140 : type === "bank" ? 520 : 320;
+    gain.gain.value = 0.03;
+    oscillator.connect(gain);
+    gain.connect(context.destination);
+    oscillator.start();
+    oscillator.stop(context.currentTime + 0.08);
+  };
+
+  const handleRoll = () => {
+    playFeedback("roll");
+    dice.roll();
+  };
+
+  const handleBank = () => {
+    playFeedback("bank");
+    dice.bankSelected();
+  };
+
+  const handleFinish = () => {
+    if (isFarkled) playFeedback("farkle");
+    dice.finishTurn();
+  };
+
+  useDiceKeyboardShortcuts({
+    canBank: dice.canBank,
+    canFinish: dice.canFinish,
+    canRoll: dice.canRoll,
+    currentRollLength: activeTurn?.isFarkled
+      ? 0
+      : dice.currentRoll?.length ?? 0,
+    onBank: handleBank,
+    onFinish: handleFinish,
+    onRoll: handleRoll,
+    onToggleDie: dice.toggleDieSelection,
+  });
+
+  if (!currentPlayer || !activeTurn) {
+    return <p>No active player</p>;
+  }
 
   return (
     <div className="turn-frame | grid gap-3 h-full overflow-hidden">
@@ -75,14 +122,14 @@ export function DiceTurnPanel({
           <h3 className="text-white flex gap-4" aria-live="polite">
             <span className="font-sub-heading flex">ROUND SCORE:</span>
             <span className="font-sub-heading flex">
-              {dice.activeTurn.tempScore || 0}
+              {activeTurn.tempScore || 0}
             </span>
           </h3>
         </div>
         <div className="ml-auto">
           <div>
             <span className="flex gap-1">
-              {[...new Array(dice.activeTurn.availableDice).keys()].map((e) => (
+              {[...new Array(activeTurn.availableDice).keys()].map((e) => (
                 <DiceIcon key={e} count={e + 1} className="w-[40px]" />
               ))}
             </span>
@@ -100,6 +147,18 @@ export function DiceTurnPanel({
       >
         <span className="font-heading-2">Selected:</span>{" "}
         <span>{turnCopy.selectedStatus}</span>
+        {dice.selectedBreakdown.length > 0 ? (
+          <ul className="mt-2 flex flex-wrap gap-2 text-sm">
+            {dice.selectedBreakdown.map((item) => (
+              <li
+                key={`${item.label}-${item.score}`}
+                className="rounded-full bg-sun-100 px-3 py-1 text-gray-900"
+              >
+                {item.label} = {item.score}
+              </li>
+            ))}
+          </ul>
+        ) : null}
       </div>
 
       <div className="flex min-h-0 flex-col items-center justify-center gap-4 overflow-auto">
@@ -133,7 +192,7 @@ export function DiceTurnPanel({
                   key={`${value}-${idx}`}
                   type="button"
                   onClick={() => dice.toggleDieSelection(idx)}
-                  disabled={dice?.activeTurn?.isFarkled}
+                  disabled={activeTurn.isFarkled}
                   aria-pressed={isSelected}
                   aria-label={`${isSelected ? "Deselect" : "Select"} die ${
                     idx + 1
@@ -179,7 +238,7 @@ export function DiceTurnPanel({
 
       <div className="flex flex-col gap-2 sm:flex-row">
         <RichButton
-          onClick={dice.roll}
+          onClick={handleRoll}
           disabled={!dice.canRoll}
           className={`grow-1 justify-center`}
           icon="dice"
@@ -187,7 +246,7 @@ export function DiceTurnPanel({
           Roll dice
         </RichButton>
         <RichButton
-          onClick={dice.bankSelected}
+          onClick={handleBank}
           disabled={!dice.canBank}
           className={`grow-1 justify-center`}
           icon="bank"
@@ -195,7 +254,7 @@ export function DiceTurnPanel({
           {dice.selectedScore > 0 ? `Bank ${dice.selectedScore}` : "Bank"}
         </RichButton>
         <RichButton
-          onClick={dice.finishTurn}
+          onClick={handleFinish}
           disabled={!dice.canFinish}
           className={`grow-1 justify-center`}
           icon="rocket"

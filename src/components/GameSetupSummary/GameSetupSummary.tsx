@@ -2,10 +2,12 @@ import type { GameSettings } from "@/domain/game/gameTypes";
 import { formatScore } from "@/utils/formatScore";
 
 type GameSetupSummaryProps = {
+  onEditSettings?: () => void;
   settings: GameSettings;
 };
 
 export function GameSetupSummary({
+  onEditSettings,
   settings,
 }: Readonly<GameSetupSummaryProps>) {
   const modeLabel =
@@ -31,7 +33,22 @@ export function GameSetupSummary({
             {settings.showComboSuggestions ? "On" : "Off"}
           </dd>
         </div>
+        <div className="flex justify-between gap-3">
+          <dt>Feedback</dt>
+          <dd className="text-right text-red-700">
+            {settings.tableFeedback ? "On" : "Off"}
+          </dd>
+        </div>
       </dl>
+      {onEditSettings ? (
+        <button
+          type="button"
+          className="mt-3 rounded-lg px-3 py-2 text-sm text-red-700 hover:bg-red-100 focus-visible:outline-2 focus-visible:outline-red-700"
+          onClick={onEditSettings}
+        >
+          Edit settings
+        </button>
+      ) : null}
     </section>
   );
 }

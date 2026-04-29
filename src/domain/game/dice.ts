@@ -102,6 +102,65 @@ export type ScoringCombo = {
   score: number;
 };
 
+export type ScoreBreakdownItem = {
+  label: string;
+  score: number;
+};
+
+export function getScoreBreakdown(dice: DieValue[]): ScoreBreakdownItem[] {
+  const { score, usedCount } = scoreSelectedDiceWithUsage(dice);
+  if (score <= 0 || usedCount !== dice.length) return [];
+
+  const counts = [0, 0, 0, 0, 0, 0, 0];
+  for (const value of dice) {
+    counts[value] += 1;
+  }
+
+  if (dice.length === 6) {
+    const isStraight = counts.slice(1).every((count) => count === 1);
+    if (isStraight) return [{ label: "Straight", score: scoringRules.straight }];
+
+    const pairCount = counts.filter((count) => count === 2).length;
+    if (pairCount === 3) {
+      return [{ label: "Three pairs", score: scoringRules.threePairs }];
+    }
+
+    const tripleCount = counts.filter((count) => count === 3).length;
+    if (tripleCount === 2) {
+      return [{ label: "Two triples", score: scoringRules.twoTriples }];
+    }
+  }
+
+  const breakdown: ScoreBreakdownItem[] = [];
+
+  for (let face = 1 as DieValue; face <= 6; face++) {
+    const count = counts[face];
+    if (count >= 3) {
+      breakdown.push({
+        label: `${count} ${face}s`,
+        score: getMultipleScore(face, count),
+      });
+      counts[face] = 0;
+    }
+  }
+
+  if (counts[1] > 0) {
+    breakdown.push({
+      label: counts[1] === 1 ? "Single 1" : `${counts[1]} single 1s`,
+      score: counts[1] * scoringRules.singleOne,
+    });
+  }
+
+  if (counts[5] > 0) {
+    breakdown.push({
+      label: counts[5] === 1 ? "Single 5" : `${counts[5]} single 5s`,
+      score: counts[5] * scoringRules.singleFive,
+    });
+  }
+
+  return breakdown;
+}
+
 export function getScoringCombinations(roll: DieValue[]): ScoringCombo[] {
   const rollLength = roll.length;
   const combosByKey = new Map<string, ScoringCombo>();

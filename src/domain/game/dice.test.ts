@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  getScoreBreakdown,
   scoreSelectedDice,
   scoreSelectedDiceWithUsage,
   type DieValue,
@@ -24,5 +25,16 @@ describe("dice scoring", () => {
     const result = scoreSelectedDiceWithUsage([1, 2, 3] as DieValue[]);
 
     expect(result).toEqual({ score: 100, usedCount: 1 });
+  });
+
+  it("explains scoring selections", () => {
+    expect(getScoreBreakdown([2, 2, 2, 1])).toEqual([
+      { label: "3 2s", score: 200 },
+      { label: "Single 1", score: 100 },
+    ]);
+    expect(getScoreBreakdown([1, 2, 3, 4, 5, 6])).toEqual([
+      { label: "Straight", score: 1500 },
+    ]);
+    expect(getScoreBreakdown([1, 2, 3] as DieValue[])).toEqual([]);
   });
 });

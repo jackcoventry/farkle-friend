@@ -8,7 +8,10 @@ import {
   rollInActiveTurn,
   startActiveTurn,
 } from "@/domain/game/turnLogic";
-import { scoreSelectedDiceWithUsage } from "@/domain/game/dice";
+import {
+  getScoreBreakdown,
+  scoreSelectedDiceWithUsage,
+} from "@/domain/game/dice";
 import type { DieValue } from "@/domain/game/dice";
 
 type Args = {
@@ -57,6 +60,10 @@ export function useDiceTurnController({
       : { score: 0, usedCount: 0 };
   }, [heldDice]);
   const selectedScore = selectedScoring.score;
+  const selectedBreakdown = useMemo(
+    () => getScoreBreakdown(heldDice),
+    [heldDice]
+  );
   const selectedUsesAllDice =
     heldDice.length > 0 && selectedScoring.usedCount === heldDice.length;
   const selectedHasInvalidDice = selectedScore > 0 && !selectedUsesAllDice;
@@ -152,6 +159,7 @@ export function useDiceTurnController({
   return {
     activeTurn: turnForPlayer,
     currentRoll,
+    selectedBreakdown,
     selectedIndices,
     selectedHasInvalidDice,
     selectedScore,

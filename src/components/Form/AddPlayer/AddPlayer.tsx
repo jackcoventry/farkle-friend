@@ -60,10 +60,14 @@ export type AddPlayerFormResult = {
 };
 
 type AddPlayerFormProps = {
+  onEditSettings?: () => void;
   onSubmit: SubmitHandler<AddPlayerFormSchemaType>;
 };
 
-function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
+function AddPlayerForm({
+  onEditSettings,
+  onSubmit,
+}: Readonly<AddPlayerFormProps>) {
   const {
     control,
     handleSubmit,
@@ -223,6 +227,15 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
                   )}`
                 : "Add at least two players to start."}
             </p>
+            {onEditSettings ? (
+              <button
+                type="button"
+                className="mt-2 rounded-lg px-3 py-2 text-sm text-red-700 hover:bg-red-100 focus-visible:outline-2 focus-visible:outline-red-700"
+                onClick={onEditSettings}
+              >
+                Edit settings
+              </button>
+            ) : null}
           </div>
           <Button
             type="button"

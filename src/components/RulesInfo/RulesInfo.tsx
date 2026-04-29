@@ -38,10 +38,10 @@ function RulesInfoSection({
   children,
 }: Readonly<RulesInfoSectionProps>) {
   return (
-    <div className="gap-2 flex flex-col">
+    <section className="gap-2 flex flex-col rounded-lg bg-sun-50 p-4">
       {title ? <h2 className="font-heading-2">{title}</h2> : null}
       {children}
-    </div>
+    </section>
   );
 }
 
@@ -49,9 +49,11 @@ function RulesInfo() {
   return (
     <div className="flex flex-col gap-8">
       <h1 className="font-heading text-center">Rules & scoring</h1>
-      <div className="gap-8 md:flex">
-        <div className="flex flex-col gap-5 mb-8 md:mb-0">
-          <RulesInfoSection title="Singles" />
+      <div className="grid gap-5 md:grid-cols-2">
+        <div className="flex flex-col gap-5">
+          <RulesInfoSection title="Singles">
+            <p>Ones and fives score by themselves.</p>
+          </RulesInfoSection>
 
           {scoringRuleExamples.singles.map((example) => (
             <RulesInfoRow key={example.title} {...example} />
@@ -95,7 +97,7 @@ function RulesInfo() {
       </div>
       <RulesInfoSection title="Combination precedence">
         <p>Some patterns override others:</p>
-        <ul className="list-disc list-inside">
+        <ul className="list-disc list-inside grid gap-1">
           <li>Straight / three pairs / two triples override lower patterns</li>
           <li>
             Six of a kind is handled as a scaled multiple, not two triples!

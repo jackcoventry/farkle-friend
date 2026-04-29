@@ -62,4 +62,5 @@ export type GameSettings = {
   mode: GameMode;
   targetScore: number;
   showComboSuggestions: boolean;
+  tableFeedback: boolean;
 };

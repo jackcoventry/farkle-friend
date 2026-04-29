@@ -24,6 +24,7 @@ export function createInitialGameState(): GameState {
       mode: "dice",
       targetScore: 10000,
       showComboSuggestions: false,
+      tableFeedback: false,
     },
     turns: [],
     updatedAt: now,

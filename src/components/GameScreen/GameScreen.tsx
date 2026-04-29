@@ -134,13 +134,24 @@ export function GameScreen() {
                   onRemovePlayer={onRemovePlayer}
                 />
               </div>
-            ) : null}
-            <GameSetupSummary settings={state.settings} />
+            ) : (
+              <section className="my-6 rounded-lg bg-white/70 p-4">
+                <h3 className="font-heading-2">No players yet</h3>
+                <p className="mt-1 text-gray-800">
+                  Add at least two players, then start the game from the setup
+                  panel.
+                </p>
+              </section>
+            )}
+            <GameSetupSummary
+              settings={state.settings}
+              onEditSettings={() => setLobbyScreen("settings")}
+            />
             <Footer />
           </div>
         </GameShell.Sidebar>
         <GameShell.Body>
-          <div className="mx-auto flex h-full w-full max-w-[520px] flex-col justify-center gap-4">
+          <div className="mx-auto flex h-full w-full max-w-[520px] flex-col justify-start gap-4 overflow-auto py-4">
             <div
               className="grid grid-cols-2 gap-2 rounded-lg bg-white/90 p-2"
               role="tablist"
@@ -190,7 +201,10 @@ export function GameScreen() {
                 id="players-panel"
                 role="tabpanel"
               >
-                <AddPlayerForm onSubmit={onAddPlayerFormSubmit} />
+                <AddPlayerForm
+                  onEditSettings={() => setLobbyScreen("settings")}
+                  onSubmit={onAddPlayerFormSubmit}
+                />
               </div>
             ) : (
               <div

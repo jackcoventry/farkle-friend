@@ -17,6 +17,7 @@ describe("game logic", () => {
       diceStyle: "default",
       mode: "dice",
       showComboSuggestions: false,
+      tableFeedback: false,
       targetScore: 10000,
     });
   });
