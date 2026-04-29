@@ -141,12 +141,26 @@ export function DiceTurnPanel({
                   style={{
                     animationDelay: `${idx * 0.05}s`,
                   }}
-                  className="animate-bounce-in w-[72px] cursor-pointer opacity-0 transition-transform hover:z-10 hover:scale-115 sm:w-[100px]"
+                  className={`animate-bounce-in flex w-[76px] cursor-pointer flex-col items-center rounded-lg p-1 opacity-0 transition-transform hover:z-10 hover:scale-105 sm:w-[108px] ${
+                    isSelected
+                      ? "bg-yellow-200 ring-4 ring-yellow-400"
+                      : "bg-white/10"
+                  }`}
                 >
                   <DiceIcon
                     count={value}
                     state={isSelected ? "active" : "default"}
                   />
+                  <span
+                    aria-hidden="true"
+                    className={`mt-2 rounded-full px-2 py-1 text-xs ${
+                      isSelected
+                        ? "bg-gray-900 text-white"
+                        : "bg-white text-gray-800"
+                    }`}
+                  >
+                    {isSelected ? "Selected" : "Available"}
+                  </span>
                 </button>
               );
             })}

@@ -114,6 +114,7 @@ export function GameScreen() {
           onResetGame={onResetGame}
           onResetPlayers={onResetPlayers}
           players={summary.players}
+          turns={state.turns}
           winner={winner}
         />
       </main>
@@ -169,30 +170,72 @@ export function GameScreen() {
           </div>
         </GameShell.Sidebar>
         <GameShell.Body>
-          {currentPlayer && avatar && !state.pendingTurnResult ? (
-            <PlayerSwitchSplash
-              key={`${currentPlayer.id}-${state.currentPlayerIndex}`}
-              currentPlayer={currentPlayer}
-              avatar={avatar}
-            />
-          ) : null}
+          <div className="flex h-full min-h-0 flex-col gap-4">
+            {currentPlayer ? (
+              <section
+                className="flex flex-wrap items-center gap-3 rounded-lg bg-white/90 px-4 py-3 text-gray-900 shadow-sm"
+                aria-live="polite"
+              >
+                <div>
+                  <p className="text-sm text-gray-700">
+                    {flowState === "TURN_RESULT"
+                      ? "Turn complete"
+                      : "Now playing"}
+                  </p>
+                  <h2 className="font-heading-2">{currentPlayer.username}</h2>
+                </div>
+                <dl className="ml-auto flex flex-wrap gap-4 text-sm sm:text-base">
+                  <div>
+                    <dt className="text-gray-700">
+                      {state.pendingTurnResult ? "Previous total" : "Current total"}
+                    </dt>
+                    <dd className="font-body-1 text-red-700">
+                      {formatScore(
+                        state.pendingTurnResult?.previousTotal ??
+                          currentPlayer.totalScore ??
+                          0
+                      )}
+                    </dd>
+                  </div>
+                  {state.pendingTurnResult ? (
+                    <div>
+                      <dt className="text-gray-700">Updated total</dt>
+                      <dd className="font-body-1 text-red-700">
+                        {formatScore(state.pendingTurnResult.newTotal)}
+                      </dd>
+                    </div>
+                  ) : null}
+                </dl>
+              </section>
+            ) : null}
 
-          {currentPlayer ? (
-            flowState === "TURN_RESULT" && state.pendingTurnResult ? (
-              <TurnResultPanel
-                currentPlayer={currentPlayer}
-                nextPlayer={nextPlayer}
-                result={state.pendingTurnResult}
-                onAdvanceTurn={onAdvanceTurn}
-              />
-            ) : state.settings.mode === "dice" ? (
-              <DiceTurnPanel state={state} dispatch={dispatch} />
-            ) : (
-              <ManualTurn state={state} dispatch={dispatch} />
-            )
-          ) : (
-            <p>No active player</p>
-          )}
+            <div className="min-h-0 flex-1">
+              {currentPlayer && avatar && !state.pendingTurnResult ? (
+                <PlayerSwitchSplash
+                  key={`${currentPlayer.id}-${state.currentPlayerIndex}`}
+                  currentPlayer={currentPlayer}
+                  avatar={avatar}
+                />
+              ) : null}
+
+              {currentPlayer ? (
+                flowState === "TURN_RESULT" && state.pendingTurnResult ? (
+                  <TurnResultPanel
+                    currentPlayer={currentPlayer}
+                    nextPlayer={nextPlayer}
+                    result={state.pendingTurnResult}
+                    onAdvanceTurn={onAdvanceTurn}
+                  />
+                ) : state.settings.mode === "dice" ? (
+                  <DiceTurnPanel state={state} dispatch={dispatch} />
+                ) : (
+                  <ManualTurn state={state} dispatch={dispatch} />
+                )
+              ) : (
+                <p>No active player</p>
+              )}
+            </div>
+          </div>
         </GameShell.Body>
       </GameShell>
 
