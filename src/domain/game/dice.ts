@@ -1,3 +1,5 @@
+import { getMultipleScore, scoringRules } from "@/domain/game/scoringRules";
+
 export type DieValue = 1 | 2 | 3 | 4 | 5 | 6; // Farkle uses 6-side dice
 
 export function rollDice(count: number = 6): DieValue[] {
@@ -34,39 +36,37 @@ function analyzeDice(dice: DieValue[]): DiceAnalysis {
       work[6] === 1;
 
     if (isStraight) {
-      return { counts, score: 1500, usedCount: 6 };
+      return { counts, score: scoringRules.straight, usedCount: 6 };
     }
 
     const pairCount = work.filter((c) => c === 2).length;
     if (pairCount === 3) {
-      return { counts, score: 1500, usedCount: 6 };
+      return { counts, score: scoringRules.threePairs, usedCount: 6 };
     }
 
     const tripleFaces = work.filter((c) => c === 3).length;
     if (tripleFaces === 2) {
-      return { counts, score: 2500, usedCount: 6 };
+      return { counts, score: scoringRules.twoTriples, usedCount: 6 };
     }
   }
 
   for (let face = 1 as DieValue; face <= 6; face++) {
     const count = work[face];
     if (count >= 3) {
-      const base = face === 1 ? 1000 : face * 100;
-      const multiplier = count - 2;
-      score += base * multiplier;
+      score += getMultipleScore(face, count);
       usedCount += count;
       work[face] = 0;
     }
   }
 
   if (work[1] > 0) {
-    score += work[1] * 100;
+    score += work[1] * scoringRules.singleOne;
     usedCount += work[1];
     work[1] = 0;
   }
 
   if (work[5] > 0) {
-    score += work[5] * 50;
+    score += work[5] * scoringRules.singleFive;
     usedCount += work[5];
     work[5] = 0;
   }

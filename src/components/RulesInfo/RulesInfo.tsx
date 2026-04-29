@@ -1,7 +1,8 @@
 import DiceIcon from "@/components/DiceIcon/DiceIcon";
+import { scoringRuleExamples } from "@/domain/game/scoringRules";
 
 type RulesInfoRowProps = {
-  dice?: number[];
+  dice?: Array<1 | 2 | 3 | 4 | 5 | 6>;
   points: number;
   title?: string;
 };
@@ -47,13 +48,14 @@ function RulesInfoSection({
 function RulesInfo() {
   return (
     <div className="flex flex-col gap-8">
-      <h1 className="font-heading text-center">Game rules</h1>
+      <h1 className="font-heading text-center">Rules & scoring</h1>
       <div className="gap-8 md:flex">
         <div className="flex flex-col gap-5 mb-8 md:mb-0">
           <RulesInfoSection title="Singles" />
 
-          <RulesInfoRow dice={[1]} points={100} title="Single 1" />
-          <RulesInfoRow dice={[5]} points={50} title="Single 5" />
+          {scoringRuleExamples.singles.map((example) => (
+            <RulesInfoRow key={example.title} {...example} />
+          ))}
 
           <RulesInfoSection title="Three of a kind">
             <p>
@@ -61,12 +63,9 @@ function RulesInfo() {
               apart from three 1s, which is 1000 times
             </p>
           </RulesInfoSection>
-          <RulesInfoRow dice={[1, 1, 1]} points={1000} title="Three 1s" />
-          <RulesInfoRow dice={[2, 2, 2]} points={200} title="Three 2s" />
-          <RulesInfoRow dice={[3, 3, 3]} points={300} title="Three 3s" />
-          <RulesInfoRow dice={[4, 4, 4]} points={400} title="Three 4s" />
-          <RulesInfoRow dice={[5, 5, 5]} points={500} title="Three 5s" />
-          <RulesInfoRow dice={[6, 6, 6]} points={600} title="Three 6s" />
+          {scoringRuleExamples.triples.map((example) => (
+            <RulesInfoRow key={example.title} {...example} />
+          ))}
         </div>
         <div className="flex flex-col gap-5">
           <RulesInfoSection title="Four / five / six of a kind">
@@ -75,39 +74,23 @@ function RulesInfo() {
               five and quadrupled for six.
             </p>
           </RulesInfoSection>
-          <RulesInfoRow dice={[4, 4, 4, 4]} points={800} title="Four 4s" />
-          <RulesInfoRow dice={[5, 5, 5, 5, 5]} points={1800} title="Five 5s" />
-          <RulesInfoRow
-            dice={[1, 1, 1, 1, 1, 1]}
-            points={4000}
-            title="Six 1s"
-          />
+          {scoringRuleExamples.multiples.map((example) => (
+            <RulesInfoRow key={example.title} {...example} />
+          ))}
 
           <RulesInfoSection title="Straight">
             <p>Using all 6 dice.</p>
           </RulesInfoSection>
-          <RulesInfoRow
-            dice={[1, 2, 3, 4, 5, 6]}
-            points={1500}
-            title="Straight"
-          />
+          <RulesInfoRow {...scoringRuleExamples.specials[0]} />
           <RulesInfoSection title="Three pairs">
             <p>Any distinct pairs, using all six dice.</p>
           </RulesInfoSection>
-          <RulesInfoRow
-            dice={[2, 2, 5, 5, 6, 6]}
-            points={1500}
-            title="Three pairs"
-          />
+          <RulesInfoRow {...scoringRuleExamples.specials[1]} />
 
           <RulesInfoSection title="Two triples">
             <p>Any distinct triples, using all six dice.</p>
           </RulesInfoSection>
-          <RulesInfoRow
-            dice={[3, 3, 3, 6, 6, 6]}
-            points={2500}
-            title="Two triples"
-          />
+          <RulesInfoRow {...scoringRuleExamples.specials[2]} />
         </div>
       </div>
       <RulesInfoSection title="Combination precedence">
