@@ -4,9 +4,10 @@ import {
   AvatarId,
   avatarSet,
 } from "@/components/Form/AddPlayer/AddPlayer";
+import { GamePreferences } from "@/components/GamePreferences/GamePreferences";
 import Modal from "@/components/Modal/Modal";
 import Splash from "@/components/Modal/Splash";
-import { gameSounds } from "@/domain/game/gameAudio";
+import { playGameSound } from "@/domain/game/gameAudio";
 import type { Player, Turn } from "@/domain/game/gameTypes";
 import { formatScore } from "@/utils/formatScore";
 import { useEffect } from "react";
@@ -46,12 +47,7 @@ export function GameFinishedModal({
   const farkles = turns.filter((turn) => turn.score === 0).length;
 
   useEffect(() => {
-    const sound = gameSounds.win;
-    if (!soundEnabled || !sound) return;
-
-    const audio = new Audio(sound.src);
-    audio.volume = sound.volume ?? 0.7;
-    void audio.play().catch(() => undefined);
+    playGameSound("win", soundEnabled);
   }, [soundEnabled]);
 
   return (
@@ -142,6 +138,7 @@ export function GameFinishedModal({
           <Button onClick={onResetPlayers} className="justify-center">
             New players
           </Button>
+          <GamePreferences className="flex justify-center" />
         </Splash>
       </Modal.Body>
     </Modal>

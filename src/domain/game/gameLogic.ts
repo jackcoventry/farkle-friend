@@ -23,6 +23,7 @@ export function createInitialGameState(): GameState {
       autoAdvanceTurns: false,
       diceStyle: "default",
       mode: "dice",
+      motionEnabled: true,
       targetScore: 10000,
       showComboSuggestions: false,
       tableFeedback: false,

@@ -2,8 +2,7 @@
 
 import { GameAction } from "@/domain/game/gameReducer";
 import { GameState } from "@/domain/game/gameTypes";
-import type { GameSoundEvent } from "@/domain/game/gameAudio";
-import { gameSounds } from "@/domain/game/gameAudio";
+import { playGameSound } from "@/domain/game/gameAudio";
 import { getScoringCombinations } from "@/domain/game/dice";
 import DiceIcon from "@/components/DiceIcon/DiceIcon";
 import RichButton from "@/components/RichButton/RichButton";
@@ -21,11 +20,6 @@ type DiceTurnPanelProps = {
 export type DiceTurnMetrics = {
   diceLeft: number;
   roundScore: number;
-};
-
-type FeedbackWindow = Window & {
-  AudioContext?: typeof AudioContext;
-  webkitAudioContext?: typeof AudioContext;
 };
 
 export function DiceTurnPanel({
@@ -68,37 +62,8 @@ export function DiceTurnPanel({
   const tableFeedbackEnabled = state.settings.tableFeedback;
 
   const playFeedback = useCallback(
-    (type: Extract<GameSoundEvent, "bank" | "farkle" | "roll">) => {
-      if (!tableFeedbackEnabled || typeof window === "undefined") return;
-
-      const customSound = gameSounds[type];
-      if (customSound) {
-        const audio = new Audio(customSound.src);
-        audio.volume = customSound.volume ?? 0.7;
-        void audio.play().catch(() => undefined);
-        return;
-      }
-
-      if ("vibrate" in navigator) {
-        navigator.vibrate(type === "farkle" ? [70, 30, 70] : 35);
-      }
-
-      const feedbackWindow = window as FeedbackWindow;
-      const AudioContextCtor =
-        feedbackWindow.AudioContext ?? feedbackWindow.webkitAudioContext;
-      if (!AudioContextCtor) return;
-
-      const context = new AudioContextCtor();
-      const oscillator = context.createOscillator();
-      const gain = context.createGain();
-
-      oscillator.frequency.value =
-        type === "farkle" ? 140 : type === "bank" ? 520 : 320;
-      gain.gain.value = 0.03;
-      oscillator.connect(gain);
-      gain.connect(context.destination);
-      oscillator.start();
-      oscillator.stop(context.currentTime + 0.08);
+    (type: "bank" | "farkle" | "roll" | "select") => {
+      playGameSound(type, tableFeedbackEnabled);
     },
     [tableFeedbackEnabled]
   );
@@ -114,9 +79,16 @@ export function DiceTurnPanel({
   };
 
   const handleFinish = () => {
-    if (isFarkled) playFeedback("farkle");
     dice.finishTurn();
   };
+
+  const handleToggleDieSelection = useCallback(
+    (index: number) => {
+      playFeedback("select");
+      dice.toggleDieSelection(index);
+    },
+    [dice, playFeedback]
+  );
 
   useEffect(() => {
     if (!isFarkled) return;
@@ -153,7 +125,7 @@ export function DiceTurnPanel({
     onBank: handleBank,
     onFinish: handleFinish,
     onRoll: handleRoll,
-    onToggleDie: dice.toggleDieSelection,
+    onToggleDie: handleToggleDieSelection,
   });
 
   if (!currentPlayer || !activeTurn) {
@@ -216,7 +188,7 @@ export function DiceTurnPanel({
                 <button
                   key={`${value}-${idx}`}
                   type="button"
-                  onClick={() => dice.toggleDieSelection(idx)}
+                  onClick={() => handleToggleDieSelection(idx)}
                   disabled={activeTurn.isFarkled}
                   aria-pressed={isSelected}
                   aria-label={`${isSelected ? "Deselect" : "Select"} die ${

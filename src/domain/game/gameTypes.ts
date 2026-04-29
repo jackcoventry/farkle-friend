@@ -61,6 +61,7 @@ export type GameSettings = {
   autoAdvanceTurns: boolean;
   diceStyle: DiceStyle;
   mode: GameMode;
+  motionEnabled: boolean;
   targetScore: number;
   showComboSuggestions: boolean;
   tableFeedback: boolean;

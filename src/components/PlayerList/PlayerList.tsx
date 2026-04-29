@@ -83,7 +83,7 @@ function PlayerList({
                   aria-valuenow={progress}
                 >
                   <div
-                    className="h-full bg-red-700"
+                    className="h-full bg-red-700 transition-[width] duration-500 ease-out"
                     style={{ width: `${progress}%` }}
                   />
                 </div>

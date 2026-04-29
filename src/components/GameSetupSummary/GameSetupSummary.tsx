@@ -45,6 +45,12 @@ export function GameSetupSummary({
             {settings.tableFeedback ? "On" : "Off"}
           </dd>
         </div>
+        <div className="flex justify-between gap-3">
+          <dt>Animations</dt>
+          <dd className="text-right text-red-700">
+            {settings.motionEnabled ? "On" : "Off"}
+          </dd>
+        </div>
       </dl>
       {onEditSettings ? (
         <button

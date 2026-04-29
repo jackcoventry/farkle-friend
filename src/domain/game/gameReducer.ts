@@ -17,6 +17,10 @@ export type GameAction =
   | { type: "END_GAME" }
   | { type: "RESET_GAME" }
   | { type: "RECORD_TURN"; playerId: PlayerId; score: number }
+  | {
+      type: "UPDATE_PREFERENCES";
+      settings: Pick<GameSettings, "motionEnabled" | "tableFeedback">;
+    }
   | { type: "UPDATE_SETTINGS"; settings: Partial<GameSettings> };
 
 export function reducer(state: GameState, action: GameAction): GameState {
@@ -35,6 +39,14 @@ export function reducer(state: GameState, action: GameAction): GameState {
       return resetGame(state);
     case "RECORD_TURN":
       return recordTurn(state, action.playerId, action.score);
+    case "UPDATE_PREFERENCES":
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          ...action.settings,
+        },
+      };
     case "UPDATE_SETTINGS": {
       if (state.phase !== "LOBBY") return state; // settings should be locked once game started
       return {

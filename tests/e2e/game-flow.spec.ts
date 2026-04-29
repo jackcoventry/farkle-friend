@@ -86,3 +86,31 @@ test("auto-advance setting moves to the next player after a turn result", async 
     page.getByRole("dialog", { name: "Grace's turn" })
   ).toBeVisible({ timeout: 5000 });
 });
+
+test("sound and animation preferences can be changed during a game", async ({
+  page,
+}) => {
+  await page.goto("/game/");
+  await page.getByRole("tab", { name: "Settings" }).click();
+  await page.getByRole("radio", { name: "manual", exact: true }).check();
+  await page.getByRole("button", { name: "Save" }).click();
+
+  await page.getByLabel("Player name").fill("Ada");
+  await page.getByRole("button", { name: "Add" }).click();
+  await page.getByLabel("Player name").fill("Grace");
+  await page.getByLabel("Avatar Hot dog").check();
+  await page.getByRole("button", { name: "Add" }).click();
+  await page.getByRole("button", { name: "Start game" }).click();
+  await page.waitForTimeout(2100);
+
+  await page.getByRole("button", { name: "Preferences" }).click();
+  const dialog = page.getByRole("dialog", { name: "Game preferences" });
+  await expect(dialog).toBeVisible();
+
+  await dialog.locator("#preferenceSound_off").check();
+  await dialog.locator("#preferenceMotion_off").check();
+  await expect(page.locator("html")).toHaveAttribute("data-motion", "off");
+
+  await dialog.getByRole("button", { name: "Close preferences" }).click();
+  await expect(page.getByLabel("Turn score")).toBeVisible();
+});

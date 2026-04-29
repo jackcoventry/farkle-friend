@@ -18,6 +18,7 @@ const SettingsFormSchema = z.object({
   autoAdvanceTurns: z.boolean(),
   diceStyle: z.enum(diceStyles),
   mode: z.enum(modes),
+  motionEnabled: z.boolean(),
   targetScore: z
     .number()
     .int("Target score must be a whole number.")
@@ -51,6 +52,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
       autoAdvanceTurns: state.settings.autoAdvanceTurns,
       diceStyle: state.settings.diceStyle,
       mode: state.settings.mode,
+      motionEnabled: state.settings.motionEnabled,
       targetScore: state.settings.targetScore,
       showComboSuggestions: state.settings.showComboSuggestions,
       tableFeedback: state.settings.tableFeedback,
@@ -62,6 +64,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
     autoAdvanceTurns: boolean;
     diceStyle: DiceStyle;
     mode: GameMode;
+    motionEnabled: boolean;
     targetScore: number;
     showComboSuggestions: boolean;
     tableFeedback: boolean;
@@ -308,6 +311,43 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
                     />
                   </Pill.Control>
                   <Pill.Label htmlFor="tableFeedback_no">Off</Pill.Label>
+                </Pill>
+              </div>
+            </fieldset>
+          )}
+        />
+
+        <Controller
+          control={control}
+          name="motionEnabled"
+          render={({ field }) => (
+            <fieldset className="grid gap-3">
+              <legend>Animations</legend>
+              <div className="flex flex-wrap gap-4">
+                <Pill>
+                  <Pill.Control>
+                    <input
+                      type="radio"
+                      checked={field.value === true}
+                      onChange={() => field.onChange(true)}
+                      name="motionEnabled"
+                      id="motionEnabled_yes"
+                    />
+                  </Pill.Control>
+                  <Pill.Label htmlFor="motionEnabled_yes">On</Pill.Label>
+                </Pill>
+
+                <Pill>
+                  <Pill.Control>
+                    <input
+                      type="radio"
+                      checked={field.value === false}
+                      onChange={() => field.onChange(false)}
+                      name="motionEnabled"
+                      id="motionEnabled_no"
+                    />
+                  </Pill.Control>
+                  <Pill.Label htmlFor="motionEnabled_no">Off</Pill.Label>
                 </Pill>
               </div>
             </fieldset>

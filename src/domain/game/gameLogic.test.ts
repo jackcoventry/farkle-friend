@@ -17,6 +17,7 @@ describe("game logic", () => {
       autoAdvanceTurns: false,
       diceStyle: "default",
       mode: "dice",
+      motionEnabled: true,
       showComboSuggestions: false,
       tableFeedback: false,
       targetScore: 10000,

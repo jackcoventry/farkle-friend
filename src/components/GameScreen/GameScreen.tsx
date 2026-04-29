@@ -18,6 +18,7 @@ import { ConfirmGameActionModal } from "@/components/GameActions/ConfirmGameActi
 import type { ConfirmGameAction } from "@/components/GameActions/ConfirmGameActionModal";
 import { GameActions } from "@/components/GameActions/GameActions";
 import { GameFinishedModal } from "@/components/GameFinishedModal/GameFinishedModal";
+import { GamePreferences } from "@/components/GamePreferences/GamePreferences";
 import { GameSetupSummary } from "@/components/GameSetupSummary/GameSetupSummary";
 import GameShell from "@/components/GameShell/GameShell";
 import { ManualTurn } from "@/components/ManualTurn/ManualTurn";
@@ -128,116 +129,121 @@ export function GameScreen() {
 
   if (flowState === "LOBBY") {
     return (
-      <GameShell>
-        <GameShell.Sidebar>
-          <div className="flex flex-col h-full">
-            {state.players.length > 0 ? (
-              <div className="my-6 overflow-auto">
-                <PlayerList
-                  players={state.players}
-                  onRemovePlayer={onRemovePlayer}
-                />
-              </div>
-            ) : (
-              <section className="my-6 rounded-lg bg-white/70 p-4">
-                <h2 className="font-heading-2">No players yet</h2>
-                <p className="mt-1 text-gray-800">
-                  Add at least two players, then start the game from the setup
-                  panel.
-                </p>
-              </section>
-            )}
-            <GameSetupSummary
-              settings={state.settings}
-              onEditSettings={() => setLobbyScreen("settings")}
-            />
-            <Footer />
-          </div>
-        </GameShell.Sidebar>
-        <GameShell.Body>
-          <div className="mx-auto flex h-full w-full max-w-[520px] flex-col justify-start gap-4 overflow-auto py-4">
-            <div
-              className="grid grid-cols-2 gap-2 rounded-lg bg-white/90 p-2"
-              role="tablist"
-              aria-label="Game setup"
-            >
-              <button
-                ref={playersTabRef}
-                type="button"
-                role="tab"
-                aria-selected={lobbyScreen === "players"}
-                aria-controls="players-panel"
-                id="players-tab"
-                tabIndex={lobbyScreen === "players" ? 0 : -1}
-                className={`rounded-lg px-4 py-3 font-button ${
-                  lobbyScreen === "players"
-                    ? "bg-red-700 text-white"
-                    : "bg-white text-gray-900"
-                }`}
-                onClick={() => setLobbyScreen("players")}
-                onKeyDown={onLobbyTabKeyDown}
-              >
-                Players
-              </button>
-              <button
-                ref={settingsTabRef}
-                type="button"
-                role="tab"
-                aria-selected={lobbyScreen === "settings"}
-                aria-controls="settings-panel"
-                id="settings-tab"
-                tabIndex={lobbyScreen === "settings" ? 0 : -1}
-                className={`rounded-lg px-4 py-3 font-button ${
-                  lobbyScreen === "settings"
-                    ? "bg-red-700 text-white"
-                    : "bg-white text-gray-900"
-                }`}
-                onClick={() => setLobbyScreen("settings")}
-                onKeyDown={onLobbyTabKeyDown}
-              >
-                Settings
-              </button>
+      <>
+        <GameShell>
+          <GameShell.Sidebar>
+            <div className="flex flex-col h-full">
+              {state.players.length > 0 ? (
+                <div className="my-6 overflow-auto">
+                  <PlayerList
+                    players={state.players}
+                    onRemovePlayer={onRemovePlayer}
+                  />
+                </div>
+              ) : (
+                <section className="my-6 rounded-lg bg-white/70 p-4">
+                  <h2 className="font-heading-2">No players yet</h2>
+                  <p className="mt-1 text-gray-800">
+                    Add at least two players, then start the game from the setup
+                    panel.
+                  </p>
+                </section>
+              )}
+              <GameSetupSummary
+                settings={state.settings}
+                onEditSettings={() => setLobbyScreen("settings")}
+              />
+              <Footer />
             </div>
+          </GameShell.Sidebar>
+          <GameShell.Body>
+            <div className="mx-auto flex h-full w-full max-w-[520px] flex-col justify-start gap-4 overflow-auto py-4">
+              <GamePreferences className="flex justify-end" />
+              <div
+                className="grid grid-cols-2 gap-2 rounded-lg bg-white/90 p-2"
+                role="tablist"
+                aria-label="Game setup"
+              >
+                <button
+                  ref={playersTabRef}
+                  type="button"
+                  role="tab"
+                  aria-selected={lobbyScreen === "players"}
+                  aria-controls="players-panel"
+                  id="players-tab"
+                  tabIndex={lobbyScreen === "players" ? 0 : -1}
+                  className={`rounded-lg px-4 py-3 font-button ${
+                    lobbyScreen === "players"
+                      ? "bg-red-700 text-white"
+                      : "bg-white text-gray-900"
+                  }`}
+                  onClick={() => setLobbyScreen("players")}
+                  onKeyDown={onLobbyTabKeyDown}
+                >
+                  Players
+                </button>
+                <button
+                  ref={settingsTabRef}
+                  type="button"
+                  role="tab"
+                  aria-selected={lobbyScreen === "settings"}
+                  aria-controls="settings-panel"
+                  id="settings-tab"
+                  tabIndex={lobbyScreen === "settings" ? 0 : -1}
+                  className={`rounded-lg px-4 py-3 font-button ${
+                    lobbyScreen === "settings"
+                      ? "bg-red-700 text-white"
+                      : "bg-white text-gray-900"
+                  }`}
+                  onClick={() => setLobbyScreen("settings")}
+                  onKeyDown={onLobbyTabKeyDown}
+                >
+                  Settings
+                </button>
+              </div>
 
-            {lobbyScreen === "players" ? (
-              <div
-                aria-labelledby="players-tab"
-                id="players-panel"
-                role="tabpanel"
-              >
-                <AddPlayerForm
-                  onEditSettings={() => setLobbyScreen("settings")}
-                  onSubmit={onAddPlayerFormSubmit}
-                />
-              </div>
-            ) : (
-              <div
-                aria-labelledby="settings-tab"
-                id="settings-panel"
-                role="tabpanel"
-              >
-                <Settings onSubmit={onSettingsSubmit} />
-              </div>
-            )}
-          </div>
-        </GameShell.Body>
-      </GameShell>
+              {lobbyScreen === "players" ? (
+                <div
+                  aria-labelledby="players-tab"
+                  id="players-panel"
+                  role="tabpanel"
+                >
+                  <AddPlayerForm
+                    onEditSettings={() => setLobbyScreen("settings")}
+                    onSubmit={onAddPlayerFormSubmit}
+                  />
+                </div>
+              ) : (
+                <div
+                  aria-labelledby="settings-tab"
+                  id="settings-panel"
+                  role="tabpanel"
+                >
+                  <Settings onSubmit={onSettingsSubmit} />
+                </div>
+              )}
+            </div>
+          </GameShell.Body>
+        </GameShell>
+      </>
     );
   }
 
   if (flowState === "FINISHED") {
     return (
-      <main>
-        <h1 className="sr-only">Farkle Friend</h1>
-        <GameFinishedModal
-          onResetGame={onResetGame}
-          onResetPlayers={onResetPlayers}
-          players={summary.players}
-          soundEnabled={state.settings.tableFeedback}
-          turns={state.turns}
-          winner={winner}
-        />
-      </main>
+      <>
+        <main>
+          <h1 className="sr-only">Farkle Friend</h1>
+          <GameFinishedModal
+            onResetGame={onResetGame}
+            onResetPlayers={onResetPlayers}
+            players={summary.players}
+            soundEnabled={state.settings.tableFeedback}
+            turns={state.turns}
+            winner={winner}
+          />
+        </main>
+      </>
     );
   }
 
@@ -359,6 +365,7 @@ export function GameScreen() {
                     </div>
                   ) : null}
                 </dl>
+                <GamePreferences className="w-full sm:w-auto" />
               </section>
             ) : null}
 
@@ -368,6 +375,7 @@ export function GameScreen() {
                   key={`${currentPlayer.id}-${state.currentPlayerIndex}`}
                   currentPlayer={currentPlayer}
                   avatar={avatar}
+                  soundEnabled={state.settings.tableFeedback}
                 />
               ) : null}
 

@@ -4,27 +4,32 @@ import { AvatarImage } from "@/components/AvatarImage/AvatarImage";
 import { AvatarId, avatarSet } from "@/components/Form/AddPlayer/AddPlayer";
 import Modal from "@/components/Modal/Modal";
 import Splash from "@/components/Modal/Splash";
+import { playGameSound } from "@/domain/game/gameAudio";
 import type { Player } from "@/domain/game/gameTypes";
 import { useEffect, useState } from "react";
 
 type PlayerSwitchSplashProps = {
   avatar: (typeof avatarSet)[AvatarId];
   currentPlayer: Player;
+  soundEnabled?: boolean;
 };
 
 export function PlayerSwitchSplash({
   avatar,
   currentPlayer,
+  soundEnabled = false,
 }: Readonly<PlayerSwitchSplashProps>) {
   const [isOpen, setIsOpen] = useState(true);
 
   useEffect(() => {
+    playGameSound("turnStart", soundEnabled);
+
     const timeout = globalThis.setTimeout(() => {
       setIsOpen(false);
     }, 2000);
 
     return () => globalThis.clearTimeout(timeout);
-  }, []);
+  }, [currentPlayer.id, soundEnabled]);
 
   if (!isOpen) return null;
 
