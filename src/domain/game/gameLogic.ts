@@ -20,6 +20,7 @@ export function createInitialGameState(): GameState {
     phase: "LOBBY",
     players: [],
     settings: {
+      autoAdvanceTurns: false,
       diceStyle: "default",
       mode: "dice",
       targetScore: 10000,

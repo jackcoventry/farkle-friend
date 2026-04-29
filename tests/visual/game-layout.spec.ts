@@ -35,7 +35,7 @@ test("dice turn layout remains stable", async ({ page }) => {
 test("winner modal layout remains stable", async ({ page }) => {
   await page.goto("/game/");
   await page.getByRole("tab", { name: "Settings" }).click();
-  await page.getByLabel("manual").check();
+  await page.getByRole("radio", { name: "manual", exact: true }).check();
   await page.getByLabel("Point target").fill("500");
   await page.getByRole("button", { name: "Save" }).click();
 

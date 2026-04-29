@@ -58,6 +58,7 @@ export type DiceStyle = "default" | "medieval";
 export type GameMode = "dice" | "manual";
 
 export type GameSettings = {
+  autoAdvanceTurns: boolean;
   diceStyle: DiceStyle;
   mode: GameMode;
   targetScore: number;
