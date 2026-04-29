@@ -32,7 +32,8 @@ import {
 import { useGame } from "@/domain/game/GameProvider";
 import { useWarnBeforeUnload } from "@/hooks/useWarnBeforeUnload";
 import { formatScore } from "@/utils/formatScore";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import type { KeyboardEvent } from "react";
 
 export function GameScreen() {
   const { state, dispatch } = useGame();
@@ -40,6 +41,8 @@ export function GameScreen() {
   const [lobbyScreen, setLobbyScreen] = useState<"players" | "settings">(
     "players"
   );
+  const playersTabRef = useRef<HTMLButtonElement | null>(null);
+  const settingsTabRef = useRef<HTMLButtonElement | null>(null);
   const summary = getGameSummary(state);
   const flowState = getGameFlowState(state);
   const currentPlayer = getCurrentPlayer(state, summary);
@@ -92,6 +95,31 @@ export function GameScreen() {
     dispatch({ type: "ADVANCE_TURN" });
   };
 
+  const selectLobbyScreen = (screen: "players" | "settings") => {
+    setLobbyScreen(screen);
+    const tab = screen === "players" ? playersTabRef : settingsTabRef;
+    window.requestAnimationFrame(() => tab.current?.focus());
+  };
+
+  const onLobbyTabKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+    const nextScreen = lobbyScreen === "players" ? "settings" : "players";
+
+    if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+      event.preventDefault();
+      selectLobbyScreen(nextScreen);
+    }
+
+    if (event.key === "Home") {
+      event.preventDefault();
+      selectLobbyScreen("players");
+    }
+
+    if (event.key === "End") {
+      event.preventDefault();
+      selectLobbyScreen("settings");
+    }
+  };
+
   if (flowState === "LOBBY") {
     return (
       <GameShell>
@@ -119,37 +147,59 @@ export function GameScreen() {
               aria-label="Game setup"
             >
               <button
+                ref={playersTabRef}
                 type="button"
                 role="tab"
                 aria-selected={lobbyScreen === "players"}
+                aria-controls="players-panel"
+                id="players-tab"
+                tabIndex={lobbyScreen === "players" ? 0 : -1}
                 className={`rounded-lg px-4 py-3 font-button ${
                   lobbyScreen === "players"
                     ? "bg-red-700 text-white"
                     : "bg-white text-gray-900"
                 }`}
                 onClick={() => setLobbyScreen("players")}
+                onKeyDown={onLobbyTabKeyDown}
               >
                 Players
               </button>
               <button
+                ref={settingsTabRef}
                 type="button"
                 role="tab"
                 aria-selected={lobbyScreen === "settings"}
+                aria-controls="settings-panel"
+                id="settings-tab"
+                tabIndex={lobbyScreen === "settings" ? 0 : -1}
                 className={`rounded-lg px-4 py-3 font-button ${
                   lobbyScreen === "settings"
                     ? "bg-red-700 text-white"
                     : "bg-white text-gray-900"
                 }`}
                 onClick={() => setLobbyScreen("settings")}
+                onKeyDown={onLobbyTabKeyDown}
               >
                 Settings
               </button>
             </div>
 
             {lobbyScreen === "players" ? (
-              <AddPlayerForm onSubmit={onAddPlayerFormSubmit} />
+              <div
+                aria-labelledby="players-tab"
+                id="players-panel"
+                role="tabpanel"
+              >
+                <AddPlayerForm onSubmit={onAddPlayerFormSubmit} />
+              </div>
             ) : (
-              <Settings onSubmit={onSettingsSubmit} />
+              <div
+                aria-labelledby="settings-tab"
+                id="settings-panel"
+                role="tabpanel"
+              >
+                <Settings onSubmit={onSettingsSubmit} />
+              </div>
             )}
           </div>
         </GameShell.Body>

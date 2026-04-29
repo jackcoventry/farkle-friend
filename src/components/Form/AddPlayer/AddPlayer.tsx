@@ -4,6 +4,7 @@ import { AvatarImage } from "@/components/AvatarImage/AvatarImage";
 import Button from "@/components/Button/Button";
 import { canStartGame } from "@/domain/game/gameLogic";
 import { useGame } from "@/domain/game/GameProvider";
+import { formatScore } from "@/utils/formatScore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import z from "zod";
@@ -110,6 +111,9 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
   };
 
   const readyToStart = Boolean(canStartGame(state));
+  const modeLabel =
+    state.settings.mode === "dice" ? "Dice rolling" : "Manual scoring";
+  const playerCount = state.players.length;
 
   const onStartGame = () => {
     dispatch({ type: "START_GAME" });
@@ -209,17 +213,26 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
           </>
         )}
 
-        {state.players.length <= 1 ? (
-          <p className="font-body">You need at least two players to play!</p>
-        ) : (
+        <section className="grid gap-3 rounded-lg bg-sun-50 p-4">
+          <div>
+            <h3 className="font-heading-2">Ready?</h3>
+            <p className="text-gray-800">
+              {readyToStart
+                ? `${playerCount} players · ${modeLabel} · First to ${formatScore(
+                    state.settings.targetScore
+                  )}`
+                : "Add at least two players to start."}
+            </p>
+          </div>
           <Button
+            type="button"
             onClick={onStartGame}
             className="w-full justify-center"
             disabled={!readyToStart}
           >
             Start game
           </Button>
-        )}
+        </section>
       </form>
     </div>
   );
