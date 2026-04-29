@@ -35,12 +35,11 @@ test("active dice turn has no detectable accessibility violations", async ({
 test("turn result and finished modal have no detectable accessibility violations", async ({
   page,
 }) => {
-  await page.goto("/");
-  await page.getByRole("button", { name: "Settings" }).click();
+  await page.goto("/game/");
+  await page.getByRole("tab", { name: "Settings" }).click();
   await page.getByLabel("manual").check();
   await page.getByLabel("Point target").fill("500");
   await page.getByRole("button", { name: "Save" }).click();
-  await page.getByRole("link", { name: "Start Game" }).click();
 
   await addTwoPlayers(page);
   await page.getByRole("button", { name: "Start game" }).click();

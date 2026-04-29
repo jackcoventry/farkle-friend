@@ -13,7 +13,7 @@ export default defineConfig({
   },
   test: {
     environment: "jsdom",
-    exclude: ["tests/e2e/**", "node_modules/**", ".next/**"],
+    exclude: ["tests/e2e/**", "tests/visual/**", "node_modules/**", ".next/**"],
     fileParallelism: false,
     globals: true,
     maxWorkers: 1,
