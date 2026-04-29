@@ -3,9 +3,12 @@
 import Button from "@/components/Button/Button";
 import type { Player, TurnResult } from "@/domain/game/gameTypes";
 import { formatScore } from "@/utils/formatScore";
-import { useEffect, useId, useRef } from "react";
+import { useEffect, useId, useRef, useState } from "react";
+
+const AUTO_ADVANCE_SECONDS = 3;
 
 type TurnResultPanelProps = {
+  autoAdvance?: boolean;
   currentPlayer: Player;
   nextPlayer?: Player | null;
   onAdvanceTurn: () => void;
@@ -13,6 +16,7 @@ type TurnResultPanelProps = {
 };
 
 export function TurnResultPanel({
+  autoAdvance = false,
   currentPlayer,
   nextPlayer,
   onAdvanceTurn,
@@ -21,10 +25,41 @@ export function TurnResultPanel({
   const actionText = result.isGameWinner ? "Show winner" : "Next player";
   const titleId = useId();
   const panelRef = useRef<HTMLElement | null>(null);
+  const [now, setNow] = useState(() => Date.now());
+  const [autoAdvanceDeadline] = useState(
+    () => Date.now() + AUTO_ADVANCE_SECONDS * 1000,
+  );
+  const secondsRemaining = Math.max(
+    0,
+    Math.ceil((autoAdvanceDeadline - now) / 1000),
+  );
 
   useEffect(() => {
     panelRef.current?.focus();
   }, [result.playerId, result.score]);
+
+  useEffect(() => {
+    if (!autoAdvance || result.isGameWinner) return;
+
+    const interval = window.setInterval(() => {
+      setNow(Date.now());
+    }, 1000);
+    const timeout = window.setTimeout(
+      onAdvanceTurn,
+      AUTO_ADVANCE_SECONDS * 1000,
+    );
+
+    return () => {
+      window.clearInterval(interval);
+      window.clearTimeout(timeout);
+    };
+  }, [
+    autoAdvance,
+    onAdvanceTurn,
+    result.isGameWinner,
+    result.playerId,
+    result.score,
+  ]);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
     if (event.key !== "Enter") return;
@@ -72,6 +107,11 @@ export function TurnResultPanel({
           ? `${currentPlayer.username} reached the target score.`
           : `Next up: ${nextPlayer?.username ?? "next player"}.`}
       </p>
+      {autoAdvance && !result.isGameWinner ? (
+        <p className="text-sm text-gray-700" aria-live="polite">
+          Advancing automatically in {secondsRemaining}...
+        </p>
+      ) : null}
       <Button onClick={onAdvanceTurn} className="justify-center" size="large">
         {actionText}
       </Button>

@@ -15,6 +15,7 @@ const minTargetScore = 500;
 const maxTargetScore = 50000;
 
 const SettingsFormSchema = z.object({
+  autoAdvanceTurns: z.boolean(),
   diceStyle: z.enum(diceStyles),
   mode: z.enum(modes),
   targetScore: z
@@ -47,6 +48,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
   } = useForm<SettingsFormSchemaType>({
     resolver: zodResolver(SettingsFormSchema),
     defaultValues: {
+      autoAdvanceTurns: state.settings.autoAdvanceTurns,
       diceStyle: state.settings.diceStyle,
       mode: state.settings.mode,
       targetScore: state.settings.targetScore,
@@ -57,6 +59,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
   });
 
   const submitHandler = (data: {
+    autoAdvanceTurns: boolean;
     diceStyle: DiceStyle;
     mode: GameMode;
     targetScore: number;
@@ -74,6 +77,43 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
         onSubmit={handleSubmit(submitHandler)}
       >
         <h2 className="font-heading text-center">Settings</h2>
+        <Controller
+          control={control}
+          name="autoAdvanceTurns"
+          render={({ field }) => (
+            <fieldset className="grid gap-3">
+              <legend>Turn hand-off</legend>
+              <div className="flex flex-wrap gap-4">
+                <Pill>
+                  <Pill.Control>
+                    <input
+                      type="radio"
+                      checked={field.value === true}
+                      onChange={() => field.onChange(true)}
+                      name="autoAdvanceTurns"
+                      id="autoAdvanceTurns_yes"
+                    />
+                  </Pill.Control>
+                  <Pill.Label htmlFor="autoAdvanceTurns_yes">Auto</Pill.Label>
+                </Pill>
+
+                <Pill>
+                  <Pill.Control>
+                    <input
+                      type="radio"
+                      checked={field.value === false}
+                      onChange={() => field.onChange(false)}
+                      name="autoAdvanceTurns"
+                      id="autoAdvanceTurns_no"
+                    />
+                  </Pill.Control>
+                  <Pill.Label htmlFor="autoAdvanceTurns_no">Manual</Pill.Label>
+                </Pill>
+              </div>
+            </fieldset>
+          )}
+        />
+
         <Controller
           name="diceStyle"
           control={control}

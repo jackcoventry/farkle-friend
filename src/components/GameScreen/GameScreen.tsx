@@ -1,6 +1,10 @@
 "use client";
 
-import { DiceTurnPanel } from "@/components/DiceTurnPanel/DiceTurnPanel";
+import DiceIcon from "@/components/DiceIcon/DiceIcon";
+import {
+  DiceTurnPanel,
+  type DiceTurnMetrics,
+} from "@/components/DiceTurnPanel/DiceTurnPanel";
 import Footer from "@/components/Footer/Footer";
 import AddPlayerForm, {
   AddPlayerFormSchemaType,
@@ -39,8 +43,10 @@ export function GameScreen() {
   const { state, dispatch } = useGame();
   const [confirmAction, setConfirmAction] = useState<ConfirmGameAction>(null);
   const [lobbyScreen, setLobbyScreen] = useState<"players" | "settings">(
-    "players"
+    "players",
   );
+  const [diceTurnMetrics, setDiceTurnMetrics] =
+    useState<DiceTurnMetrics | null>(null);
   const playersTabRef = useRef<HTMLButtonElement | null>(null);
   const settingsTabRef = useRef<HTMLButtonElement | null>(null);
   const summary = getGameSummary(state);
@@ -125,8 +131,6 @@ export function GameScreen() {
       <GameShell>
         <GameShell.Sidebar>
           <div className="flex flex-col h-full">
-            <h2 className="font-heading mb-2">Players</h2>
-
             {state.players.length > 0 ? (
               <div className="my-6 overflow-auto">
                 <PlayerList
@@ -136,7 +140,7 @@ export function GameScreen() {
               </div>
             ) : (
               <section className="my-6 rounded-lg bg-white/70 p-4">
-                <h3 className="font-heading-2">No players yet</h3>
+                <h2 className="font-heading-2">No players yet</h2>
                 <p className="mt-1 text-gray-800">
                   Add at least two players, then start the game from the setup
                   panel.
@@ -229,6 +233,7 @@ export function GameScreen() {
           onResetGame={onResetGame}
           onResetPlayers={onResetPlayers}
           players={summary.players}
+          soundEnabled={state.settings.tableFeedback}
           turns={state.turns}
           winner={winner}
         />
@@ -241,7 +246,6 @@ export function GameScreen() {
       <GameShell>
         <GameShell.Sidebar>
           <div className="flex flex-col h-full">
-            <h2 className="font-heading mb-2">Players</h2>
             <p className="font-body-1">
               First to {formatScore(state.settings.targetScore)} points
             </p>
@@ -302,16 +306,50 @@ export function GameScreen() {
                 <dl className="ml-auto flex flex-wrap gap-4 text-sm sm:text-base">
                   <div>
                     <dt className="text-gray-700">
-                      {state.pendingTurnResult ? "Previous total" : "Current total"}
+                      {state.pendingTurnResult
+                        ? "Previous total"
+                        : "Current total"}
                     </dt>
                     <dd className="font-body-1 text-red-700">
                       {formatScore(
                         state.pendingTurnResult?.previousTotal ??
                           currentPlayer.totalScore ??
-                          0
+                          0,
                       )}
                     </dd>
                   </div>
+                  {state.settings.mode === "dice" &&
+                  flowState === "TURN_ACTIVE" &&
+                  diceTurnMetrics ? (
+                    <>
+                      <div>
+                        <dt className="text-gray-700">Round score</dt>
+                        <dd className="font-body-1 text-red-700">
+                          {formatScore(diceTurnMetrics.roundScore)}
+                        </dd>
+                      </div>
+                      <div>
+                        <dt className="text-gray-700">Dice left</dt>
+                        <dd className="flex items-center gap-2 font-body-1 text-red-700">
+                          <span>{diceTurnMetrics.diceLeft}</span>
+                          <span
+                            aria-hidden="true"
+                            className="hidden gap-1 sm:flex"
+                          >
+                            {[
+                              ...new Array(diceTurnMetrics.diceLeft).keys(),
+                            ].map((index) => (
+                              <DiceIcon
+                                key={index}
+                                count={index + 1}
+                                className="w-[28px]"
+                              />
+                            ))}
+                          </span>
+                        </dd>
+                      </div>
+                    </>
+                  ) : null}
                   {state.pendingTurnResult ? (
                     <div>
                       <dt className="text-gray-700">Updated total</dt>
@@ -336,13 +374,19 @@ export function GameScreen() {
               {currentPlayer ? (
                 flowState === "TURN_RESULT" && state.pendingTurnResult ? (
                   <TurnResultPanel
+                    autoAdvance={state.settings.autoAdvanceTurns}
                     currentPlayer={currentPlayer}
+                    key={`${state.pendingTurnResult.playerId}-${state.pendingTurnResult.score}-${state.pendingTurnResult.newTotal}`}
                     nextPlayer={nextPlayer}
                     result={state.pendingTurnResult}
                     onAdvanceTurn={onAdvanceTurn}
                   />
                 ) : state.settings.mode === "dice" ? (
-                  <DiceTurnPanel state={state} dispatch={dispatch} />
+                  <DiceTurnPanel
+                    dispatch={dispatch}
+                    onTurnMetricsChange={setDiceTurnMetrics}
+                    state={state}
+                  />
                 ) : (
                   <ManualTurn state={state} dispatch={dispatch} />
                 )

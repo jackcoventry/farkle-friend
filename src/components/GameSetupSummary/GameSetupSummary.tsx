@@ -28,6 +28,12 @@ export function GameSetupSummary({
           </dd>
         </div>
         <div className="flex justify-between gap-3">
+          <dt>Turn hand-off</dt>
+          <dd className="text-right text-red-700">
+            {settings.autoAdvanceTurns ? "Auto" : "Manual"}
+          </dd>
+        </div>
+        <div className="flex justify-between gap-3">
           <dt>Combo hints</dt>
           <dd className="text-right text-red-700">
             {settings.showComboSuggestions ? "On" : "Off"}

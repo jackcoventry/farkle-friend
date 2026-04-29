@@ -2,17 +2,25 @@
 
 import { GameAction } from "@/domain/game/gameReducer";
 import { GameState } from "@/domain/game/gameTypes";
+import type { GameSoundEvent } from "@/domain/game/gameAudio";
+import { gameSounds } from "@/domain/game/gameAudio";
 import { getScoringCombinations } from "@/domain/game/dice";
 import DiceIcon from "@/components/DiceIcon/DiceIcon";
 import RichButton from "@/components/RichButton/RichButton";
 import { useTurnController } from "@/domain/game/useTurnController";
 import { useDiceTurnController } from "@/domain/game/useDiceTurnController";
 import { getDiceTurnCopy } from "@/domain/game/diceTurnPresenter";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 
 type DiceTurnPanelProps = {
   state: GameState;
   dispatch: React.Dispatch<GameAction>;
+  onTurnMetricsChange?: (metrics: DiceTurnMetrics | null) => void;
+};
+
+export type DiceTurnMetrics = {
+  diceLeft: number;
+  roundScore: number;
 };
 
 type FeedbackWindow = Window & {
@@ -23,6 +31,7 @@ type FeedbackWindow = Window & {
 export function DiceTurnPanel({
   state,
   dispatch,
+  onTurnMetricsChange,
 }: Readonly<DiceTurnPanelProps>) {
   const { currentPlayer, commitTurnScore } = useTurnController(state, dispatch);
 
@@ -58,30 +67,41 @@ export function DiceTurnPanel({
   });
   const tableFeedbackEnabled = state.settings.tableFeedback;
 
-  const playFeedback = (type: "bank" | "farkle" | "roll") => {
-    if (!tableFeedbackEnabled || typeof window === "undefined") return;
+  const playFeedback = useCallback(
+    (type: Extract<GameSoundEvent, "bank" | "farkle" | "roll">) => {
+      if (!tableFeedbackEnabled || typeof window === "undefined") return;
 
-    if ("vibrate" in navigator) {
-      navigator.vibrate(type === "farkle" ? [70, 30, 70] : 35);
-    }
+      const customSound = gameSounds[type];
+      if (customSound) {
+        const audio = new Audio(customSound.src);
+        audio.volume = customSound.volume ?? 0.7;
+        void audio.play().catch(() => undefined);
+        return;
+      }
 
-    const feedbackWindow = window as FeedbackWindow;
-    const AudioContextCtor =
-      feedbackWindow.AudioContext ?? feedbackWindow.webkitAudioContext;
-    if (!AudioContextCtor) return;
+      if ("vibrate" in navigator) {
+        navigator.vibrate(type === "farkle" ? [70, 30, 70] : 35);
+      }
 
-    const context = new AudioContextCtor();
-    const oscillator = context.createOscillator();
-    const gain = context.createGain();
+      const feedbackWindow = window as FeedbackWindow;
+      const AudioContextCtor =
+        feedbackWindow.AudioContext ?? feedbackWindow.webkitAudioContext;
+      if (!AudioContextCtor) return;
 
-    oscillator.frequency.value =
-      type === "farkle" ? 140 : type === "bank" ? 520 : 320;
-    gain.gain.value = 0.03;
-    oscillator.connect(gain);
-    gain.connect(context.destination);
-    oscillator.start();
-    oscillator.stop(context.currentTime + 0.08);
-  };
+      const context = new AudioContextCtor();
+      const oscillator = context.createOscillator();
+      const gain = context.createGain();
+
+      oscillator.frequency.value =
+        type === "farkle" ? 140 : type === "bank" ? 520 : 320;
+      gain.gain.value = 0.03;
+      oscillator.connect(gain);
+      gain.connect(context.destination);
+      oscillator.start();
+      oscillator.stop(context.currentTime + 0.08);
+    },
+    [tableFeedbackEnabled]
+  );
 
   const handleRoll = () => {
     playFeedback("roll");
@@ -98,13 +118,38 @@ export function DiceTurnPanel({
     dice.finishTurn();
   };
 
+  useEffect(() => {
+    if (!isFarkled) return;
+
+    playFeedback("farkle");
+  }, [isFarkled, playFeedback]);
+
+  useEffect(() => {
+    if (!activeTurn) {
+      onTurnMetricsChange?.(null);
+      return;
+    }
+
+    onTurnMetricsChange?.({
+      diceLeft: activeTurn.availableDice,
+      roundScore: activeTurn.tempScore,
+    });
+
+    return () => onTurnMetricsChange?.(null);
+  }, [
+    activeTurn,
+    activeTurn?.availableDice,
+    activeTurn?.tempScore,
+    onTurnMetricsChange,
+  ]);
+
   useDiceKeyboardShortcuts({
     canBank: dice.canBank,
     canFinish: dice.canFinish,
     canRoll: dice.canRoll,
     currentRollLength: activeTurn?.isFarkled
       ? 0
-      : dice.currentRoll?.length ?? 0,
+      : (dice.currentRoll?.length ?? 0),
     onBank: handleBank,
     onFinish: handleFinish,
     onRoll: handleRoll,
@@ -117,26 +162,6 @@ export function DiceTurnPanel({
 
   return (
     <div className="turn-frame | grid gap-3 h-full overflow-hidden">
-      <div className="flex flex-wrap gap-4">
-        <div>
-          <h3 className="text-white flex gap-4" aria-live="polite">
-            <span className="font-sub-heading flex">ROUND SCORE:</span>
-            <span className="font-sub-heading flex">
-              {activeTurn.tempScore || 0}
-            </span>
-          </h3>
-        </div>
-        <div className="ml-auto">
-          <div>
-            <span className="flex gap-1">
-              {[...new Array(activeTurn.availableDice).keys()].map((e) => (
-                <DiceIcon key={e} count={e + 1} className="w-[40px]" />
-              ))}
-            </span>
-          </div>
-        </div>
-      </div>
-
       <div
         className={`rounded-lg px-4 py-3 ${
           dice.selectedHasInvalidDice

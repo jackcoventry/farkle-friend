@@ -33,8 +33,6 @@ export function TurnHistory({
 
   return (
     <section className="rounded-lg bg-white/80 p-3" aria-live="polite">
-      <h3 className="font-heading-2 mb-2">Table pulse</h3>
-
       {leader ? (
         <dl className="mb-3 grid gap-2 border-b border-sun-200 pb-3">
           <div className="flex justify-between gap-3">
@@ -53,7 +51,8 @@ export function TurnHistory({
             <div className="flex justify-between gap-3">
               <dt>Biggest turn</dt>
               <dd className="truncate text-right text-red-700">
-                {playerNames.get(biggestTurn.playerId) ?? "Player"} +{formatScore(biggestTurn.score)}
+                {playerNames.get(biggestTurn.playerId) ?? "Player"} +
+                {formatScore(biggestTurn.score)}
               </dd>
             </div>
           ) : null}
@@ -70,7 +69,7 @@ export function TurnHistory({
 
       {recentTurns.length > 0 ? (
         <>
-          <h4 className="font-heading-2 mb-2">Recent turns</h4>
+          <p className="font-heading-2 mb-2">Recent turns</p>
           <ol className="flex flex-col gap-2">
             {recentTurns.map((turn) => {
               const player = playersById.get(turn.playerId);

@@ -6,13 +6,16 @@ import {
 } from "@/components/Form/AddPlayer/AddPlayer";
 import Modal from "@/components/Modal/Modal";
 import Splash from "@/components/Modal/Splash";
+import { gameSounds } from "@/domain/game/gameAudio";
 import type { Player, Turn } from "@/domain/game/gameTypes";
 import { formatScore } from "@/utils/formatScore";
+import { useEffect } from "react";
 
 type GameFinishedModalProps = {
   onResetGame: () => void;
   onResetPlayers: () => void;
   players: Player[];
+  soundEnabled?: boolean;
   turns: Turn[];
   winner: Player | null;
 };
@@ -21,6 +24,7 @@ export function GameFinishedModal({
   onResetGame,
   onResetPlayers,
   players,
+  soundEnabled = false,
   turns,
   winner,
 }: Readonly<GameFinishedModalProps>) {
@@ -40,6 +44,15 @@ export function GameFinishedModal({
   const totalPoints = turns.reduce((total, turn) => total + turn.score, 0);
   const averageTurn = turns.length > 0 ? Math.round(totalPoints / turns.length) : 0;
   const farkles = turns.filter((turn) => turn.score === 0).length;
+
+  useEffect(() => {
+    const sound = gameSounds.win;
+    if (!soundEnabled || !sound) return;
+
+    const audio = new Audio(sound.src);
+    audio.volume = sound.volume ?? 0.7;
+    void audio.play().catch(() => undefined);
+  }, [soundEnabled]);
 
   return (
     <Modal isOpen={true} ariaLabel="Game finished" variant="splash">

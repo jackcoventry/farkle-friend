@@ -14,10 +14,6 @@ function Footer() {
   return (
     <>
       <footer className="mt-auto flex">
-        <div>
-          <span className="font-sub-heading text-center">FARKLE!</span>
-          <span className="block">Built by Jack Coventry</span>
-        </div>
         <div className="ml-auto mt-auto">
           <Button
             type="button"
@@ -25,9 +21,11 @@ function Footer() {
             icon="question-circle"
             ariaLabel="View rules and scoring"
             className="items-center"
-          >
-            Rules & scoring
-          </Button>
+          />
+        </div>
+        <div>
+          <span className="font-sub-heading text-center">FARKLE!</span>
+          <span className="block">Built by Jack Coventry</span>
         </div>
       </footer>
       <Modal

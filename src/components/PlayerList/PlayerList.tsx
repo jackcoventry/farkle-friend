@@ -55,7 +55,7 @@ function PlayerList({
             </div>
             <div className="flex min-w-0 flex-1 flex-col justify-center">
               <div className="flex min-w-0 items-baseline gap-2">
-                <h3 className="font-heading-2 truncate">{player.username}</h3>
+                <p className="font-heading-2 truncate">{player.username}</p>
                 {isActive ? (
                   <span className="rounded-full bg-red-700 px-2 py-1 text-xs text-white">
                     Current
