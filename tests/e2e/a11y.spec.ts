@@ -46,12 +46,15 @@ test("turn result and finished modal have no detectable accessibility violations
   await page.getByRole("button", { name: "Start game" }).click();
   await page.waitForTimeout(2100);
 
-  await page.getByLabel("Turn score").fill("500");
+  await page.getByLabel("Turn score").fill("50");
   await page.getByRole("button", { name: "Submit score" }).click();
-  await expect(page.getByText("Ada reached the target score.")).toBeVisible();
+  await expect(page.getByText("Next up: Grace.")).toBeVisible();
   await expectNoA11yViolations(page);
 
-  await page.getByRole("button", { name: "Show winner" }).click();
+  await page.getByRole("button", { name: "Next player" }).click();
+  await page.waitForTimeout(2100);
+  await page.getByLabel("Turn score").fill("500");
+  await page.getByRole("button", { name: "Submit score" }).click();
   await expect(page.getByRole("dialog", { name: "Game finished" })).toBeVisible();
   await expectNoA11yViolations(page);
 });

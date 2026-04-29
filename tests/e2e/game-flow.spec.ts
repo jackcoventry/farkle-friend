@@ -36,9 +36,6 @@ test("players can start a manual game, score turns, and reset for new players", 
 
   await page.getByLabel("Turn score").fill("500");
   await page.getByRole("button", { name: "Submit score" }).click();
-  await expect(page.getByText("Grace reached the target score.")).toBeVisible();
-  await page.getByRole("button", { name: "Show winner" }).click();
-
   await expect(page.getByRole("dialog", { name: "Game finished" })).toBeVisible();
   await expect(page.getByText("Grace wins!")).toBeVisible();
 

@@ -7,6 +7,9 @@ import AddPlayerForm, {
   AvatarId,
   avatarSet,
 } from "@/components/Form/AddPlayer/AddPlayer";
+import Settings, {
+  SettingsFormSchemaType,
+} from "@/components/Form/Settings/Settings";
 import { ConfirmGameActionModal } from "@/components/GameActions/ConfirmGameActionModal";
 import type { ConfirmGameAction } from "@/components/GameActions/ConfirmGameActionModal";
 import { GameActions } from "@/components/GameActions/GameActions";
@@ -34,6 +37,9 @@ import { useState } from "react";
 export function GameScreen() {
   const { state, dispatch } = useGame();
   const [confirmAction, setConfirmAction] = useState<ConfirmGameAction>(null);
+  const [lobbyScreen, setLobbyScreen] = useState<"players" | "settings">(
+    "players"
+  );
   const summary = getGameSummary(state);
   const flowState = getGameFlowState(state);
   const currentPlayer = getCurrentPlayer(state, summary);
@@ -49,6 +55,14 @@ export function GameScreen() {
       username: data.username,
       avatar: data.avatar,
     });
+  };
+
+  const onSettingsSubmit = (data: SettingsFormSchemaType) => {
+    dispatch({
+      type: "UPDATE_SETTINGS",
+      settings: data,
+    });
+    setLobbyScreen("players");
   };
 
   const onResetGame = () => {
@@ -98,8 +112,45 @@ export function GameScreen() {
           </div>
         </GameShell.Sidebar>
         <GameShell.Body>
-          <div className="max-w-[400px] m-auto flex h-full">
-            <AddPlayerForm onSubmit={onAddPlayerFormSubmit} />
+          <div className="mx-auto flex h-full w-full max-w-[520px] flex-col justify-center gap-4">
+            <div
+              className="grid grid-cols-2 gap-2 rounded-lg bg-white/90 p-2"
+              role="tablist"
+              aria-label="Game setup"
+            >
+              <button
+                type="button"
+                role="tab"
+                aria-selected={lobbyScreen === "players"}
+                className={`rounded-lg px-4 py-3 font-button ${
+                  lobbyScreen === "players"
+                    ? "bg-red-700 text-white"
+                    : "bg-white text-gray-900"
+                }`}
+                onClick={() => setLobbyScreen("players")}
+              >
+                Players
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={lobbyScreen === "settings"}
+                className={`rounded-lg px-4 py-3 font-button ${
+                  lobbyScreen === "settings"
+                    ? "bg-red-700 text-white"
+                    : "bg-white text-gray-900"
+                }`}
+                onClick={() => setLobbyScreen("settings")}
+              >
+                Settings
+              </button>
+            </div>
+
+            {lobbyScreen === "players" ? (
+              <AddPlayerForm onSubmit={onAddPlayerFormSubmit} />
+            ) : (
+              <Settings onSubmit={onSettingsSubmit} />
+            )}
           </div>
         </GameShell.Body>
       </GameShell>

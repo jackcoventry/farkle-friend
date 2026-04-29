@@ -37,7 +37,8 @@ function Footer() {
         variant="modal"
       >
         <Modal.Body>
-          <div className="rules-modal | bg-white overflow-y-auto rounded-lg">
+          <div className="rules-modal | bg-white overflow-y-auto rounded-lg p-4">
+            <Modal.CloseButton ariaLabel="Close rules and scoring" />
             <RulesInfo />
           </div>
         </Modal.Body>

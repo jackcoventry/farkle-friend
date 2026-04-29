@@ -49,7 +49,7 @@ describe("game reducer flow", () => {
     );
   });
 
-  it("waits for confirmation before showing the winner", () => {
+  it("finishes immediately on a winning turn", () => {
     let state = createStartedGame();
     const ada = state.players[0];
 
@@ -59,14 +59,9 @@ describe("game reducer flow", () => {
       score: 500,
     });
 
-    expect(getGameFlowState(state)).toBe("TURN_RESULT");
-    expect(state.phase).toBe("IN_PROGRESS");
-    expect(state.pendingTurnResult?.isGameWinner).toBe(true);
-
-    state = reducer(state, { type: "ADVANCE_TURN" });
-
     expect(getGameFlowState(state)).toBe("FINISHED");
     expect(state.phase).toBe("FINISHED");
+    expect(state.pendingTurnResult).toBeNull();
     expect(getGameSummary(state).winnerId).toBe(ada.id);
   });
 

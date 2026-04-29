@@ -49,12 +49,9 @@ describe("game logic", () => {
     expect(state.pendingTurnResult).toBeNull();
 
     state = recordTurn(state, grace.id, 500);
-    expect(state.phase).toBe("IN_PROGRESS");
-    expect(state.pendingTurnResult?.isGameWinner).toBe(true);
-
-    state = advanceTurn(state);
     expect(state.phase).toBe("FINISHED");
     expect(state.currentPlayerIndex).toBeNull();
+    expect(state.pendingTurnResult).toBeNull();
 
     const summary = getGameSummary(state);
     expect(summary.winnerId).toBe(grace.id);

@@ -169,17 +169,27 @@ export function recordTurn(
   };
   const summary = getGameSummary(nextState);
   const newTotal = summary.players.find((p) => p.id === playerId)?.totalScore ?? 0;
+  const turnResult = {
+    isGameWinner: summary.isTargetReached,
+    newTotal,
+    nextPlayerId: nextIndex == null ? null : state.players[nextIndex]?.id ?? null,
+    playerId,
+    previousTotal: previousTotals[playerId] ?? 0,
+    score: turn.score,
+  };
+
+  if (turnResult.isGameWinner) {
+    return withUpdatedAt({
+      ...nextState,
+      currentPlayerIndex: null,
+      pendingTurnResult: null,
+      phase: "FINISHED",
+    });
+  }
 
   return withUpdatedAt({
     ...nextState,
-    pendingTurnResult: {
-      isGameWinner: summary.isTargetReached,
-      newTotal,
-      nextPlayerId: nextIndex == null ? null : state.players[nextIndex]?.id ?? null,
-      playerId,
-      previousTotal: previousTotals[playerId] ?? 0,
-      score: turn.score,
-    },
+    pendingTurnResult: turnResult,
   });
 }
 
