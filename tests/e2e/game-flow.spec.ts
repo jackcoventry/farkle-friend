@@ -114,3 +114,26 @@ test("sound and animation preferences can be changed during a game", async ({
   await dialog.getByRole("button", { name: "Close preferences" }).click();
   await expect(page.getByLabel("Turn score")).toBeVisible();
 });
+
+test("mobile setup sidebar opens with a toggle", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/game/");
+
+  const sidebar = page.locator(".game-shell__sidebar");
+  const closedBox = await sidebar.boundingBox();
+  expect(closedBox?.x).toBeLessThan(0);
+
+  await page.getByRole("button", { name: "Open sidebar" }).click();
+  await expect(
+    page.getByRole("button", { name: "Close sidebar" })
+  ).toBeVisible();
+  await expect(page.getByRole("button", { name: "Preferences" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Start game" })).toBeVisible();
+
+  await expect
+    .poll(async () => {
+      const openBox = await sidebar.boundingBox();
+      return openBox?.x ?? -1;
+    })
+    .toBeGreaterThanOrEqual(0);
+});

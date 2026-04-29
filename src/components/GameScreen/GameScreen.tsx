@@ -1,6 +1,7 @@
 "use client";
 
 import DiceIcon from "@/components/DiceIcon/DiceIcon";
+import Button from "@/components/Button/Button";
 import {
   DiceTurnPanel,
   type DiceTurnMetrics,
@@ -26,7 +27,7 @@ import PlayerList from "@/components/PlayerList/PlayerList";
 import { PlayerSwitchSplash } from "@/components/PlayerSwitchSplash/PlayerSwitchSplash";
 import { TurnHistory } from "@/components/TurnHistory/TurnHistory";
 import { TurnResultPanel } from "@/components/TurnResultPanel/TurnResultPanel";
-import { getGameSummary } from "@/domain/game/gameLogic";
+import { canStartGame, getGameSummary } from "@/domain/game/gameLogic";
 import {
   getCurrentPlayer,
   getGameFlowState,
@@ -56,6 +57,9 @@ export function GameScreen() {
   const nextPlayer = getNextPlayer(summary, state.pendingTurnResult);
   const winner = getWinner(summary);
   const avatar = avatarSet[currentPlayer?.avatar as AvatarId];
+  const readyToStart = Boolean(canStartGame(state));
+  const lobbyModeLabel =
+    state.settings.mode === "dice" ? "Dice rolling" : "Manual scoring";
 
   useWarnBeforeUnload(shouldWarnBeforeUnload(state));
 
@@ -102,6 +106,10 @@ export function GameScreen() {
     dispatch({ type: "ADVANCE_TURN" });
   };
 
+  const onStartGame = () => {
+    dispatch({ type: "START_GAME" });
+  };
+
   const selectLobbyScreen = (screen: "players" | "settings") => {
     setLobbyScreen(screen);
     const tab = screen === "players" ? playersTabRef : settingsTabRef;
@@ -130,7 +138,7 @@ export function GameScreen() {
   if (flowState === "LOBBY") {
     return (
       <>
-        <GameShell>
+        <GameShell key="lobby">
           <GameShell.Sidebar>
             <div className="flex flex-col h-full">
               {state.players.length > 0 ? (
@@ -153,12 +161,32 @@ export function GameScreen() {
                 settings={state.settings}
                 onEditSettings={() => setLobbyScreen("settings")}
               />
+              <section className="mt-4 grid gap-3 rounded-lg bg-sun-50 p-4">
+                <div>
+                  <h2 className="font-heading-2">Ready?</h2>
+                  <p className="text-gray-800">
+                    {readyToStart
+                      ? `${state.players.length} players · ${lobbyModeLabel} · First to ${formatScore(
+                          state.settings.targetScore,
+                        )}`
+                      : "Add at least two players to start."}
+                  </p>
+                </div>
+                <Button
+                  type="button"
+                  onClick={onStartGame}
+                  className="w-full justify-center"
+                  disabled={!readyToStart}
+                >
+                  Start game
+                </Button>
+                <GamePreferences className="flex" />
+              </section>
               <Footer />
             </div>
           </GameShell.Sidebar>
           <GameShell.Body>
             <div className="mx-auto flex h-full w-full max-w-[520px] flex-col justify-start gap-4 overflow-auto py-4">
-              <GamePreferences className="flex justify-end" />
               <div
                 className="grid grid-cols-2 gap-2 rounded-lg bg-white/90 p-2"
                 role="tablist"
@@ -209,7 +237,6 @@ export function GameScreen() {
                   role="tabpanel"
                 >
                   <AddPlayerForm
-                    onEditSettings={() => setLobbyScreen("settings")}
                     onSubmit={onAddPlayerFormSubmit}
                   />
                 </div>
@@ -249,7 +276,7 @@ export function GameScreen() {
 
   return (
     <>
-      <GameShell>
+      <GameShell key="active">
         <GameShell.Sidebar>
           <div className="flex flex-col h-full">
             <p className="font-body-1">

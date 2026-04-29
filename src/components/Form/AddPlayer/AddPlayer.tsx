@@ -2,9 +2,7 @@
 
 import { AvatarImage } from "@/components/AvatarImage/AvatarImage";
 import Button from "@/components/Button/Button";
-import { canStartGame } from "@/domain/game/gameLogic";
 import { useGame } from "@/domain/game/GameProvider";
-import { formatScore } from "@/utils/formatScore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import z from "zod";
@@ -60,14 +58,10 @@ export type AddPlayerFormResult = {
 };
 
 type AddPlayerFormProps = {
-  onEditSettings?: () => void;
   onSubmit: SubmitHandler<AddPlayerFormSchemaType>;
 };
 
-function AddPlayerForm({
-  onEditSettings,
-  onSubmit,
-}: Readonly<AddPlayerFormProps>) {
+function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
   const {
     control,
     handleSubmit,
@@ -84,7 +78,7 @@ function AddPlayerForm({
     mode: "onBlur",
   });
 
-  const { state, dispatch } = useGame();
+  const { state } = useGame();
   const avatarsInUse = state.players.reduce((acc: number[], currentItem) => {
     acc.push(currentItem?.avatar);
     return acc;
@@ -112,15 +106,6 @@ function AddPlayerForm({
         (avatar) => avatar !== data.avatar && !avatarsInUse.includes(avatar)
       ) ?? 1;
     setValue("avatar", nextAvailableAvatar);
-  };
-
-  const readyToStart = Boolean(canStartGame(state));
-  const modeLabel =
-    state.settings.mode === "dice" ? "Dice rolling" : "Manual scoring";
-  const playerCount = state.players.length;
-
-  const onStartGame = () => {
-    dispatch({ type: "START_GAME" });
   };
 
   return (
@@ -216,36 +201,6 @@ function AddPlayerForm({
             </Button>
           </>
         )}
-
-        <section className="grid gap-3 rounded-lg bg-sun-50 p-4">
-          <div>
-            <h3 className="font-heading-2">Ready?</h3>
-            <p className="text-gray-800">
-              {readyToStart
-                ? `${playerCount} players · ${modeLabel} · First to ${formatScore(
-                    state.settings.targetScore
-                  )}`
-                : "Add at least two players to start."}
-            </p>
-            {onEditSettings ? (
-              <button
-                type="button"
-                className="mt-2 rounded-lg px-3 py-2 text-sm text-red-700 hover:bg-red-100 focus-visible:outline-2 focus-visible:outline-red-700"
-                onClick={onEditSettings}
-              >
-                Edit settings
-              </button>
-            ) : null}
-          </div>
-          <Button
-            type="button"
-            onClick={onStartGame}
-            className="w-full justify-center"
-            disabled={!readyToStart}
-          >
-            Start game
-          </Button>
-        </section>
       </form>
     </div>
   );

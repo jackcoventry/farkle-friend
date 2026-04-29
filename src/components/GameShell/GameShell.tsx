@@ -1,5 +1,9 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import "./GameShell.css";
+
+const SIDEBAR_ID = "game-shell-sidebar";
 
 type RootProps = {
   children: React.ReactNode;
@@ -10,6 +14,7 @@ type SlotProps = {
 };
 
 export default function GameShell({ children }: Readonly<RootProps>) {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   let sidebar, body;
 
   React.Children.forEach(children, (child) => {
@@ -20,8 +25,20 @@ export default function GameShell({ children }: Readonly<RootProps>) {
   });
 
   return (
-    <main className="game-shell | h-dvh">
+    <main
+      className="game-shell | h-dvh"
+      data-sidebar-open={isSidebarOpen ? "true" : "false"}
+    >
       <h1 className="sr-only">Farkle Friend</h1>
+      <button
+        type="button"
+        className="game-shell__toggle | rounded-lg bg-red-700 px-4 py-2 text-white"
+        aria-controls={SIDEBAR_ID}
+        aria-expanded={isSidebarOpen}
+        onClick={() => setIsSidebarOpen((current) => !current)}
+      >
+        {isSidebarOpen ? "Close sidebar" : "Open sidebar"}
+      </button>
       {sidebar}
       {body}
     </main>
@@ -29,7 +46,11 @@ export default function GameShell({ children }: Readonly<RootProps>) {
 }
 
 GameShell.Sidebar = function Header({ children }: SlotProps) {
-  return <aside className="game-shell__sidebar | p-6">{children}</aside>;
+  return (
+    <aside id={SIDEBAR_ID} className="game-shell__sidebar | p-6">
+      {children}
+    </aside>
+  );
 };
 
 GameShell.Body = function Body({ children }: SlotProps) {

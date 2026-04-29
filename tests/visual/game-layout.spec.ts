@@ -9,6 +9,13 @@ async function addTwoPlayers(page: Page) {
   await page.getByRole("button", { name: "Add" }).click();
 }
 
+async function openSidebarIfNeeded(page: Page) {
+  const toggle = page.getByRole("button", { name: "Open sidebar" });
+  if (await toggle.isVisible()) {
+    await toggle.click();
+  }
+}
+
 test("dice turn layout remains stable", async ({ page }) => {
   await page.addInitScript(() => {
     const rolls = [0, 0.18, 0.36, 0.54, 0.72, 0.9];
@@ -22,6 +29,7 @@ test("dice turn layout remains stable", async ({ page }) => {
 
   await page.goto("/game/");
   await addTwoPlayers(page);
+  await openSidebarIfNeeded(page);
   await page.getByRole("button", { name: "Start game" }).click();
   await page.waitForTimeout(2100);
   await page.getByRole("button", { name: "Roll dice" }).click();
@@ -40,6 +48,7 @@ test("winner modal layout remains stable", async ({ page }) => {
   await page.getByRole("button", { name: "Save" }).click();
 
   await addTwoPlayers(page);
+  await openSidebarIfNeeded(page);
   await page.getByRole("button", { name: "Start game" }).click();
   await page.waitForTimeout(2100);
   await page.getByLabel("Turn score").fill("500");
