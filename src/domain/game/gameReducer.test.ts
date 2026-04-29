@@ -45,7 +45,7 @@ describe("game reducer flow", () => {
     expect(getGameFlowState(state)).toBe("TURN_ACTIVE");
     expect(state.pendingTurnResult).toBeNull();
     expect(getCurrentPlayer(state, getGameSummary(state))?.username).toBe(
-      "Grace"
+      "Grace",
     );
   });
 

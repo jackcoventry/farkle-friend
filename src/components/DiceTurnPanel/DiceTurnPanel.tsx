@@ -31,7 +31,9 @@ export function DiceTurnPanel({
     canBank: dice.canBank,
     canFinish: dice.canFinish,
     canRoll: dice.canRoll,
-    currentRollLength: dice.currentRoll?.length ?? 0,
+    currentRollLength: dice.activeTurn?.isFarkled
+      ? 0
+      : dice.currentRoll?.length ?? 0,
     onBank: dice.bankSelected,
     onFinish: dice.finishTurn,
     onRoll: dice.roll,
@@ -151,7 +153,7 @@ export function DiceTurnPanel({
           </div>
         ) : !isHotDice ? (
           <div className="max-w-[620px] rounded-lg bg-white/90 p-5 text-center shadow-lg">
-            <p className="font-sub-heading text-red-600">
+            <p className="font-sub-heading text-red-700">
               {currentPlayer.username}&apos;s turn
             </p>
             <h2 className="font-heading">{turnCopy.title}</h2>
