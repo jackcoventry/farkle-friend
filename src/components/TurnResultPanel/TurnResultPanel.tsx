@@ -44,7 +44,7 @@ export function TurnResultPanel({
       tabIndex={-1}
     >
       <div>
-        <p className="font-sub-heading text-red-600">Turn complete</p>
+        <p className="font-sub-heading text-red-700">Turn complete</p>
         <h2 id={titleId} className="font-heading">
           {currentPlayer.username}
         </h2>
@@ -52,7 +52,7 @@ export function TurnResultPanel({
       <dl className="grid gap-3 text-left sm:grid-cols-3">
         <div className="rounded-lg bg-gray-100 p-4">
           <dt className="font-body-1 text-gray-700">Turn score</dt>
-          <dd className="font-heading-2 text-red-600">
+          <dd className="font-heading-2 text-red-700">
             {formatScore(result.score)}
           </dd>
         </div>

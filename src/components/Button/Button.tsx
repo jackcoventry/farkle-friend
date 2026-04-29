@@ -97,7 +97,7 @@ const Button = React.forwardRef<
     const { as, ...inlineRest } = rest as InlineOnlyProps;
     void as;
 
-    classes += " bg-red-500 hover:bg-red-600";
+    classes += " bg-red-700 hover:bg-red-800";
 
     return (
       <span
@@ -138,7 +138,7 @@ const Button = React.forwardRef<
 
     const relSafe = target === "_blank" ? rel || "noopener noreferrer" : rel;
 
-    classes += " bg-red-500 cursor-pointer hover:bg-red-600";
+    classes += " bg-red-700 cursor-pointer hover:bg-red-800";
 
     return (
       <a
@@ -185,7 +185,7 @@ const Button = React.forwardRef<
   if (disabled) {
     classes += " bg-gray-500 cursor-not-allowed";
   } else {
-    classes += " bg-red-500 cursor-pointer hover:bg-red-600";
+    classes += " bg-red-700 cursor-pointer hover:bg-red-800";
   }
 
   return (

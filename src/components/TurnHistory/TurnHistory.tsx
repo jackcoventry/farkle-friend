@@ -36,20 +36,20 @@ export function TurnHistory({
         <dl className="mb-3 grid gap-2 border-b border-sun-200 pb-3">
           <div className="flex justify-between gap-3">
             <dt>Leader</dt>
-            <dd className="truncate text-right text-red-600">
+            <dd className="truncate text-right text-red-700">
               {leader.username}
             </dd>
           </div>
           <div className="flex justify-between gap-3">
             <dt>Needs</dt>
-            <dd className="text-right text-red-600">
+            <dd className="text-right text-red-700">
               {formatScore(Math.max(0, targetScore - (leader.totalScore ?? 0)))}
             </dd>
           </div>
           {biggestTurn ? (
             <div className="flex justify-between gap-3">
               <dt>Biggest turn</dt>
-              <dd className="truncate text-right text-red-600">
+              <dd className="truncate text-right text-red-700">
                 {playerNames.get(biggestTurn.playerId) ?? "Player"} +{formatScore(biggestTurn.score)}
               </dd>
             </div>
@@ -57,7 +57,7 @@ export function TurnHistory({
           {lastFarkle ? (
             <div className="flex justify-between gap-3">
               <dt>Last farkle</dt>
-              <dd className="truncate text-right text-red-600">
+              <dd className="truncate text-right text-red-700">
                 {playerNames.get(lastFarkle.playerId) ?? "Player"}
               </dd>
             </div>
@@ -74,7 +74,7 @@ export function TurnHistory({
                 <span className="truncate">
                   {playerNames.get(turn.playerId) ?? "Player"}
                 </span>
-                <span className="shrink-0 text-red-600">
+                <span className="shrink-0 text-red-700">
                   {turn.score === 0 ? "Farkle" : `+${formatScore(turn.score)}`}
                 </span>
               </li>

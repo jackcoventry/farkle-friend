@@ -25,6 +25,7 @@ function DiceIcon({
       data-count={count}
       data-state={state}
       data-variant={variant}
+      role="img"
     >
       {[...new Array(count).keys()].map((e) => (
         <span className="dice-dot" key={e} />

@@ -20,10 +20,11 @@ export default function GameShell({ children }: Readonly<RootProps>) {
   });
 
   return (
-    <article className="game-shell | h-dvh">
+    <main className="game-shell | h-dvh">
+      <h1 className="sr-only">Farkle Friend</h1>
       {sidebar}
       {body}
-    </article>
+    </main>
   );
 }
 

@@ -41,7 +41,7 @@ const RichButton = React.forwardRef<
       {icon && (
         <span
           aria-hidden="true"
-          className={`h-[100px] w-[100px]  flex rounded-full justify-center items-center mx-auto relative z-0 p-5 ${disabled ? " bg-gray-600" : " bg-red-500"}`}
+          className={`h-[100px] w-[100px]  flex rounded-full justify-center items-center mx-auto relative z-0 p-5 ${disabled ? " bg-gray-600" : " bg-red-700"}`}
         >
           <DynamicImage
             name={icon}
@@ -51,7 +51,7 @@ const RichButton = React.forwardRef<
       )}
       {children && (
         <span
-          className={`py-4 px-6 z-10 relative font-heading rounded-lg text-white ${disabled ? " bg-gray-600" : " bg-red-500"}`}
+          className={`py-4 px-6 z-10 relative font-heading rounded-lg text-white ${disabled ? " bg-gray-600" : " bg-red-700"}`}
         >
           {children}
         </span>

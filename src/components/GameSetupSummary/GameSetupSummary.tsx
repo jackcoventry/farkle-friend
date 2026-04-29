@@ -17,17 +17,17 @@ export function GameSetupSummary({
       <dl className="grid gap-2">
         <div className="flex justify-between gap-3">
           <dt>Mode</dt>
-          <dd className="text-right text-red-600">{modeLabel}</dd>
+          <dd className="text-right text-red-700">{modeLabel}</dd>
         </div>
         <div className="flex justify-between gap-3">
           <dt>Target</dt>
-          <dd className="text-right text-red-600">
+          <dd className="text-right text-red-700">
             {formatScore(settings.targetScore)}
           </dd>
         </div>
         <div className="flex justify-between gap-3">
           <dt>Combo hints</dt>
-          <dd className="text-right text-red-600">
+          <dd className="text-right text-red-700">
             {settings.showComboSuggestions ? "On" : "Off"}
           </dd>
         </div>

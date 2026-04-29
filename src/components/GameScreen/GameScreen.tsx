@@ -108,11 +108,15 @@ export function GameScreen() {
 
   if (flowState === "FINISHED") {
     return (
-      <GameFinishedModal
-        onResetGame={onResetGame}
-        onResetPlayers={onResetPlayers}
-        winner={winner}
-      />
+      <main>
+        <h1 className="sr-only">Farkle Friend</h1>
+        <GameFinishedModal
+          onResetGame={onResetGame}
+          onResetPlayers={onResetPlayers}
+          players={summary.players}
+          winner={winner}
+        />
+      </main>
     );
   }
 
@@ -126,21 +130,35 @@ export function GameScreen() {
               First to {formatScore(state.settings.targetScore)} points
             </p>
 
-            <div className="my-6 overflow-auto">
-              <PlayerList
-                players={summary.players}
-                activePlayerId={state.players[state.currentPlayerIndex ?? 0].id}
-                leadingPlayerId={summary.leadingPlayerId}
-                targetScore={state.settings.targetScore}
-              />
-            </div>
+            <details className="my-4 rounded-lg bg-white/60 p-2" open>
+              <summary className="cursor-pointer font-heading-2">
+                Scoreboard
+              </summary>
+              <div className="mt-3 overflow-auto">
+                <PlayerList
+                  players={summary.players}
+                  activePlayerId={
+                    state.players[state.currentPlayerIndex ?? 0].id
+                  }
+                  leadingPlayerId={summary.leadingPlayerId}
+                  targetScore={state.settings.targetScore}
+                />
+              </div>
+            </details>
 
-            <TurnHistory
-              leadingPlayerId={summary.leadingPlayerId}
-              players={summary.players}
-              targetScore={state.settings.targetScore}
-              turns={state.turns}
-            />
+            <details className="rounded-lg bg-white/60 p-2" open>
+              <summary className="cursor-pointer font-heading-2">
+                Table pulse
+              </summary>
+              <div className="mt-3">
+                <TurnHistory
+                  leadingPlayerId={summary.leadingPlayerId}
+                  players={summary.players}
+                  targetScore={state.settings.targetScore}
+                  turns={state.turns}
+                />
+              </div>
+            </details>
 
             <GameActions
               onQuit={() => setConfirmAction("quit")}

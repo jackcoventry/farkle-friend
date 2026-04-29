@@ -57,7 +57,7 @@ function PlayerList({
               <div className="flex min-w-0 items-baseline gap-2">
                 <h3 className="font-heading-2 truncate">{player.username}</h3>
                 {isActive ? (
-                  <span className="rounded-full bg-red-500 px-2 py-1 text-xs text-white">
+                  <span className="rounded-full bg-red-700 px-2 py-1 text-xs text-white">
                     Current
                   </span>
                 ) : null}
@@ -67,7 +67,7 @@ function PlayerList({
                   </span>
                 ) : null}
               </div>
-              <span className="block text-red-600">
+              <span className="block text-red-700">
                 {totalScore} points
                 {remainingScore !== null
                   ? ` - needs ${remainingScore}`
@@ -83,7 +83,7 @@ function PlayerList({
                   aria-valuenow={progress}
                 >
                   <div
-                    className="h-full bg-red-500"
+                    className="h-full bg-red-700"
                     style={{ width: `${progress}%` }}
                   />
                 </div>
