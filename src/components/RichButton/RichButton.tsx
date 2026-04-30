@@ -4,6 +4,7 @@ import "./RichButton.css";
 
 export type Icons = "dice" | "rocket" | "bank" | "cancel";
 export type RichButtonProps = {
+  ariaDescribedBy?: string;
   ariaLabel?: string;
   children?: React.ReactNode;
   className?: string;
@@ -18,6 +19,7 @@ const RichButton = React.forwardRef<
   Readonly<RichButtonProps>
 >(function RichButtonRoot(props: RichButtonProps, ref) {
   const {
+    ariaDescribedBy,
     ariaLabel,
     children,
     className,
@@ -30,6 +32,7 @@ const RichButton = React.forwardRef<
 
   return (
     <button
+      aria-describedby={ariaDescribedBy}
       aria-label={ariaLabel}
       disabled={disabled}
       onClick={onClick}

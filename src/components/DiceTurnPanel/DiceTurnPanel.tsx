@@ -49,6 +49,7 @@ export function DiceTurnPanel({
       ? []
       : getScoringCombinations(activeTurn.currentRoll);
   const hasSelectedDice = dice.selectedIndices.length > 0;
+  const showSelectionStatus = hasSelectedDice || isFarkled;
   const turnCopy = getDiceTurnCopy({
     canRoll: dice.canRoll,
     hasSelectedDice,
@@ -59,6 +60,18 @@ export function DiceTurnPanel({
     tempScore: activeTurn?.tempScore ?? 0,
     usesAllDice: dice.selectedUsesAllDice,
   });
+  const actionHint = getDiceActionHint({
+    canBank: dice.canBank,
+    canFinish: dice.canFinish,
+    canRoll: dice.canRoll,
+    hasCurrentRoll: !!currentRoll,
+    hasSelectedDice,
+    isFarkled,
+    selectedHasInvalidDice: dice.selectedHasInvalidDice,
+    selectedScore: dice.selectedScore,
+    tempScore: activeTurn?.tempScore ?? 0,
+  });
+  const showActionHint = actionHint !== null;
   const tableFeedbackEnabled = state.preferences.tableFeedback;
 
   const playFeedback = useCallback(
@@ -142,8 +155,18 @@ export function DiceTurnPanel({
         }`}
         aria-live="polite"
       >
-        <span className="font-heading-2">Selected:</span>{" "}
-        <span>{turnCopy.selectedStatus}</span>
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div className="min-w-0">
+            <p className="font-heading-2">{turnCopy.title}</p>
+            <p className="mt-1 text-sm">{turnCopy.detail}</p>
+          </div>
+          {showSelectionStatus ? (
+            <div className="rounded-lg bg-white/70 px-3 py-2 text-sm">
+              <span className="font-body-1">Selection</span>{" "}
+              <span>{turnCopy.selectedStatus}</span>
+            </div>
+          ) : null}
+        </div>
         {dice.selectedBreakdown.length > 0 ? (
           <ul className="mt-2 flex flex-wrap gap-2 text-sm">
             {dice.selectedBreakdown.map((item) => (
@@ -155,6 +178,11 @@ export function DiceTurnPanel({
               </li>
             ))}
           </ul>
+        ) : null}
+        {showActionHint ? (
+          <p id="dice-action-hint" className="mt-3 text-sm font-body-1">
+            {actionHint}
+          </p>
         ) : null}
       </div>
 
@@ -233,27 +261,30 @@ export function DiceTurnPanel({
         ) : null}
       </div>
 
-      <div className="flex flex-col gap-2 sm:flex-row">
+      <div className="grid grid-cols-3 gap-2">
         <RichButton
           onClick={handleRoll}
+          ariaDescribedBy={showActionHint ? "dice-action-hint" : undefined}
           disabled={!dice.canRoll}
-          className={`grow-1 justify-center`}
+          className="justify-center"
           icon="dice"
         >
           Roll dice
         </RichButton>
         <RichButton
           onClick={handleBank}
+          ariaDescribedBy={showActionHint ? "dice-action-hint" : undefined}
           disabled={!dice.canBank}
-          className={`grow-1 justify-center`}
+          className="justify-center"
           icon="bank"
         >
           {dice.selectedScore > 0 ? `Bank ${dice.selectedScore}` : "Bank"}
         </RichButton>
         <RichButton
           onClick={handleFinish}
+          ariaDescribedBy={showActionHint ? "dice-action-hint" : undefined}
           disabled={!dice.canFinish}
-          className={`grow-1 justify-center`}
+          className="justify-center"
           icon="rocket"
         >
           {isFarkled ? "Score 0 and end turn" : "End turn"}
@@ -264,6 +295,46 @@ export function DiceTurnPanel({
       </p>
     </div>
   );
+}
+
+type DiceActionHintArgs = {
+  canBank: boolean;
+  canFinish: boolean;
+  canRoll: boolean;
+  hasCurrentRoll: boolean;
+  hasSelectedDice: boolean;
+  isFarkled: boolean;
+  selectedHasInvalidDice: boolean;
+  selectedScore: number;
+  tempScore: number;
+};
+
+function getDiceActionHint({
+  canBank,
+  canFinish,
+  canRoll,
+  hasCurrentRoll,
+  hasSelectedDice,
+  isFarkled,
+  selectedHasInvalidDice,
+  selectedScore,
+  tempScore,
+}: DiceActionHintArgs): string | null {
+  if (isFarkled) return "End the turn to score 0 and move to the next player.";
+  if (canBank && selectedScore > 0) {
+    return `Bank ${selectedScore} points from this selection, or keep selecting scoring dice.`;
+  }
+  if (selectedHasInvalidDice) {
+    return "Deselect any dice that do not score before banking this selection.";
+  }
+  if (hasSelectedDice) return "Selected dice do not score yet.";
+  if (canRoll && tempScore > 0) {
+    return "Roll again to push your luck, or end the turn to keep the round score.";
+  }
+  if (canFinish) return "End the turn to add the round score to your total.";
+  if (canRoll) return null;
+  if (hasCurrentRoll) return "Tap dice to select them, or use keys 1-6.";
+  return "Roll to reveal the next dice.";
 }
 
 type DiceKeyboardShortcutsArgs = {

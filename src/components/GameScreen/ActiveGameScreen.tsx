@@ -77,7 +77,7 @@ export function ActiveGameScreen({
 
           <details className="rounded-lg bg-white/60 p-2" open>
             <summary className="cursor-pointer font-heading-2">
-              Table pulse
+              Turn log
             </summary>
             <div className="mt-3">
               <TurnHistory

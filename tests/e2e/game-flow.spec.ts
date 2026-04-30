@@ -14,7 +14,11 @@ test("players can start a manual game, score turns, and reset for new players", 
   await page.getByRole("link", { name: "Start Game" }).click();
 
   await expect(page.getByRole("button", { name: "Start game" })).toBeDisabled();
-  await expect(page.getByText("Add at least two players to start.")).toBeVisible();
+  await expect(
+    page
+      .locator(".lobby-start-panel")
+      .getByText("Add at least two players to start."),
+  ).toBeVisible();
 
   await page.getByRole("tab", { name: "Settings" }).click();
   await page.getByRole("radio", { name: "manual", exact: true }).check();
@@ -22,7 +26,9 @@ test("players can start a manual game, score turns, and reset for new players", 
   await page.getByRole("button", { name: "Save" }).click();
 
   await addTwoPlayers(page);
-  await expect(page.getByText("2 players · Manual scoring")).toBeVisible();
+  await expect(
+    page.locator(".lobby-start-panel").getByText("2 players · Manual scoring"),
+  ).toBeVisible();
   await startGame(page);
 
   await expect(page.getByText("Ada's turn")).toBeVisible();
@@ -116,7 +122,6 @@ test("mobile setup sidebar opens with a toggle", async ({ page }) => {
     page.getByRole("button", { name: "Close sidebar" })
   ).toBeVisible();
   await expect(page.getByRole("button", { name: "Preferences" })).toBeVisible();
-  await expect(page.getByRole("button", { name: "Start game" })).toBeVisible();
 
   await expect
     .poll(async () => {

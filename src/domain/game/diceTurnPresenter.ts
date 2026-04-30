@@ -81,7 +81,7 @@ export function getDiceTurnCopy({
     return {
       detail: "Roll all available dice to begin.",
       selectedStatus,
-      title: "Start your turn",
+      title: "Ready to roll",
       tone: "default",
     };
   }
@@ -112,5 +112,5 @@ function getSelectedStatus({
 
   if (hasSelectedDice) return "Selected dice do not score.";
 
-  return "Select scoring dice to bank them.";
+  return "No dice selected.";
 }

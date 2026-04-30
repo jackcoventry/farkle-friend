@@ -45,8 +45,26 @@ export function LobbyGameScreen({
   state,
 }: Readonly<LobbyGameScreenProps>) {
   const readyToStart = canStartGame(state);
+  const playersNeeded = Math.max(0, 2 - state.players.length);
   const modeLabel =
     state.settings.mode === "dice" ? "Dice rolling" : "Manual scoring";
+  const startPanelMessage = readyToStart
+    ? `${state.players.length} players · ${modeLabel} · First to ${formatScore(
+        state.settings.targetScore,
+      )}`
+    : playersNeeded === 1
+      ? "Add 1 more player to start."
+      : "Add at least two players to start.";
+  const startGameButton = (
+    <Button
+      type="button"
+      onClick={onStartGame}
+      className="w-full justify-center"
+      disabled={!readyToStart}
+    >
+      Start game
+    </Button>
+  );
 
   return (
     <GameShell key="lobby">
@@ -73,27 +91,7 @@ export function LobbyGameScreen({
             settings={state.settings}
             onEditSettings={() => onSelectLobbyScreen("settings")}
           />
-          <section className="mt-4 grid gap-3 rounded-lg bg-sun-50 p-4">
-            <div>
-              <h2 className="font-heading-2">Ready?</h2>
-              <p className="text-gray-800">
-                {readyToStart
-                  ? `${state.players.length} players · ${modeLabel} · First to ${formatScore(
-                      state.settings.targetScore,
-                    )}`
-                  : "Add at least two players to start."}
-              </p>
-            </div>
-            <Button
-              type="button"
-              onClick={onStartGame}
-              className="w-full justify-center"
-              disabled={!readyToStart}
-            >
-              Start game
-            </Button>
-            <GamePreferences className="flex" />
-          </section>
+          <GamePreferences className="mt-4 flex" />
           <Footer />
         </div>
       </GameShell.Sidebar>
@@ -159,6 +157,14 @@ export function LobbyGameScreen({
               <Settings onSubmit={onSettingsSubmit} />
             </div>
           )}
+
+          <section className="lobby-start-panel grid gap-3 rounded-lg bg-white/90 p-4 text-gray-900 shadow-sm">
+            <div>
+              <h2 className="font-heading-2">Ready?</h2>
+              <p className="text-gray-800">{startPanelMessage}</p>
+            </div>
+            {startGameButton}
+          </section>
         </div>
       </GameShell.Body>
     </GameShell>

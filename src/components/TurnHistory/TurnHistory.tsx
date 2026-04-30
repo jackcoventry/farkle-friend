@@ -69,7 +69,7 @@ export function TurnHistory({
 
       {recentTurns.length > 0 ? (
         <>
-          <p className="font-heading-2 mb-2">Recent turns</p>
+          <p className="font-heading-2 mb-2">Recent table events</p>
           <ol className="flex flex-col gap-2">
             {recentTurns.map((turn) => {
               const player = playersById.get(turn.playerId);
@@ -96,7 +96,8 @@ export function TurnHistory({
                       </span>
                     ) : null}
                     <span className="truncate">
-                      {playerNames.get(turn.playerId) ?? "Player"}
+                      {playerNames.get(turn.playerId) ?? "Player"}{" "}
+                      {isFarkle ? "farkled" : "banked"}
                     </span>
                   </span>
                   <span
