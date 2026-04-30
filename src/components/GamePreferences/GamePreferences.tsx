@@ -22,9 +22,9 @@ export function GamePreferences({
   }) => {
     dispatch({
       type: "UPDATE_PREFERENCES",
-      settings: {
-        motionEnabled: settings.motionEnabled ?? state.settings.motionEnabled,
-        tableFeedback: settings.tableFeedback ?? state.settings.tableFeedback,
+      preferences: {
+        motionEnabled: settings.motionEnabled ?? state.preferences.motionEnabled,
+        tableFeedback: settings.tableFeedback ?? state.preferences.tableFeedback,
       },
     });
   };
@@ -58,7 +58,7 @@ export function GamePreferences({
                     <Pill.Control>
                       <input
                         type="radio"
-                        checked={state.settings.tableFeedback}
+                        checked={state.preferences.tableFeedback}
                         onChange={() => updatePreferences({ tableFeedback: true })}
                         name="preferenceSound"
                         id="preferenceSound_on"
@@ -70,7 +70,7 @@ export function GamePreferences({
                     <Pill.Control>
                       <input
                         type="radio"
-                        checked={!state.settings.tableFeedback}
+                        checked={!state.preferences.tableFeedback}
                         onChange={() =>
                           updatePreferences({ tableFeedback: false })
                         }
@@ -89,7 +89,7 @@ export function GamePreferences({
                     <Pill.Control>
                       <input
                         type="radio"
-                        checked={state.settings.motionEnabled}
+                        checked={state.preferences.motionEnabled}
                         onChange={() => updatePreferences({ motionEnabled: true })}
                         name="preferenceMotion"
                         id="preferenceMotion_on"
@@ -101,7 +101,7 @@ export function GamePreferences({
                     <Pill.Control>
                       <input
                         type="radio"
-                        checked={!state.settings.motionEnabled}
+                        checked={!state.preferences.motionEnabled}
                         onChange={() =>
                           updatePreferences({ motionEnabled: false })
                         }

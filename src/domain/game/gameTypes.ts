@@ -24,6 +24,7 @@ export type GameState = {
   phase: GamePhase;
   pendingTurnResult: TurnResult | null;
   players: Player[];
+  preferences: GamePreferences;
   settings: GameSettings;
   turns: Turn[];
   updatedAt: string;
@@ -61,8 +62,11 @@ export type GameSettings = {
   autoAdvanceTurns: boolean;
   diceStyle: DiceStyle;
   mode: GameMode;
-  motionEnabled: boolean;
   targetScore: number;
   showComboSuggestions: boolean;
+};
+
+export type GamePreferences = {
+  motionEnabled: boolean;
   tableFeedback: boolean;
 };

@@ -53,9 +53,18 @@ export function GameScreen() {
   };
 
   const onSettingsSubmit = (data: SettingsFormSchemaType) => {
+    const { motionEnabled, tableFeedback, ...settings } = data;
+
     dispatch({
       type: "UPDATE_SETTINGS",
-      settings: data,
+      settings,
+    });
+    dispatch({
+      type: "UPDATE_PREFERENCES",
+      preferences: {
+        motionEnabled,
+        tableFeedback,
+      },
     });
     setLobbyScreen("players");
   };
@@ -142,7 +151,7 @@ export function GameScreen() {
             onResetGame={onResetGame}
             onResetPlayers={onResetPlayers}
             players={summary.players}
-            soundEnabled={state.settings.tableFeedback}
+            soundEnabled={state.preferences.tableFeedback}
             turns={state.turns}
             winner={winner}
           />

@@ -100,14 +100,14 @@ describe("game reducer flow", () => {
 
     const nextState = reducer(state, {
       type: "UPDATE_PREFERENCES",
-      settings: {
+      preferences: {
         motionEnabled: false,
         tableFeedback: true,
       },
     });
 
-    expect(nextState.settings.motionEnabled).toBe(false);
-    expect(nextState.settings.tableFeedback).toBe(true);
+    expect(nextState.preferences.motionEnabled).toBe(false);
+    expect(nextState.preferences.tableFeedback).toBe(true);
     expect(nextState.phase).toBe("IN_PROGRESS");
   });
 

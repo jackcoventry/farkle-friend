@@ -111,7 +111,7 @@ export function ActiveGameScreen({
                 key={`${currentPlayer.id}-${state.currentPlayerIndex}`}
                 currentPlayer={currentPlayer}
                 avatar={avatar}
-                soundEnabled={state.settings.tableFeedback}
+                soundEnabled={state.preferences.tableFeedback}
               />
             ) : null}
 

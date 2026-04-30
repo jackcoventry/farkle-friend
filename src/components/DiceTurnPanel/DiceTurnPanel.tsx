@@ -59,7 +59,7 @@ export function DiceTurnPanel({
     tempScore: activeTurn?.tempScore ?? 0,
     usesAllDice: dice.selectedUsesAllDice,
   });
-  const tableFeedbackEnabled = state.settings.tableFeedback;
+  const tableFeedbackEnabled = state.preferences.tableFeedback;
 
   const playFeedback = useCallback(
     (type: "bank" | "farkle" | "roll" | "select") => {

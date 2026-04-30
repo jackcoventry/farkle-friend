@@ -69,6 +69,7 @@ export function LobbyGameScreen({
             </section>
           )}
           <GameSetupSummary
+            preferences={state.preferences}
             settings={state.settings}
             onEditSettings={() => onSelectLobbyScreen("settings")}
           />

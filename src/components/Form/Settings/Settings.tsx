@@ -52,10 +52,10 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
       autoAdvanceTurns: state.settings.autoAdvanceTurns,
       diceStyle: state.settings.diceStyle,
       mode: state.settings.mode,
-      motionEnabled: state.settings.motionEnabled,
+      motionEnabled: state.preferences.motionEnabled,
       targetScore: state.settings.targetScore,
       showComboSuggestions: state.settings.showComboSuggestions,
-      tableFeedback: state.settings.tableFeedback,
+      tableFeedback: state.preferences.tableFeedback,
     },
     mode: "onBlur",
   });

@@ -1,13 +1,15 @@
-import type { GameSettings } from "@/domain/game/gameTypes";
+import type { GamePreferences, GameSettings } from "@/domain/game/gameTypes";
 import { formatScore } from "@/utils/formatScore";
 
 type GameSetupSummaryProps = {
   onEditSettings?: () => void;
+  preferences: GamePreferences;
   settings: GameSettings;
 };
 
 export function GameSetupSummary({
   onEditSettings,
+  preferences,
   settings,
 }: Readonly<GameSetupSummaryProps>) {
   const modeLabel =
@@ -42,13 +44,13 @@ export function GameSetupSummary({
         <div className="flex justify-between gap-3">
           <dt>Feedback</dt>
           <dd className="text-right text-red-700">
-            {settings.tableFeedback ? "On" : "Off"}
+            {preferences.tableFeedback ? "On" : "Off"}
           </dd>
         </div>
         <div className="flex justify-between gap-3">
           <dt>Animations</dt>
           <dd className="text-right text-red-700">
-            {settings.motionEnabled ? "On" : "Off"}
+            {preferences.motionEnabled ? "On" : "Off"}
           </dd>
         </div>
       </dl>
