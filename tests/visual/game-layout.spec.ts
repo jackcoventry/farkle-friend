@@ -1,20 +1,5 @@
 import { expect, test } from "@playwright/test";
-import type { Page } from "@playwright/test";
-
-async function addTwoPlayers(page: Page) {
-  await page.getByLabel("Player name").fill("Ada");
-  await page.getByRole("button", { name: "Add" }).click();
-  await page.getByLabel("Player name").fill("Grace");
-  await page.getByLabel("Avatar Hot dog").check();
-  await page.getByRole("button", { name: "Add" }).click();
-}
-
-async function openSidebarIfNeeded(page: Page) {
-  const toggle = page.getByRole("button", { name: "Open sidebar" });
-  if (await toggle.isVisible()) {
-    await toggle.click();
-  }
-}
+import { addTwoPlayers, startGame, waitForTurnSplash } from "../helpers/game";
 
 test("dice turn layout remains stable", async ({ page }) => {
   await page.addInitScript(() => {
@@ -29,9 +14,8 @@ test("dice turn layout remains stable", async ({ page }) => {
 
   await page.goto("/game/");
   await addTwoPlayers(page);
-  await openSidebarIfNeeded(page);
-  await page.getByRole("button", { name: "Start game" }).click();
-  await page.waitForTimeout(2100);
+  await startGame(page);
+  await waitForTurnSplash(page, "Ada");
   await page.getByRole("button", { name: "Roll dice" }).click();
   await page.waitForTimeout(600);
 
@@ -48,9 +32,8 @@ test("winner modal layout remains stable", async ({ page }) => {
   await page.getByRole("button", { name: "Save" }).click();
 
   await addTwoPlayers(page);
-  await openSidebarIfNeeded(page);
-  await page.getByRole("button", { name: "Start game" }).click();
-  await page.waitForTimeout(2100);
+  await startGame(page);
+  await waitForTurnSplash(page, "Ada");
   await page.getByLabel("Turn score").fill("500");
   await page.getByRole("button", { name: "Submit score" }).click();
 

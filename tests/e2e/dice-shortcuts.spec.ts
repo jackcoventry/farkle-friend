@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { startGame, waitForTurnSplash } from "../helpers/game";
 
 test("dice keyboard shortcuts work without hijacking form typing", async ({
   page,
@@ -15,10 +16,8 @@ test("dice keyboard shortcuts work without hijacking form typing", async ({
   await page.getByLabel("Player name").fill("Grace");
   await page.getByLabel("Avatar Hot dog").check();
   await page.getByRole("button", { name: "Add" }).click();
-  await page.getByRole("button", { name: "Start game" }).click();
-
-  await expect(page.getByRole("dialog", { name: "Ada's turn" })).toBeVisible();
-  await page.waitForTimeout(2100);
+  await startGame(page);
+  await waitForTurnSplash(page, "Ada");
 
   await page.keyboard.press("R");
   await expect(page.getByRole("button", { name: /Select die 1/ })).toBeVisible();

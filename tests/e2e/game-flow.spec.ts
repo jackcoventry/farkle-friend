@@ -1,4 +1,10 @@
 import { expect, test } from "@playwright/test";
+import {
+  addPlayersAndStartGame,
+  addTwoPlayers,
+  startGame,
+  waitForTurnSplash,
+} from "../helpers/game";
 
 test("players can start a manual game, score turns, and reset for new players", async ({
   page,
@@ -15,17 +21,12 @@ test("players can start a manual game, score turns, and reset for new players", 
   await page.getByLabel("Point target").fill("500");
   await page.getByRole("button", { name: "Save" }).click();
 
-  await page.getByLabel("Player name").fill("Ada");
-  await page.getByRole("button", { name: "Add" }).click();
-  await page.getByLabel("Player name").fill("Grace");
-  await page.getByLabel("Avatar Hot dog").check();
-  await page.getByRole("button", { name: "Add" }).click();
+  await addTwoPlayers(page);
   await expect(page.getByText("2 players · Manual scoring")).toBeVisible();
-  await page.getByRole("button", { name: "Start game" }).click();
+  await startGame(page);
 
-  await expect(page.getByRole("dialog", { name: "Ada's turn" })).toBeVisible();
   await expect(page.getByText("Ada's turn")).toBeVisible();
-  await page.waitForTimeout(2100);
+  await waitForTurnSplash(page, "Ada");
 
   await page.getByLabel("Turn score").fill("50");
   await page.getByRole("button", { name: "Submit score" }).click();
@@ -33,10 +34,7 @@ test("players can start a manual game, score turns, and reset for new players", 
   await expect(page.getByText("Next up: Grace.")).toBeVisible();
   await page.getByRole("button", { name: "Next player" }).click();
 
-  await expect(
-    page.getByRole("dialog", { name: "Grace's turn" })
-  ).toBeVisible();
-  await page.waitForTimeout(2100);
+  await waitForTurnSplash(page, "Grace");
 
   await page.getByLabel("Turn score").fill("500");
   await page.getByRole("button", { name: "Submit score" }).click();
@@ -71,13 +69,8 @@ test("auto-advance setting moves to the next player after a turn result", async 
   await page.getByLabel("Auto").check();
   await page.getByRole("button", { name: "Save" }).click();
 
-  await page.getByLabel("Player name").fill("Ada");
-  await page.getByRole("button", { name: "Add" }).click();
-  await page.getByLabel("Player name").fill("Grace");
-  await page.getByLabel("Avatar Hot dog").check();
-  await page.getByRole("button", { name: "Add" }).click();
-  await page.getByRole("button", { name: "Start game" }).click();
-  await page.waitForTimeout(2100);
+  await addPlayersAndStartGame(page);
+  await waitForTurnSplash(page, "Ada");
 
   await page.getByLabel("Turn score").fill("50");
   await page.getByRole("button", { name: "Submit score" }).click();
@@ -95,13 +88,8 @@ test("sound and animation preferences can be changed during a game", async ({
   await page.getByRole("radio", { name: "manual", exact: true }).check();
   await page.getByRole("button", { name: "Save" }).click();
 
-  await page.getByLabel("Player name").fill("Ada");
-  await page.getByRole("button", { name: "Add" }).click();
-  await page.getByLabel("Player name").fill("Grace");
-  await page.getByLabel("Avatar Hot dog").check();
-  await page.getByRole("button", { name: "Add" }).click();
-  await page.getByRole("button", { name: "Start game" }).click();
-  await page.waitForTimeout(2100);
+  await addPlayersAndStartGame(page);
+  await waitForTurnSplash(page, "Ada");
 
   await page.getByRole("button", { name: "Preferences" }).click();
   const dialog = page.getByRole("dialog", { name: "Game preferences" });
