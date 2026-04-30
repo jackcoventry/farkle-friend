@@ -9,7 +9,6 @@
 }
 
 .game-shell__body {
-  background-image: url("../../styles/images/pattern-1.png");
   min-width: 0;
   overflow: auto;
 }

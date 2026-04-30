@@ -79,7 +79,6 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
         className="form | gap-6 flex flex-col"
         onSubmit={handleSubmit(submitHandler)}
       >
-        <h2 className="font-heading text-center">Settings</h2>
         <Controller
           control={control}
           name="autoAdvanceTurns"
@@ -283,8 +282,8 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
             <fieldset className="grid gap-3">
               <legend>Sound & haptics</legend>
               <p className="text-sm text-gray-700">
-                Adds restrained roll, bank, and Farkle feedback when your browser
-                allows it.
+                Adds restrained roll, bank, and Farkle feedback when your
+                browser allows it.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Pill>

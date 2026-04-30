@@ -1,5 +1,4 @@
 import React from "react";
-import "./Button.css";
 
 /* -----------------------------
    COMMON PROPS
@@ -65,7 +64,7 @@ function getVariantClasses(variant: CommonProps["variant"]) {
     return "border border-red-700 bg-white text-red-700 hover:bg-red-50";
   }
 
-  return "bg-red-700 text-white hover:bg-red-800";
+  return "border border-pink-500 shadow-offset-solid-style transition-shadow shadow-pink-700 bg-pink-500 text-white hover:bg-pink-400 hover:shadow-none";
 }
 
 const Button = React.forwardRef<
@@ -84,11 +83,11 @@ const Button = React.forwardRef<
     ...rest
   } = props;
 
-  let classes = "button | rounded-lg flex gap-3 relative";
+  let classes = "button | rounded-3xl flex relative";
   if (className) classes += ` | ${className}`;
-  if (size === "small") classes += " font-button-small py-2 px-4";
-  if (size === "default") classes += " font-button py-2 px-5";
-  if (size === "large") classes += " font-button-large py-3 px-6";
+  if (size === "small") classes += " font-button-small gap-3 py-2 px-5";
+  if (size === "default") classes += " font-button py-3 gap-4 px-6";
+  if (size === "large") classes += " font-button-large gap-5 py-4 px-8";
 
   if (iconPosition === "left") classes += " flex-row-reverse";
 
@@ -121,7 +120,7 @@ const Button = React.forwardRef<
           <span className="content | align-center">{children}</span>
         )}
         {icon && (
-          <span>
+          <span className="inline-flex items-center">
             <svg
               className="icon"
               width="1.25em"
@@ -166,7 +165,7 @@ const Button = React.forwardRef<
           <span className="content | align-center">{children}</span>
         )}
         {icon && (
-          <span>
+          <span className="inline-flex items-center">
             <svg
               className="icon"
               width="1.25em"
@@ -213,7 +212,7 @@ const Button = React.forwardRef<
         <span className="content | align-center">{children}</span>
       )}
       {icon && (
-        <span className="icon">
+        <span className="inline-flex items-center">
           <svg
             className="icon"
             width="1.25em"

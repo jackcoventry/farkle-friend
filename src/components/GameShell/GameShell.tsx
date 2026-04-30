@@ -61,6 +61,6 @@ GameShell.Sidebar = function Header({ children }: SlotProps) {
 
 GameShell.Body = function Body({ children }: SlotProps) {
   return (
-    <section className="game-shell__body | bg-gray-800 p-6">{children}</section>
+    <section className="game-shell__body | bg-gray-900 p-6">{children}</section>
   );
 };

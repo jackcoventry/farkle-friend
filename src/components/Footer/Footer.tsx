@@ -3,6 +3,7 @@ import RulesInfo from "@/components/RulesInfo/RulesInfo";
 import { useState } from "react";
 import Button from "@/components/Button/Button";
 import "./Footer.css";
+import { GamePreferences } from "../GamePreferences/GamePreferences";
 
 function Footer() {
   const [showRulesModal, setShowRulesModal] = useState<boolean>(false);
@@ -14,6 +15,10 @@ function Footer() {
   return (
     <>
       <footer className="mt-auto flex">
+        <div>
+          <span className="font-sub-heading text-center">FARKLE!</span>
+          <span className="block">Built by Jack Coventry</span>
+        </div>
         <div className="ml-auto mt-auto">
           <Button
             type="button"
@@ -21,11 +26,9 @@ function Footer() {
             icon="question-circle"
             ariaLabel="View rules and scoring"
             className="items-center"
+            size="small"
           />
-        </div>
-        <div>
-          <span className="font-sub-heading text-center">FARKLE!</span>
-          <span className="block">Built by Jack Coventry</span>
+          <GamePreferences />
         </div>
       </footer>
       <Modal

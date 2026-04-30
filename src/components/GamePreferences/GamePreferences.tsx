@@ -10,9 +10,7 @@ type GamePreferencesProps = {
   className?: string;
 };
 
-export function GamePreferences({
-  className,
-}: Readonly<GamePreferencesProps>) {
+export function GamePreferences({ className }: Readonly<GamePreferencesProps>) {
   const { state, dispatch } = useGame();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -23,8 +21,10 @@ export function GamePreferences({
     dispatch({
       type: "UPDATE_PREFERENCES",
       preferences: {
-        motionEnabled: settings.motionEnabled ?? state.preferences.motionEnabled,
-        tableFeedback: settings.tableFeedback ?? state.preferences.tableFeedback,
+        motionEnabled:
+          settings.motionEnabled ?? state.preferences.motionEnabled,
+        tableFeedback:
+          settings.tableFeedback ?? state.preferences.tableFeedback,
       },
     });
   };
@@ -35,8 +35,10 @@ export function GamePreferences({
         <Button
           type="button"
           size="small"
-          variant="secondary"
+          variant="primary"
           onClick={() => setIsOpen(true)}
+          icon="three-dots-vertical"
+          iconOnly
         >
           Preferences
         </Button>
@@ -59,7 +61,9 @@ export function GamePreferences({
                       <input
                         type="radio"
                         checked={state.preferences.tableFeedback}
-                        onChange={() => updatePreferences({ tableFeedback: true })}
+                        onChange={() =>
+                          updatePreferences({ tableFeedback: true })
+                        }
                         name="preferenceSound"
                         id="preferenceSound_on"
                       />
@@ -90,7 +94,9 @@ export function GamePreferences({
                       <input
                         type="radio"
                         checked={state.preferences.motionEnabled}
-                        onChange={() => updatePreferences({ motionEnabled: true })}
+                        onChange={() =>
+                          updatePreferences({ motionEnabled: true })
+                        }
                         name="preferenceMotion"
                         id="preferenceMotion_on"
                       />

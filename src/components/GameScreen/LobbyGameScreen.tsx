@@ -91,18 +91,17 @@ export function LobbyGameScreen({
             settings={state.settings}
             onEditSettings={() => onSelectLobbyScreen("settings")}
           />
-          <GamePreferences className="mt-4 flex" />
           <Footer />
         </div>
       </GameShell.Sidebar>
       <GameShell.Body>
         <div className="mx-auto flex h-full w-full max-w-[520px] flex-col justify-start gap-4 overflow-auto py-4">
           <div
-            className="grid grid-cols-2 gap-2 rounded-lg bg-white/90 p-2"
+            className="grid grid-cols-2 gap-2"
             role="tablist"
             aria-label="Game setup"
           >
-            <button
+            <Button
               ref={playersTabRef}
               type="button"
               role="tab"
@@ -110,17 +109,15 @@ export function LobbyGameScreen({
               aria-controls="players-panel"
               id="players-tab"
               tabIndex={lobbyScreen === "players" ? 0 : -1}
-              className={`rounded-lg px-4 py-3 font-button ${
-                lobbyScreen === "players"
-                  ? "bg-red-700 text-white"
-                  : "bg-white text-gray-900"
-              }`}
               onClick={() => onSelectLobbyScreen("players")}
               onKeyDown={onLobbyTabKeyDown}
+              variant={lobbyScreen === "players" ? "primary" : "secondary"}
+              size="small"
+              icon="person-circle"
             >
               Players
-            </button>
-            <button
+            </Button>
+            <Button
               ref={settingsTabRef}
               type="button"
               role="tab"
@@ -128,16 +125,14 @@ export function LobbyGameScreen({
               aria-controls="settings-panel"
               id="settings-tab"
               tabIndex={lobbyScreen === "settings" ? 0 : -1}
-              className={`rounded-lg px-4 py-3 font-button ${
-                lobbyScreen === "settings"
-                  ? "bg-red-700 text-white"
-                  : "bg-white text-gray-900"
-              }`}
               onClick={() => onSelectLobbyScreen("settings")}
               onKeyDown={onLobbyTabKeyDown}
+              variant={lobbyScreen === "settings" ? "primary" : "secondary"}
+              size="small"
+              icon="person-circle"
             >
               Settings
-            </button>
+            </Button>
           </div>
 
           {lobbyScreen === "players" ? (

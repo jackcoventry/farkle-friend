@@ -1,7 +1,5 @@
 "use client";
 
-import DiceIcon from "@/components/DiceIcon/DiceIcon";
-import { GamePreferences } from "@/components/GamePreferences/GamePreferences";
 import type { DiceTurnMetrics } from "@/components/DiceTurnPanel/DiceTurnPanel";
 import type { GameFlowState, GameState, Player } from "@/domain/game/gameTypes";
 import { formatScore } from "@/utils/formatScore";
@@ -57,17 +55,6 @@ export function GameStatusBar({
               <dt className="text-gray-700">Dice left</dt>
               <dd className="flex items-center gap-2 font-body-1 text-red-700">
                 <span>{diceTurnMetrics.diceLeft}</span>
-                <span aria-hidden="true" className="hidden gap-1 sm:flex">
-                  {[...new Array(diceTurnMetrics.diceLeft).keys()].map(
-                    (index) => (
-                      <DiceIcon
-                        key={index}
-                        count={index + 1}
-                        className="w-[28px]"
-                      />
-                    ),
-                  )}
-                </span>
               </dd>
             </div>
           </>
@@ -81,7 +68,6 @@ export function GameStatusBar({
           </div>
         ) : null}
       </dl>
-      <GamePreferences className="w-full sm:w-auto" />
     </section>
   );
 }
