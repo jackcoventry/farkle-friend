@@ -60,6 +60,14 @@ type InlineOnlyProps = {
 export type ButtonProps = CommonProps &
   (ButtonOnlyProps | AnchorOnlyProps | InlineOnlyProps);
 
+function getVariantClasses(variant: CommonProps["variant"]) {
+  if (variant === "secondary") {
+    return "border border-red-700 bg-white text-red-700 hover:bg-red-50";
+  }
+
+  return "bg-red-700 text-white hover:bg-red-800";
+}
+
 const Button = React.forwardRef<
   HTMLButtonElement | HTMLAnchorElement | HTMLSpanElement,
   Readonly<ButtonProps>
@@ -76,7 +84,7 @@ const Button = React.forwardRef<
     ...rest
   } = props;
 
-  let classes = "button | rounded-lg flex gap-3 relative text-white";
+  let classes = "button | rounded-lg flex gap-3 relative";
   if (className) classes += ` | ${className}`;
   if (size === "small") classes += " font-button-small py-2 px-4";
   if (size === "default") classes += " font-button py-2 px-5";
@@ -97,7 +105,7 @@ const Button = React.forwardRef<
     const { as, ...inlineRest } = rest as InlineOnlyProps;
     void as;
 
-    classes += " bg-red-700 hover:bg-red-800";
+    classes += ` ${getVariantClasses(variant)}`;
 
     return (
       <span
@@ -138,7 +146,7 @@ const Button = React.forwardRef<
 
     const relSafe = target === "_blank" ? rel || "noopener noreferrer" : rel;
 
-    classes += " bg-red-700 cursor-pointer hover:bg-red-800";
+    classes += ` cursor-pointer ${getVariantClasses(variant)}`;
 
     return (
       <a
@@ -183,9 +191,9 @@ const Button = React.forwardRef<
     ...buttonRest
   } = rest as ButtonOnlyProps;
   if (disabled) {
-    classes += " bg-gray-500 cursor-not-allowed";
+    classes += " bg-gray-500 cursor-not-allowed text-white";
   } else {
-    classes += " bg-red-700 cursor-pointer hover:bg-red-800";
+    classes += ` cursor-pointer ${getVariantClasses(variant)}`;
   }
 
   return (

@@ -7,13 +7,19 @@ const SIDEBAR_ID = "game-shell-sidebar";
 
 type RootProps = {
   children: React.ReactNode;
+  sidebarCloseLabel?: string;
+  sidebarOpenLabel?: string;
 };
 
 type SlotProps = {
   children: React.ReactNode;
 };
 
-export default function GameShell({ children }: Readonly<RootProps>) {
+export default function GameShell({
+  children,
+  sidebarCloseLabel = "Close sidebar",
+  sidebarOpenLabel = "Open sidebar",
+}: Readonly<RootProps>) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   let sidebar, body;
 
@@ -37,7 +43,7 @@ export default function GameShell({ children }: Readonly<RootProps>) {
         aria-expanded={isSidebarOpen}
         onClick={() => setIsSidebarOpen((current) => !current)}
       >
-        {isSidebarOpen ? "Close sidebar" : "Open sidebar"}
+        {isSidebarOpen ? sidebarCloseLabel : sidebarOpenLabel}
       </button>
       {sidebar}
       {body}

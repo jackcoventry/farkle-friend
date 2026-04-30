@@ -13,8 +13,8 @@ export default meta;
 type Story = StoryObj<typeof GameShell>;
 
 const Template: Story = {
-  render: () => (
-    <GameShell>
+  render: (args) => (
+    <GameShell {...args}>
       <GameShell.Sidebar>Sidebar</GameShell.Sidebar>
       <GameShell.Body>Body</GameShell.Body>
     </GameShell>
@@ -23,7 +23,10 @@ const Template: Story = {
 
 export const Default = {
   ...Template,
-  args: {},
+  args: {
+    sidebarCloseLabel: "Close sidebar",
+    sidebarOpenLabel: "Open sidebar",
+  },
   parameters: {
     layout: "fullscreen",
   },

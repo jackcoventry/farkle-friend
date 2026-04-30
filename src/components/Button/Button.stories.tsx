@@ -17,6 +17,10 @@ const meta: Meta<ButtonProps> = {
       options: ["small", "default", "large"],
       control: { type: "radio" },
     },
+    variant: {
+      options: ["primary", "secondary"],
+      control: { type: "radio" },
+    },
     iconPosition: {
       options: ["left", "right", "top"],
       control: { type: "radio" },

@@ -197,6 +197,14 @@ describe("Button (polymorphic)", () => {
     expect(button).toHaveAttribute("data-icon-position", "left");
   });
 
+  it("applies a distinct secondary style", () => {
+    render(<Button variant="secondary">Secondary</Button>);
+
+    const button = screen.getByRole("button", { name: "Secondary" });
+    expect(button.className).toContain("border-red-700");
+    expect(button.className).toContain("text-red-700");
+  });
+
   /* -----------------------------
    * REF FORWARDING
    * ----------------------------- */
