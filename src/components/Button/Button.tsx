@@ -91,6 +91,9 @@ const Button = React.forwardRef<
 
   if (iconPosition === "left") classes += " flex-row-reverse";
 
+  const childrenWrapper =
+    "content | w-full display flex justify-center align-center";
+
   // If iconOnly and no ariaLabel, fall back to children (if string)
   let computedAriaLabel = ariaLabel;
   if (!computedAriaLabel && iconOnly && typeof children === "string") {
@@ -117,7 +120,7 @@ const Button = React.forwardRef<
         {...inlineRest}
       >
         {children && !iconOnly && (
-          <span className="content | align-center">{children}</span>
+          <span className={childrenWrapper}>{children}</span>
         )}
         {icon && (
           <span className="inline-flex items-center">
@@ -162,7 +165,7 @@ const Button = React.forwardRef<
         {...anchorRest}
       >
         {children && !iconOnly && (
-          <span className="content | align-center">{children}</span>
+          <span className={childrenWrapper}>{children}</span>
         )}
         {icon && (
           <span className="inline-flex items-center">
@@ -209,7 +212,7 @@ const Button = React.forwardRef<
       {...buttonRest}
     >
       {children && !iconOnly && (
-        <span className="content | align-center">{children}</span>
+        <span className={childrenWrapper}>{children}</span>
       )}
       {icon && (
         <span className="inline-flex items-center">

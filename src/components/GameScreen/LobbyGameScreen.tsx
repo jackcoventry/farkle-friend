@@ -78,9 +78,9 @@ export function LobbyGameScreen({
               />
             </div>
           ) : (
-            <section className="my-6 rounded-lg bg-white/70 p-4">
+            <section className="my-6 rounded-3xl bg-gray-700 border border-gray-200 text-white p-4">
               <h2 className="font-heading-2">No players yet</h2>
-              <p className="mt-1 text-gray-800">
+              <p className="mt-1 text-gray-300">
                 Add at least two players, then start the game from the setup
                 panel.
               </p>
@@ -153,11 +153,9 @@ export function LobbyGameScreen({
             </div>
           )}
 
-          <section className="lobby-start-panel grid gap-3 rounded-lg bg-white/90 p-4 text-gray-900 shadow-sm">
-            <div>
-              <h2 className="font-heading-2">Ready?</h2>
-              <p className="text-gray-800">{startPanelMessage}</p>
-            </div>
+          <section className="lobby-start-panel grid gap-5 border-pink-500 border p-6 rounded-4xl bg-gray-800">
+            <h2 className="font-heading-2 text-white">Ready?</h2>
+            {/* <p className="text-gray-300">{startPanelMessage}</p> */}
             {startGameButton}
           </section>
         </div>

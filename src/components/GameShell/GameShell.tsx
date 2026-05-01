@@ -53,7 +53,7 @@ export default function GameShell({
 
 GameShell.Sidebar = function Header({ children }: SlotProps) {
   return (
-    <aside id={SIDEBAR_ID} className="game-shell__sidebar | p-6">
+    <aside id={SIDEBAR_ID} className="game-shell__sidebar | p-6 bg-gray-800">
       {children}
     </aside>
   );

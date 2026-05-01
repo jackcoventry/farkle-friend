@@ -109,7 +109,7 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
   };
 
   return (
-    <div className="form-wrapper | border-sun-300 border-2 p-6 rounded-4xl bg-black/50 self-center">
+    <div className="form-wrapper | border-pink-500 border p-6 rounded-4xl bg-gray-800 self-center">
       <form
         className="form | gap-6 flex flex-col"
         onSubmit={handleSubmit(submitHandler)}
@@ -126,7 +126,7 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
                   </label>
                   <input
                     id="player-name"
-                    className={`border-1 py-4 px-5 bg-white rounded-4xl ${errors?.username ? "border-red-500" : "border-gray-800"}`}
+                    className={`py-4 px-5 border border-gray-300 bg-gray-600 rounded-4xl placeholder-white text-white`}
                     {...field}
                     placeholder="Enter player name..."
                     data-valid={errors?.username ? "false" : "true"}
@@ -136,7 +136,10 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
                     }
                   />
                   {errors?.username ? (
-                    <p id="player-name-error" className="text-red-700">
+                    <p
+                      id="player-name-error"
+                      className="text-red-800 px-4 py-2 bg-white border-red-500 border rounded-3xl"
+                    >
                       {errors.username.message}
                     </p>
                   ) : null}
@@ -149,9 +152,9 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
               control={control}
               render={({ field, fieldState }) => (
                 <fieldset aria-invalid={!!fieldState.error || undefined}>
-                  <legend className="mb-4">Choose an avatar</legend>
+                  <legend className="mb-4 text-white">Choose an avatar</legend>
 
-                  <div className="flex gap-4 grid grid-cols-3">
+                  <div className="gap-4 grid grid-cols-3 justify-items-center">
                     {avatarValues.map((option) => {
                       const avatar = avatarSet[option];
                       const isAvatarInUse = avatarsInUse.includes(option);
@@ -162,6 +165,7 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
                           aria-label={`Avatar ${avatar.name}${
                             isAvatarInUse ? " unavailable" : ""
                           }`}
+                          className="w-[100px] hover:scale-105 transition-transform"
                         >
                           <input
                             type="radio"
