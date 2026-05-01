@@ -18,10 +18,7 @@ export function GameStatusBar({
   state,
 }: Readonly<GameStatusBarProps>) {
   return (
-    <section
-      className="flex flex-wrap items-center gap-3 rounded-4xl bg-gray-700 px-7 py-3 text-white border border-grey-200"
-      aria-live="polite"
-    >
+    <section className="flex flex-wrap items-center gap-3 rounded-4xl bg-gray-700 px-7 py-3 text-white border border-grey-200">
       <div>
         <p className="text-sm text-white">
           {flowState === "TURN_RESULT" ? "Turn complete" : "Now playing"}
