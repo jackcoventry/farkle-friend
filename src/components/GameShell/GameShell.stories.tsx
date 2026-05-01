@@ -15,7 +15,10 @@ type Story = StoryObj<typeof GameShell>;
 const Template: Story = {
   render: (args) => (
     <GameShell {...args}>
-      <GameShell.Sidebar>Sidebar</GameShell.Sidebar>
+      <GameShell.Sidebar>
+        <GameShell.SidebarMain>Sidebar</GameShell.SidebarMain>
+        <GameShell.SidebarFooter>Footer</GameShell.SidebarFooter>
+      </GameShell.Sidebar>
       <GameShell.Body>Body</GameShell.Body>
     </GameShell>
   ),

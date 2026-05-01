@@ -8,6 +8,27 @@
   display: none;
 }
 
+.game-shell__sidebar {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  max-height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.game-shell__sidebar-main {
+  min-height: 0;
+  overflow: auto;
+  padding-right: var(--spacing-1);
+}
+
+.game-shell__sidebar-footer {
+  display: grid;
+  gap: var(--spacing-4);
+  overflow: visible;
+  padding-top: var(--spacing-4);
+}
+
 .game-shell__body {
   min-width: 0;
   overflow: auto;
@@ -23,9 +44,11 @@
     background: white;
     bottom: 0;
     box-shadow: 0 0 40px rgb(0 0 0 / 0.25);
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
     left: 0;
     max-width: min(380px, calc(100vw - 3rem));
-    overflow: auto;
+    overflow: hidden;
     position: fixed;
     top: 0;
     transform: translateX(-110%);

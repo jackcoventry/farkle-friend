@@ -24,7 +24,6 @@ import type {
   GameSummary,
   Player,
 } from "@/domain/game/gameTypes";
-import { formatScore } from "@/utils/formatScore";
 import type { Dispatch, SetStateAction } from "react";
 
 type ActiveGameScreenProps = {
@@ -59,42 +58,40 @@ export function ActiveGameScreen({
   return (
     <GameShell key="active">
       <GameShell.Sidebar>
-        <div className="flex flex-col h-full">
-          <div>
-            <details className="my-4 rounded-lg bg-white/60 p-2" open>
-              <summary className="cursor-pointer font-heading-2">
-                Scoreboard
-              </summary>
-              <div className="mt-3 overflow-auto">
-                <PlayerList
-                  players={summary.players}
-                  activePlayerId={currentPlayer?.id}
-                  leadingPlayerId={summary.leadingPlayerId}
-                  targetScore={state.settings.targetScore}
-                />
-              </div>
-            </details>
+        <GameShell.SidebarMain>
+          <details className="my-4 rounded-lg bg-white/60 p-2" open>
+            <summary className="cursor-pointer font-heading-2">
+              Scoreboard
+            </summary>
+            <div className="mt-3">
+              <PlayerList
+                players={summary.players}
+                activePlayerId={currentPlayer?.id}
+                leadingPlayerId={summary.leadingPlayerId}
+                targetScore={state.settings.targetScore}
+              />
+            </div>
+          </details>
 
-            <details className="rounded-lg bg-white/60 p-2" open>
-              <summary className="cursor-pointer font-heading-2">
-                Turn log
-              </summary>
-              <div className="mt-3">
-                <TurnHistory
-                  leadingPlayerId={summary.leadingPlayerId}
-                  players={summary.players}
-                  targetScore={state.settings.targetScore}
-                  turns={state.turns}
-                />
-              </div>
-            </details>
-          </div>
+          <details className="rounded-lg bg-white/60 p-2" open>
+            <summary className="cursor-pointer font-heading-2">
+              Turn log
+            </summary>
+            <div className="mt-3">
+              <TurnHistory
+                leadingPlayerId={summary.leadingPlayerId}
+                players={summary.players}
+                targetScore={state.settings.targetScore}
+                turns={state.turns}
+              />
+            </div>
+          </details>
+        </GameShell.SidebarMain>
 
-          <div>
-            <GameActions onQuit={onQuit} onRestart={onRestart} />
-            <Footer />
-          </div>
-        </div>
+        <GameShell.SidebarFooter>
+          <GameActions onQuit={onQuit} onRestart={onRestart} />
+          <Footer />
+        </GameShell.SidebarFooter>
       </GameShell.Sidebar>
       <GameShell.Body>
         <div className="flex h-full min-h-0 flex-col gap-4">

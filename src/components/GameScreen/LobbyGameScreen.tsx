@@ -69,9 +69,9 @@ export function LobbyGameScreen({
   return (
     <GameShell key="lobby">
       <GameShell.Sidebar>
-        <div className="flex flex-col h-full">
+        <GameShell.SidebarMain>
           {state.players.length > 0 ? (
-            <div className="my-6 overflow-auto">
+            <div className="my-6">
               <PlayerList
                 players={state.players}
                 onRemovePlayer={onRemovePlayer}
@@ -91,8 +91,10 @@ export function LobbyGameScreen({
             settings={state.settings}
             onEditSettings={() => onSelectLobbyScreen("settings")}
           />
+        </GameShell.SidebarMain>
+        <GameShell.SidebarFooter>
           <Footer />
-        </div>
+        </GameShell.SidebarFooter>
       </GameShell.Sidebar>
       <GameShell.Body>
         <div className="mx-auto flex h-full w-full max-w-[520px] flex-col justify-start gap-4 overflow-auto py-4">

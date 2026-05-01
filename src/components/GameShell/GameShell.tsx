@@ -59,6 +59,14 @@ GameShell.Sidebar = function Header({ children }: SlotProps) {
   );
 };
 
+GameShell.SidebarMain = function SidebarMain({ children }: SlotProps) {
+  return <div className="game-shell__sidebar-main">{children}</div>;
+};
+
+GameShell.SidebarFooter = function SidebarFooter({ children }: SlotProps) {
+  return <div className="game-shell__sidebar-footer">{children}</div>;
+};
+
 GameShell.Body = function Body({ children }: SlotProps) {
   return (
     <section className="game-shell__body | bg-gray-900 p-6">{children}</section>
