@@ -43,7 +43,7 @@ type SettingWrapperProps = {
 
 function SettingWrapper({ children }: Readonly<SettingWrapperProps>) {
   return (
-    <div className="border-pink-300 border p-6 rounded-2xl bg-gray-700 text-white">
+    <div className="border-pink-300 border p-6 rounded-2xl bg-gray-700 text-white flex flex-col gap-2">
       {children}
     </div>
   );
@@ -98,7 +98,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
             <fieldset className="grid gap-3">
               <SettingWrapper>
                 <legend>Turn hand-off</legend>
-                <div className="flex flex-wrap gap-4">
+                <div className="flex gap-4">
                   <Pill>
                     <Pill.Control>
                       <input
@@ -111,20 +111,22 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
                     </Pill.Control>
                     <Pill.Label htmlFor="autoAdvanceTurns_yes">Auto</Pill.Label>
                   </Pill>
-                </div>
 
-                <Pill>
-                  <Pill.Control>
-                    <input
-                      type="radio"
-                      checked={field.value === false}
-                      onChange={() => field.onChange(false)}
-                      name="autoAdvanceTurns"
-                      id="autoAdvanceTurns_no"
-                    />
-                  </Pill.Control>
-                  <Pill.Label htmlFor="autoAdvanceTurns_no">Manual</Pill.Label>
-                </Pill>
+                  <Pill>
+                    <Pill.Control>
+                      <input
+                        type="radio"
+                        checked={field.value === false}
+                        onChange={() => field.onChange(false)}
+                        name="autoAdvanceTurns"
+                        id="autoAdvanceTurns_no"
+                      />
+                    </Pill.Control>
+                    <Pill.Label htmlFor="autoAdvanceTurns_no">
+                      Manual
+                    </Pill.Label>
+                  </Pill>
+                </div>
               </SettingWrapper>
             </fieldset>
           )}
@@ -136,9 +138,9 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
           render={({ field, fieldState }) => (
             <fieldset aria-invalid={!!fieldState.error || undefined}>
               <SettingWrapper>
-                <legend className="mb-4">Dice Style</legend>
+                <legend>Dice Style</legend>
 
-                <div className="gap-4 grid grid-cols-3">
+                <div className="flex gap-4">
                   {diceStyles.map((option) => {
                     const id = `${option}_${field.name}`;
                     return (
@@ -171,9 +173,9 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
           render={({ field, fieldState }) => (
             <fieldset aria-invalid={!!fieldState.error || undefined}>
               <SettingWrapper>
-                <legend className="mb-4">Mode</legend>
+                <legend>Mode</legend>
 
-                <div className="gap-4 grid grid-cols-3">
+                <div className="gap-4 flex">
                   {modes.map((option) => {
                     const id = `${option}_${field.name}`;
 
@@ -227,7 +229,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
                   }
                 />
 
-                <div className="flex flex-wrap gap-2">
+                <div className="flex gap-2">
                   {targetScorePresets.map((preset) => (
                     <Button
                       key={preset}
@@ -263,7 +265,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
             <fieldset className="grid gap-3">
               <SettingWrapper>
                 <legend>Show combo suggestions</legend>
-                <div className="flex flex-wrap gap-4">
+                <div className="flex gap-4">
                   <Pill>
                     <Pill.Control>
                       <input
@@ -306,7 +308,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
                   Adds restrained roll, bank, and Farkle feedback when your
                   browser allows it.
                 </p>
-                <div className="flex flex-wrap gap-4">
+                <div className="flex gap-4">
                   <Pill>
                     <Pill.Control>
                       <input
@@ -345,7 +347,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
             <fieldset className="grid gap-3">
               <SettingWrapper>
                 <legend>Animations</legend>
-                <div className="flex flex-wrap gap-4">
+                <div className="flex gap-4">
                   <Pill>
                     <Pill.Control>
                       <input

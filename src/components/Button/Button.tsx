@@ -1,4 +1,5 @@
 import React from "react";
+import "./Button.css";
 
 /* -----------------------------
    COMMON PROPS
@@ -61,7 +62,7 @@ export type ButtonProps = CommonProps &
 
 function getVariantClasses(variant: CommonProps["variant"]) {
   if (variant === "secondary") {
-    return "border border-red-700 bg-white text-red-700 hover:bg-red-50";
+    return "button--secondary";
   }
 
   return "border border-pink-500 shadow-offset-solid-style transition-shadow shadow-pink-700 bg-pink-500 text-white hover:bg-pink-400 hover:shadow-none";

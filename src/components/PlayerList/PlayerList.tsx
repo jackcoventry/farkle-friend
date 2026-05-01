@@ -18,7 +18,7 @@ function PlayerList({
   targetScore,
 }: Readonly<PlayerListProps>) {
   return (
-    <ul className="player-list">
+    <ul className="player-list | flex flex-col gap-2">
       {players.map((player) => {
         const isActive = player.id === activePlayerId;
         const isLeader = player.id === leadingPlayerId;
@@ -31,74 +31,72 @@ function PlayerList({
           targetScore && targetScore > 0
             ? Math.min(100, Math.round((totalScore / targetScore) * 100))
             : null;
-        const classes = `flex p-3 gap-3 rounded-lg ${
+        const classes = `flex gap-3 bg-gray-700 border border-pink-200 text-white p-4 rounded-2xl ${
           isActive
-            ? "border-l-4 border-red-500 bg-amber-100 ring-2 ring-red-300 hover:bg-amber-50"
-            : "hover:bg-gray-100"
+            ? "border-l-4 border-red-500 bg-amber-100 ring-2 ring-red-300 hover:bg-gray-600"
+            : "hover:bg-gray-600"
         }`;
         const avatar = avatarSet[player.avatar as AvatarId];
 
         return (
-          <li
-            key={player.id}
-            className={classes}
-            aria-current={isActive ? "step" : undefined}
-          >
-            <div
-              className={`flex h-[60px] w-[60px] shrink-0 items-center justify-center rounded-full border-2 border-white p-2 ring ${avatar.color}`}
-            >
-              <AvatarImage
-                avatar={avatar}
-                alt={`${player.username}'s ${avatar.name} avatar`}
-                className="h-auto w-full"
-              />
-            </div>
-            <div className="flex min-w-0 flex-1 flex-col justify-center">
-              <div className="flex min-w-0 items-baseline gap-2">
-                <p className="font-heading-2 truncate">{player.username}</p>
-                {isActive ? (
-                  <span className="rounded-full bg-red-700 px-2 py-1 text-xs text-white">
-                    Current
-                  </span>
-                ) : null}
-                {isLeader && totalScore > 0 ? (
-                  <span className="rounded-full bg-yellow-400 px-2 py-1 text-xs text-gray-900">
-                    Leader
-                  </span>
+          <li key={player.id} aria-current={isActive ? "step" : undefined}>
+            <div className={classes}>
+              <div
+                className={`flex h-[60px] w-[60px] shrink-0 items-center justify-center rounded-full border-2 p-2 ring ${avatar.color} `}
+              >
+                <AvatarImage
+                  avatar={avatar}
+                  alt={`${player.username}'s ${avatar.name} avatar`}
+                  className="h-auto w-full"
+                />
+              </div>
+              <div className="flex min-w-0 flex-1 flex-col justify-center">
+                <div className="flex min-w-0 items-baseline gap-2">
+                  <p className="font-heading-2 truncate">{player.username}</p>
+                  {isActive ? (
+                    <span className="rounded-full bg-pink-500 px-2 py-1 text-xs text-white">
+                      Current
+                    </span>
+                  ) : null}
+                  {isLeader && totalScore > 0 ? (
+                    <span className="rounded-full bg-yellow-400 px-2 py-1 text-xs text-gray-900">
+                      Leader
+                    </span>
+                  ) : null}
+                </div>
+                <span className="block text-pink-300">
+                  {totalScore} points
+                  {remainingScore === null
+                    ? null
+                    : ` - needs ${remainingScore}`}
+                </span>
+                {progress !== null ? (
+                  <div
+                    className="mt-2 h-2 overflow-hidden rounded-full bg-white"
+                    aria-label={`${player.username} is ${progress}% of the way to the target score`}
+                    role="meter"
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                    aria-valuenow={progress}
+                  >
+                    <div
+                      className="h-full bg-pink-500 transition-[width] duration-500 ease-out"
+                      style={{ width: `${progress}%` }}
+                    />
+                  </div>
                 ) : null}
               </div>
-              <span className="block text-red-700">
-                {totalScore} points
-                {remainingScore !== null
-                  ? ` - needs ${remainingScore}`
-                  : null}
-              </span>
-              {progress !== null ? (
-                <div
-                  className="mt-2 h-2 overflow-hidden rounded-full bg-white"
-                  aria-label={`${player.username} is ${progress}% of the way to the target score`}
-                  role="meter"
-                  aria-valuemin={0}
-                  aria-valuemax={100}
-                  aria-valuenow={progress}
+              {onRemovePlayer ? (
+                <button
+                  type="button"
+                  aria-label={`Remove ${player.username}`}
+                  className="ml-auto self-center cursor-pointer rounded-lg px-3 py-2 text-sm text-pink-300 hover:bg-red-100 focus-visible:outline-2 focus-visible:outline-yellow-500"
+                  onClick={() => onRemovePlayer(player.id)}
                 >
-                  <div
-                    className="h-full bg-red-700 transition-[width] duration-500 ease-out"
-                    style={{ width: `${progress}%` }}
-                  />
-                </div>
+                  Remove
+                </button>
               ) : null}
             </div>
-            {onRemovePlayer ? (
-              <button
-                type="button"
-                aria-label={`Remove ${player.username}`}
-                className="ml-auto self-center rounded-lg px-3 py-2 text-sm text-red-700 hover:bg-red-100 focus-visible:outline-2 focus-visible:outline-red-700"
-                onClick={() => onRemovePlayer(player.id)}
-              >
-                Remove
-              </button>
-            ) : null}
           </li>
         );
       })}

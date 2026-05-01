@@ -45,3 +45,11 @@ export const Default = {
     as: "button",
   },
 };
+
+export const Secondary = {
+  ...Template,
+  args: {
+    as: "button",
+    variant: "secondary",
+  },
+};

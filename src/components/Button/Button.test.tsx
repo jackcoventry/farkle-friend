@@ -201,8 +201,27 @@ describe("Button (polymorphic)", () => {
     render(<Button variant="secondary">Secondary</Button>);
 
     const button = screen.getByRole("button", { name: "Secondary" });
-    expect(button.className).toContain("border-red-700");
-    expect(button.className).toContain("text-red-700");
+    expect(button.className).toContain("button--secondary");
+  });
+
+  it("applies secondary styling to anchor and inline variants", () => {
+    render(
+      <>
+        <Button as="a" href="/game" variant="secondary">
+          Link secondary
+        </Button>
+        <Button as="inline" variant="secondary">
+          Inline secondary
+        </Button>
+      </>
+    );
+
+    expect(screen.getByRole("link", { name: "Link secondary" })).toHaveClass(
+      "button--secondary"
+    );
+    expect(screen.getByText("Inline secondary").closest(".button")).toHaveClass(
+      "button--secondary"
+    );
   });
 
   /* -----------------------------

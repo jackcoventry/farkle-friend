@@ -16,14 +16,37 @@ const Template: Story = {
   render: (args) => (
     <div
       style={{
-        width: 100,
+        display: "flex",
+        flexWrap: "wrap",
+        gap: "1rem",
       }}
     >
       <Pill {...args}>
         <Pill.Control>
-          <input id="story-pill" type="checkbox" />
+          <input
+            defaultChecked
+            id="story-pill-radio"
+            name="story-pill"
+            type="radio"
+          />
         </Pill.Control>
-        <Pill.Label htmlFor="story-pill">Sup</Pill.Label>
+        <Pill.Label htmlFor="story-pill-radio">Auto</Pill.Label>
+      </Pill>
+      <Pill {...args}>
+        <Pill.Control>
+          <input
+            id="story-pill-radio-manual"
+            name="story-pill"
+            type="radio"
+          />
+        </Pill.Control>
+        <Pill.Label htmlFor="story-pill-radio-manual">Manual</Pill.Label>
+      </Pill>
+      <Pill {...args}>
+        <Pill.Control>
+          <input id="story-pill-checkbox" type="checkbox" />
+        </Pill.Control>
+        <Pill.Label htmlFor="story-pill-checkbox">Checkbox</Pill.Label>
       </Pill>
     </div>
   ),

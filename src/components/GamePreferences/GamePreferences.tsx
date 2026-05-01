@@ -31,18 +31,16 @@ export function GamePreferences({ className }: Readonly<GamePreferencesProps>) {
 
   return (
     <>
-      <div className={className}>
-        <Button
-          type="button"
-          size="small"
-          variant="primary"
-          onClick={() => setIsOpen(true)}
-          icon="three-dots-vertical"
-          iconOnly
-        >
-          Preferences
-        </Button>
-      </div>
+      <Button
+        type="button"
+        size="small"
+        variant="primary"
+        onClick={() => setIsOpen(true)}
+        icon="three-dots-vertical"
+        iconOnly
+      >
+        Preferences
+      </Button>
       <Modal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}

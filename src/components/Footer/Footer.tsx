@@ -14,21 +14,31 @@ function Footer() {
 
   return (
     <>
-      <footer className="mt-auto flex">
-        <div>
+      <footer className="mt-auto flex flex-col text-white">
+        <div className="flex items-between">
           <span className="font-sub-heading text-center">FARKLE!</span>
-          <span className="block">Built by Jack Coventry</span>
+          <div className="flex gap-3 ml-auto items-center">
+            <Button
+              type="button"
+              onClick={handleShowRulesModal}
+              icon="question-circle"
+              ariaLabel="View rules and scoring"
+              className="items-center"
+              size="small"
+            />
+            <GamePreferences />
+          </div>
         </div>
-        <div className="ml-auto mt-auto">
-          <Button
-            type="button"
-            onClick={handleShowRulesModal}
-            icon="question-circle"
-            ariaLabel="View rules and scoring"
-            className="items-center"
-            size="small"
-          />
-          <GamePreferences />
+
+        <div>
+          <a
+            href="https://jrc.codes"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block"
+          >
+            Built by Jack Coventry
+          </a>
         </div>
       </footer>
       <Modal
