@@ -32,9 +32,7 @@ function PlayerList({
             ? Math.min(100, Math.round((totalScore / targetScore) * 100))
             : null;
         const classes = `flex gap-3 bg-gray-700 border border-pink-200 text-white p-4 rounded-2xl ${
-          isActive
-            ? "border-l-4 border-red-500 bg-amber-100 ring-2 ring-red-300 hover:bg-gray-600"
-            : "hover:bg-gray-600"
+          isActive ? "border-pink-500 bg-pink-900" : "hover:bg-gray-600"
         }`;
         const avatar = avatarSet[player.avatar as AvatarId];
 
@@ -66,9 +64,9 @@ function PlayerList({
                 </div>
                 <span className="block text-pink-300">
                   {totalScore} points
-                  {remainingScore === null
+                  {/* {remainingScore === null
                     ? null
-                    : ` - needs ${remainingScore}`}
+                    : ` - needs ${remainingScore}`} */}
                 </span>
                 {progress !== null ? (
                   <div

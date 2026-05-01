@@ -19,6 +19,11 @@ const Template: Story = {
         <GameShell.SidebarMain>Sidebar</GameShell.SidebarMain>
         <GameShell.SidebarFooter>Footer</GameShell.SidebarFooter>
       </GameShell.Sidebar>
+      <GameShell.MobileToolbar>
+        <button type="button" className="rounded-lg bg-white px-4 py-2">
+          Turn info
+        </button>
+      </GameShell.MobileToolbar>
       <GameShell.Body>Body</GameShell.Body>
     </GameShell>
   ),

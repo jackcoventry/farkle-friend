@@ -32,25 +32,28 @@ export function TurnHistory({
   if (recentTurns.length === 0 && !leader) return null;
 
   return (
-    <section className="rounded-lg bg-white/80 p-3" aria-live="polite">
+    <section
+      className="rounded-lg bg-gray-700 border border-pink-200 text-white p-4"
+      aria-live="polite"
+    >
       {leader ? (
-        <dl className="mb-3 grid gap-2 border-b border-sun-200 pb-3">
+        <dl className="mb-3 grid gap-2 border-b border-pink-200 pb-3">
           <div className="flex justify-between gap-3">
             <dt>Leader</dt>
-            <dd className="truncate text-right text-red-700">
+            <dd className="truncate text-right text-pink-300">
               {leader.username}
             </dd>
           </div>
           <div className="flex justify-between gap-3">
             <dt>Needs</dt>
-            <dd className="text-right text-red-700">
+            <dd className="text-right text-pink-300">
               {formatScore(Math.max(0, targetScore - (leader.totalScore ?? 0)))}
             </dd>
           </div>
           {biggestTurn ? (
             <div className="flex justify-between gap-3">
               <dt>Biggest turn</dt>
-              <dd className="truncate text-right text-red-700">
+              <dd className="truncate text-right text-pink-300">
                 {playerNames.get(biggestTurn.playerId) ?? "Player"} +
                 {formatScore(biggestTurn.score)}
               </dd>
@@ -59,7 +62,7 @@ export function TurnHistory({
           {lastFarkle ? (
             <div className="flex justify-between gap-3">
               <dt>Last farkle</dt>
-              <dd className="truncate text-right text-red-700">
+              <dd className="truncate text-right text-pink-300">
                 {playerNames.get(lastFarkle.playerId) ?? "Player"}
               </dd>
             </div>
@@ -69,7 +72,7 @@ export function TurnHistory({
 
       {recentTurns.length > 0 ? (
         <>
-          <p className="font-heading-2 mb-2">Recent table events</p>
+          <p className="font-heading-3 mb-2">Recent events</p>
           <ol className="flex flex-col gap-2">
             {recentTurns.map((turn) => {
               const player = playersById.get(turn.playerId);
@@ -80,7 +83,7 @@ export function TurnHistory({
                 <li
                   key={turn.id}
                   className={`flex items-center justify-between gap-3 rounded-lg p-2 ${
-                    isFarkle ? "bg-red-50" : "bg-white/70"
+                    isFarkle ? "bg-pink-50 text-pink-700" : "bg-gray-500"
                   }`}
                 >
                   <span className="flex min-w-0 items-center gap-2">
@@ -102,9 +105,7 @@ export function TurnHistory({
                   </span>
                   <span
                     className={`shrink-0 rounded-full px-2 py-1 text-sm ${
-                      isFarkle
-                        ? "bg-red-700 text-white"
-                        : "bg-sun-100 text-red-700"
+                      isFarkle ? "bg-pink-700 text-white" : "text-pink-300"
                     }`}
                   >
                     {isFarkle ? "Farkle" : `+${formatScore(turn.score)}`}

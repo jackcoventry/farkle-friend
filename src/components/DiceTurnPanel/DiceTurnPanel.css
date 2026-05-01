@@ -4,13 +4,17 @@
 
 .dice-turn-table {
   background:
-    radial-gradient(circle at 30% 20%, rgb(255 255 255 / 0.22), transparent 28%),
+    radial-gradient(
+      circle at 30% 20%,
+      rgb(255 255 255 / 0.22),
+      transparent 28%
+    ),
     linear-gradient(135deg, var(--color-gray-700), var(--color-sun-900));
   border: 2px solid rgb(255 255 255 / 0.24);
   border-radius: var(--radius-3xl, 1.5rem);
   display: grid;
   gap: var(--spacing-4);
-  grid-template-columns: minmax(0, 1fr) minmax(220px, 320px);
+  grid-template-columns: minmax(0, 1fr) minmax(180px, 240px);
   block-size: 100%;
   min-block-size: 0;
   overflow: hidden;
@@ -38,6 +42,7 @@
 
 .dice-turn-table__coach {
   align-content: start;
+  align-self: start;
   display: grid;
   gap: var(--spacing-3);
   min-block-size: 0;
@@ -52,12 +57,35 @@
   padding: var(--spacing-4);
 }
 
-@media (max-width: 860px) {
+.dice-turn-coach-modal {
+  background: var(--color-gray-800);
+  border-radius: var(--radius-3xl, 1.5rem);
+  max-height: calc(100dvh - var(--spacing-6));
+  overflow: auto;
+  padding: var(--spacing-4);
+  width: min(420px, calc(100dvw - var(--spacing-5)));
+}
+
+.dice-turn-coach-modal .dice-turn-table__coach {
+  display: grid;
+}
+
+@media (max-width: 1120px) {
   .dice-turn-table {
     grid-template-columns: 1fr;
   }
 
+  .dice-turn-table__coach {
+    order: -1;
+  }
+
   .dice-turn-table__play {
     min-block-size: 0;
+  }
+}
+
+@media (max-width: 900px) {
+  .dice-turn-table__coach {
+    display: none;
   }
 }

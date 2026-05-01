@@ -25,6 +25,7 @@ import type {
   Player,
 } from "@/domain/game/gameTypes";
 import type { Dispatch, SetStateAction } from "react";
+import { useState } from "react";
 
 type ActiveGameScreenProps = {
   avatar: (typeof avatarSet)[AvatarId] | undefined;
@@ -55,12 +56,22 @@ export function ActiveGameScreen({
   state,
   summary,
 }: Readonly<ActiveGameScreenProps>) {
+  const [isTurnCoachOpen, setIsTurnCoachOpen] = useState(false);
+  const showTurnInfoToggle =
+    currentPlayer &&
+    flowState === "TURN_ACTIVE" &&
+    state.settings.mode === "dice" &&
+    !state.pendingTurnResult;
+
   return (
     <GameShell key="active">
       <GameShell.Sidebar>
         <GameShell.SidebarMain>
-          <details className="my-4 rounded-lg bg-white/60 p-2" open>
-            <summary className="cursor-pointer font-heading-2">
+          <details
+            className="my-4 rounded-2xl bg-gray-600 border border-pink-200 p-4"
+            open
+          >
+            <summary className="cursor-pointer font-heading-2 text-white">
               Scoreboard
             </summary>
             <div className="mt-3">
@@ -73,8 +84,11 @@ export function ActiveGameScreen({
             </div>
           </details>
 
-          <details className="rounded-lg bg-white/60 p-2" open>
-            <summary className="cursor-pointer font-heading-2">
+          <details
+            className="my-4 rounded-2xl bg-gray-600 border border-pink-200 p-4"
+            open
+          >
+            <summary className="cursor-pointer font-heading-2 text-white">
               Turn log
             </summary>
             <div className="mt-3">
@@ -93,6 +107,19 @@ export function ActiveGameScreen({
           <Footer />
         </GameShell.SidebarFooter>
       </GameShell.Sidebar>
+      {showTurnInfoToggle ? (
+        <GameShell.MobileToolbar>
+          <button
+            type="button"
+            className="rounded-lg bg-white px-4 py-2 text-gray-900"
+            aria-controls="dice-turn-coach-modal"
+            aria-expanded={isTurnCoachOpen}
+            onClick={() => setIsTurnCoachOpen((current) => !current)}
+          >
+            {isTurnCoachOpen ? "Hide turn info" : "Turn info"}
+          </button>
+        </GameShell.MobileToolbar>
+      ) : null}
       <GameShell.Body>
         <div className="flex h-full min-h-0 flex-col gap-4">
           {currentPlayer ? (
@@ -127,6 +154,8 @@ export function ActiveGameScreen({
               ) : state.settings.mode === "dice" ? (
                 <DiceTurnPanel
                   dispatch={dispatch}
+                  isCoachOpenOnMobile={isTurnCoachOpen}
+                  onCloseMobileCoach={() => setIsTurnCoachOpen(false)}
                   onTurnMetricsChange={setDiceTurnMetrics}
                   state={state}
                 />

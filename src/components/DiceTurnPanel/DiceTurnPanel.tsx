@@ -5,6 +5,7 @@ import { GameState } from "@/domain/game/gameTypes";
 import { playGameSound } from "@/domain/game/gameAudio";
 import { getScoringCombinations } from "@/domain/game/dice";
 import DiceIcon from "@/components/DiceIcon/DiceIcon";
+import Modal from "@/components/Modal/Modal";
 import { TurnActionCluster } from "@/components/TurnActionCluster/TurnActionCluster";
 import { useTurnController } from "@/domain/game/useTurnController";
 import { useDiceTurnController } from "@/domain/game/useDiceTurnController";
@@ -15,6 +16,8 @@ import "./DiceTurnPanel.css";
 type DiceTurnPanelProps = {
   state: GameState;
   dispatch: React.Dispatch<GameAction>;
+  isCoachOpenOnMobile?: boolean;
+  onCloseMobileCoach?: () => void;
   onTurnMetricsChange?: (metrics: DiceTurnMetrics | null) => void;
 };
 
@@ -26,6 +29,8 @@ export type DiceTurnMetrics = {
 export function DiceTurnPanel({
   state,
   dispatch,
+  isCoachOpenOnMobile = false,
+  onCloseMobileCoach,
   onTurnMetricsChange,
 }: Readonly<DiceTurnPanelProps>) {
   const { currentPlayer, commitTurnScore } = useTurnController(state, dispatch);
@@ -146,6 +151,66 @@ export function DiceTurnPanel({
 
   const actionHintId =
     showTurnCoach && showActionHint ? "dice-action-hint" : undefined;
+  const coachContent = (
+    <>
+      <section
+        className={`dice-turn-table__coach-panel | bg-gray-500 text-white border border-gray-200`}
+        // className={`dice-turn-table__coach-panel ${
+        //   dice.selectedHasInvalidDice
+        //     ? "bg-red-50 text-red-800"
+        //     : "bg-white/90 text-gray-900"
+        // }`}
+        aria-label="Turn status"
+        aria-live="polite"
+        role="status"
+      >
+        <div className="min-w-0 flex flex-col gap-2">
+          <p className="font-heading-2">{turnCopy.title}</p>
+          <p className="text-sm">{turnCopy.detail}</p>
+        </div>
+        {showSelectionStatus ? (
+          <div className="rounded-lg bg-pink-300 px-3 py-2 text-sm">
+            <span className="font-body-1">Selection</span>{" "}
+            <span>{turnCopy.selectedStatus}</span>
+          </div>
+        ) : null}
+        {dice.selectedBreakdown.length > 0 ? (
+          <ul className="flex flex-wrap gap-2 text-sm">
+            {dice.selectedBreakdown.map((item) => (
+              <li
+                key={`${item.label}-${item.score}`}
+                className="rounded-full bg-pink-100 px-3 py-1 text-gray-900"
+              >
+                {item.label} = {item.score}
+              </li>
+            ))}
+          </ul>
+        ) : null}
+        {showActionHint ? (
+          <p id="dice-action-hint" className="text-sm font-body-1">
+            {actionHint}
+          </p>
+        ) : null}
+      </section>
+
+      {state.settings.showComboSuggestions && currentCombos.length > 0 ? (
+        <section
+          className="dice-turn-table__coach-panel bg-white/90 text-gray-900"
+          aria-label="Scoring combinations"
+        >
+          <p className="font-body-1">Possible scoring dice</p>
+          <ul className="mt-2 grid gap-1 text-sm">
+            {currentCombos.slice(0, 5).map((combo, index) => (
+              <li key={index}>
+                [{combo.dice.toSorted((a, b) => b - a).join(", ")}] →{" "}
+                {combo.score} pts
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+    </>
+  );
 
   return (
     <div className="turn-frame dice-turn-frame | grid gap-3 h-full">
@@ -200,79 +265,39 @@ export function DiceTurnPanel({
           ) : null}
 
           {!isFarkled && !currentRoll ? (
-            <div className="dice-turn-table__empty" aria-hidden="true" />
+            <div
+              className="dice-turn-table__empty | motion-safe:animate-pulse"
+              aria-hidden="true"
+            />
           ) : null}
         </div>
 
         {showTurnCoach ? (
-          <aside className="dice-turn-table__coach" aria-label="Turn guidance">
-            <section
-              className={`dice-turn-table__coach-panel ${
-                dice.selectedHasInvalidDice
-                  ? "bg-red-50 text-red-800"
-                  : "bg-white/90 text-gray-900"
-              }`}
-              aria-label="Turn status"
-              aria-live="polite"
-              role="status"
-            >
-              <div className="min-w-0">
-                <p className="font-heading-2">{turnCopy.title}</p>
-                <p className="mt-1 text-sm">{turnCopy.detail}</p>
-              </div>
-              {showSelectionStatus ? (
-                <div className="rounded-lg bg-white/70 px-3 py-2 text-sm">
-                  <span className="font-body-1">Selection</span>{" "}
-                  <span>{turnCopy.selectedStatus}</span>
-                </div>
-              ) : null}
-              {dice.selectedBreakdown.length > 0 ? (
-                <ul className="flex flex-wrap gap-2 text-sm">
-                  {dice.selectedBreakdown.map((item) => (
-                    <li
-                      key={`${item.label}-${item.score}`}
-                      className="rounded-full bg-sun-100 px-3 py-1 text-gray-900"
-                    >
-                      {item.label} = {item.score}
-                    </li>
-                  ))}
-                </ul>
-              ) : null}
-              {showActionHint ? (
-                <p id="dice-action-hint" className="text-sm font-body-1">
-                  {actionHint}
-                </p>
-              ) : null}
-            </section>
-
-            {state.settings.showComboSuggestions && currentCombos.length > 0 ? (
-              <section
-                className="dice-turn-table__coach-panel bg-white/90 text-gray-900"
-                aria-label="Scoring combinations"
-              >
-                <p className="font-body-1">Possible scoring dice</p>
-                <ul className="mt-2 grid gap-1 text-sm">
-                  {currentCombos.slice(0, 5).map((combo, index) => (
-                    <li key={index}>
-                      [{combo.dice.toSorted((a, b) => b - a).join(", ")}] →{" "}
-                      {combo.score} pts
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            ) : null}
-
-            <details className="dice-turn-table__coach-panel bg-white/80 text-sm text-gray-800">
-              <summary className="cursor-pointer font-body-1">
-                Keyboard shortcuts
-              </summary>
-              <p className="mt-2">
-                1-6 select dice, R roll, B bank, Enter end.
-              </p>
-            </details>
+          <aside
+            id="dice-turn-coach"
+            className="dice-turn-table__coach"
+            aria-label="Turn guidance"
+          >
+            {coachContent}
           </aside>
         ) : null}
       </div>
+
+      {showTurnCoach ? (
+        <Modal
+          id="dice-turn-coach-modal"
+          isOpen={isCoachOpenOnMobile}
+          onClose={onCloseMobileCoach}
+          ariaLabel="Turn information"
+        >
+          <Modal.Body>
+            <div className="dice-turn-coach-modal">
+              <Modal.CloseButton ariaLabel="Close turn information" />
+              <div className="dice-turn-table__coach">{coachContent}</div>
+            </div>
+          </Modal.Body>
+        </Modal>
+      ) : null}
 
       <TurnActionCluster
         actions={[
