@@ -62,6 +62,15 @@ export function ActiveGameScreen({
     flowState === "TURN_ACTIVE" &&
     state.settings.mode === "dice" &&
     !state.pendingTurnResult;
+  const isActiveDiceTurn = Boolean(showTurnInfoToggle);
+  const statusBar = currentPlayer ? (
+    <GameStatusBar
+      currentPlayer={currentPlayer}
+      diceTurnMetrics={diceTurnMetrics}
+      flowState={flowState}
+      state={state}
+    />
+  ) : null;
 
   return (
     <GameShell key="active">
@@ -122,14 +131,7 @@ export function ActiveGameScreen({
       ) : null}
       <GameShell.Body>
         <div className="flex h-full min-h-0 flex-col gap-4">
-          {currentPlayer ? (
-            <GameStatusBar
-              currentPlayer={currentPlayer}
-              diceTurnMetrics={diceTurnMetrics}
-              flowState={flowState}
-              state={state}
-            />
-          ) : null}
+          {!isActiveDiceTurn ? statusBar : null}
 
           <div className="min-h-0 flex-1">
             {currentPlayer && avatar && !state.pendingTurnResult ? (
@@ -157,6 +159,7 @@ export function ActiveGameScreen({
                   isCoachOpenOnMobile={isTurnCoachOpen}
                   onCloseMobileCoach={() => setIsTurnCoachOpen(false)}
                   onTurnMetricsChange={setDiceTurnMetrics}
+                  statusSlot={statusBar}
                   state={state}
                 />
               ) : (

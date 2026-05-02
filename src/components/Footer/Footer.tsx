@@ -2,7 +2,6 @@ import Modal from "@/components/Modal/Modal";
 import RulesInfo from "@/components/RulesInfo/RulesInfo";
 import { useState } from "react";
 import Button from "@/components/Button/Button";
-import "./Footer.css";
 import { GamePreferences } from "../GamePreferences/GamePreferences";
 
 function Footer() {
@@ -48,7 +47,7 @@ function Footer() {
         variant="modal"
       >
         <Modal.Body>
-          <div className="rules-modal | bg-white overflow-y-auto rounded-lg p-4">
+          <div className="rules-modal | bg-white overflow-y-auto rounded-lg p-8 h-full m-4 max-h-[calc(100dvh-var(--spacing-8))]">
             <Modal.CloseButton ariaLabel="Close rules and scoring" />
             <RulesInfo />
           </div>

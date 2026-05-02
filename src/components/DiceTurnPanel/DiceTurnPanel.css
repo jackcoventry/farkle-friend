@@ -1,5 +1,17 @@
-.dice-turn-frame {
+.dice-turn-layout {
+  block-size: 100%;
+  display: grid;
+  gap: var(--spacing-4);
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 320px);
+  min-block-size: 0;
+}
+
+.dice-turn-main {
+  display: grid;
+  gap: var(--spacing-3);
   grid-template-rows: minmax(0, 1fr) auto;
+  min-block-size: 0;
+  min-inline-size: 0;
 }
 
 .dice-turn-table {
@@ -12,22 +24,19 @@
     linear-gradient(135deg, var(--color-gray-700), var(--color-sun-900));
   border: 2px solid rgb(255 255 255 / 0.24);
   border-radius: var(--radius-3xl, 1.5rem);
-  display: grid;
-  gap: var(--spacing-4);
-  grid-template-columns: minmax(0, 1fr) minmax(180px, 240px);
   block-size: 100%;
   min-block-size: 0;
   overflow: hidden;
-  padding: var(--spacing-4);
 }
 
 .dice-turn-table__play {
   align-items: center;
+  block-size: 100%;
   display: flex;
   justify-content: center;
   min-block-size: 0;
   min-inline-size: 0;
-  overflow: auto;
+  overflow: hidden;
 }
 
 .dice-turn-table__empty {
@@ -40,6 +49,15 @@
   inline-size: min(16rem, 70%);
 }
 
+.dice-turn-rail {
+  align-content: start;
+  display: grid;
+  gap: var(--spacing-3);
+  min-block-size: 0;
+  min-inline-size: 0;
+  overflow: auto;
+}
+
 .dice-turn-table__coach {
   align-content: start;
   align-self: start;
@@ -48,13 +66,6 @@
   min-block-size: 0;
   min-inline-size: 0;
   overflow: auto;
-}
-
-.dice-turn-table__coach-panel {
-  border-radius: var(--radius-lg, 0.75rem);
-  display: grid;
-  gap: var(--spacing-3);
-  padding: var(--spacing-4);
 }
 
 .dice-turn-coach-modal {
@@ -71,8 +82,12 @@
 }
 
 @media (max-width: 1120px) {
-  .dice-turn-table {
+  .dice-turn-layout {
     grid-template-columns: 1fr;
+  }
+
+  .dice-turn-rail {
+    order: -1;
   }
 
   .dice-turn-table__coach {

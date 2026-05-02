@@ -39,13 +39,14 @@ const TemplateForGroup: Story = {
       style={{
         display: "flex",
         gap: 10,
+        height: 100,
         width: 1000,
       }}
     >
       {args.count ? (
         <>
           {[...new Array(args.count).keys()].map((e) => (
-            <DiceIcon key={e} count={e + 1} />
+            <DiceIcon key={e} count={e + 1} variant={args.variant} />
           ))}
         </>
       ) : null}

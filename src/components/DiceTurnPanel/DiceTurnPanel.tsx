@@ -19,6 +19,7 @@ type DiceTurnPanelProps = {
   isCoachOpenOnMobile?: boolean;
   onCloseMobileCoach?: () => void;
   onTurnMetricsChange?: (metrics: DiceTurnMetrics | null) => void;
+  statusSlot?: React.ReactNode;
 };
 
 export type DiceTurnMetrics = {
@@ -32,6 +33,7 @@ export function DiceTurnPanel({
   isCoachOpenOnMobile = false,
   onCloseMobileCoach,
   onTurnMetricsChange,
+  statusSlot,
 }: Readonly<DiceTurnPanelProps>) {
   const { currentPlayer, commitTurnScore } = useTurnController(state, dispatch);
 
@@ -154,7 +156,7 @@ export function DiceTurnPanel({
   const coachContent = (
     <>
       <section
-        className={`dice-turn-table__coach-panel | bg-gray-500 text-white border border-gray-200`}
+        className={`dice-turn-table__coach-panel | rounded-4xl bg-gray-700 px-7 py-3 text-white border border-grey-200`}
         // className={`dice-turn-table__coach-panel ${
         //   dice.selectedHasInvalidDice
         //     ? "bg-red-50 text-red-800"
@@ -214,73 +216,109 @@ export function DiceTurnPanel({
 
   return (
     <div className="turn-frame dice-turn-frame | grid gap-3 h-full">
-      <div className="dice-turn-table">
-        <div className="dice-turn-table__play">
-          {isFarkled ? (
-            <div
-              role="alert"
-              className="animate-bounce-in max-w-[560px] rounded-3xl border-4 border-red-700 bg-white p-6 text-center shadow-lg"
-            >
-              <p className="font-sub-heading text-red-700">Turn over</p>
-              <h2 className="font-heading text-red-700">
-                You&apos;ve been Farkled!
-              </h2>
-              <p className="mt-2 text-gray-900">
-                No scoring dice were rolled. This turn scores 0 points.
-              </p>
-            </div>
-          ) : null}
+      <div className="dice-turn-layout">
+        <div className="dice-turn-main | h-[calc(100dvh-var(--spacing-7))]">
+          <div className="dice-turn-table">
+            <div className="dice-turn-table__play">
+              {isFarkled ? (
+                <div
+                  role="alert"
+                  className="animate-bounce-in max-w-[560px] rounded-3xl border-4 border-red-700 bg-white p-6 text-center shadow-lg"
+                >
+                  <p className="font-sub-heading text-red-700">Turn over</p>
+                  <h2 className="font-heading text-red-700">
+                    You&apos;ve been Farkled!
+                  </h2>
+                  <p className="mt-2 text-gray-900">
+                    No scoring dice were rolled. This turn scores 0 points.
+                  </p>
+                </div>
+              ) : null}
 
-          {!isFarkled && currentRoll ? (
-            <div className="flex flex-wrap justify-center gap-4 sm:gap-5">
-              {currentRoll.map((value, idx) => {
-                const isSelected = dice.selectedIndices.includes(idx);
-                return (
-                  <button
-                    key={`${value}-${idx}`}
-                    type="button"
-                    onClick={() => handleToggleDieSelection(idx)}
-                    disabled={activeTurn.isFarkled}
-                    aria-pressed={isSelected}
-                    aria-label={`${isSelected ? "Deselect" : "Select"} die ${
-                      idx + 1
-                    } showing ${value}`}
-                    style={{
-                      animationDelay: `${idx * 0.05}s`,
-                    }}
-                    className={`animate-bounce-in w-[72px] cursor-pointer rounded-lg p-1 opacity-0 transition-transform hover:z-10 hover:scale-105 sm:w-[100px] ${
-                      isSelected
-                        ? "bg-yellow-200 ring-4 ring-yellow-400"
-                        : "bg-transparent"
-                    }`}
-                  >
-                    <DiceIcon
-                      count={value}
-                      state={isSelected ? "active" : "default"}
-                    />
-                  </button>
-                );
-              })}
-            </div>
-          ) : null}
+              {!isFarkled && currentRoll ? (
+                <div className="flex flex-wrap justify-center gap-4 sm:gap-5">
+                  {currentRoll.map((value, idx) => {
+                    const isSelected = dice.selectedIndices.includes(idx);
+                    return (
+                      <button
+                        key={`${value}-${idx}`}
+                        type="button"
+                        onClick={() => handleToggleDieSelection(idx)}
+                        disabled={activeTurn.isFarkled}
+                        aria-pressed={isSelected}
+                        aria-label={`${isSelected ? "Deselect" : "Select"} die ${
+                          idx + 1
+                        } showing ${value}`}
+                        style={{
+                          animationDelay: `${idx * 0.05}s`,
+                        }}
+                        className={`animate-bounce-in w-[72px] cursor-pointer rounded-lg p-1 opacity-0 transition-transform hover:z-10 hover:scale-105 sm:w-[100px] ${
+                          isSelected
+                            ? "bg-yellow-200 ring-4 ring-yellow-400"
+                            : "bg-transparent"
+                        }`}
+                      >
+                        <DiceIcon
+                          count={value}
+                          state={isSelected ? "active" : "default"}
+                        />
+                      </button>
+                    );
+                  })}
+                </div>
+              ) : null}
 
-          {!isFarkled && !currentRoll ? (
-            <div
-              className="dice-turn-table__empty | motion-safe:animate-pulse"
-              aria-hidden="true"
-            />
-          ) : null}
+              {!isFarkled && !currentRoll ? (
+                <div
+                  className="dice-turn-table__empty | motion-safe:animate-pulse"
+                  aria-hidden="true"
+                />
+              ) : null}
+            </div>
+          </div>
+
+          <TurnActionCluster
+            actions={[
+              {
+                ariaDescribedBy: actionHintId,
+                disabled: !dice.canRoll,
+                icon: "dice",
+                label: "Roll",
+                onClick: handleRoll,
+              },
+              {
+                ariaDescribedBy: actionHintId,
+                disabled: !dice.canBank,
+                icon: "bank",
+                label:
+                  dice.selectedScore > 0
+                    ? `Bank ${dice.selectedScore}`
+                    : "Bank",
+                onClick: handleBank,
+              },
+              {
+                ariaDescribedBy: actionHintId,
+                disabled: !dice.canFinish,
+                icon: "rocket",
+                label: isFarkled ? "Score 0" : "End turn",
+                onClick: handleFinish,
+              },
+            ]}
+          />
         </div>
 
-        {showTurnCoach ? (
-          <aside
-            id="dice-turn-coach"
-            className="dice-turn-table__coach"
-            aria-label="Turn guidance"
-          >
-            {coachContent}
-          </aside>
-        ) : null}
+        <aside className="dice-turn-rail" aria-label="Turn information">
+          {statusSlot}
+          {showTurnCoach ? (
+            <div
+              id="dice-turn-coach"
+              className="dice-turn-table__coach"
+              aria-label="Turn guidance"
+            >
+              {coachContent}
+            </div>
+          ) : null}
+        </aside>
       </div>
 
       {showTurnCoach ? (
@@ -298,33 +336,6 @@ export function DiceTurnPanel({
           </Modal.Body>
         </Modal>
       ) : null}
-
-      <TurnActionCluster
-        actions={[
-          {
-            ariaDescribedBy: actionHintId,
-            disabled: !dice.canRoll,
-            icon: "dice",
-            label: "Roll",
-            onClick: handleRoll,
-          },
-          {
-            ariaDescribedBy: actionHintId,
-            disabled: !dice.canBank,
-            icon: "bank",
-            label:
-              dice.selectedScore > 0 ? `Bank ${dice.selectedScore}` : "Bank",
-            onClick: handleBank,
-          },
-          {
-            ariaDescribedBy: actionHintId,
-            disabled: !dice.canFinish,
-            icon: "rocket",
-            label: isFarkled ? "Score 0" : "End turn",
-            onClick: handleFinish,
-          },
-        ]}
-      />
     </div>
   );
 }
@@ -412,9 +423,9 @@ function useDiceKeyboardShortcuts({
       }
     };
 
-    window.addEventListener("keydown", handleKeyDown);
+    globalThis.addEventListener("keydown", handleKeyDown);
 
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    return () => globalThis.removeEventListener("keydown", handleKeyDown);
   }, [
     canBank,
     canFinish,

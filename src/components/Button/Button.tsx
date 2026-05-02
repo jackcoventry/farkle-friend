@@ -1,5 +1,4 @@
 import React from "react";
-import "./Button.css";
 
 /* -----------------------------
    COMMON PROPS
@@ -62,10 +61,10 @@ export type ButtonProps = CommonProps &
 
 function getVariantClasses(variant: CommonProps["variant"]) {
   if (variant === "secondary") {
-    return "button--secondary";
+    return "border-2 border-purple-500 shadow-offset-solid-style transition-shadow shadow-pink-700 bg-white text-black hover:border-pink-500 hover:shadow-none";
   }
 
-  return "border border-pink-500 shadow-offset-solid-style transition-shadow shadow-pink-700 bg-pink-500 text-white hover:bg-pink-400 hover:shadow-none";
+  return "border-2 border-pink-500 shadow-offset-solid-style transition-shadow shadow-pink-700 bg-pink-500 text-white hover:bg-pink-400 hover:shadow-none";
 }
 
 const Button = React.forwardRef<
@@ -84,7 +83,7 @@ const Button = React.forwardRef<
     ...rest
   } = props;
 
-  let classes = "button | rounded-3xl flex relative";
+  let classes = "button | rounded-full flex relative";
   if (className) classes += ` | ${className}`;
   if (size === "small") classes += " font-button-small gap-3 py-2 px-5";
   if (size === "default") classes += " font-button py-3 gap-4 px-6";

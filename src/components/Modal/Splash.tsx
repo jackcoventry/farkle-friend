@@ -16,7 +16,7 @@ function Splash({
   children,
 }: Readonly<SplashProps>) {
   return (
-    <div className="animate-bounce-in bg-white w-[500px] p-8 flex flex-col gap-4 text-center rounded-3xl shadow-lg">
+    <div className="animate-bounce-in bg-gray-700 border border-pink-500 text-white w-[500px] p-8 flex flex-col gap-4 text-center rounded-3xl shadow-lg">
       <h2 className="font-heading">{title}</h2>
       {image}
       {subtitle && <p className="font-sub-heading">{subtitle}</p>}
