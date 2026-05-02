@@ -1,4 +1,7 @@
-import { DynamicImage, type ImageKey } from "@/components/DynamicImage/DynamicImage";
+import {
+  DynamicImage,
+  type ImageKey,
+} from "@/components/DynamicImage/DynamicImage";
 import "./TurnActionCluster.css";
 
 export type TurnAction = {

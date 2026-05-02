@@ -93,10 +93,7 @@ export function ActiveGameScreen({
             </div>
           </details>
 
-          <details
-            className="my-4 rounded-2xl bg-gray-600 border border-pink-200 p-4"
-            open
-          >
+          <details className="my-4 rounded-2xl bg-gray-600 border border-pink-200 p-4">
             <summary className="cursor-pointer font-heading-2 text-white">
               Turn log
             </summary>
@@ -116,24 +113,12 @@ export function ActiveGameScreen({
           <Footer />
         </GameShell.SidebarFooter>
       </GameShell.Sidebar>
-      {showTurnInfoToggle ? (
-        <GameShell.MobileToolbar>
-          <button
-            type="button"
-            className="rounded-lg bg-white px-4 py-2 text-gray-900"
-            aria-controls="dice-turn-coach-modal"
-            aria-expanded={isTurnCoachOpen}
-            onClick={() => setIsTurnCoachOpen((current) => !current)}
-          >
-            {isTurnCoachOpen ? "Hide turn info" : "Turn info"}
-          </button>
-        </GameShell.MobileToolbar>
-      ) : null}
+
       <GameShell.Body>
         <div className="flex h-full min-h-0 flex-col gap-4">
           {!isActiveDiceTurn ? statusBar : null}
 
-          <div className="min-h-0 flex-1">
+          <div className="min-h-0 flex-1 flex">
             {currentPlayer && avatar && !state.pendingTurnResult ? (
               <PlayerSwitchSplash
                 key={`${currentPlayer.id}-${state.currentPlayerIndex}`}
@@ -171,6 +156,20 @@ export function ActiveGameScreen({
           </div>
         </div>
       </GameShell.Body>
+
+      {showTurnInfoToggle ? (
+        <GameShell.MobileToolbar>
+          <button
+            type="button"
+            className="rounded-lg bg-white px-4 py-2 text-gray-900"
+            aria-controls="dice-turn-coach-modal"
+            aria-expanded={isTurnCoachOpen}
+            onClick={() => setIsTurnCoachOpen((current) => !current)}
+          >
+            {isTurnCoachOpen ? "Hide turn info" : "Turn info"}
+          </button>
+        </GameShell.MobileToolbar>
+      ) : null}
     </GameShell>
   );
 }

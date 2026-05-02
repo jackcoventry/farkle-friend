@@ -144,19 +144,17 @@ export function GameScreen() {
 
   if (flowState === "FINISHED") {
     return (
-      <>
-        <main>
-          <h1 className="sr-only">Farkle Friend</h1>
-          <GameFinishedModal
-            onResetGame={onResetGame}
-            onResetPlayers={onResetPlayers}
-            players={summary.players}
-            soundEnabled={state.preferences.tableFeedback}
-            turns={state.turns}
-            winner={winner}
-          />
-        </main>
-      </>
+      <main>
+        <h1 className="sr-only">Farkle Friend</h1>
+        <GameFinishedModal
+          onResetGame={onResetGame}
+          onResetPlayers={onResetPlayers}
+          players={summary.players}
+          soundEnabled={state.preferences.tableFeedback}
+          turns={state.turns}
+          winner={winner}
+        />
+      </main>
     );
   }
 

@@ -41,17 +41,17 @@ export function TurnResultPanel({
   useEffect(() => {
     if (!autoAdvance || result.isGameWinner) return;
 
-    const interval = window.setInterval(() => {
+    const interval = globalThis.setInterval(() => {
       setNow(Date.now());
     }, 1000);
-    const timeout = window.setTimeout(
+    const timeout = globalThis.setTimeout(
       onAdvanceTurn,
       AUTO_ADVANCE_SECONDS * 1000,
     );
 
     return () => {
-      window.clearInterval(interval);
-      window.clearTimeout(timeout);
+      globalThis.clearInterval(interval);
+      globalThis.clearTimeout(timeout);
     };
   }, [
     autoAdvance,

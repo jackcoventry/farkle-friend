@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import "./GameShell.css";
 
 const SIDEBAR_ID = "game-shell-sidebar";
 
@@ -35,9 +34,9 @@ export default function GameShell({
       }
     };
 
-    window.addEventListener("keydown", handleKeyDown);
+    globalThis.addEventListener("keydown", handleKeyDown);
 
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    return () => globalThis.removeEventListener("keydown", handleKeyDown);
   }, [isSidebarOpen]);
 
   React.Children.forEach(children, (child) => {
@@ -50,11 +49,11 @@ export default function GameShell({
 
   return (
     <main
-      className="game-shell | h-dvh"
+      className="game-shell | h-dvh min-h-dvh grid grid-cols-1 grid-rows-[auto_minmax(0,1fr)] xl:grid-cols-[400px_1fr] xl:grid-rows-1"
       data-sidebar-open={isSidebarOpen ? "true" : "false"}
     >
       <h1 className="sr-only">Farkle Friend</h1>
-      <div className="game-shell__mobile-toolbar">
+      <div className="game-shell__mobile-toolbar | grid xl:hidden">
         <button
           type="button"
           className="game-shell__toggle | rounded-lg bg-red-700 px-4 py-2 text-white"
@@ -64,18 +63,18 @@ export default function GameShell({
         >
           {isSidebarOpen ? sidebarCloseLabel : sidebarOpenLabel}
         </button>
-        {mobileToolbar}
       </div>
       {isSidebarOpen ? (
         <button
           type="button"
-          className="game-shell__backdrop"
+          className="game-shell__backdrop | xl:hidden block inset-0 padding-0 fixed z-40 border bg-transparent"
           aria-label={sidebarCloseLabel}
           onClick={() => setIsSidebarOpen(false)}
         />
       ) : null}
       {sidebar}
       {body}
+      {mobileToolbar}
     </main>
   );
 }
@@ -84,7 +83,7 @@ GameShell.Sidebar = function Header({ children }: SlotProps) {
   return (
     <aside
       id={SIDEBAR_ID}
-      className="game-shell__sidebar | p-6 bg-gray-800"
+      className="game-shell__sidebar | grid grid-rows-[minmax(0,1fr)_auto] max-h-dvh min-h-0 overflow-hidden p-4 lg:p-6 bg-gray-800"
       aria-label="Game menu"
       role="dialog"
       aria-modal="true"
@@ -96,11 +95,19 @@ GameShell.Sidebar = function Header({ children }: SlotProps) {
 };
 
 GameShell.SidebarMain = function SidebarMain({ children }: SlotProps) {
-  return <div className="game-shell__sidebar-main">{children}</div>;
+  return (
+    <div className="game-shell__sidebar-main | pr-1 overflow-auto min-h-0">
+      {children}
+    </div>
+  );
 };
 
 GameShell.SidebarFooter = function SidebarFooter({ children }: SlotProps) {
-  return <div className="game-shell__sidebar-footer">{children}</div>;
+  return (
+    <div className="game-shell__sidebar-footer | grid gap-4 overflow-visible pt-4">
+      {children}
+    </div>
+  );
 };
 
 GameShell.MobileToolbar = function MobileToolbar({ children }: SlotProps) {
@@ -109,6 +116,8 @@ GameShell.MobileToolbar = function MobileToolbar({ children }: SlotProps) {
 
 GameShell.Body = function Body({ children }: SlotProps) {
   return (
-    <section className="game-shell__body | bg-gray-900 p-6">{children}</section>
+    <section className="game-shell__body | bg-gray-900 p-4 lg:p-6 min-w-0 overflow-auto">
+      {children}
+    </section>
   );
 };

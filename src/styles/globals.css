@@ -178,7 +178,7 @@ body {
   width: 200px;
 }
 
-.turn-frame {
+/* .turn-frame {
   grid-template-rows: auto auto minmax(0, 1fr) auto auto;
 }
 
@@ -186,7 +186,7 @@ body {
   .turn-frame {
     min-height: 620px;
   }
-}
+} */
 
 @media (max-width: 600px) {
   .modal__dialog {

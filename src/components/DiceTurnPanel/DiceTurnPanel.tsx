@@ -157,11 +157,6 @@ export function DiceTurnPanel({
     <>
       <section
         className={`dice-turn-table__coach-panel | rounded-4xl bg-gray-700 px-7 py-3 text-white border border-grey-200`}
-        // className={`dice-turn-table__coach-panel ${
-        //   dice.selectedHasInvalidDice
-        //     ? "bg-red-50 text-red-800"
-        //     : "bg-white/90 text-gray-900"
-        // }`}
         aria-label="Turn status"
         aria-live="polite"
         role="status"
@@ -215,11 +210,11 @@ export function DiceTurnPanel({
   );
 
   return (
-    <div className="turn-frame dice-turn-frame | grid gap-3 h-full">
-      <div className="dice-turn-layout">
-        <div className="dice-turn-main | h-[calc(100dvh-var(--spacing-7))]">
-          <div className="dice-turn-table">
-            <div className="dice-turn-table__play">
+    <div className="turn-frame | grid gap-3 h-full w-full">
+      <div className="xl:grid-cols-[minmax(0,1fr)_minmax(240px,320px)] grid-cols-[1fr] grid gap-4">
+        <div className="grid-rows-[minmax(0,1fr)_auto] grid gap-3 h-[calc(50dvh-var(--spacing-7))] xl:h-[calc(100dvh-var(--spacing-7))]">
+          <div className="dice-turn-table | border-2 border-pink-100 overflow-hidden rounded-4xl">
+            <div className="items-center h-full flex justify-center overflow-hidden">
               {isFarkled ? (
                 <div
                   role="alert"
@@ -227,7 +222,7 @@ export function DiceTurnPanel({
                 >
                   <p className="font-sub-heading text-red-700">Turn over</p>
                   <h2 className="font-heading text-red-700">
-                    You&apos;ve been Farkled!
+                    You have been Farkled!
                   </h2>
                   <p className="mt-2 text-gray-900">
                     No scoring dice were rolled. This turn scores 0 points.
@@ -270,7 +265,7 @@ export function DiceTurnPanel({
 
               {!isFarkled && !currentRoll ? (
                 <div
-                  className="dice-turn-table__empty | motion-safe:animate-pulse"
+                  className="dice-turn-table__empty | motion-safe:animate-[spin_100s_linear_infinite] border-2 border-dashed border-pink-200 rounded-full aspect-square"
                   aria-hidden="true"
                 />
               ) : null}
@@ -307,12 +302,15 @@ export function DiceTurnPanel({
           />
         </div>
 
-        <aside className="dice-turn-rail" aria-label="Turn information">
+        <aside
+          className="dice-turn-rail | -order-1 xl:order-2 content-start grid gap-3 overflow-auto"
+          aria-label="Turn information"
+        >
           {statusSlot}
           {showTurnCoach ? (
             <div
               id="dice-turn-coach"
-              className="dice-turn-table__coach"
+              className="dice-turn-table__coach | content-start self-start hidden xl:grid gap-3 overflow-auto"
               aria-label="Turn guidance"
             >
               {coachContent}
