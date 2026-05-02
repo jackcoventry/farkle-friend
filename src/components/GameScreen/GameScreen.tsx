@@ -103,7 +103,7 @@ export function GameScreen() {
   const selectLobbyScreen = (screen: "players" | "settings") => {
     setLobbyScreen(screen);
     const tab = screen === "players" ? playersTabRef : settingsTabRef;
-    window.requestAnimationFrame(() => tab.current?.focus());
+    globalThis.requestAnimationFrame(() => tab.current?.focus());
   };
 
   const onLobbyTabKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {

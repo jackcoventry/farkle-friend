@@ -1,7 +1,7 @@
 "use client";
 
 import { GameAction } from "@/domain/game/gameReducer";
-import { GameState } from "@/domain/game/gameTypes";
+import { GameState, GameSummary } from "@/domain/game/gameTypes";
 import { playGameSound } from "@/domain/game/gameAudio";
 import { getScoringCombinations } from "@/domain/game/dice";
 import DiceIcon from "@/components/DiceIcon/DiceIcon";
@@ -12,14 +12,20 @@ import { useDiceTurnController } from "@/domain/game/useDiceTurnController";
 import { getDiceTurnCopy } from "@/domain/game/diceTurnPresenter";
 import { useCallback, useEffect } from "react";
 import "./DiceTurnPanel.css";
+import { GameScreenSidebar } from "../GameScreen/ActiveGameScreen";
 
 type DiceTurnPanelProps = {
   state: GameState;
   dispatch: React.Dispatch<GameAction>;
   isCoachOpenOnMobile?: boolean;
+  isSidebarOpenOnMobile?: boolean;
   onCloseMobileCoach?: () => void;
+  onCloseMobileSidebar?: () => void;
   onTurnMetricsChange?: (metrics: DiceTurnMetrics | null) => void;
   statusSlot?: React.ReactNode;
+  sidebarSummary?: GameSummary;
+  sidebarOnQuit?: () => void;
+  sidebarOnRestart?: () => void;
 };
 
 export type DiceTurnMetrics = {
@@ -31,9 +37,14 @@ export function DiceTurnPanel({
   state,
   dispatch,
   isCoachOpenOnMobile = false,
+  isSidebarOpenOnMobile = false,
   onCloseMobileCoach,
+  onCloseMobileSidebar,
   onTurnMetricsChange,
   statusSlot,
+  sidebarSummary,
+  sidebarOnQuit,
+  sidebarOnRestart,
 }: Readonly<DiceTurnPanelProps>) {
   const { currentPlayer, commitTurnScore } = useTurnController(state, dispatch);
 
@@ -58,7 +69,7 @@ export function DiceTurnPanel({
       : getScoringCombinations(activeTurn.currentRoll);
   const hasSelectedDice = dice.selectedIndices.length > 0;
   const showSelectionStatus = hasSelectedDice || isFarkled;
-  const showTurnCoach = !isFarkled;
+  const showTurnCoachAndSidebar = !isFarkled;
   const turnCopy = getDiceTurnCopy({
     canRoll: dice.canRoll,
     hasSelectedDice,
@@ -152,7 +163,7 @@ export function DiceTurnPanel({
   }
 
   const actionHintId =
-    showTurnCoach && showActionHint ? "dice-action-hint" : undefined;
+    showTurnCoachAndSidebar && showActionHint ? "dice-action-hint" : undefined;
   const coachContent = (
     <>
       <section
@@ -307,7 +318,7 @@ export function DiceTurnPanel({
           aria-label="Turn information"
         >
           {statusSlot}
-          {showTurnCoach ? (
+          {showTurnCoachAndSidebar ? (
             <div
               id="dice-turn-coach"
               className="dice-turn-table__coach | content-start self-start hidden xl:grid gap-3 overflow-auto"
@@ -319,20 +330,39 @@ export function DiceTurnPanel({
         </aside>
       </div>
 
-      {showTurnCoach ? (
-        <Modal
-          id="dice-turn-coach-modal"
-          isOpen={isCoachOpenOnMobile}
-          onClose={onCloseMobileCoach}
-          ariaLabel="Turn information"
-        >
-          <Modal.Body>
-            <div className="dice-turn-coach-modal">
-              <Modal.CloseButton ariaLabel="Close turn information" />
-              <div className="dice-turn-table__coach">{coachContent}</div>
-            </div>
-          </Modal.Body>
-        </Modal>
+      {showTurnCoachAndSidebar ? (
+        <>
+          <Modal
+            id="dice-turn-coach-modal"
+            isOpen={isCoachOpenOnMobile}
+            onClose={onCloseMobileCoach}
+            ariaLabel="Turn information"
+          >
+            <Modal.Body>
+              <div className="dice-turn-coach-modal">
+                <Modal.CloseButton ariaLabel="Close turn information" />
+                <div className="dice-turn-table__coach">{coachContent}</div>
+              </div>
+            </Modal.Body>
+          </Modal>
+
+          <Modal
+            isOpen={isSidebarOpenOnMobile}
+            onClose={onCloseMobileSidebar}
+            variant="modal"
+          >
+            <Modal.Body>
+              <GameScreenSidebar
+                summary={sidebarSummary}
+                currentPlayer={currentPlayer}
+                state={state}
+                onQuit={sidebarOnQuit}
+                onRestart={sidebarOnRestart}
+                isDesktop={false}
+              />
+            </Modal.Body>
+          </Modal>
+        </>
       ) : null}
     </div>
   );
