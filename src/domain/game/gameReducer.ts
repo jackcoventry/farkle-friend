@@ -7,7 +7,12 @@ import {
   resetGame,
   startGame,
 } from "./gameLogic";
-import { GameSettings, GameState, PlayerId } from "./gameTypes";
+import {
+  GamePreferences,
+  GameSettings,
+  GameState,
+  PlayerId,
+} from "./gameTypes";
 
 export type GameAction =
   | { type: "ADD_PLAYER"; username: string; avatar: number }
@@ -19,7 +24,7 @@ export type GameAction =
   | { type: "RECORD_TURN"; playerId: PlayerId; score: number }
   | {
       type: "UPDATE_PREFERENCES";
-      settings: Pick<GameSettings, "motionEnabled" | "tableFeedback">;
+      preferences: Partial<GamePreferences>;
     }
   | { type: "UPDATE_SETTINGS"; settings: Partial<GameSettings> };
 
@@ -42,9 +47,9 @@ export function reducer(state: GameState, action: GameAction): GameState {
     case "UPDATE_PREFERENCES":
       return {
         ...state,
-        settings: {
-          ...state.settings,
-          ...action.settings,
+        preferences: {
+          ...state.preferences,
+          ...action.preferences,
         },
       };
     case "UPDATE_SETTINGS": {

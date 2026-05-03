@@ -10,9 +10,7 @@ type GamePreferencesProps = {
   className?: string;
 };
 
-export function GamePreferences({
-  className,
-}: Readonly<GamePreferencesProps>) {
+export function GamePreferences({ className }: Readonly<GamePreferencesProps>) {
   const { state, dispatch } = useGame();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -22,25 +20,27 @@ export function GamePreferences({
   }) => {
     dispatch({
       type: "UPDATE_PREFERENCES",
-      settings: {
-        motionEnabled: settings.motionEnabled ?? state.settings.motionEnabled,
-        tableFeedback: settings.tableFeedback ?? state.settings.tableFeedback,
+      preferences: {
+        motionEnabled:
+          settings.motionEnabled ?? state.preferences.motionEnabled,
+        tableFeedback:
+          settings.tableFeedback ?? state.preferences.tableFeedback,
       },
     });
   };
 
   return (
     <>
-      <div className={className}>
-        <Button
-          type="button"
-          size="small"
-          variant="secondary"
-          onClick={() => setIsOpen(true)}
-        >
-          Preferences
-        </Button>
-      </div>
+      <Button
+        type="button"
+        size="small"
+        variant="primary"
+        onClick={() => setIsOpen(true)}
+        icon="three-dots-vertical"
+        iconOnly
+      >
+        Preferences
+      </Button>
       <Modal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
@@ -58,8 +58,10 @@ export function GamePreferences({
                     <Pill.Control>
                       <input
                         type="radio"
-                        checked={state.settings.tableFeedback}
-                        onChange={() => updatePreferences({ tableFeedback: true })}
+                        checked={state.preferences.tableFeedback}
+                        onChange={() =>
+                          updatePreferences({ tableFeedback: true })
+                        }
                         name="preferenceSound"
                         id="preferenceSound_on"
                       />
@@ -70,7 +72,7 @@ export function GamePreferences({
                     <Pill.Control>
                       <input
                         type="radio"
-                        checked={!state.settings.tableFeedback}
+                        checked={!state.preferences.tableFeedback}
                         onChange={() =>
                           updatePreferences({ tableFeedback: false })
                         }
@@ -89,8 +91,10 @@ export function GamePreferences({
                     <Pill.Control>
                       <input
                         type="radio"
-                        checked={state.settings.motionEnabled}
-                        onChange={() => updatePreferences({ motionEnabled: true })}
+                        checked={state.preferences.motionEnabled}
+                        onChange={() =>
+                          updatePreferences({ motionEnabled: true })
+                        }
                         name="preferenceMotion"
                         id="preferenceMotion_on"
                       />
@@ -101,7 +105,7 @@ export function GamePreferences({
                     <Pill.Control>
                       <input
                         type="radio"
-                        checked={!state.settings.motionEnabled}
+                        checked={!state.preferences.motionEnabled}
                         onChange={() =>
                           updatePreferences({ motionEnabled: false })
                         }

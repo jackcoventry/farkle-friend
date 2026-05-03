@@ -104,6 +104,12 @@ function RulesInfo() {
           </li>
         </ul>
       </RulesInfoSection>
+      <details className="dice-turn-table__coach-panel bg-white/80 text-sm text-gray-800">
+        <summary className="cursor-pointer font-body-1">
+          Keyboard shortcuts
+        </summary>
+        <p className="mt-2">1-6 select dice, R roll, B bank, Enter end.</p>
+      </details>
     </div>
   );
 }

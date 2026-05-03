@@ -1,5 +1,4 @@
 import React from "react";
-import "./Button.css";
 
 /* -----------------------------
    COMMON PROPS
@@ -60,6 +59,14 @@ type InlineOnlyProps = {
 export type ButtonProps = CommonProps &
   (ButtonOnlyProps | AnchorOnlyProps | InlineOnlyProps);
 
+function getVariantClasses(variant: CommonProps["variant"]) {
+  if (variant === "secondary") {
+    return "border-2 border-purple-500 shadow-offset-solid-style transition-shadow shadow-pink-700 bg-white text-black hover:border-pink-500 hover:shadow-none";
+  }
+
+  return "border-2 border-pink-500 shadow-offset-solid-style transition-shadow shadow-pink-700 bg-pink-500 text-white hover:bg-pink-400 hover:shadow-none";
+}
+
 const Button = React.forwardRef<
   HTMLButtonElement | HTMLAnchorElement | HTMLSpanElement,
   Readonly<ButtonProps>
@@ -76,13 +83,16 @@ const Button = React.forwardRef<
     ...rest
   } = props;
 
-  let classes = "button | rounded-lg flex gap-3 relative text-white";
+  let classes = "button | rounded-full flex relative";
   if (className) classes += ` | ${className}`;
-  if (size === "small") classes += " font-button-small py-2 px-4";
-  if (size === "default") classes += " font-button py-2 px-5";
-  if (size === "large") classes += " font-button-large py-3 px-6";
+  if (size === "small") classes += " font-button-small gap-3 py-2 px-5";
+  if (size === "default") classes += " font-button py-3 gap-4 px-6";
+  if (size === "large") classes += " font-button-large gap-5 py-4 px-8";
 
   if (iconPosition === "left") classes += " flex-row-reverse";
+
+  const childrenWrapper =
+    "content | w-full display flex justify-center align-center";
 
   // If iconOnly and no ariaLabel, fall back to children (if string)
   let computedAriaLabel = ariaLabel;
@@ -97,7 +107,7 @@ const Button = React.forwardRef<
     const { as, ...inlineRest } = rest as InlineOnlyProps;
     void as;
 
-    classes += " bg-red-700 hover:bg-red-800";
+    classes += ` ${getVariantClasses(variant)}`;
 
     return (
       <span
@@ -110,10 +120,10 @@ const Button = React.forwardRef<
         {...inlineRest}
       >
         {children && !iconOnly && (
-          <span className="content | align-center">{children}</span>
+          <span className={childrenWrapper}>{children}</span>
         )}
         {icon && (
-          <span>
+          <span className="inline-flex items-center">
             <svg
               className="icon"
               width="1.25em"
@@ -138,7 +148,7 @@ const Button = React.forwardRef<
 
     const relSafe = target === "_blank" ? rel || "noopener noreferrer" : rel;
 
-    classes += " bg-red-700 cursor-pointer hover:bg-red-800";
+    classes += ` cursor-pointer ${getVariantClasses(variant)}`;
 
     return (
       <a
@@ -155,10 +165,10 @@ const Button = React.forwardRef<
         {...anchorRest}
       >
         {children && !iconOnly && (
-          <span className="content | align-center">{children}</span>
+          <span className={childrenWrapper}>{children}</span>
         )}
         {icon && (
-          <span>
+          <span className="inline-flex items-center">
             <svg
               className="icon"
               width="1.25em"
@@ -183,9 +193,9 @@ const Button = React.forwardRef<
     ...buttonRest
   } = rest as ButtonOnlyProps;
   if (disabled) {
-    classes += " bg-gray-500 cursor-not-allowed";
+    classes += " bg-gray-500 cursor-not-allowed text-white";
   } else {
-    classes += " bg-red-700 cursor-pointer hover:bg-red-800";
+    classes += ` cursor-pointer ${getVariantClasses(variant)}`;
   }
 
   return (
@@ -202,10 +212,10 @@ const Button = React.forwardRef<
       {...buttonRest}
     >
       {children && !iconOnly && (
-        <span className="content | align-center">{children}</span>
+        <span className={childrenWrapper}>{children}</span>
       )}
       {icon && (
-        <span className="icon">
+        <span className="inline-flex items-center">
           <svg
             className="icon"
             width="1.25em"

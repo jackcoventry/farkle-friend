@@ -17,6 +17,10 @@ const meta: Meta<ButtonProps> = {
       options: ["small", "default", "large"],
       control: { type: "radio" },
     },
+    variant: {
+      options: ["primary", "secondary"],
+      control: { type: "radio" },
+    },
     iconPosition: {
       options: ["left", "right", "top"],
       control: { type: "radio" },
@@ -39,5 +43,13 @@ export const Default = {
   ...Template,
   args: {
     as: "button",
+  },
+};
+
+export const Secondary = {
+  ...Template,
+  args: {
+    as: "button",
+    variant: "secondary",
   },
 };

@@ -13,9 +13,17 @@ export default meta;
 type Story = StoryObj<typeof GameShell>;
 
 const Template: Story = {
-  render: () => (
-    <GameShell>
-      <GameShell.Sidebar>Sidebar</GameShell.Sidebar>
+  render: (args) => (
+    <GameShell {...args}>
+      <GameShell.Sidebar>
+        <GameShell.SidebarMain>Sidebar</GameShell.SidebarMain>
+        <GameShell.SidebarFooter>Footer</GameShell.SidebarFooter>
+      </GameShell.Sidebar>
+      <GameShell.MobileToolbar>
+        <button type="button" className="rounded-lg bg-white px-4 py-2">
+          Turn info
+        </button>
+      </GameShell.MobileToolbar>
       <GameShell.Body>Body</GameShell.Body>
     </GameShell>
   ),
@@ -23,7 +31,10 @@ const Template: Story = {
 
 export const Default = {
   ...Template,
-  args: {},
+  args: {
+    sidebarCloseLabel: "Close sidebar",
+    sidebarOpenLabel: "Open sidebar",
+  },
   parameters: {
     layout: "fullscreen",
   },

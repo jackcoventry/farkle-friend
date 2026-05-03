@@ -234,6 +234,7 @@ function ModalCloseButton({
       icon="close"
       className="justify-end mb-4 ml-auto"
       variant="primary"
+      size="small"
     />
   );
 }

@@ -18,10 +18,11 @@ export function GameProvider({
   const value = useGameState();
 
   useEffect(() => {
-    document.documentElement.dataset.motion = value.state.settings.motionEnabled
+    document.documentElement.dataset.motion = value.state.preferences
+      .motionEnabled
       ? "on"
       : "off";
-  }, [value.state.settings.motionEnabled]);
+  }, [value.state.preferences.motionEnabled]);
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;
 }

@@ -41,17 +41,17 @@ export function TurnResultPanel({
   useEffect(() => {
     if (!autoAdvance || result.isGameWinner) return;
 
-    const interval = window.setInterval(() => {
+    const interval = globalThis.setInterval(() => {
       setNow(Date.now());
     }, 1000);
-    const timeout = window.setTimeout(
+    const timeout = globalThis.setTimeout(
       onAdvanceTurn,
       AUTO_ADVANCE_SECONDS * 1000,
     );
 
     return () => {
-      window.clearInterval(interval);
-      window.clearTimeout(timeout);
+      globalThis.clearInterval(interval);
+      globalThis.clearTimeout(timeout);
     };
   }, [
     autoAdvance,
@@ -74,32 +74,34 @@ export function TurnResultPanel({
       ref={panelRef}
       aria-labelledby={titleId}
       aria-live="polite"
-      className="m-auto flex w-full max-w-[560px] flex-col gap-5 rounded-lg bg-white p-6 text-center shadow-lg outline-none focus-visible:ring-4 focus-visible:ring-red-300"
+      className="m-auto flex w-full max-w-[560px] flex-col gap-5 rounded-lg bg-gray-700 border border-gray-200 p-6 text-white text-center shadow-lg outline-none focus-visible:ring-4 focus-visible:ring-red-300"
       onKeyDown={handleKeyDown}
       tabIndex={-1}
     >
       <div>
-        <p className="font-sub-heading text-red-700">Turn complete</p>
+        <p className="font-sub-heading">Turn ended!</p>
         <h2 id={titleId} className="font-heading">
           {currentPlayer.username}
         </h2>
       </div>
       <dl className="grid gap-3 text-left sm:grid-cols-3">
-        <div className="rounded-lg bg-gray-100 p-4">
-          <dt className="font-body-1 text-gray-700">Turn score</dt>
-          <dd className="font-heading-2 text-red-700">
+        <div className="rounded-lg bg-gray-500 border border-pink-200 p-4">
+          <dt className="font-body-1 ">Turn score</dt>
+          <dd className="font-heading-2 text-white">
             {formatScore(result.score)}
           </dd>
         </div>
-        <div className="rounded-lg bg-gray-100 p-4">
-          <dt className="font-body-1 text-gray-700">Previous total</dt>
+        <div className="rounded-lg bg-gray-500 border border-pink-200 p-4">
+          <dt className="font-body-1 ">Previous total</dt>
           <dd className="font-heading-2">
             {formatScore(result.previousTotal)}
           </dd>
         </div>
-        <div className="rounded-lg bg-gray-100 p-4">
-          <dt className="font-body-1 text-gray-700">New total</dt>
-          <dd className="font-heading-2">{formatScore(result.newTotal)}</dd>
+        <div className="rounded-lg bg-gray-500 border border-pink-200 p-4">
+          <dt className="font-body-1 ">New total</dt>
+          <dd className="font-heading-2 text-pink-300">
+            {formatScore(result.newTotal)}
+          </dd>
         </div>
       </dl>
       <p className="font-sub-heading">
@@ -108,7 +110,7 @@ export function TurnResultPanel({
           : `Next up: ${nextPlayer?.username ?? "next player"}.`}
       </p>
       {autoAdvance && !result.isGameWinner ? (
-        <p className="text-sm text-gray-700" aria-live="polite">
+        <p className="text-sm " aria-live="polite">
           Advancing automatically in {secondsRemaining}...
         </p>
       ) : null}

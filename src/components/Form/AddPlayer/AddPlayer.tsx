@@ -88,7 +88,7 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
     const duplicateName = state.players.some(
       (player) =>
         player.username.trim().toLowerCase() ===
-        data.username.trim().toLowerCase()
+        data.username.trim().toLowerCase(),
     );
 
     if (duplicateName) {
@@ -103,20 +103,19 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
     reset();
     const nextAvailableAvatar =
       avatarValues.find(
-        (avatar) => avatar !== data.avatar && !avatarsInUse.includes(avatar)
+        (avatar) => avatar !== data.avatar && !avatarsInUse.includes(avatar),
       ) ?? 1;
     setValue("avatar", nextAvailableAvatar);
   };
 
   return (
-    <div className="form-wrapper | border-sun-300 border-1 p-6 rounded-lg bg-white self-center">
+    <div className="form-wrapper | border-pink-500 border p-6 rounded-4xl bg-gray-800 self-center">
       <form
         className="form | gap-6 flex flex-col"
         onSubmit={handleSubmit(submitHandler)}
       >
         {!maxPlayersReached && (
           <>
-            <h2 className="font-heading text-center">Add player</h2>
             <Controller
               name="username"
               control={control}
@@ -127,9 +126,9 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
                   </label>
                   <input
                     id="player-name"
-                    className={`border-1 py-4 px-5 rounded-4xl ${errors?.username ? "border-red-500" : "border-gray-800"}`}
+                    className={`py-4 px-5 border border-gray-300 bg-gray-600 rounded-4xl placeholder-white text-white`}
                     {...field}
-                    placeholder="Enter your name..."
+                    placeholder="Enter player name..."
                     data-valid={errors?.username ? "false" : "true"}
                     aria-invalid={errors?.username ? "true" : undefined}
                     aria-describedby={
@@ -137,7 +136,10 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
                     }
                   />
                   {errors?.username ? (
-                    <p id="player-name-error" className="text-red-700">
+                    <p
+                      id="player-name-error"
+                      className="text-red-800 px-4 py-2 bg-white border-red-500 border rounded-3xl"
+                    >
                       {errors.username.message}
                     </p>
                   ) : null}
@@ -150,9 +152,9 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
               control={control}
               render={({ field, fieldState }) => (
                 <fieldset aria-invalid={!!fieldState.error || undefined}>
-                  <legend className="mb-4">Choose an avatar</legend>
+                  <legend className="mb-4 text-white">Choose an avatar</legend>
 
-                  <div className="flex gap-4 grid grid-cols-3">
+                  <div className="gap-4 grid grid-cols-3 justify-items-center">
                     {avatarValues.map((option) => {
                       const avatar = avatarSet[option];
                       const isAvatarInUse = avatarsInUse.includes(option);
@@ -163,6 +165,7 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
                           aria-label={`Avatar ${avatar.name}${
                             isAvatarInUse ? " unavailable" : ""
                           }`}
+                          className="w-[100px] hover:scale-105 transition-transform"
                         >
                           <input
                             type="radio"

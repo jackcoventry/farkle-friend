@@ -45,8 +45,8 @@ export default function Home() {
           }}
         >
           <Link href="/game">
-            <Button as="inline" size="large" className="block w-full text-center">
-              Start Game
+            <Button as="inline" size="large">
+              Start
             </Button>
           </Link>
         </div>

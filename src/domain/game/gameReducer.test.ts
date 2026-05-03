@@ -79,4 +79,50 @@ describe("game reducer flow", () => {
     expect(reducer(state, { type: "RESET_GAME" }).pendingTurnResult).toBeNull();
     expect(reducer(state, { type: "END_GAME" }).pendingTurnResult).toBeNull();
   });
+
+  it("does not allow game rule settings to change after the game starts", () => {
+    const state = createStartedGame();
+
+    const nextState = reducer(state, {
+      type: "UPDATE_SETTINGS",
+      settings: {
+        mode: "manual",
+        targetScore: 1000,
+      },
+    });
+
+    expect(nextState.settings.mode).toBe("dice");
+    expect(nextState.settings.targetScore).toBe(500);
+  });
+
+  it("allows accessibility preferences to change after the game starts", () => {
+    const state = createStartedGame();
+
+    const nextState = reducer(state, {
+      type: "UPDATE_PREFERENCES",
+      preferences: {
+        motionEnabled: false,
+        tableFeedback: true,
+      },
+    });
+
+    expect(nextState.preferences.motionEnabled).toBe(false);
+    expect(nextState.preferences.tableFeedback).toBe(true);
+    expect(nextState.phase).toBe("IN_PROGRESS");
+  });
+
+  it("does not advance turns after a winning turn has finished the game", () => {
+    let state = createStartedGame();
+    const ada = state.players[0];
+
+    state = reducer(state, {
+      type: "RECORD_TURN",
+      playerId: ada.id,
+      score: 500,
+    });
+    const nextState = reducer(state, { type: "ADVANCE_TURN" });
+
+    expect(nextState).toBe(state);
+    expect(getGameFlowState(nextState)).toBe("FINISHED");
+  });
 });
