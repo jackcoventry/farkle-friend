@@ -10,7 +10,6 @@ import { GameStatusBar } from "@/components/GameScreen/GameStatusBar";
 import GameShell from "@/components/GameShell/GameShell";
 import { ManualTurn } from "@/components/ManualTurn/ManualTurn";
 import PlayerList from "@/components/PlayerList/PlayerList";
-import { PlayerSwitchSplash } from "@/components/PlayerSwitchSplash/PlayerSwitchSplash";
 import { TurnHistory } from "@/components/TurnHistory/TurnHistory";
 import { TurnResultPanel } from "@/components/TurnResultPanel/TurnResultPanel";
 import type {
@@ -26,7 +25,7 @@ import type {
 } from "@/domain/game/gameTypes";
 import type { Dispatch, SetStateAction } from "react";
 import { useState } from "react";
-import Modal from "../Modal/Modal";
+import Button from "@/components/Button/Button";
 
 type ActiveGameScreenProps = {
   avatar: (typeof avatarSet)[AvatarId] | undefined;
@@ -141,14 +140,14 @@ export function ActiveGameScreen({
           {isActiveDiceTurn ? null : statusBar}
 
           <div className="min-h-0 flex-1 flex">
-            {currentPlayer && avatar && !state.pendingTurnResult ? (
+            {/* {currentPlayer && avatar && !state.pendingTurnResult ? (
               <PlayerSwitchSplash
                 key={`${currentPlayer.id}-${state.currentPlayerIndex}`}
                 currentPlayer={currentPlayer}
                 avatar={avatar}
                 soundEnabled={state.preferences.tableFeedback}
               />
-            ) : null}
+            ) : null} */}
 
             {currentPlayer ? (
               flowState === "TURN_RESULT" && state.pendingTurnResult ? (
@@ -186,24 +185,26 @@ export function ActiveGameScreen({
 
       {showTurnInfoToggle ? (
         <GameShell.MobileToolbar>
-          <button
-            type="button"
-            className="rounded-lg bg-white px-4 py-2 text-gray-900"
+          <Button
             aria-controls="dice-turn-coach-modal"
             aria-expanded={isTurnCoachOpen}
+            size="small"
             onClick={() => setIsTurnCoachOpen((current) => !current)}
+            icon="arrow-left"
+            iconOnly
           >
             {isTurnCoachOpen ? "Hide turn info" : "Turn info"}
-          </button>
-          <button
-            type="button"
-            className="rounded-lg bg-white px-4 py-2 text-gray-900"
+          </Button>
+          <Button
             aria-controls="dice-turn-sidebar-modal"
             aria-expanded={showSidebarModal}
             onClick={() => setShowSidebarModal((current) => !current)}
+            size="small"
+            icon="three-dots-vertical"
+            iconOnly
           >
             {showSidebarModal ? "Hide sidebar" : "Show sidebar??"}
-          </button>
+          </Button>
         </GameShell.MobileToolbar>
       ) : null}
     </GameShell>

@@ -10,7 +10,7 @@ import z from "zod";
 
 export const diceStyles = ["default", "medieval"] as const;
 export const modes = ["dice", "manual"] as const;
-const targetScorePresets = [5000, 10000, 20000] as const;
+const targetScorePresets = [2500, 5000, 10000] as const;
 const minTargetScore = 500;
 const maxTargetScore = 50000;
 

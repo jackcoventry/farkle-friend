@@ -1,38 +1,4 @@
-.turn-action-cluster {
-  --turn-action-bg: var(--color-red-700);
-  --turn-action-bg-hover: var(--color-pink-500);
-  --turn-action-border: var(--color-sun-900);
-  --turn-action-shadow: var(--color-sun-700);
-
-  align-items: stretch;
-  background: var(--turn-action-border);
-  border: 2px solid var(--turn-action-border);
-  border-radius: 999px;
-  box-shadow: var(--shadow-offset-solid-style) var(--turn-action-shadow);
-  display: grid;
-  gap: 2px;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin-inline: auto;
-  max-inline-size: 760px;
-  overflow: hidden;
-  width: 100%;
-}
-
 .turn-action-cluster__button {
-  align-items: center;
-  background:
-    linear-gradient(180deg, rgb(255 255 255 / 0.18), transparent),
-    var(--turn-action-bg);
-  color: var(--color-white);
-  cursor: pointer;
-  display: flex;
-  gap: var(--spacing-2);
-  justify-content: center;
-  min-block-size: 72px;
-  min-inline-size: 0;
-  padding-block: var(--spacing-3);
-  padding-inline: var(--spacing-3);
-  position: relative;
   transition:
     background-color 160ms ease,
     flex-grow 220ms cubic-bezier(0.34, 1.56, 0.64, 1),
@@ -57,21 +23,8 @@
   z-index: 2;
 }
 
-.turn-action-cluster__button:disabled {
-  background: var(--color-gray-600);
-  color: var(--color-gray-200);
-  cursor: not-allowed;
-}
-
 .turn-action-cluster__icon {
-  align-items: center;
   background: rgb(255 255 255 / 0.18);
-  border-radius: 999px;
-  display: inline-flex;
-  flex: 0 0 auto;
-  inline-size: 2.4rem;
-  justify-content: center;
-  padding: var(--spacing-2);
 }
 
 .turn-action-cluster__icon img {
@@ -85,33 +38,11 @@
 
 .turn-action-cluster__label {
   font: var(--font-title-2);
-  min-inline-size: 0;
-  overflow-wrap: anywhere;
-  text-align: center;
 }
 
-@media (min-width: 900px) {
-  .turn-action-cluster {
-    display: flex;
-  }
-
-  .turn-action-cluster__button {
-    flex: 1 1 0;
-  }
-
+@media (min-width: 80rem) {
   .turn-action-cluster__button:not(:disabled):hover {
     flex-grow: 1.3;
-  }
-}
-
-@media (max-width: 899px) {
-  .turn-action-cluster {
-    border-radius: var(--radius-lg, 0.75rem);
-    grid-template-columns: 1fr;
-  }
-
-  .turn-action-cluster__button {
-    min-block-size: 56px;
   }
 }
 

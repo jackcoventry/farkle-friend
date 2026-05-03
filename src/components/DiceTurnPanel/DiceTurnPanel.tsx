@@ -203,15 +203,21 @@ export function DiceTurnPanel({
 
       {state.settings.showComboSuggestions && currentCombos.length > 0 ? (
         <section
-          className="dice-turn-table__coach-panel bg-white/90 text-gray-900"
+          className="dice-turn-table__coach-panel bg-gray-600 border border-white rounded-2xl px-7 py-4 text-white"
           aria-label="Scoring combinations"
         >
           <p className="font-body-1">Possible scoring dice</p>
           <ul className="mt-2 grid gap-1 text-sm">
             {currentCombos.slice(0, 5).map((combo, index) => (
-              <li key={index}>
-                [{combo.dice.toSorted((a, b) => b - a).join(", ")}] →{" "}
-                {combo.score} pts
+              <li key={index} className="grid w-full grid-cols-2">
+                <span className="flex gap-1">
+                  {combo.dice.map((e) => (
+                    <DiceIcon key={e} count={e} className="w-6" />
+                  ))}
+                </span>
+                <span className="text-right text-pink-200">
+                  {combo.score} pts
+                </span>
               </li>
             ))}
           </ul>
@@ -222,8 +228,8 @@ export function DiceTurnPanel({
 
   return (
     <div className="turn-frame | grid gap-3 h-full w-full">
-      <div className="xl:grid-cols-[minmax(0,1fr)_minmax(240px,320px)] grid-cols-[1fr] grid gap-4">
-        <div className="grid-rows-[minmax(0,1fr)_auto] grid gap-3 h-[calc(50dvh-var(--spacing-7))] xl:h-[calc(100dvh-var(--spacing-7))]">
+      <div className="xl:grid-cols-[minmax(0,1fr)_minmax(240px,320px)] grid-cols-[1fr] grid gap-4 content-start">
+        <div className="grid-rows-[minmax(0,1fr)_auto] grid gap-3 sm:h-[calc(50dvh-var(--spacing-7))] xl:h-[calc(100dvh-var(--spacing-7))]">
           <div className="dice-turn-table | border-2 border-pink-100 overflow-hidden rounded-4xl">
             <div className="items-center h-full flex justify-center overflow-hidden">
               {isFarkled ? (
@@ -314,7 +320,7 @@ export function DiceTurnPanel({
         </div>
 
         <aside
-          className="dice-turn-rail | -order-1 xl:order-2 content-start grid gap-3 overflow-auto"
+          className="dice-turn-rail | -order-1 xl:order-2 content-start grid gap-3 overflow-auto xl:h-[calc(100dvh-var(--spacing-7))]"
           aria-label="Turn information"
         >
           {statusSlot}
@@ -341,7 +347,9 @@ export function DiceTurnPanel({
             <Modal.Body>
               <div className="dice-turn-coach-modal">
                 <Modal.CloseButton ariaLabel="Close turn information" />
-                <div className="dice-turn-table__coach">{coachContent}</div>
+                <div className="dice-turn-table__coach | flex flex-col gap-4">
+                  {coachContent}
+                </div>
               </div>
             </Modal.Body>
           </Modal>

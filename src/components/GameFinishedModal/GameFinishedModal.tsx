@@ -1,10 +1,6 @@
 import { AvatarImage } from "@/components/AvatarImage/AvatarImage";
 import Button from "@/components/Button/Button";
-import {
-  AvatarId,
-  avatarSet,
-} from "@/components/Form/AddPlayer/AddPlayer";
-import { GamePreferences } from "@/components/GamePreferences/GamePreferences";
+import { AvatarId, avatarSet } from "@/components/Form/AddPlayer/AddPlayer";
 import Modal from "@/components/Modal/Modal";
 import Splash from "@/components/Modal/Splash";
 import { playGameSound } from "@/domain/game/gameAudio";
@@ -31,7 +27,7 @@ export function GameFinishedModal({
 }: Readonly<GameFinishedModalProps>) {
   const avatar = avatarSet[winner?.avatar as AvatarId];
   const standings = [...players].sort(
-    (a, b) => (b.totalScore ?? 0) - (a.totalScore ?? 0)
+    (a, b) => (b.totalScore ?? 0) - (a.totalScore ?? 0),
   );
   const biggestTurn = turns.reduce<Turn | null>((biggest, turn) => {
     if (!biggest || turn.score > biggest.score) return turn;
@@ -43,7 +39,8 @@ export function GameFinishedModal({
   const winnerScore = standings[0]?.totalScore ?? 0;
   const runnerUpScore = standings[1]?.totalScore ?? 0;
   const totalPoints = turns.reduce((total, turn) => total + turn.score, 0);
-  const averageTurn = turns.length > 0 ? Math.round(totalPoints / turns.length) : 0;
+  const averageTurn =
+    turns.length > 0 ? Math.round(totalPoints / turns.length) : 0;
   const farkles = turns.filter((turn) => turn.score === 0).length;
 
   useEffect(() => {
@@ -57,7 +54,7 @@ export function GameFinishedModal({
           title={winner ? `${winner.username} wins!` : "Game finished"}
           image={
             <figure
-              className={`splash-avatar-crown relative rounded-full w-[128px] h-[128px] mx-auto my-2 p-4 flex items-center justify-center ${avatar?.color ?? "bg-gray-500"}`}
+              className={`splash-avatar-crown relative rounded-full w-32 h-32 mx-auto my-2 p-4 flex items-center justify-center ${avatar?.color ?? "bg-gray-500"}`}
             >
               {avatar ? (
                 <AvatarImage
@@ -75,7 +72,7 @@ export function GameFinishedModal({
               className="grid max-h-[30dvh] gap-3 overflow-auto pr-1 text-left"
               tabIndex={0}
             >
-              <section className="rounded-lg bg-gray-100 p-4">
+              <section className="rounded-lg bg-gray-600 p-4">
                 <h3 className="font-heading-2 mb-2 text-center">
                   Final standings
                 </h3>
@@ -88,29 +85,31 @@ export function GameFinishedModal({
                       <span className="truncate">
                         {index + 1}. {player.username}
                       </span>
-                      <span className="shrink-0 text-red-700">
+                      <span className="shrink-0 text-pink-200">
                         {formatScore(player.totalScore ?? 0)}
                       </span>
                     </li>
                   ))}
                 </ol>
               </section>
-              <section className="rounded-lg bg-gray-100 p-4">
+              <section className="rounded-lg bg-gray-600 p-4">
                 <h3 className="font-heading-2 mb-2 text-center">Game recap</h3>
                 <dl className="grid grid-cols-2 gap-3 text-sm sm:text-base">
                   <div>
-                    <dt className="text-gray-700">Winning margin</dt>
-                    <dd className="font-body-1 text-red-700">
+                    <dt className="text-white">Winning margin</dt>
+                    <dd className="font-body-1 text-pink-200">
                       {formatScore(Math.max(0, winnerScore - runnerUpScore))}
                     </dd>
                   </div>
                   <div>
-                    <dt className="text-gray-700">Turns played</dt>
-                    <dd className="font-body-1 text-red-700">{turns.length}</dd>
+                    <dt className="text-white">Turns played</dt>
+                    <dd className="font-body-1 text-pink-200">
+                      {turns.length}
+                    </dd>
                   </div>
                   <div>
-                    <dt className="text-gray-700">Biggest turn</dt>
-                    <dd className="font-body-1 text-red-700">
+                    <dt className="text-white">Biggest turn</dt>
+                    <dd className="font-body-1 text-pink-200">
                       {biggestTurn
                         ? `${formatScore(biggestTurn.score)} by ${
                             biggestTurnPlayer?.username ?? "Unknown"
@@ -119,14 +118,14 @@ export function GameFinishedModal({
                     </dd>
                   </div>
                   <div>
-                    <dt className="text-gray-700">Average turn</dt>
-                    <dd className="font-body-1 text-red-700">
+                    <dt className="text-white">Average turn</dt>
+                    <dd className="font-body-1 text-pink-200">
                       {formatScore(averageTurn)}
                     </dd>
                   </div>
                   <div>
-                    <dt className="text-gray-700">Farkles</dt>
-                    <dd className="font-body-1 text-red-700">{farkles}</dd>
+                    <dt className="text-white">Farkles</dt>
+                    <dd className="font-body-1 text-pink-200">{farkles}</dd>
                   </div>
                 </dl>
               </section>
@@ -138,7 +137,6 @@ export function GameFinishedModal({
           <Button onClick={onResetPlayers} className="justify-center">
             New players
           </Button>
-          <GamePreferences className="flex justify-center" />
         </Splash>
       </Modal.Body>
     </Modal>

@@ -45,7 +45,7 @@ export default function GameShell({ children }: Readonly<RootProps>) {
 
   return (
     <main
-      className="game-shell | h-dvh min-h-dvh grid grid-cols-1 grid-rows-[auto_minmax(0,1fr)] xl:grid-cols-[400px_1fr] xl:grid-rows-1"
+      className="game-shell | h-dvh min-h-dvh grid grid-cols-1 grid-rows-[1fr_auto] xl:grid-cols-[400px_1fr] xl:grid-rows-1"
       data-sidebar-open={isSidebarOpen ? "true" : "false"}
     >
       <h1 className="sr-only">Farkle Friend</h1>
@@ -91,7 +91,11 @@ GameShell.SidebarFooter = function SidebarFooter({ children }: SlotProps) {
 };
 
 GameShell.MobileToolbar = function MobileToolbar({ children }: SlotProps) {
-  return <nav className="xl:hidden">{children}</nav>;
+  return (
+    <nav className="bg-gray-900 xl:hidden p-2 flex justify-between">
+      {children}
+    </nav>
+  );
 };
 
 GameShell.Body = function Body({ children }: SlotProps) {
