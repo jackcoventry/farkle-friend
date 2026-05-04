@@ -3,19 +3,13 @@ import type { Metadata } from "next";
 import { Providers } from "./providers";
 import "@/styles/globals.css";
 
-const dynaPuff = localFont({
-  src: "./fonts/dynapuff-400.ttf",
-  variable: "--font-dynapuff",
+const Nunito = localFont({
+  src: "./fonts/Nunito-Medium.woff2",
+  variable: "--font-nunito",
 });
 
-const kirangHaerang = localFont({
-  src: "./fonts/kirang-haerang-400.ttf",
-  weight: "400",
-  variable: "--font-kirang-haerang",
-});
-
-const outfit = localFont({
-  src: "./fonts/outfit-400.ttf",
+const Outfit = localFont({
+  src: "./fonts/Outfit-Regular.woff2",
   variable: "--font-outfit",
 });
 
@@ -45,10 +39,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${dynaPuff.variable} ${kirangHaerang.variable} ${outfit.variable}`}
-    >
+    <html lang="en" className={`${Nunito.variable} ${Outfit.variable}`}>
       <body>
         <Providers>{children}</Providers>
       </body>

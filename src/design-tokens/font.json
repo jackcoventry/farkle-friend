@@ -4,7 +4,7 @@
       "1": {
         "$type": "fontFamily",
         "$value": [
-          "DynaPuff",
+          "Nunito",
           "system-ui",
           "-apple-system",
           "Segoe UI",
@@ -17,18 +17,6 @@
         "$type": "fontFamily",
         "$value": [
           "Outfit",
-          "system-ui",
-          "-apple-system",
-          "Segoe UI",
-          "Helvetica Neue",
-          "Arial",
-          "sans-serif"
-        ]
-      },
-      "3": {
-        "$type": "fontFamily",
-        "$value": [
-          "Kirang Haerang",
           "system-ui",
           "-apple-system",
           "Segoe UI",
@@ -133,7 +121,7 @@
       },
       "3": {
         "$value": {
-          "fontFamily": "{font.family.3}",
+          "fontFamily": "{font.family.1}",
           "fontWeight": "{font.weight.1}",
           "fontSize": "{font.size.5}",
           "lineHeight": "{font.line-height.1}"
@@ -144,7 +132,7 @@
       },
       "mega": {
         "$value": {
-          "fontFamily": "{font.family.3}",
+          "fontFamily": "{font.family.1}",
           "fontWeight": "{font.weight.1}",
           "fontSize": "{font.size.clamp}",
           "lineHeight": "{font.line-height.4}"
