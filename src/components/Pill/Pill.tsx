@@ -32,7 +32,12 @@ export default function Pill({ children, className }: Readonly<PillProps>) {
   });
 
   return (
-    <span className={mergeClassNames("pill", className)}>
+    <span
+      className={mergeClassNames(
+        "pill | inline-flex min-w-0 relative",
+        className,
+      )}
+    >
       {control}
       {label}
     </span>
@@ -59,10 +64,16 @@ Pill.Label = function PillLabel({
   return (
     <label
       htmlFor={htmlFor}
-      className={mergeClassNames("pill-box", className)}
+      className={mergeClassNames(
+        "pill-box | items-center border-2 border-purple-500 rounded-full text-black bg-white cursor-pointer inline-grid gap-2 px-4 py-2 hover:translate-y-px",
+        className,
+      )}
     >
-      <span className="pill-box__indicator" aria-hidden="true" />
-      <span className="pill-box__label">{children}</span>
+      <span
+        className="pill-box__indicator | items-center size-4 border-2 border-inherit rounded-full inline-flex justify-center"
+        aria-hidden="true"
+      />
+      <span className="pill-box__label | min-w-0">{children}</span>
     </label>
   );
 };

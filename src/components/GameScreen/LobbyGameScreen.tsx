@@ -8,7 +8,6 @@ import AddPlayerForm, {
 import Settings, {
   type SettingsFormSchemaType,
 } from "@/components/Form/Settings/Settings";
-import { GamePreferences } from "@/components/GamePreferences/GamePreferences";
 import { GameSetupSummary } from "@/components/GameSetupSummary/GameSetupSummary";
 import GameShell from "@/components/GameShell/GameShell";
 import PlayerList from "@/components/PlayerList/PlayerList";
@@ -16,6 +15,7 @@ import { canStartGame } from "@/domain/game/gameLogic";
 import type { GameState } from "@/domain/game/gameTypes";
 import { formatScore } from "@/utils/formatScore";
 import type { KeyboardEvent, RefObject } from "react";
+import { Panel } from "@/components/Panel/Panel";
 
 type LobbyScreen = "players" | "settings";
 
@@ -78,13 +78,13 @@ export function LobbyGameScreen({
               />
             </div>
           ) : (
-            <section className="my-6 rounded-3xl bg-gray-700 border border-gray-200 text-white p-4">
+            <Panel className="my-6">
               <h2 className="font-heading-2">No players yet</h2>
               <p className="mt-1 text-gray-300">
                 Add at least two players, then start the game from the setup
                 panel.
               </p>
-            </section>
+            </Panel>
           )}
           <GameSetupSummary
             preferences={state.preferences}
@@ -97,7 +97,12 @@ export function LobbyGameScreen({
         </GameShell.SidebarFooter>
       </GameShell.Sidebar>
       <GameShell.Body>
-        <div className="mx-auto flex h-full w-full max-w-[520px] flex-col justify-start gap-4 overflow-auto py-4">
+        <div className="mx-auto flex h-full w-full max-w-[520px] flex-col justify-start gap-6 overflow-auto p-4">
+          <Panel className="lobby-start-panel | grid gap-5">
+            <h2 className="font-heading-2 text-white">Ready?</h2>
+            {/* <p className="text-gray-300">{startPanelMessage}</p> */}
+            {startGameButton}
+          </Panel>
           <div
             className="grid grid-cols-2 gap-2"
             role="tablist"
@@ -118,6 +123,9 @@ export function LobbyGameScreen({
               icon="person-circle"
             >
               Players
+              {state.players.length ? (
+                <span className="ml-2">({state.players.length})</span>
+              ) : null}
             </Button>
             <Button
               ref={settingsTabRef}
@@ -154,12 +162,6 @@ export function LobbyGameScreen({
               <Settings onSubmit={onSettingsSubmit} />
             </div>
           )}
-
-          <section className="lobby-start-panel grid gap-5 border-pink-500 border p-6 rounded-4xl bg-gray-800">
-            <h2 className="font-heading-2 text-white">Ready?</h2>
-            {/* <p className="text-gray-300">{startPanelMessage}</p> */}
-            {startGameButton}
-          </section>
         </div>
       </GameShell.Body>
     </GameShell>

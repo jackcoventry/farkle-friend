@@ -1,6 +1,7 @@
 import type { GamePreferences, GameSettings } from "@/domain/game/gameTypes";
 import { formatScore } from "@/utils/formatScore";
-import Button from "../Button/Button";
+import Button from "@/components/Button/Button";
+import { Panel } from "@/components/Panel/Panel";
 
 type GameSetupSummaryProps = {
   onEditSettings?: () => void;
@@ -17,7 +18,7 @@ export function GameSetupSummary({
     settings.mode === "dice" ? "Dice rolling" : "Manual scoring";
 
   return (
-    <section className="rounded-3xl bg-gray-700 border border-gray-200 text-white p-4">
+    <Panel>
       <h3 className="font-heading-2 mb-2">Game setup</h3>
       <dl className="grid gap-2">
         <div className="flex justify-between gap-3">
@@ -60,6 +61,6 @@ export function GameSetupSummary({
           Edit settings
         </Button>
       ) : null}
-    </section>
+    </Panel>
   );
 }

@@ -13,6 +13,7 @@ import { getDiceTurnCopy } from "@/domain/game/diceTurnPresenter";
 import { useCallback, useEffect } from "react";
 import "./DiceTurnPanel.css";
 import { GameScreenSidebar } from "../GameScreen/ActiveGameScreen";
+import { Panel } from "../Panel/Panel";
 
 type DiceTurnPanelProps = {
   state: GameState;
@@ -166,8 +167,8 @@ export function DiceTurnPanel({
     showTurnCoachAndSidebar && showActionHint ? "dice-action-hint" : undefined;
   const coachContent = (
     <>
-      <section
-        className={`dice-turn-table__coach-panel | rounded-4xl bg-gray-700 px-7 py-3 text-white border border-grey-200`}
+      <Panel
+        className="dice-turn-table__coach-panel | gap-4 flex flex-wrap"
         aria-label="Turn status"
         aria-live="polite"
         role="status"
@@ -183,7 +184,7 @@ export function DiceTurnPanel({
           </div>
         ) : null}
         {dice.selectedBreakdown.length > 0 ? (
-          <ul className="flex flex-wrap gap-2 text-sm">
+          <ul className="flex flex-wrap gap-4 text-sm">
             {dice.selectedBreakdown.map((item) => (
               <li
                 key={`${item.label}-${item.score}`}
@@ -199,11 +200,11 @@ export function DiceTurnPanel({
             {actionHint}
           </p>
         ) : null}
-      </section>
+      </Panel>
 
       {state.settings.showComboSuggestions && currentCombos.length > 0 ? (
-        <section
-          className="dice-turn-table__coach-panel bg-gray-600 border border-white rounded-2xl px-7 py-4 text-white"
+        <Panel
+          className="dice-turn-table__coach-panel"
           aria-label="Scoring combinations"
         >
           <p className="font-body-1">Possible scoring dice</p>
@@ -221,7 +222,7 @@ export function DiceTurnPanel({
               </li>
             ))}
           </ul>
-        </section>
+        </Panel>
       ) : null}
     </>
   );
@@ -230,7 +231,7 @@ export function DiceTurnPanel({
     <div className="turn-frame | grid gap-3 h-full w-full">
       <div className="xl:grid-cols-[minmax(0,1fr)_minmax(240px,320px)] grid-cols-[1fr] grid gap-4 content-start">
         <div className="grid-rows-[minmax(0,1fr)_auto] grid gap-3 sm:h-[calc(50dvh-var(--spacing-7))] xl:h-[calc(100dvh-var(--spacing-7))]">
-          <div className="dice-turn-table | border-2 border-pink-100 overflow-hidden rounded-4xl">
+          <Panel className="dice-turn-table">
             <div className="items-center h-full flex justify-center overflow-hidden">
               {isFarkled ? (
                 <div
@@ -287,7 +288,7 @@ export function DiceTurnPanel({
                 />
               ) : null}
             </div>
-          </div>
+          </Panel>
 
           <TurnActionCluster
             actions={[

@@ -1,6 +1,7 @@
 "use client";
 
 import Button from "@/components/Button/Button";
+import { Panel } from "@/components/Panel/Panel";
 import Pill from "@/components/Pill/Pill";
 import { useGame } from "@/domain/game/GameProvider";
 import { DiceStyle, GameMode } from "@/domain/game/gameTypes";
@@ -36,18 +37,6 @@ export type SettingsFormResult = {
 type SettingsFormProps = {
   onSubmit: SubmitHandler<SettingsFormSchemaType>;
 };
-
-type SettingWrapperProps = {
-  children: React.ReactNode;
-};
-
-function SettingWrapper({ children }: Readonly<SettingWrapperProps>) {
-  return (
-    <div className="border-pink-300 border p-6 rounded-2xl bg-gray-700 text-white flex flex-col gap-2">
-      {children}
-    </div>
-  );
-}
 
 function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
   const { state } = useGame();
@@ -95,9 +84,9 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
           control={control}
           name="autoAdvanceTurns"
           render={({ field }) => (
-            <fieldset className="grid gap-3">
-              <SettingWrapper>
-                <legend>Turn hand-off</legend>
+            <Panel>
+              <fieldset className="grid gap-3">
+                <legend className="contents">Turn hand-off</legend>
                 <div className="flex gap-4">
                   <Pill>
                     <Pill.Control>
@@ -127,8 +116,8 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
                     </Pill.Label>
                   </Pill>
                 </div>
-              </SettingWrapper>
-            </fieldset>
+              </fieldset>
+            </Panel>
           )}
         />
 
@@ -136,10 +125,12 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
           name="diceStyle"
           control={control}
           render={({ field, fieldState }) => (
-            <fieldset aria-invalid={!!fieldState.error || undefined}>
-              <SettingWrapper>
-                <legend>Dice Style</legend>
-
+            <Panel>
+              <fieldset
+                className="grid gap-3"
+                aria-invalid={!!fieldState.error || undefined}
+              >
+                <legend className="contents">Dice Style</legend>
                 <div className="flex gap-4">
                   {diceStyles.map((option) => {
                     const id = `${option}_${field.name}`;
@@ -162,8 +153,8 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
                     );
                   })}
                 </div>
-              </SettingWrapper>
-            </fieldset>
+              </fieldset>
+            </Panel>
           )}
         />
 
@@ -171,9 +162,12 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
           name="mode"
           control={control}
           render={({ field, fieldState }) => (
-            <fieldset aria-invalid={!!fieldState.error || undefined}>
-              <SettingWrapper>
-                <legend>Mode</legend>
+            <Panel>
+              <fieldset
+                className="grid gap-3"
+                aria-invalid={!!fieldState.error || undefined}
+              >
+                <legend className="contents">Mode</legend>
 
                 <div className="gap-4 flex">
                   {modes.map((option) => {
@@ -198,8 +192,8 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
                     );
                   })}
                 </div>
-              </SettingWrapper>
-            </fieldset>
+              </fieldset>
+            </Panel>
           )}
         />
 
@@ -207,7 +201,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
           name="targetScore"
           control={control}
           render={({ field, fieldState }) => (
-            <SettingWrapper>
+            <Panel>
               <div className="grid gap-3">
                 <label htmlFor="target-score">Point target</label>
                 <input
@@ -254,7 +248,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
                   </p>
                 ) : null}
               </div>
-            </SettingWrapper>
+            </Panel>
           )}
         />
 
@@ -262,9 +256,9 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
           control={control}
           name="showComboSuggestions"
           render={({ field }) => (
-            <fieldset className="grid gap-3">
-              <SettingWrapper>
-                <legend>Show combo suggestions</legend>
+            <Panel>
+              <fieldset className="grid gap-3">
+                <legend className="contents">Show combo suggestions</legend>
                 <div className="flex gap-4">
                   <Pill>
                     <Pill.Control>
@@ -292,8 +286,8 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
                     <Pill.Label htmlFor="showCombo_no">No</Pill.Label>
                   </Pill>
                 </div>
-              </SettingWrapper>
-            </fieldset>
+              </fieldset>
+            </Panel>
           )}
         />
 
@@ -301,9 +295,9 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
           control={control}
           name="tableFeedback"
           render={({ field }) => (
-            <fieldset className="grid gap-3">
-              <SettingWrapper>
-                <legend>Sound & haptics</legend>
+            <Panel>
+              <fieldset className="grid gap-3">
+                <legend className="contents">Sound & haptics</legend>
                 <p className="text-sm">
                   Adds restrained roll, bank, and Farkle feedback when your
                   browser allows it.
@@ -335,8 +329,8 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
                     <Pill.Label htmlFor="tableFeedback_no">Off</Pill.Label>
                   </Pill>
                 </div>
-              </SettingWrapper>
-            </fieldset>
+              </fieldset>
+            </Panel>
           )}
         />
 
@@ -344,9 +338,9 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
           control={control}
           name="motionEnabled"
           render={({ field }) => (
-            <fieldset className="grid gap-3">
-              <SettingWrapper>
-                <legend>Animations</legend>
+            <Panel>
+              <fieldset className="grid gap-3">
+                <legend className="contents">Animations</legend>
                 <div className="flex gap-4">
                   <Pill>
                     <Pill.Control>
@@ -374,8 +368,8 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
                     <Pill.Label htmlFor="motionEnabled_no">Off</Pill.Label>
                   </Pill>
                 </div>
-              </SettingWrapper>
-            </fieldset>
+              </fieldset>
+            </Panel>
           )}
         />
 

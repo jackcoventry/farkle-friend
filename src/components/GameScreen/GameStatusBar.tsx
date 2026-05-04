@@ -3,6 +3,7 @@
 import type { DiceTurnMetrics } from "@/components/DiceTurnPanel/DiceTurnPanel";
 import type { GameFlowState, GameState, Player } from "@/domain/game/gameTypes";
 import { formatScore } from "@/utils/formatScore";
+import { Panel } from "../Panel/Panel";
 
 type GameStatusBarProps = {
   currentPlayer: Player;
@@ -18,8 +19,8 @@ export function GameStatusBar({
   state,
 }: Readonly<GameStatusBarProps>) {
   return (
-    <section className="flex flex-wrap items-center gap-3 rounded-4xl bg-gray-700 px-7 py-3 text-white border border-grey-200">
-      <div>
+    <Panel>
+      <div className="mb-4">
         <p className="text-sm text-white">
           {flowState === "TURN_RESULT" ? "Turn complete" : "Now playing"}
         </p>
@@ -67,6 +68,6 @@ export function GameStatusBar({
           </div>
         ) : null}
       </dl>
-    </section>
+    </Panel>
   );
 }

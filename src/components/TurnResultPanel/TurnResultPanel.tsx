@@ -4,6 +4,7 @@ import Button from "@/components/Button/Button";
 import type { Player, TurnResult } from "@/domain/game/gameTypes";
 import { formatScore } from "@/utils/formatScore";
 import { useEffect, useId, useRef, useState } from "react";
+import { Panel } from "../Panel/Panel";
 
 const AUTO_ADVANCE_SECONDS = 3;
 
@@ -70,11 +71,11 @@ export function TurnResultPanel({
   };
 
   return (
-    <section
+    <Panel
       ref={panelRef}
       aria-labelledby={titleId}
       aria-live="polite"
-      className="m-auto flex w-full max-w-[560px] flex-col gap-5 rounded-lg bg-gray-700 border border-gray-200 p-6 text-white text-center shadow-lg outline-none focus-visible:ring-4 focus-visible:ring-red-300"
+      className="m-auto flex w-full max-w-[560px] flex-col text-center gap-6 p-8"
       onKeyDown={handleKeyDown}
       tabIndex={-1}
     >
@@ -117,6 +118,6 @@ export function TurnResultPanel({
       <Button onClick={onAdvanceTurn} className="justify-center" size="large">
         {actionText}
       </Button>
-    </section>
+    </Panel>
   );
 }

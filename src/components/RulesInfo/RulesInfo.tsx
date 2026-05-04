@@ -1,5 +1,6 @@
 import DiceIcon from "@/components/DiceIcon/DiceIcon";
 import { scoringRuleExamples } from "@/domain/game/scoringRules";
+import { Panel } from "../Panel/Panel";
 
 type RulesInfoRowProps = {
   dice?: Array<1 | 2 | 3 | 4 | 5 | 6>;
@@ -38,16 +39,16 @@ function RulesInfoSection({
   children,
 }: Readonly<RulesInfoSectionProps>) {
   return (
-    <section className="gap-2 flex flex-col rounded-lg bg-sun-50 p-4">
+    <Panel className="gap-2 flex flex-col">
       {title ? <h2 className="font-heading-2">{title}</h2> : null}
       {children}
-    </section>
+    </Panel>
   );
 }
 
 function RulesInfo() {
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-8 bg-gray-800 text-white p-4">
       <h1 className="font-heading text-center">Rules & scoring</h1>
       <div className="grid gap-5 md:grid-cols-2">
         <div className="flex flex-col gap-5">
@@ -104,12 +105,14 @@ function RulesInfo() {
           </li>
         </ul>
       </RulesInfoSection>
-      <details className="dice-turn-table__coach-panel bg-white/80 text-sm text-gray-800">
-        <summary className="cursor-pointer font-body-1">
-          Keyboard shortcuts
-        </summary>
-        <p className="mt-2">1-6 select dice, R roll, B bank, Enter end.</p>
-      </details>
+      <Panel>
+        <details className="dice-turn-table__coach-panel">
+          <summary className="cursor-pointer font-body-1">
+            Keyboard shortcuts
+          </summary>
+          <p className="mt-2">1-6 select dice, R roll, B bank, Enter end.</p>
+        </details>
+      </Panel>
     </div>
   );
 }

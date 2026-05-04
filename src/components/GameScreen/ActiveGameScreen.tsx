@@ -26,6 +26,7 @@ import type {
 import type { Dispatch, SetStateAction } from "react";
 import { useState } from "react";
 import Button from "@/components/Button/Button";
+import { Panel } from "@/components/Panel/Panel";
 
 type ActiveGameScreenProps = {
   avatar: (typeof avatarSet)[AvatarId] | undefined;
@@ -53,36 +54,37 @@ export function GameScreenSidebar({
   return (
     <GameShell.Sidebar isDesktop={isDesktop}>
       <GameShell.SidebarMain>
-        <details
-          className="my-4 rounded-2xl bg-gray-600 border border-pink-200 p-4"
-          open
-        >
-          <summary className="cursor-pointer font-heading-2 text-white">
-            Scoreboard
-          </summary>
-          <div className="mt-3">
-            <PlayerList
-              players={summary.players}
-              activePlayerId={currentPlayer?.id}
-              leadingPlayerId={summary.leadingPlayerId}
-              targetScore={state.settings.targetScore}
-            />
-          </div>
-        </details>
+        <Panel>
+          <details open>
+            <summary className="cursor-pointer font-heading-2 text-white">
+              Scoreboard
+            </summary>
+            <div className="mt-3">
+              <PlayerList
+                players={summary.players}
+                activePlayerId={currentPlayer?.id}
+                leadingPlayerId={summary.leadingPlayerId}
+                targetScore={state.settings.targetScore}
+              />
+            </div>
+          </details>
+        </Panel>
 
-        <details className="my-4 rounded-2xl bg-gray-600 border border-pink-200 p-4">
-          <summary className="cursor-pointer font-heading-2 text-white">
-            Turn log
-          </summary>
-          <div className="mt-3">
-            <TurnHistory
-              leadingPlayerId={summary.leadingPlayerId}
-              players={summary.players}
-              targetScore={state.settings.targetScore}
-              turns={state.turns}
-            />
-          </div>
-        </details>
+        <Panel>
+          <details>
+            <summary className="cursor-pointer font-heading-2 text-white">
+              Turn log
+            </summary>
+            <div className="mt-3">
+              <TurnHistory
+                leadingPlayerId={summary.leadingPlayerId}
+                players={summary.players}
+                targetScore={state.settings.targetScore}
+                turns={state.turns}
+              />
+            </div>
+          </details>
+        </Panel>
       </GameShell.SidebarMain>
 
       <GameShell.SidebarFooter>
@@ -140,15 +142,6 @@ export function ActiveGameScreen({
           {isActiveDiceTurn ? null : statusBar}
 
           <div className="min-h-0 flex-1 flex">
-            {/* {currentPlayer && avatar && !state.pendingTurnResult ? (
-              <PlayerSwitchSplash
-                key={`${currentPlayer.id}-${state.currentPlayerIndex}`}
-                currentPlayer={currentPlayer}
-                avatar={avatar}
-                soundEnabled={state.preferences.tableFeedback}
-              />
-            ) : null} */}
-
             {currentPlayer ? (
               flowState === "TURN_RESULT" && state.pendingTurnResult ? (
                 <TurnResultPanel

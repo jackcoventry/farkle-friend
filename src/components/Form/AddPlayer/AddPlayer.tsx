@@ -2,6 +2,7 @@
 
 import { AvatarImage } from "@/components/AvatarImage/AvatarImage";
 import Button from "@/components/Button/Button";
+import { Panel } from "@/components/Panel/Panel";
 import { useGame } from "@/domain/game/GameProvider";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
@@ -109,11 +110,12 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
   };
 
   return (
-    <div className="form-wrapper | border-pink-500 border p-6 rounded-4xl bg-gray-800 self-center">
+    <Panel className="form-wrapper | self-center">
       <form
         className="form | gap-6 flex flex-col"
         onSubmit={handleSubmit(submitHandler)}
       >
+        <h2>Add Player</h2>
         {!maxPlayersReached && (
           <>
             <Controller
@@ -205,7 +207,7 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
           </>
         )}
       </form>
-    </div>
+    </Panel>
   );
 }
 
