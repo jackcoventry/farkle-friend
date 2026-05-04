@@ -75,7 +75,7 @@ export function TurnResultPanel({
       ref={panelRef}
       aria-labelledby={titleId}
       aria-live="polite"
-      className="m-auto flex w-full max-w-[560px] flex-col text-center gap-6 p-8"
+      className="m-auto flex w-full max-w-[560px] flex-col text-center gap-4 p-6"
       onKeyDown={handleKeyDown}
       tabIndex={-1}
     >

@@ -71,14 +71,12 @@ export function LobbyGameScreen({
       <GameShell.Sidebar>
         <GameShell.SidebarMain>
           {state.players.length > 0 ? (
-            <div className="my-6">
-              <PlayerList
-                players={state.players}
-                onRemovePlayer={onRemovePlayer}
-              />
-            </div>
+            <PlayerList
+              players={state.players}
+              onRemovePlayer={onRemovePlayer}
+            />
           ) : (
-            <Panel className="my-6">
+            <Panel>
               <h2 className="font-heading-2">No players yet</h2>
               <p className="mt-1 text-gray-300">
                 Add at least two players, then start the game from the setup

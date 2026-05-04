@@ -76,7 +76,7 @@ GameShell.Sidebar = function Header({
 
 GameShell.SidebarMain = function SidebarMain({ children }: SlotProps) {
   return (
-    <div className="game-shell__sidebar-main | pr-1 overflow-auto min-h-0 flex flex-col gap-3">
+    <div className="game-shell__sidebar-main | pr-1 overflow-auto min-h-0 flex flex-col gap-6">
       {children}
     </div>
   );
