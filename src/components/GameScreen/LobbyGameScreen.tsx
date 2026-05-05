@@ -98,7 +98,6 @@ export function LobbyGameScreen({
         <div className="mx-auto flex h-full w-full max-w-[520px] flex-col justify-start gap-6 overflow-auto p-4">
           <Panel className="lobby-start-panel | grid gap-5">
             <h2 className="font-heading-2 text-text">Ready?</h2>
-            <p className="text-text-muted">{startPanelMessage}</p>
             {startGameButton}
           </Panel>
           <div

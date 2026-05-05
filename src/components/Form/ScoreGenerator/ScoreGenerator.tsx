@@ -1,5 +1,5 @@
+import Button from "@/components/Button/Button";
 import DiceIcon from "@/components/DiceIcon/DiceIcon";
-import RichButton from "@/components/RichButton/RichButton";
 import { DieValue } from "@/domain/game/dice";
 import React from "react";
 
@@ -41,13 +41,9 @@ function ScoreGenerator({ onChange }: Readonly<ScoreGeneratorProps>) {
 
       <div className="mt-4 flex flex-col items-center gap-4">
         <p className="font-heading h-9">{selectedItems.toString()}</p>
-        <RichButton
-          icon="bank"
-          disabled={selectedItems.length === 0}
-          onClick={handleSubmit}
-        >
+        <Button disabled={selectedItems.length === 0} onClick={handleSubmit}>
           Save selection
-        </RichButton>
+        </Button>
       </div>
     </>
   );

@@ -64,9 +64,8 @@ function PlayerList({
                 </div>
                 <span className="block text-text-muted">
                   {totalScore} points
-                  {remainingScore === null ? null : ` - needs ${remainingScore}`}
                 </span>
-                {progress !== null ? (
+                {progress === null ? null : (
                   <div
                     className="mt-2 h-2 overflow-hidden rounded-full bg-surface"
                     aria-label={`${player.username} is ${progress}% of the way to the target score`}
@@ -80,7 +79,7 @@ function PlayerList({
                       style={{ width: `${progress}%` }}
                     />
                   </div>
-                ) : null}
+                )}
               </div>
               {onRemovePlayer ? (
                 <button
