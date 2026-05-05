@@ -9,6 +9,7 @@ import { GameActions } from "@/components/GameActions/GameActions";
 import { GameStatusBar } from "@/components/GameScreen/GameStatusBar";
 import GameShell from "@/components/GameShell/GameShell";
 import { ManualTurn } from "@/components/ManualTurn/ManualTurn";
+import Modal from "@/components/Modal/Modal";
 import PlayerList from "@/components/PlayerList/PlayerList";
 import { PlayerSwitchSplash } from "@/components/PlayerSwitchSplash/PlayerSwitchSplash";
 import { TurnHistory } from "@/components/TurnHistory/TurnHistory";
@@ -119,12 +120,17 @@ export function ActiveGameScreen({
   const [isTurnCoachOpen, setIsTurnCoachOpen] = useState(false);
   const [showSidebarModal, setShowSidebarModal] = useState(false);
   const currentAvatar =
-    avatar ?? (currentPlayer ? avatarSet[currentPlayer.avatar as AvatarId] : undefined);
+    avatar ??
+    (currentPlayer ? avatarSet[currentPlayer.avatar as AvatarId] : undefined);
   const showTurnInfoToggle =
     currentPlayer &&
     flowState === "TURN_ACTIVE" &&
-    state.settings.mode === "dice" &&
+    (state.settings.mode === "dice" || state.settings.mode === "manual") &&
     !state.pendingTurnResult;
+  const turnInfoModalId =
+    state.settings.mode === "manual"
+      ? "manual-turn-coach-modal"
+      : "dice-turn-coach-modal";
   const isActiveTurnLayout =
     currentPlayer &&
     flowState === "TURN_ACTIVE" &&
@@ -159,8 +165,31 @@ export function ActiveGameScreen({
         />
       ) : null}
 
+      <Modal
+        id="active-game-sidebar-modal"
+        isOpen={showSidebarModal}
+        onClose={() => setShowSidebarModal(false)}
+        ariaLabel="Game menu"
+      >
+        <Modal.Body className="game-menu-modal">
+          <div className="game-menu-modal__content | grid gap-3">
+            <div className="flex justify-end">
+              <Modal.CloseButton ariaLabel="Close game menu" />
+            </div>
+            <GameScreenSidebar
+              summary={summary}
+              currentPlayer={currentPlayer}
+              state={state}
+              onQuit={onQuit}
+              onRestart={onRestart}
+              isDesktop={false}
+            />
+          </div>
+        </Modal.Body>
+      </Modal>
+
       <GameShell.Body>
-        <div className="flex h-full min-h-0 flex-col gap-4">
+        <div className="flex h-full min-h-0 flex-col gap-2 lg:gap-4">
           {isActiveTurnLayout ? null : statusBar}
 
           <div className="min-h-0 flex-1 flex">
@@ -178,20 +207,17 @@ export function ActiveGameScreen({
                 <DiceTurnPanel
                   dispatch={dispatch}
                   isCoachOpenOnMobile={isTurnCoachOpen}
-                  isSidebarOpenOnMobile={showSidebarModal}
                   onCloseMobileCoach={() => setIsTurnCoachOpen(false)}
-                  onCloseMobileSidebar={() => setShowSidebarModal(false)}
                   onTurnMetricsChange={setDiceTurnMetrics}
                   statusSlot={statusBar}
                   state={state}
-                  sidebarSummary={summary}
-                  sidebarOnQuit={onQuit}
-                  sidebarOnRestart={onRestart}
                 />
               ) : (
                 <ManualTurn
                   state={state}
                   dispatch={dispatch}
+                  isCoachOpenOnMobile={isTurnCoachOpen}
+                  onCloseMobileCoach={() => setIsTurnCoachOpen(false)}
                   statusSlot={statusBar}
                 />
               )
@@ -202,30 +228,36 @@ export function ActiveGameScreen({
         </div>
       </GameShell.Body>
 
-      {showTurnInfoToggle ? (
-        <GameShell.MobileToolbar>
+      <GameShell.MobileToolbar>
+        <div
+          className={`grid w-full gap-2 ${
+            showTurnInfoToggle ? "grid-cols-2" : "grid-cols-1"
+          }`}
+        >
+          {showTurnInfoToggle ? (
+            <Button
+              aria-controls={turnInfoModalId}
+              aria-expanded={isTurnCoachOpen}
+              className="justify-center"
+              size="small"
+              onClick={() => setIsTurnCoachOpen((current) => !current)}
+              icon="arrow-left"
+            >
+              {isTurnCoachOpen ? "Hide turn info" : "Turn info"}
+            </Button>
+          ) : null}
           <Button
-            aria-controls="dice-turn-coach-modal"
-            aria-expanded={isTurnCoachOpen}
-            size="small"
-            onClick={() => setIsTurnCoachOpen((current) => !current)}
-            icon="arrow-left"
-            iconOnly
-          >
-            {isTurnCoachOpen ? "Hide turn info" : "Turn info"}
-          </Button>
-          <Button
-            aria-controls="dice-turn-sidebar-modal"
+            aria-controls="active-game-sidebar-modal"
             aria-expanded={showSidebarModal}
-            onClick={() => setShowSidebarModal((current) => !current)}
+            className="justify-center"
+            onClick={() => setShowSidebarModal(true)}
             size="small"
             icon="three-dots-vertical"
-            iconOnly
           >
-            {showSidebarModal ? "Hide sidebar" : "Show sidebar??"}
+            Game menu
           </Button>
-        </GameShell.MobileToolbar>
-      ) : null}
+        </div>
+      </GameShell.MobileToolbar>
     </GameShell>
   );
 }

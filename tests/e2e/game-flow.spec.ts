@@ -109,24 +109,140 @@ test("sound and animation preferences can be changed during a game", async ({
   await expect(page.getByLabel("Turn score")).toBeVisible();
 });
 
-test("mobile setup sidebar opens with a toggle", async ({ page }) => {
+test("mobile setup sidebar opens in a modal", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/game/");
 
-  const sidebar = page.locator(".game-shell__sidebar");
-  const closedBox = await sidebar.boundingBox();
-  expect(closedBox?.x).toBeLessThan(0);
+  await expect(page.getByRole("dialog", { name: "Game setup summary" })).toBeHidden();
 
-  await page.getByRole("button", { name: "Open sidebar" }).click();
-  await expect(
-    page.getByRole("button", { name: "Close sidebar" })
-  ).toBeVisible();
-  await expect(page.getByRole("button", { name: "Preferences" })).toBeVisible();
+  await page.getByRole("button", { name: "Setup summary" }).click();
+  const dialog = page.getByRole("dialog", { name: "Game setup summary" });
 
-  await expect
-    .poll(async () => {
-      const openBox = await sidebar.boundingBox();
-      return openBox?.x ?? -1;
-    })
-    .toBeGreaterThanOrEqual(0);
+  await expect(dialog).toBeVisible();
+  await expect(dialog.getByText("No players yet")).toBeVisible();
+  await dialog.getByRole("button", { name: "Close setup summary" }).click();
+  await expect(dialog).toBeHidden();
+});
+
+test("short mobile dice layout keeps dice inside a larger board", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 692 });
+  await page.addInitScript(() => {
+    const rolls = [0, 0.18, 0.36, 0.54, 0.72, 0.9];
+    let index = 0;
+    Math.random = () => {
+      const value = rolls[index % rolls.length];
+      index += 1;
+      return value;
+    };
+  });
+
+  await page.goto("/game/");
+  await addTwoPlayers(page);
+  await startGame(page);
+  await waitForTurnSplash(page, "Ada");
+  await page.getByRole("button", { name: "Roll dice" }).click();
+
+  const boardBox = await page.locator(".dice-turn-table").boundingBox();
+  expect(boardBox?.height).toBeGreaterThan(240);
+
+  const dice = await page.getByRole("button", { name: /Select die/ }).all();
+  for (const die of dice) {
+    const dieBox = await die.boundingBox();
+    expect(dieBox?.y).toBeGreaterThanOrEqual(boardBox!.y);
+    expect((dieBox!.y ?? 0) + (dieBox!.height ?? 0)).toBeLessThanOrEqual(
+      boardBox!.y + boardBox!.height,
+    );
+  }
+});
+
+test("short tablet dice layout keeps controls below the board", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 820, height: 550 });
+  await page.addInitScript(() => {
+    const rolls = [0, 0.18, 0.36, 0.54, 0.72, 0.9];
+    let index = 0;
+    Math.random = () => {
+      const value = rolls[index % rolls.length];
+      index += 1;
+      return value;
+    };
+  });
+
+  await page.goto("/game/");
+  await addTwoPlayers(page);
+  await startGame(page);
+  await waitForTurnSplash(page, "Ada");
+  await page.getByRole("button", { name: "Roll dice" }).click();
+
+  const boardBox = await page.locator(".dice-turn-table").boundingBox();
+  const controlsBox = await page.locator(".turn-action-cluster").boundingBox();
+  expect(boardBox?.height).toBeGreaterThanOrEqual(300);
+  expect(controlsBox?.height).toBeGreaterThanOrEqual(56);
+  expect(controlsBox?.y).toBeGreaterThanOrEqual(
+    (boardBox?.y ?? 0) + (boardBox?.height ?? 0),
+  );
+
+  const dice = await page.getByRole("button", { name: /Select die/ }).all();
+  for (const die of dice) {
+    const dieBox = await die.boundingBox();
+    expect(dieBox?.y).toBeGreaterThanOrEqual(boardBox!.y);
+    expect((dieBox!.y ?? 0) + (dieBox!.height ?? 0)).toBeLessThanOrEqual(
+      boardBox!.y + boardBox!.height,
+    );
+  }
+});
+
+test("mid-height tablet dice layout keeps full controls visible", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1200, height: 750 });
+  await page.addInitScript(() => {
+    const rolls = [0, 0.18, 0.36, 0.54, 0.72, 0.9];
+    let index = 0;
+    Math.random = () => {
+      const value = rolls[index % rolls.length];
+      index += 1;
+      return value;
+    };
+  });
+
+  await page.goto("/game/");
+  await addTwoPlayers(page);
+  await startGame(page);
+  await waitForTurnSplash(page, "Ada");
+  await page.getByRole("button", { name: "Roll dice" }).click();
+
+  const bodyBox = await page.locator(".game-shell__body").boundingBox();
+  const controlsBox = await page.locator(".turn-action-cluster").boundingBox();
+  const endTurnBox = await page
+    .getByRole("button", { name: "End turn" })
+    .boundingBox();
+
+  expect(controlsBox?.height).toBeGreaterThanOrEqual(56);
+  expect(endTurnBox?.height).toBeGreaterThanOrEqual(48);
+  expect((endTurnBox?.y ?? 0) + (endTurnBox?.height ?? 0)).toBeLessThanOrEqual(
+    (bodyBox?.y ?? 0) + (bodyBox?.height ?? 0),
+  );
+});
+
+test("active game menu modal fits within a short viewport", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 692 });
+  await page.goto("/game/");
+  await addTwoPlayers(page);
+  await startGame(page);
+  await waitForTurnSplash(page, "Ada");
+
+  await page.getByRole("button", { name: "Game menu" }).click();
+  const dialog = page.getByRole("dialog", { name: "Game menu" });
+  await expect(dialog).toBeVisible();
+  await expect(dialog.getByRole("button", { name: "Close game menu" })).toBeVisible();
+
+  const dialogBox = await dialog.boundingBox();
+  expect(dialogBox?.y).toBeGreaterThanOrEqual(0);
+  expect((dialogBox?.y ?? 0) + (dialogBox?.height ?? 0)).toBeLessThanOrEqual(
+    692,
+  );
 });

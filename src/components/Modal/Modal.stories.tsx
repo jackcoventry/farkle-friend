@@ -75,7 +75,7 @@ function NextPlayerModalStory() {
             title={`${player.username}'s turn`}
             image={
               <figure
-                className={`rounded-full overflow-hidden w-[200px] h-[200px] mx-auto my-4 p-6 flex items-center justify-center ${avatar.color}`}
+                className={`rounded-full overflow-hidden aspect-square max-w-[200px] mx-auto my-4 p-6 flex items-center justify-center ${avatar.color}`}
               >
                 <Image
                   src={avatar.image}

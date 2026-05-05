@@ -23,8 +23,8 @@ function Splash({
     >
       <h2 className="font-heading">{title}</h2>
       {image}
-      {subtitle && <p className="font-sub-heading">{subtitle}</p>}
-      {text && <p className="font-mega | text-red-500">{text}</p>}
+      {subtitle && <p className="font-body">{subtitle}</p>}
+      {text && <p className="font-heading | text-accent">{text}</p>}
       {children}
     </div>
   );

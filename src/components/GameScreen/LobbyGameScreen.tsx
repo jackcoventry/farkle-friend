@@ -10,11 +10,13 @@ import Settings, {
 } from "@/components/Form/Settings/Settings";
 import { GameSetupSummary } from "@/components/GameSetupSummary/GameSetupSummary";
 import GameShell from "@/components/GameShell/GameShell";
+import Modal from "@/components/Modal/Modal";
 import PlayerList from "@/components/PlayerList/PlayerList";
 import { canStartGame } from "@/domain/game/gameLogic";
 import type { GameState } from "@/domain/game/gameTypes";
 import { formatScore } from "@/utils/formatScore";
 import type { KeyboardEvent, RefObject } from "react";
+import { useState } from "react";
 import { Panel } from "@/components/Panel/Panel";
 
 type LobbyScreen = "players" | "settings";
@@ -44,6 +46,7 @@ export function LobbyGameScreen({
   settingsTabRef,
   state,
 }: Readonly<LobbyGameScreenProps>) {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const readyToStart = canStartGame(state);
   const playersNeeded = Math.max(0, 2 - state.players.length);
   const modeLabel =
@@ -68,7 +71,7 @@ export function LobbyGameScreen({
 
   return (
     <GameShell key="lobby">
-      <GameShell.Sidebar>
+      <GameShell.Sidebar isDesktop>
         <GameShell.SidebarMain>
           {state.players.length > 0 ? (
             <PlayerList
@@ -94,6 +97,47 @@ export function LobbyGameScreen({
           <Footer />
         </GameShell.SidebarFooter>
       </GameShell.Sidebar>
+
+      <Modal
+        id="lobby-sidebar-modal"
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+        ariaLabel="Game setup summary"
+      >
+        <Modal.Body>
+          <GameShell.Sidebar>
+            <GameShell.SidebarMain>
+              {state.players.length > 0 ? (
+                <PlayerList
+                  players={state.players}
+                  onRemovePlayer={onRemovePlayer}
+                />
+              ) : (
+                <Panel>
+                  <h2 className="font-heading-2">No players yet</h2>
+                  <p className="mt-1 text-text-muted">
+                    Add at least two players, then start the game from the setup
+                    panel.
+                  </p>
+                </Panel>
+              )}
+              <GameSetupSummary
+                preferences={state.preferences}
+                settings={state.settings}
+                onEditSettings={() => {
+                  setIsSidebarOpen(false);
+                  onSelectLobbyScreen("settings");
+                }}
+              />
+            </GameShell.SidebarMain>
+            <GameShell.SidebarFooter>
+              <Modal.CloseButton ariaLabel="Close setup summary" />
+              <Footer />
+            </GameShell.SidebarFooter>
+          </GameShell.Sidebar>
+        </Modal.Body>
+      </Modal>
+
       <GameShell.Body>
         <div className="mx-auto flex h-full w-full max-w-[520px] flex-col justify-start gap-6 overflow-auto p-4">
           <Panel className="lobby-start-panel | grid gap-5">
@@ -161,6 +205,18 @@ export function LobbyGameScreen({
           )}
         </div>
       </GameShell.Body>
+
+      <GameShell.MobileToolbar>
+        <Button
+          aria-controls="lobby-sidebar-modal"
+          aria-expanded={isSidebarOpen}
+          icon="three-dots-vertical"
+          onClick={() => setIsSidebarOpen(true)}
+          size="small"
+        >
+          Setup summary
+        </Button>
+      </GameShell.MobileToolbar>
     </GameShell>
   );
 }

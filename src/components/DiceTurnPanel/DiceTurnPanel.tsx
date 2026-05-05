@@ -1,7 +1,7 @@
 "use client";
 
 import { GameAction } from "@/domain/game/gameReducer";
-import { GameState, GameSummary } from "@/domain/game/gameTypes";
+import { GameState } from "@/domain/game/gameTypes";
 import { playGameSound } from "@/domain/game/gameAudio";
 import { getScoringCombinations } from "@/domain/game/dice";
 import DiceIcon from "@/components/DiceIcon/DiceIcon";
@@ -12,21 +12,15 @@ import { useDiceTurnController } from "@/domain/game/useDiceTurnController";
 import { getDiceTurnCopy } from "@/domain/game/diceTurnPresenter";
 import { useCallback, useEffect } from "react";
 import "./DiceTurnPanel.css";
-import { GameScreenSidebar } from "../GameScreen/ActiveGameScreen";
 import { Panel } from "../Panel/Panel";
 
 type DiceTurnPanelProps = {
   state: GameState;
   dispatch: React.Dispatch<GameAction>;
   isCoachOpenOnMobile?: boolean;
-  isSidebarOpenOnMobile?: boolean;
   onCloseMobileCoach?: () => void;
-  onCloseMobileSidebar?: () => void;
   onTurnMetricsChange?: (metrics: DiceTurnMetrics | null) => void;
   statusSlot?: React.ReactNode;
-  sidebarSummary?: GameSummary;
-  sidebarOnQuit?: () => void;
-  sidebarOnRestart?: () => void;
 };
 
 export type DiceTurnMetrics = {
@@ -38,14 +32,9 @@ export function DiceTurnPanel({
   state,
   dispatch,
   isCoachOpenOnMobile = false,
-  isSidebarOpenOnMobile = false,
   onCloseMobileCoach,
-  onCloseMobileSidebar,
   onTurnMetricsChange,
   statusSlot,
-  sidebarSummary,
-  sidebarOnQuit,
-  sidebarOnRestart,
 }: Readonly<DiceTurnPanelProps>) {
   const { currentPlayer, commitTurnScore } = useTurnController(state, dispatch);
 
@@ -228,11 +217,11 @@ export function DiceTurnPanel({
   );
 
   return (
-    <div className="turn-frame | grid gap-3 h-full w-full">
-      <div className="xl:grid-cols-[minmax(0,1fr)_minmax(240px,320px)] grid-cols-[1fr] grid gap-4 content-start">
-        <div className="grid-rows-[minmax(0,1fr)_auto] grid gap-3 sm:h-[calc(50dvh-var(--spacing-7))] xl:h-[calc(100dvh-var(--spacing-7))]">
+    <div className="turn-frame | grid min-h-0 h-full w-full gap-2 lg:gap-3">
+      <div className="dice-turn-layout | grid h-full min-h-0 grid-cols-[1fr] grid-rows-[auto_minmax(0,1fr)] gap-2 lg:gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(240px,320px)] xl:grid-rows-1">
+        <div className="dice-turn-board-stack | grid h-full min-h-0 grid-rows-[minmax(300px,1fr)_auto] gap-2 lg:gap-3 xl:h-[calc(100dvh-var(--spacing-7))]">
           <Panel className="dice-turn-table">
-            <div className="items-center h-full flex justify-center overflow-hidden">
+            <div className="items-center h-full flex justify-center overflow-visible">
               {isFarkled ? (
                 <div
                   role="alert"
@@ -249,7 +238,7 @@ export function DiceTurnPanel({
               ) : null}
 
               {!isFarkled && currentRoll ? (
-                <div className="flex flex-wrap justify-center gap-4 sm:gap-5">
+                <div className="flex flex-wrap justify-center gap-3 sm:gap-5">
                   {currentRoll.map((value, idx) => {
                     const isSelected = dice.selectedIndices.includes(idx);
                     return (
@@ -322,7 +311,7 @@ export function DiceTurnPanel({
         </div>
 
         <aside
-          className="dice-turn-rail | -order-1 xl:order-2 content-start grid gap-3 overflow-auto xl:h-[calc(100dvh-var(--spacing-7))]"
+          className="dice-turn-rail | -order-1 xl:order-2 content-start grid gap-2 lg:gap-3 overflow-visible xl:overflow-auto xl:h-[calc(100dvh-var(--spacing-7))]"
           aria-label="Turn information"
         >
           {statusSlot}
@@ -355,25 +344,6 @@ export function DiceTurnPanel({
               </div>
             </Modal.Body>
           </Modal>
-
-          {sidebarSummary && sidebarOnQuit && sidebarOnRestart ? (
-            <Modal
-              isOpen={isSidebarOpenOnMobile}
-              onClose={onCloseMobileSidebar}
-              variant="modal"
-            >
-              <Modal.Body>
-                <GameScreenSidebar
-                  summary={sidebarSummary}
-                  currentPlayer={currentPlayer}
-                  state={state}
-                  onQuit={sidebarOnQuit}
-                  onRestart={sidebarOnRestart}
-                  isDesktop={false}
-                />
-              </Modal.Body>
-            </Modal>
-          ) : null}
         </>
       ) : null}
     </div>

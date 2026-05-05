@@ -8,7 +8,7 @@
 .dice-icon {
   aspect-ratio: 1/1;
   background-color: var(--dice-color-bg);
-  border: 1px solid var(--dice-color-border);
+  border: 2px solid var(--dice-color-border);
   border-radius: 10%;
   display: grid;
   position: relative;

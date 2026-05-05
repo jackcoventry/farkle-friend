@@ -39,8 +39,6 @@ test("winner modal layout remains stable", async ({ page }) => {
 
   const dialog = page.getByRole("dialog", { name: "Game finished" });
   await expect(dialog).toBeVisible();
-  await page.evaluate(() => {
-    (document.activeElement as HTMLElement | null)?.blur();
-  });
+  await dialog.focus();
   await expect(dialog).toHaveScreenshot("winner-modal-layout.png");
 });

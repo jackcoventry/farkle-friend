@@ -46,6 +46,35 @@
   }
 }
 
+@media (max-width: 80rem) and (max-height: 820px) {
+  .turn-action-cluster {
+    border-radius: 999px;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    min-block-size: 3.75rem;
+  }
+
+  .turn-action-cluster__button {
+    gap: var(--spacing-1);
+    min-block-size: 3.5rem;
+    min-width: 0;
+    padding: var(--spacing-2);
+  }
+
+  .turn-action-cluster__icon {
+    padding: var(--spacing-1);
+  }
+
+  .turn-action-cluster__icon img {
+    block-size: 1.25rem;
+    inline-size: 1.25rem;
+  }
+
+  .turn-action-cluster__label {
+    font: var(--font-button-small);
+    white-space: nowrap;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .turn-action-cluster__button {
     transition: none;

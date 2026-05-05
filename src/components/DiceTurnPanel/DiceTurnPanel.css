@@ -6,6 +6,7 @@
       transparent 28%
     ),
     linear-gradient(135deg, var(--color-surface-raised), var(--color-canvas));
+  min-height: 300px;
 }
 
 .dice-turn-table__empty {
@@ -26,4 +27,16 @@
 
 .dice-turn-coach-modal .dice-turn-table__coach {
   display: grid;
+}
+
+@media (min-width: 48rem) and (max-width: 79.99rem) and (max-height: 820px) {
+  .dice-turn-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(220px, 280px) !important;
+    grid-template-rows: minmax(0, 1fr) !important;
+  }
+
+  .dice-turn-layout .dice-turn-rail {
+    order: 2 !important;
+    overflow: auto;
+  }
 }

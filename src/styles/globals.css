@@ -57,27 +57,22 @@ body {
   color: var(--color-accent);
 }
 
-@media (width < 80rem) {
-  .game-shell__sidebar {
-    block-size: 100dvh;
-    inline-size: min(400px, calc(100dvw - var(--spacing-5)));
-    inset-block: 0;
-    inset-inline-start: 0;
-    position: fixed;
-    transform: translateX(-105%);
-    transition: transform 180ms ease-out;
-    z-index: 40;
-  }
-
-  .game-shell[data-sidebar-open="true"] .game-shell__sidebar {
-    transform: translateX(0);
-  }
+.game-menu-modal {
+  display: grid;
+  max-block-size: calc(100dvh - var(--spacing-5));
+  min-block-size: 0;
+  overflow: hidden;
+  inline-size: min(420px, calc(100dvw - var(--spacing-5)));
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .game-shell__sidebar {
-    transition: none;
-  }
+.game-menu-modal__content {
+  grid-template-rows: auto minmax(0, 1fr);
+  min-block-size: 0;
+}
+
+.game-menu-modal .game-shell__sidebar {
+  block-size: 100%;
+  max-block-size: none;
 }
 
 .splash-screen {

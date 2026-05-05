@@ -52,6 +52,10 @@
   color: var(--pill-text-checked);
 }
 
+.pill-input:checked + .pill-box .pill-box__indicator {
+  border-color: currentColor;
+}
+
 .pill-input:checked + .pill-box .pill-box__indicator::after {
   transform: scale(1);
 }
