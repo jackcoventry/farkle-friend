@@ -5,6 +5,7 @@ import Button from "@/components/Button/Button";
 import { Panel } from "@/components/Panel/Panel";
 import { useGame } from "@/domain/game/GameProvider";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import z from "zod";
 
@@ -62,29 +63,50 @@ type AddPlayerFormProps = {
   onSubmit: SubmitHandler<AddPlayerFormSchemaType>;
 };
 
+function getNextDefaultUsername(players: { username: string }[]) {
+  const existingNames = new Set(
+    players.map((player) => player.username.trim().toLowerCase()),
+  );
+  let playerNumber = players.length + 1;
+
+  while (existingNames.has(`player #${playerNumber}`)) {
+    playerNumber += 1;
+  }
+
+  return `Player #${playerNumber}`;
+}
+
 function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
+  const { state } = useGame();
+  const defaultUsername = getNextDefaultUsername(state.players);
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { dirtyFields, errors },
     reset,
     setError,
     setValue,
   } = useForm<AddPlayerFormSchemaType>({
     resolver: zodResolver(AddPlayerFormSchema),
     defaultValues: {
-      username: "",
+      username: defaultUsername,
       avatar: 1,
     },
     mode: "onBlur",
   });
 
-  const { state } = useGame();
   const avatarsInUse = state.players.reduce((acc: number[], currentItem) => {
     acc.push(currentItem?.avatar);
     return acc;
   }, []);
   const maxPlayersReached = Boolean(state.players.length === 6);
+
+  useEffect(() => {
+    if (dirtyFields.username) return;
+
+    setValue("username", defaultUsername);
+  }, [defaultUsername, dirtyFields.username, setValue]);
+
   const submitHandler = (data: { username: string; avatar: number }) => {
     const duplicateName = state.players.some(
       (player) =>
@@ -101,7 +123,10 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
     }
 
     onSubmit(data);
-    reset();
+    reset({
+      username: "",
+      avatar: data.avatar,
+    });
     const nextAvailableAvatar =
       avatarValues.find(
         (avatar) => avatar !== data.avatar && !avatarsInUse.includes(avatar),

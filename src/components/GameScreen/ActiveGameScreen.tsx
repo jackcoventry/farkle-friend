@@ -43,6 +43,15 @@ type ActiveGameScreenProps = {
   summary: GameSummary;
 };
 
+type GameScreenSidebarProps = {
+  currentPlayer: Player | null;
+  isDesktop: boolean;
+  onQuit: () => void;
+  onRestart: () => void;
+  state: GameState;
+  summary: GameSummary;
+};
+
 export function GameScreenSidebar({
   summary,
   currentPlayer,
@@ -50,7 +59,7 @@ export function GameScreenSidebar({
   onQuit,
   onRestart,
   isDesktop,
-}) {
+}: Readonly<GameScreenSidebarProps>) {
   return (
     <GameShell.Sidebar isDesktop={isDesktop}>
       <GameShell.SidebarMain>
@@ -96,7 +105,7 @@ export function GameScreenSidebar({
 }
 
 export function ActiveGameScreen({
-  avatar,
+  avatar: _avatar,
   currentPlayer,
   diceTurnMetrics,
   dispatch,
@@ -109,6 +118,8 @@ export function ActiveGameScreen({
   state,
   summary,
 }: Readonly<ActiveGameScreenProps>) {
+  void _avatar;
+
   const [isTurnCoachOpen, setIsTurnCoachOpen] = useState(false);
   const [showSidebarModal, setShowSidebarModal] = useState(false);
   const showTurnInfoToggle =
@@ -116,7 +127,11 @@ export function ActiveGameScreen({
     flowState === "TURN_ACTIVE" &&
     state.settings.mode === "dice" &&
     !state.pendingTurnResult;
-  const isActiveDiceTurn = Boolean(showTurnInfoToggle);
+  const isActiveTurnLayout =
+    currentPlayer &&
+    flowState === "TURN_ACTIVE" &&
+    !state.pendingTurnResult &&
+    (state.settings.mode === "dice" || state.settings.mode === "manual");
   const statusBar = currentPlayer ? (
     <GameStatusBar
       currentPlayer={currentPlayer}
@@ -139,7 +154,7 @@ export function ActiveGameScreen({
 
       <GameShell.Body>
         <div className="flex h-full min-h-0 flex-col gap-4">
-          {isActiveDiceTurn ? null : statusBar}
+          {isActiveTurnLayout ? null : statusBar}
 
           <div className="min-h-0 flex-1 flex">
             {currentPlayer ? (
@@ -167,7 +182,11 @@ export function ActiveGameScreen({
                   sidebarOnRestart={onRestart}
                 />
               ) : (
-                <ManualTurn state={state} dispatch={dispatch} />
+                <ManualTurn
+                  state={state}
+                  dispatch={dispatch}
+                  statusSlot={statusBar}
+                />
               )
             ) : (
               <p>No active player</p>

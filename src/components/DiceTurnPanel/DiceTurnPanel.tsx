@@ -355,22 +355,24 @@ export function DiceTurnPanel({
             </Modal.Body>
           </Modal>
 
-          <Modal
-            isOpen={isSidebarOpenOnMobile}
-            onClose={onCloseMobileSidebar}
-            variant="modal"
-          >
-            <Modal.Body>
-              <GameScreenSidebar
-                summary={sidebarSummary}
-                currentPlayer={currentPlayer}
-                state={state}
-                onQuit={sidebarOnQuit}
-                onRestart={sidebarOnRestart}
-                isDesktop={false}
-              />
-            </Modal.Body>
-          </Modal>
+          {sidebarSummary && sidebarOnQuit && sidebarOnRestart ? (
+            <Modal
+              isOpen={isSidebarOpenOnMobile}
+              onClose={onCloseMobileSidebar}
+              variant="modal"
+            >
+              <Modal.Body>
+                <GameScreenSidebar
+                  summary={sidebarSummary}
+                  currentPlayer={currentPlayer}
+                  state={state}
+                  onQuit={sidebarOnQuit}
+                  onRestart={sidebarOnRestart}
+                  isDesktop={false}
+                />
+              </Modal.Body>
+            </Modal>
+          ) : null}
         </>
       ) : null}
     </div>

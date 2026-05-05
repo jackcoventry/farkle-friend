@@ -1,7 +1,7 @@
 "use client";
 
 import Modal from "@/components/Modal/Modal";
-import RichButton from "@/components/RichButton/RichButton";
+import { TurnActionCluster } from "@/components/TurnActionCluster/TurnActionCluster";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
@@ -59,54 +59,59 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
   return (
     <>
       <form
-        className="turn-frame | grid gap-3 h-full"
+        className="dice-turn-main | grid w-full grid-rows-[minmax(0,1fr)_auto] gap-3 sm:h-[calc(50dvh-var(--spacing-7))] xl:h-[calc(100dvh-var(--spacing-7))]"
         onSubmit={handleSubmit(submitHandler)}
       >
-        <div>
-          <h2 className="text-white font-heading">
-            Enter your score below or use the calculator!
-          </h2>
+        <div className="dice-turn-table | min-h-0 rounded-3xl border border-gray-200 p-4">
+          <div className="dice-turn-table__play | flex h-full items-center justify-center overflow-hidden">
+            <div className="grid w-full max-w-[680px] gap-6 text-center">
+              <h2 className="text-white font-heading">
+                Enter your score below or use the calculator.
+              </h2>
+
+              <Controller
+                name="value"
+                control={control}
+                render={({ field }) => (
+                  <>
+                    <label htmlFor="turn-score" className="sr-only">
+                      Turn score
+                    </label>
+                    <input
+                      id="turn-score"
+                      className="border-0 border-b-2 p-4 text-white font-mega w-full text-center appearance-none"
+                      {...field}
+                      placeholder="Enter your score..."
+                      data-valid={errors?.value ? "false" : "true"}
+                      type="number"
+                      min={0}
+                      onChange={(value) =>
+                        field.onChange(value.target.valueAsNumber)
+                      }
+                      value={field.value}
+                    />
+                  </>
+                )}
+              />
+            </div>
+          </div>
         </div>
 
-        <div className="flex items-center">
-          <Controller
-            name="value"
-            control={control}
-            render={({ field }) => (
-              <>
-                <label htmlFor="turn-score" className="sr-only">
-                  Turn score
-                </label>
-                <input
-                  id="turn-score"
-                  className="border-0 border-b-2 p-4 text-white font-mega w-full text-center appearance-none"
-                  {...field}
-                  placeholder="Enter your score..."
-                  data-valid={errors?.value ? "false" : "true"}
-                  type="number"
-                  min={0}
-                  onChange={(value) =>
-                    field.onChange(value.target.valueAsNumber)
-                  }
-                  value={field.value}
-                />
-              </>
-            )}
-          />
-        </div>
-
-        <div className="w-full flex justify-center gap-4">
-          <RichButton
-            className="justify-center"
-            icon="rocket"
-            onClick={() => setShowCalculator(true)}
-          >
-            Calculator
-          </RichButton>
-          <RichButton type="submit" className="justify-center" icon="dice">
-            Submit score
-          </RichButton>
-        </div>
+        <TurnActionCluster
+          ariaLabel="Manual score actions"
+          actions={[
+            {
+              icon: "rocket",
+              label: "Calculator",
+              onClick: () => setShowCalculator(true),
+            },
+            {
+              icon: "dice",
+              label: "Submit score",
+              type: "submit",
+            },
+          ]}
+        />
       </form>
       <Modal
         isOpen={Boolean(showCalculator)}

@@ -13,6 +13,10 @@ type SlotProps = {
   children: React.ReactNode;
 };
 
+type SidebarProps = SlotProps & {
+  isDesktop?: boolean;
+};
+
 export default function GameShell({ children }: Readonly<RootProps>) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   let sidebar, mobileToolbar, body;
@@ -59,7 +63,7 @@ export default function GameShell({ children }: Readonly<RootProps>) {
 GameShell.Sidebar = function Header({
   children,
   isDesktop = false,
-}: SlotProps) {
+}: SidebarProps) {
   return (
     <aside
       id={SIDEBAR_ID}

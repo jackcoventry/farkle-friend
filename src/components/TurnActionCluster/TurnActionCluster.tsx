@@ -6,29 +6,36 @@ import "./TurnActionCluster.css";
 
 export type TurnAction = {
   ariaDescribedBy?: string;
+  ariaLabel?: string;
   disabled?: boolean;
   icon: ImageKey;
   label: string;
-  onClick: () => void;
+  onClick?: () => void;
+  type?: "button" | "submit" | "reset";
 };
 
 type TurnActionClusterProps = {
   actions: TurnAction[];
+  ariaLabel?: string;
+  className?: string;
 };
 
 export function TurnActionCluster({
   actions,
+  ariaLabel = "Turn actions",
+  className,
 }: Readonly<TurnActionClusterProps>) {
   return (
     <div
-      className="turn-action-cluster | grid-cols-[1fr] rounded-lg items-stretch bg-pink-500 border-2 border-purple-500 xl:rounded-full grid gap-1 overflow-hidden w-full xl:flex"
-      aria-label="Turn actions"
+      className={`turn-action-cluster | grid-cols-[1fr] rounded-lg items-stretch bg-pink-500 border-2 border-purple-500 xl:rounded-full grid gap-1 overflow-hidden w-full xl:flex${className ? ` ${className}` : ""}`}
+      aria-label={ariaLabel}
     >
       {actions.map((action) => (
         <button
           key={action.label}
-          type="button"
+          type={action.type ?? "button"}
           aria-describedby={action.ariaDescribedBy}
+          aria-label={action.ariaLabel}
           className="turn-action-cluster__button | xl:flex-[1_1_0] items-center text-white cursor-pointer flex gap-2 justify-center relative p-3 disabled:bg-gray-600 disabled:color-gray-200 disabled:cursor-not-allowed"
           disabled={action.disabled}
           onClick={action.onClick}
