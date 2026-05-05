@@ -51,10 +51,11 @@ export function GameFinishedModal({
     <Modal isOpen={true} ariaLabel="Game finished" variant="splash">
       <Modal.Body>
         <Splash
+          className="gap-3 p-4 sm:p-5"
           title={winner ? `${winner.username} wins!` : "Game finished"}
           image={
             <figure
-              className={`splash-avatar-crown relative rounded-full w-32 h-32 mx-auto my-2 p-4 flex items-center justify-center ${avatar?.color ?? "bg-gray-500"}`}
+              className={`splash-avatar-crown relative rounded-full w-24 h-24 mx-auto my-1 p-3 flex items-center justify-center ${avatar?.color ?? "bg-surface-muted"}`}
             >
               {avatar ? (
                 <AvatarImage
@@ -69,47 +70,47 @@ export function GameFinishedModal({
           {standings.length > 0 ? (
             <div
               aria-label="Final standings and game recap"
-              className="grid max-h-[30dvh] gap-3 overflow-auto pr-1 text-left"
+              className="grid gap-3 text-left"
               tabIndex={0}
             >
-              <section className="rounded-lg bg-gray-600 p-4">
+              <section className="rounded-lg bg-surface-muted p-3">
                 <h3 className="font-heading-2 mb-2 text-center">
                   Final standings
                 </h3>
-                <ol className="grid gap-2">
+                <ol className="grid gap-1">
                   {standings.map((player, index) => (
                     <li
                       key={player.id}
-                      className="flex justify-between gap-3 border-b border-sun-200 pb-2 last:border-0 last:pb-0"
+                      className="flex justify-between gap-3 border-b border-border pb-2 last:border-0 last:pb-0"
                     >
                       <span className="truncate">
                         {index + 1}. {player.username}
                       </span>
-                      <span className="shrink-0 text-pink-200">
+                      <span className="shrink-0 text-accent">
                         {formatScore(player.totalScore ?? 0)}
                       </span>
                     </li>
                   ))}
                 </ol>
               </section>
-              <section className="rounded-lg bg-gray-600 p-4">
+              <section className="rounded-lg bg-surface-muted p-3">
                 <h3 className="font-heading-2 mb-2 text-center">Game recap</h3>
-                <dl className="grid grid-cols-2 gap-3 text-sm sm:text-base">
+                <dl className="grid grid-cols-2 gap-2 text-sm">
                   <div>
-                    <dt className="text-white">Winning margin</dt>
-                    <dd className="font-body-1 text-pink-200">
+                    <dt className="text-text">Winning margin</dt>
+                    <dd className="font-body-1 text-accent">
                       {formatScore(Math.max(0, winnerScore - runnerUpScore))}
                     </dd>
                   </div>
                   <div>
-                    <dt className="text-white">Turns played</dt>
-                    <dd className="font-body-1 text-pink-200">
+                    <dt className="text-text">Turns played</dt>
+                    <dd className="font-body-1 text-accent">
                       {turns.length}
                     </dd>
                   </div>
                   <div>
-                    <dt className="text-white">Biggest turn</dt>
-                    <dd className="font-body-1 text-pink-200">
+                    <dt className="text-text">Biggest turn</dt>
+                    <dd className="font-body-1 text-accent">
                       {biggestTurn
                         ? `${formatScore(biggestTurn.score)} by ${
                             biggestTurnPlayer?.username ?? "Unknown"
@@ -118,23 +119,27 @@ export function GameFinishedModal({
                     </dd>
                   </div>
                   <div>
-                    <dt className="text-white">Average turn</dt>
-                    <dd className="font-body-1 text-pink-200">
+                    <dt className="text-text">Average turn</dt>
+                    <dd className="font-body-1 text-accent">
                       {formatScore(averageTurn)}
                     </dd>
                   </div>
                   <div>
-                    <dt className="text-white">Farkles</dt>
-                    <dd className="font-body-1 text-pink-200">{farkles}</dd>
+                    <dt className="text-text">Farkles</dt>
+                    <dd className="font-body-1 text-accent">{farkles}</dd>
                   </div>
                 </dl>
               </section>
             </div>
           ) : null}
-          <Button onClick={onResetGame} className="justify-center">
+          <Button onClick={onResetGame} className="justify-center" size="small">
             Another game?
           </Button>
-          <Button onClick={onResetPlayers} className="justify-center">
+          <Button
+            onClick={onResetPlayers}
+            className="justify-center"
+            size="small"
+          >
             New players
           </Button>
         </Splash>

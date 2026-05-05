@@ -21,19 +21,19 @@ export function GameStatusBar({
   return (
     <Panel>
       <div className="mb-4">
-        <p className="text-sm text-white">
+        <p className="text-sm text-text">
           {flowState === "TURN_RESULT" ? "Turn complete" : "Now playing"}
         </p>
-        <h2 className="font-heading-2 text-pink-300">
+        <h2 className="font-heading-2 score-chip">
           {currentPlayer.username}
         </h2>
       </div>
       <dl className="ml-auto flex flex-wrap gap-4 text-sm sm:text-base">
         <div>
-          <dt className="text-white">
+          <dt className="text-text">
             {state.pendingTurnResult ? "Previous total" : "Current total"}
           </dt>
-          <dd className="font-body-1 text-pink-300">
+          <dd className="font-body-1 score-chip">
             {formatScore(
               state.pendingTurnResult?.previousTotal ??
                 currentPlayer.totalScore ??
@@ -46,14 +46,14 @@ export function GameStatusBar({
         diceTurnMetrics ? (
           <>
             <div>
-              <dt className="text-white">Round score</dt>
-              <dd className="font-body-1 text-pink-300">
+              <dt className="text-text">Round score</dt>
+              <dd className="font-body-1 score-chip">
                 {formatScore(diceTurnMetrics.roundScore)}
               </dd>
             </div>
             <div>
-              <dt className="text-white">Dice left</dt>
-              <dd className="flex items-center gap-2 font-body-1 text-pink-300">
+              <dt className="text-text">Dice left</dt>
+              <dd className="flex items-center gap-2 font-body-1 score-chip">
                 <span>{diceTurnMetrics.diceLeft}</span>
               </dd>
             </div>
@@ -61,8 +61,8 @@ export function GameStatusBar({
         ) : null}
         {state.pendingTurnResult ? (
           <div>
-            <dt className="text-white">Updated total</dt>
-            <dd className="font-body-1 text-pink-300">
+            <dt className="text-text">Updated total</dt>
+            <dd className="font-body-1 score-chip">
               {formatScore(state.pendingTurnResult.newTotal)}
             </dd>
           </div>

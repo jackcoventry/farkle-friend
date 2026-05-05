@@ -61,11 +61,11 @@ export function ManualTurn({
             <div className="min-w-0 flex flex-col gap-2">
               <p className="font-heading-2">Manual scoring</p>
               <p>
-                Enter {currentPlayer.username}&apos;s turn score, then add it to
-                bank the score and move on.
+                Enter the turn score, then add it to bank the score and move
+                on.
               </p>
             </div>
-            <p className="rounded-lg bg-pink-300 px-3 py-2 text-gray-900">
+            <p className="rounded-lg bg-accent px-3 py-2 text-accent-contrast">
               Use this mode when you are rolling physical dice.
             </p>
           </Panel>

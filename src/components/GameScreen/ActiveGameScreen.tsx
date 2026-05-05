@@ -10,12 +10,10 @@ import { GameStatusBar } from "@/components/GameScreen/GameStatusBar";
 import GameShell from "@/components/GameShell/GameShell";
 import { ManualTurn } from "@/components/ManualTurn/ManualTurn";
 import PlayerList from "@/components/PlayerList/PlayerList";
+import { PlayerSwitchSplash } from "@/components/PlayerSwitchSplash/PlayerSwitchSplash";
 import { TurnHistory } from "@/components/TurnHistory/TurnHistory";
 import { TurnResultPanel } from "@/components/TurnResultPanel/TurnResultPanel";
-import type {
-  AvatarId,
-  avatarSet,
-} from "@/components/Form/AddPlayer/AddPlayer";
+import { avatarSet, type AvatarId } from "@/components/Form/AddPlayer/AddPlayer";
 import type { GameAction } from "@/domain/game/gameReducer";
 import type {
   GameFlowState,
@@ -65,7 +63,7 @@ export function GameScreenSidebar({
       <GameShell.SidebarMain>
         <Panel>
           <details open>
-            <summary className="cursor-pointer font-heading-2 text-white">
+            <summary className="cursor-pointer font-heading-2 text-text">
               Scoreboard
             </summary>
             <div className="mt-3">
@@ -81,7 +79,7 @@ export function GameScreenSidebar({
 
         <Panel>
           <details>
-            <summary className="cursor-pointer font-heading-2 text-white">
+            <summary className="cursor-pointer font-heading-2 text-text">
               Turn log
             </summary>
             <div className="mt-3">
@@ -105,7 +103,7 @@ export function GameScreenSidebar({
 }
 
 export function ActiveGameScreen({
-  avatar: _avatar,
+  avatar,
   currentPlayer,
   diceTurnMetrics,
   dispatch,
@@ -118,10 +116,10 @@ export function ActiveGameScreen({
   state,
   summary,
 }: Readonly<ActiveGameScreenProps>) {
-  void _avatar;
-
   const [isTurnCoachOpen, setIsTurnCoachOpen] = useState(false);
   const [showSidebarModal, setShowSidebarModal] = useState(false);
+  const currentAvatar =
+    avatar ?? (currentPlayer ? avatarSet[currentPlayer.avatar as AvatarId] : undefined);
   const showTurnInfoToggle =
     currentPlayer &&
     flowState === "TURN_ACTIVE" &&
@@ -151,6 +149,15 @@ export function ActiveGameScreen({
         onRestart={onRestart}
         isDesktop={true}
       />
+
+      {currentPlayer && currentAvatar && flowState === "TURN_ACTIVE" ? (
+        <PlayerSwitchSplash
+          key={currentPlayer.id}
+          avatar={currentAvatar}
+          currentPlayer={currentPlayer}
+          soundEnabled={state.preferences.tableFeedback}
+        />
+      ) : null}
 
       <GameShell.Body>
         <div className="flex h-full min-h-0 flex-col gap-4">

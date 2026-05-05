@@ -2,6 +2,7 @@ import React from "react";
 
 type SplashProps = {
   children?: React.ReactNode;
+  className?: string;
   image: React.ReactNode;
   title: string;
   subtitle?: string;
@@ -14,9 +15,12 @@ function Splash({
   text,
   image,
   children,
+  className = "",
 }: Readonly<SplashProps>) {
   return (
-    <div className="animate-bounce-in bg-gray-700 border border-pink-500 text-white w-[500px] p-8 flex flex-col gap-4 text-center rounded-3xl shadow-lg">
+    <div
+      className={`animate-bounce-in bg-surface-raised border border-accent text-text flex max-h-[calc(100dvh-var(--spacing-5))] w-[min(500px,calc(100dvw-var(--spacing-5)))] flex-col gap-4 overflow-auto rounded-3xl p-5 text-center shadow-lg sm:p-8 ${className}`}
+    >
       <h2 className="font-heading">{title}</h2>
       {image}
       {subtitle && <p className="font-sub-heading">{subtitle}</p>}

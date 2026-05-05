@@ -62,10 +62,10 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
         className="dice-turn-main | grid w-full grid-rows-[minmax(0,1fr)_auto] gap-3 sm:h-[calc(50dvh-var(--spacing-7))] xl:h-[calc(100dvh-var(--spacing-7))]"
         onSubmit={handleSubmit(submitHandler)}
       >
-        <div className="dice-turn-table | min-h-0 rounded-3xl border border-gray-200 p-4">
+        <div className="dice-turn-table | min-h-0 rounded-3xl border border-border p-4">
           <div className="dice-turn-table__play | flex h-full items-center justify-center overflow-hidden">
             <div className="grid w-full max-w-[680px] gap-6 text-center">
-              <h2 className="text-white font-heading">
+              <h2 className="text-text font-heading">
                 Enter your score below or use the calculator.
               </h2>
 
@@ -79,7 +79,7 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
                     </label>
                     <input
                       id="turn-score"
-                      className="border-0 border-b-2 p-4 text-white font-mega w-full text-center appearance-none"
+                      className="border-0 border-b-2 border-border bg-transparent p-4 text-text font-mega w-full text-center appearance-none"
                       {...field}
                       placeholder="Enter your score..."
                       data-valid={errors?.value ? "false" : "true"}
@@ -118,7 +118,7 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
         ariaLabel="Calculate dice score"
         variant="modal"
       >
-        <Modal.Body className="grid max-h-dvh h-full mx-auto justify-center bg-white p-7 rounded-2xl">
+        <Modal.Body className="grid max-h-dvh h-full mx-auto justify-center bg-surface text-text p-7 rounded-2xl">
           <ScoreGenerator onChange={onChange} />
         </Modal.Body>
       </Modal>

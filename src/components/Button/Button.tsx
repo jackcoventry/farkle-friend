@@ -61,10 +61,10 @@ export type ButtonProps = CommonProps &
 
 function getVariantClasses(variant: CommonProps["variant"]) {
   if (variant === "secondary") {
-    return "border-pink-700 shadow-purple-500 bg-white text-black hover:border-pink-500 shadow-offset-solid-style";
+    return "border-control-border shadow-control-shadow bg-control text-control-text hover:bg-control-hover hover:border-accent shadow-offset-solid-style";
   }
 
-  return "border-pink-500 shadow-pink-700 bg-pink-500 text-white hover:bg-pink-400 hover:border-purple-500 shadow-offset-solid-style";
+  return "border-accent shadow-accent-shadow bg-accent text-accent-contrast hover:bg-accent-hover hover:border-action-border shadow-offset-solid-style";
 }
 
 const Button = React.forwardRef<
@@ -193,7 +193,8 @@ const Button = React.forwardRef<
     ...buttonRest
   } = rest as ButtonOnlyProps;
   if (disabled) {
-    classes += " bg-gray-500 cursor-not-allowed text-white";
+    classes +=
+      " bg-surface-disabled border-surface-disabled cursor-not-allowed text-text";
   } else {
     classes += ` cursor-pointer ${getVariantClasses(variant)}`;
   }

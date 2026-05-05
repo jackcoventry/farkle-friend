@@ -178,7 +178,7 @@ export function DiceTurnPanel({
           <p className="text-sm">{turnCopy.detail}</p>
         </div>
         {showSelectionStatus ? (
-          <div className="rounded-lg bg-pink-300 px-3 py-2 text-sm">
+          <div className="rounded-lg bg-accent px-3 py-2 text-sm text-accent-contrast">
             <span className="font-body-1">Selection</span>{" "}
             <span>{turnCopy.selectedStatus}</span>
           </div>
@@ -188,7 +188,7 @@ export function DiceTurnPanel({
             {dice.selectedBreakdown.map((item) => (
               <li
                 key={`${item.label}-${item.score}`}
-                className="rounded-full bg-pink-100 px-3 py-1 text-gray-900"
+                className="rounded-full bg-control px-3 py-1 text-control-text"
               >
                 {item.label} = {item.score}
               </li>
@@ -216,7 +216,7 @@ export function DiceTurnPanel({
                     <DiceIcon key={e} count={e} className="w-6" />
                   ))}
                 </span>
-                <span className="text-right text-pink-200">
+                <span className="text-right text-accent">
                   {combo.score} pts
                 </span>
               </li>
@@ -236,13 +236,13 @@ export function DiceTurnPanel({
               {isFarkled ? (
                 <div
                   role="alert"
-                  className="animate-bounce-in max-w-[560px] rounded-3xl border-4 border-red-700 bg-white p-6 text-center shadow-lg"
+                  className="animate-bounce-in max-w-[560px] rounded-3xl border-4 border-danger bg-danger-surface p-6 text-center text-danger-contrast shadow-lg"
                 >
-                  <p className="font-sub-heading text-red-700">Turn over</p>
-                  <h2 className="font-heading text-red-700">
+                  <p className="font-sub-heading text-danger">Turn over</p>
+                  <h2 className="font-heading text-danger">
                     You have been Farkled!
                   </h2>
-                  <p className="mt-2 text-gray-900">
+                  <p className="mt-2">
                     No scoring dice were rolled. This turn scores 0 points.
                   </p>
                 </div>
@@ -267,7 +267,7 @@ export function DiceTurnPanel({
                         }}
                         className={`animate-bounce-in w-[72px] cursor-pointer rounded-lg p-1 opacity-0 transition-transform hover:z-10 hover:scale-105 sm:w-[100px] ${
                           isSelected
-                            ? "bg-yellow-200 ring-4 ring-yellow-400"
+                            ? "bg-selected ring-4 ring-selected-border"
                             : "bg-transparent"
                         }`}
                       >
@@ -283,7 +283,7 @@ export function DiceTurnPanel({
 
               {!isFarkled && !currentRoll ? (
                 <div
-                  className="dice-turn-table__empty | motion-safe:animate-[spin_100s_linear_infinite] border-2 border-dashed border-pink-200 rounded-full aspect-square"
+                  className="dice-turn-table__empty | motion-safe:animate-[spin_100s_linear_infinite] border-2 border-dashed border-border rounded-full aspect-square"
                   aria-hidden="true"
                 />
               ) : null}
@@ -294,6 +294,7 @@ export function DiceTurnPanel({
             actions={[
               {
                 ariaDescribedBy: actionHintId,
+                ariaLabel: "Roll dice",
                 disabled: !dice.canRoll,
                 icon: "dice",
                 label: "Roll",

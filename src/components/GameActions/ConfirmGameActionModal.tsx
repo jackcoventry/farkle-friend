@@ -24,7 +24,7 @@ export function ConfirmGameActionModal({
       variant="modal"
       theme="warning"
     >
-      <Modal.Body className="rounded-lg bg-white p-6 shadow-lg">
+      <Modal.Body className="rounded-lg bg-surface text-text p-6 shadow-lg">
         <div className="flex max-w-[460px] flex-col gap-4 text-center">
           <Modal.Title className="font-heading">
             {isRestart ? "Restart this game?" : "Quit this game?"}
