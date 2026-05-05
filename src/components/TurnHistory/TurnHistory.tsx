@@ -33,27 +33,27 @@ export function TurnHistory({
 
   return (
     <section
-      className="rounded-lg bg-gray-700 border border-pink-200 text-white p-4"
+      className="surface-callout"
       aria-live="polite"
     >
       {leader ? (
-        <dl className="mb-3 grid gap-2 border-b border-pink-200 pb-3">
+        <dl className="mb-3 grid gap-2 border-b border-border pb-3">
           <div className="flex justify-between gap-3">
             <dt>Leader</dt>
-            <dd className="truncate text-right text-pink-300">
+            <dd className="truncate text-right score-chip">
               {leader.username}
             </dd>
           </div>
           <div className="flex justify-between gap-3">
             <dt>Needs</dt>
-            <dd className="text-right text-pink-300">
+            <dd className="text-right score-chip">
               {formatScore(Math.max(0, targetScore - (leader.totalScore ?? 0)))}
             </dd>
           </div>
           {biggestTurn ? (
             <div className="flex justify-between gap-3">
               <dt>Biggest turn</dt>
-              <dd className="truncate text-right text-pink-300">
+              <dd className="truncate text-right score-chip">
                 {playerNames.get(biggestTurn.playerId) ?? "Player"} +
                 {formatScore(biggestTurn.score)}
               </dd>
@@ -62,7 +62,7 @@ export function TurnHistory({
           {lastFarkle ? (
             <div className="flex justify-between gap-3">
               <dt>Last farkle</dt>
-              <dd className="truncate text-right text-pink-300">
+              <dd className="truncate text-right score-chip">
                 {playerNames.get(lastFarkle.playerId) ?? "Player"}
               </dd>
             </div>
@@ -83,7 +83,9 @@ export function TurnHistory({
                 <li
                   key={turn.id}
                   className={`flex items-center justify-between gap-3 rounded-lg p-2 ${
-                    isFarkle ? "bg-pink-50 text-pink-700" : "bg-gray-500"
+                    isFarkle
+                      ? "bg-danger-surface text-danger"
+                      : "bg-surface-muted"
                   }`}
                 >
                   <span className="flex min-w-0 items-center gap-2">
@@ -105,7 +107,7 @@ export function TurnHistory({
                   </span>
                   <span
                     className={`shrink-0 rounded-full px-2 py-1 text-sm ${
-                      isFarkle ? "bg-pink-700 text-white" : "text-pink-300"
+                      isFarkle ? "bg-danger text-danger-contrast" : "score-chip"
                     }`}
                   >
                     {isFarkle ? "Farkle" : `+${formatScore(turn.score)}`}

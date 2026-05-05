@@ -23,36 +23,46 @@ export function GameSetupSummary({
       <dl className="grid gap-2">
         <div className="flex justify-between gap-3">
           <dt>Mode</dt>
-          <dd className="text-right text-pink-300">{modeLabel}</dd>
+          <dd className="text-right score-chip">{modeLabel}</dd>
         </div>
         <div className="flex justify-between gap-3">
           <dt>Target</dt>
-          <dd className="text-right text-pink-300">
+          <dd className="text-right score-chip">
             {formatScore(settings.targetScore)}
           </dd>
         </div>
         <div className="flex justify-between gap-3">
           <dt>Turn hand-off</dt>
-          <dd className="text-right text-pink-300">
+          <dd className="text-right score-chip">
             {settings.autoAdvanceTurns ? "Auto" : "Manual"}
           </dd>
         </div>
         <div className="flex justify-between gap-3">
           <dt>Combo hints</dt>
-          <dd className="text-right text-pink-300">
+          <dd className="text-right score-chip">
             {settings.showComboSuggestions ? "On" : "Off"}
           </dd>
         </div>
         <div className="flex justify-between gap-3">
           <dt>Feedback</dt>
-          <dd className="text-right text-pink-300">
+          <dd className="text-right score-chip">
             {preferences.tableFeedback ? "On" : "Off"}
           </dd>
         </div>
         <div className="flex justify-between gap-3">
           <dt>Animations</dt>
-          <dd className="text-right text-pink-300">
+          <dd className="text-right score-chip">
             {preferences.motionEnabled ? "On" : "Off"}
+          </dd>
+        </div>
+        <div className="flex justify-between gap-3">
+          <dt>Theme</dt>
+          <dd className="text-right score-chip">
+            {preferences.theme === "system"
+              ? "System"
+              : preferences.theme === "light"
+                ? "Light"
+                : "Dark"}
           </dd>
         </div>
       </dl>

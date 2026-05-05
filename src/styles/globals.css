@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./tokens.theme.css";
+@import "./theme.css";
 @import "./font.css";
 
 @theme {
@@ -8,6 +9,75 @@
 
 body {
   font: var(--font-body-1);
+}
+
+.field-control {
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  color: var(--color-text);
+  display: block;
+  inline-size: 100%;
+  padding: var(--spacing-4) var(--spacing-5);
+}
+
+.field-control::placeholder {
+  color: var(--color-text-muted);
+}
+
+.field-control[aria-invalid="true"],
+.field-control[data-valid="false"] {
+  border-color: var(--color-danger);
+}
+
+.field-error {
+  background: var(--color-danger-surface);
+  border: 1px solid var(--color-danger);
+  border-radius: 1.5rem;
+  color: var(--color-danger);
+  padding: var(--spacing-2) var(--spacing-4);
+}
+
+.surface-callout {
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  color: var(--color-text);
+  padding: var(--spacing-4);
+}
+
+.status-chip {
+  background: var(--color-accent);
+  border-radius: 999px;
+  color: var(--color-accent-contrast);
+  padding: var(--spacing-1) var(--spacing-2);
+}
+
+.score-chip {
+  color: var(--color-accent);
+}
+
+@media (width < 80rem) {
+  .game-shell__sidebar {
+    block-size: 100dvh;
+    inline-size: min(400px, calc(100dvw - var(--spacing-5)));
+    inset-block: 0;
+    inset-inline-start: 0;
+    position: fixed;
+    transform: translateX(-105%);
+    transition: transform 180ms ease-out;
+    z-index: 40;
+  }
+
+  .game-shell[data-sidebar-open="true"] .game-shell__sidebar {
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .game-shell__sidebar {
+    transition: none;
+  }
 }
 
 .splash-screen {

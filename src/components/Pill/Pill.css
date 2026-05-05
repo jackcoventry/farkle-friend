@@ -1,28 +1,33 @@
 .pill {
-  --pill-bg: var(--color-white);
-  --pill-bg-checked: var(--color-sun-100);
-  --pill-border: var(--color-sun-700);
-  --pill-border-checked: var(--color-pink-500);
-  --pill-text: var(--color-gray-900);
-  --pill-text-checked: var(--color-sun-900);
-  --pill-focus: var(--color-pink-500);
+  --pill-bg: var(--color-control);
+  --pill-bg-checked: var(--color-accent);
+  --pill-border: var(--color-control-border);
+  --pill-border-checked: var(--color-accent);
+  --pill-shadow: var(--color-control-shadow);
+  --pill-text: var(--color-control-text);
+  --pill-text-checked: var(--color-accent-contrast);
+  --pill-focus: var(--color-accent);
+
+  cursor: pointer;
 }
 
 .pill-input {
-  block-size: 1px;
+  block-size: 100%;
   border: 0;
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  inline-size: 1px;
-  margin: -1px;
+  cursor: pointer;
+  inset: 0;
+  inline-size: 100%;
+  margin: 0;
+  opacity: 0;
   overflow: hidden;
   padding: 0;
   position: absolute;
-  white-space: nowrap;
+  z-index: 1;
 }
 
 .pill-box {
   grid-template-columns: auto minmax(0, 1fr);
+  pointer-events: none;
   transition:
     background-color 160ms ease,
     border-color 160ms ease,
@@ -41,8 +46,9 @@
 }
 
 .pill-input:checked + .pill-box {
+  background: var(--pill-bg-checked);
   border-color: var(--pill-border-checked);
-  box-shadow: var(--shadow-offset-solid-style) var(--color-sun-700);
+  box-shadow: var(--shadow-offset-solid-style) var(--pill-shadow);
   color: var(--pill-text-checked);
 }
 
@@ -74,6 +80,10 @@
   filter: grayscale(0.3);
   opacity: 0.58;
   transform: none;
+}
+
+.pill:has(.pill-input:disabled) {
+  cursor: not-allowed;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -5,7 +5,7 @@
       rgb(255 255 255 / 0.22),
       transparent 28%
     ),
-    linear-gradient(135deg, var(--color-gray-700), var(--color-sun-900));
+    linear-gradient(135deg, var(--color-surface-raised), var(--color-canvas));
 }
 
 .dice-turn-table__empty {
@@ -16,7 +16,7 @@
 }
 
 .dice-turn-coach-modal {
-  background: var(--color-gray-800);
+  background: var(--color-surface);
   border-radius: var(--radius-3xl, 1.5rem);
   max-height: calc(100dvh - var(--spacing-6));
   overflow: auto;

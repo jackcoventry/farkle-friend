@@ -8,7 +8,7 @@
 .turn-action-cluster__button:not(:disabled):hover {
   background:
     linear-gradient(180deg, rgb(255 255 255 / 0.26), transparent),
-    var(--turn-action-bg-hover);
+    var(--color-action-hover);
   transform: scaleX(1.04);
   z-index: 1;
 }
@@ -18,7 +18,7 @@
 }
 
 .turn-action-cluster__button:focus-visible {
-  outline: 3px solid var(--color-pink-500);
+  outline: 3px solid var(--color-accent);
   outline-offset: -6px;
   z-index: 2;
 }

@@ -86,21 +86,21 @@ export function TurnResultPanel({
         </h2>
       </div>
       <dl className="grid gap-3 text-left sm:grid-cols-3">
-        <div className="rounded-lg bg-gray-500 border border-pink-200 p-4">
+        <div className="rounded-lg bg-surface-muted border border-border p-4">
           <dt className="font-body-1 ">Turn score</dt>
-          <dd className="font-heading-2 text-white">
+          <dd className="font-heading-2 text-text">
             {formatScore(result.score)}
           </dd>
         </div>
-        <div className="rounded-lg bg-gray-500 border border-pink-200 p-4">
+        <div className="rounded-lg bg-surface-muted border border-border p-4">
           <dt className="font-body-1 ">Previous total</dt>
           <dd className="font-heading-2">
             {formatScore(result.previousTotal)}
           </dd>
         </div>
-        <div className="rounded-lg bg-gray-500 border border-pink-200 p-4">
+        <div className="rounded-lg bg-surface-muted border border-border p-4">
           <dt className="font-body-1 ">New total</dt>
-          <dd className="font-heading-2 text-pink-300">
+          <dd className="font-heading-2 text-accent">
             {formatScore(result.newTotal)}
           </dd>
         </div>

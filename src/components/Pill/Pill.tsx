@@ -65,7 +65,7 @@ Pill.Label = function PillLabel({
     <label
       htmlFor={htmlFor}
       className={mergeClassNames(
-        "pill-box | items-center border-2 border-purple-500 rounded-full text-black bg-white cursor-pointer inline-grid gap-2 px-4 py-2 hover:translate-y-px",
+        "pill-box | items-center border-2 border-control-border rounded-full text-control-text bg-control cursor-pointer inline-grid gap-2 px-4 py-2 hover:translate-y-px",
         className,
       )}
     >
