@@ -1,0 +1,124 @@
+{
+  "color": {
+    "canvas": {
+      "$type": "color",
+      "$value": "var(--theme-color-canvas)"
+    },
+    "surface": {
+      "$type": "color",
+      "$value": "var(--theme-color-surface)"
+    },
+    "surface-raised": {
+      "$type": "color",
+      "$value": "var(--theme-color-surface-raised)"
+    },
+    "surface-muted": {
+      "$type": "color",
+      "$value": "var(--theme-color-surface-muted)"
+    },
+    "surface-disabled": {
+      "$type": "color",
+      "$value": "var(--theme-color-surface-disabled)"
+    },
+    "text": {
+      "$type": "color",
+      "$value": "var(--theme-color-text)"
+    },
+    "text-muted": {
+      "$type": "color",
+      "$value": "var(--theme-color-text-muted)"
+    },
+    "text-inverse": {
+      "$type": "color",
+      "$value": "var(--theme-color-text-inverse)"
+    },
+    "border": {
+      "$type": "color",
+      "$value": "var(--theme-color-border)"
+    },
+    "border-strong": {
+      "$type": "color",
+      "$value": "var(--theme-color-border-strong)"
+    },
+    "accent": {
+      "$type": "color",
+      "$value": "var(--theme-color-accent)"
+    },
+    "accent-hover": {
+      "$type": "color",
+      "$value": "var(--theme-color-accent-hover)"
+    },
+    "accent-contrast": {
+      "$type": "color",
+      "$value": "var(--theme-color-accent-contrast)"
+    },
+    "accent-shadow": {
+      "$type": "color",
+      "$value": "var(--theme-color-accent-shadow)"
+    },
+    "control": {
+      "$type": "color",
+      "$value": "var(--theme-color-control)"
+    },
+    "control-hover": {
+      "$type": "color",
+      "$value": "var(--theme-color-control-hover)"
+    },
+    "control-text": {
+      "$type": "color",
+      "$value": "var(--theme-color-control-text)"
+    },
+    "control-border": {
+      "$type": "color",
+      "$value": "var(--theme-color-control-border)"
+    },
+    "control-shadow": {
+      "$type": "color",
+      "$value": "var(--theme-color-control-shadow)"
+    },
+    "action": {
+      "$type": "color",
+      "$value": "var(--theme-color-action)"
+    },
+    "action-hover": {
+      "$type": "color",
+      "$value": "var(--theme-color-action-hover)"
+    },
+    "action-border": {
+      "$type": "color",
+      "$value": "var(--theme-color-action-border)"
+    },
+    "action-contrast": {
+      "$type": "color",
+      "$value": "var(--theme-color-action-contrast)"
+    },
+    "overlay": {
+      "$type": "color",
+      "$value": "var(--theme-color-overlay)"
+    },
+    "danger": {
+      "$type": "color",
+      "$value": "var(--theme-color-danger)"
+    },
+    "danger-surface": {
+      "$type": "color",
+      "$value": "var(--theme-color-danger-surface)"
+    },
+    "danger-contrast": {
+      "$type": "color",
+      "$value": "var(--theme-color-danger-contrast)"
+    },
+    "selected": {
+      "$type": "color",
+      "$value": "var(--theme-color-selected)"
+    },
+    "selected-border": {
+      "$type": "color",
+      "$value": "var(--theme-color-selected-border)"
+    },
+    "selected-contrast": {
+      "$type": "color",
+      "$value": "var(--theme-color-selected-contrast)"
+    }
+  }
+}
