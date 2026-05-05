@@ -24,6 +24,15 @@ export function GameProvider({
       : "off";
   }, [value.state.preferences.motionEnabled]);
 
+  useEffect(() => {
+    if (value.state.preferences.theme === "system") {
+      delete document.documentElement.dataset.theme;
+      return;
+    }
+
+    document.documentElement.dataset.theme = value.state.preferences.theme;
+  }, [value.state.preferences.theme]);
+
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;
 }
 

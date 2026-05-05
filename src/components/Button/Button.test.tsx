@@ -201,8 +201,8 @@ describe("Button (polymorphic)", () => {
     render(<Button variant="secondary">Secondary</Button>);
 
     const button = screen.getByRole("button", { name: "Secondary" });
-    expect(button.className).toContain("border-pink-700");
-    expect(button.className).toContain("text-black");
+    expect(button.className).toContain("border-control-border");
+    expect(button.className).toContain("text-control-text");
   });
 
   it("applies secondary styling to anchor and inline variants", () => {
@@ -218,10 +218,10 @@ describe("Button (polymorphic)", () => {
     );
 
     expect(screen.getByRole("link", { name: "Link secondary" })).toHaveClass(
-      "border-pink-700",
+      "border-control-border",
     );
     expect(screen.getByText("Inline secondary").closest(".button")).toHaveClass(
-      "border-pink-700",
+      "border-control-border",
     );
   });
 

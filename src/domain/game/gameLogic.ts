@@ -21,6 +21,7 @@ export function createInitialGameState(): GameState {
     preferences: {
       motionEnabled: true,
       tableFeedback: false,
+      theme: "system",
     },
     players: [],
     settings: {

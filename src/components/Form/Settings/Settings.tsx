@@ -4,13 +4,14 @@ import Button from "@/components/Button/Button";
 import { Panel } from "@/components/Panel/Panel";
 import Pill from "@/components/Pill/Pill";
 import { useGame } from "@/domain/game/GameProvider";
-import { DiceStyle, GameMode } from "@/domain/game/gameTypes";
+import { DiceStyle, GameMode, ThemePreference } from "@/domain/game/gameTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import z from "zod";
 
 export const diceStyles = ["default", "medieval"] as const;
 export const modes = ["dice", "manual"] as const;
+export const themePreferences = ["system", "light", "dark"] as const;
 const targetScorePresets = [2500, 5000, 10000] as const;
 const minTargetScore = 500;
 const maxTargetScore = 50000;
@@ -27,6 +28,7 @@ const SettingsFormSchema = z.object({
     .max(maxTargetScore, `Target score must be ${maxTargetScore} or less.`),
   showComboSuggestions: z.boolean(),
   tableFeedback: z.boolean(),
+  theme: z.enum(themePreferences),
 });
 
 export type SettingsFormSchemaType = z.infer<typeof SettingsFormSchema>;
@@ -57,6 +59,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
       targetScore: state.settings.targetScore,
       showComboSuggestions: state.settings.showComboSuggestions,
       tableFeedback: state.preferences.tableFeedback,
+      theme: state.preferences.theme,
     },
     mode: "onBlur",
   });
@@ -69,17 +72,19 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
     targetScore: number;
     showComboSuggestions: boolean;
     tableFeedback: boolean;
+    theme: ThemePreference;
   }) => {
     onSubmit(data);
     reset();
   };
 
   return (
-    <div className="form-wrapper | border-pink-500 border p-6 rounded-4xl bg-gray-800 self-center">
+    <div className="form-wrapper | border-accent border p-6 rounded-4xl bg-surface self-center">
       <form
         className="form | gap-6 flex flex-col"
         onSubmit={handleSubmit(submitHandler)}
       >
+        <h2 className="font-heading-2 text-text">Settings</h2>
         <Controller
           control={control}
           name="autoAdvanceTurns"
@@ -206,7 +211,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
                 <label htmlFor="target-score">Point target</label>
                 <input
                   id="target-score"
-                  className={`border py-4 px-5 rounded-4xl ${errors?.targetScore ? "border-red-500" : "border-gray-200"}`}
+                  className="field-control"
                   {...field}
                   placeholder="Enter target score..."
                   data-valid={errors?.targetScore ? "false" : "true"}
@@ -243,7 +248,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
                 </div>
 
                 {fieldState.error ? (
-                  <p id="target-score-error" className="text-red-700">
+                  <p id="target-score-error" className="field-error">
                     {fieldState.error.message}
                   </p>
                 ) : null}
@@ -367,6 +372,44 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
                     </Pill.Control>
                     <Pill.Label htmlFor="motionEnabled_no">Off</Pill.Label>
                   </Pill>
+                </div>
+              </fieldset>
+            </Panel>
+          )}
+        />
+
+        <Controller
+          control={control}
+          name="theme"
+          render={({ field }) => (
+            <Panel>
+              <fieldset className="grid gap-3">
+                <legend className="contents">Theme</legend>
+                <div className="flex flex-wrap gap-4">
+                  {themePreferences.map((option) => {
+                    const id = `theme_${option}`;
+                    const label =
+                      option === "system"
+                        ? "System"
+                        : option === "light"
+                          ? "Light"
+                          : "Dark";
+
+                    return (
+                      <Pill key={option}>
+                        <Pill.Control>
+                          <input
+                            type="radio"
+                            checked={field.value === option}
+                            onChange={() => field.onChange(option)}
+                            name={field.name}
+                            id={id}
+                          />
+                        </Pill.Control>
+                        <Pill.Label htmlFor={id}>{label}</Pill.Label>
+                      </Pill>
+                    );
+                  })}
                 </div>
               </fieldset>
             </Panel>

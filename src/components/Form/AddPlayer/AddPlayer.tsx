@@ -153,9 +153,17 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
                   </label>
                   <input
                     id="player-name"
-                    className={`py-4 px-5 border border-gray-300 bg-gray-600 rounded-4xl placeholder-white text-white`}
+                    className="field-control"
                     {...field}
                     placeholder="Enter player name..."
+                    onFocus={(event) => {
+                      if (
+                        !dirtyFields.username &&
+                        event.currentTarget.value === defaultUsername
+                      ) {
+                        event.currentTarget.select();
+                      }
+                    }}
                     data-valid={errors?.username ? "false" : "true"}
                     aria-invalid={errors?.username ? "true" : undefined}
                     aria-describedby={
@@ -165,7 +173,7 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
                   {errors?.username ? (
                     <p
                       id="player-name-error"
-                      className="text-red-800 px-4 py-2 bg-white border-red-500 border rounded-3xl"
+                      className="field-error"
                     >
                       {errors.username.message}
                     </p>
@@ -179,7 +187,7 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
               control={control}
               render={({ field, fieldState }) => (
                 <fieldset aria-invalid={!!fieldState.error || undefined}>
-                  <legend className="mb-4 text-white">Choose an avatar</legend>
+                  <legend className="mb-4 text-text">Choose an avatar</legend>
 
                   <div className="gap-4 grid grid-cols-3 justify-items-center">
                     {avatarValues.map((option) => {

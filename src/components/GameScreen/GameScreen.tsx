@@ -53,7 +53,7 @@ export function GameScreen() {
   };
 
   const onSettingsSubmit = (data: SettingsFormSchemaType) => {
-    const { motionEnabled, tableFeedback, ...settings } = data;
+    const { motionEnabled, tableFeedback, theme, ...settings } = data;
 
     dispatch({
       type: "UPDATE_SETTINGS",
@@ -64,6 +64,7 @@ export function GameScreen() {
       preferences: {
         motionEnabled,
         tableFeedback,
+        theme,
       },
     });
     setLobbyScreen("players");

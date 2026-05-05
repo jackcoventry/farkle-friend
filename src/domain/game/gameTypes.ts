@@ -57,6 +57,7 @@ export type GameSummary = {
 
 export type DiceStyle = "default" | "medieval";
 export type GameMode = "dice" | "manual";
+export type ThemePreference = "system" | "light" | "dark";
 
 export type GameSettings = {
   autoAdvanceTurns: boolean;
@@ -69,4 +70,5 @@ export type GameSettings = {
 export type GamePreferences = {
   motionEnabled: boolean;
   tableFeedback: boolean;
+  theme: ThemePreference;
 };
