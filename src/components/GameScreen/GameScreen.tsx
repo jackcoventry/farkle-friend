@@ -19,7 +19,7 @@ import {
 } from "@/domain/game/gameSelectors";
 import { useGame } from "@/domain/game/GameProvider";
 import { useWarnBeforeUnload } from "@/hooks/useWarnBeforeUnload";
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import type { KeyboardEvent } from "react";
 
 export function GameScreen() {
@@ -32,12 +32,21 @@ export function GameScreen() {
     useState<DiceTurnMetrics | null>(null);
   const playersTabRef = useRef<HTMLButtonElement | null>(null);
   const settingsTabRef = useRef<HTMLButtonElement | null>(null);
-  const summary = getGameSummary(state);
-  const flowState = getGameFlowState(state);
-  const currentPlayer = getCurrentPlayer(state, summary);
-  const nextPlayer = getNextPlayer(summary, state.pendingTurnResult);
-  const winner = getWinner(summary);
-  const avatar = avatarSet[currentPlayer?.avatar as AvatarId];
+  const summary = useMemo(() => getGameSummary(state), [state]);
+  const flowState = useMemo(() => getGameFlowState(state), [state]);
+  const currentPlayer = useMemo(
+    () => getCurrentPlayer(state, summary),
+    [state, summary],
+  );
+  const nextPlayer = useMemo(
+    () => getNextPlayer(summary, state.pendingTurnResult),
+    [state.pendingTurnResult, summary],
+  );
+  const winner = useMemo(() => getWinner(summary), [summary]);
+  const avatar = useMemo(
+    () => avatarSet[currentPlayer?.avatar as AvatarId],
+    [currentPlayer],
+  );
 
   useWarnBeforeUnload(shouldWarnBeforeUnload(state));
 

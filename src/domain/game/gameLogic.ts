@@ -28,7 +28,7 @@ export function createInitialGameState(): GameState {
       autoAdvanceTurns: false,
       diceStyle: "default",
       mode: "dice",
-      targetScore: 10000,
+      targetScore: 5000,
       showComboSuggestions: false,
     },
     turns: [],
@@ -45,14 +45,14 @@ function withUpdatedAt<T extends { updatedAt: string }>(state: T): T {
 export function addPlayer(
   state: GameState,
   username: string,
-  avatar: number
+  avatar: number,
 ): GameState {
   if (state.phase !== "LOBBY") return state;
   const trimmed = username.trim();
   if (!trimmed) return state;
   if (
     state.players.some(
-      (player) => player.username.toLowerCase() === trimmed.toLowerCase()
+      (player) => player.username.toLowerCase() === trimmed.toLowerCase(),
     )
   ) {
     return state;
@@ -129,7 +129,7 @@ export function advanceTurn(state: GameState): GameState {
   }
 
   const nextPlayerIndex = state.players.findIndex(
-    (player) => player.id === state.pendingTurnResult?.nextPlayerId
+    (player) => player.id === state.pendingTurnResult?.nextPlayerId,
   );
 
   return withUpdatedAt({
@@ -142,7 +142,7 @@ export function advanceTurn(state: GameState): GameState {
 export function recordTurn(
   state: GameState,
   playerId: PlayerId,
-  score: number
+  score: number,
 ): GameState {
   // Return if a game is not in progress
   if (state.phase !== "IN_PROGRESS") return state;
@@ -174,11 +174,13 @@ export function recordTurn(
     turns,
   };
   const summary = getGameSummary(nextState);
-  const newTotal = summary.players.find((p) => p.id === playerId)?.totalScore ?? 0;
+  const newTotal =
+    summary.players.find((p) => p.id === playerId)?.totalScore ?? 0;
   const turnResult = {
     isGameWinner: summary.isTargetReached,
     newTotal,
-    nextPlayerId: nextIndex == null ? null : state.players[nextIndex]?.id ?? null,
+    nextPlayerId:
+      nextIndex == null ? null : (state.players[nextIndex]?.id ?? null),
     playerId,
     previousTotal: previousTotals[playerId] ?? 0,
     score: turn.score,

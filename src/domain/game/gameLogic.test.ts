@@ -18,7 +18,7 @@ describe("game logic", () => {
       diceStyle: "default",
       mode: "dice",
       showComboSuggestions: false,
-      targetScore: 10000,
+      targetScore: 5000,
     });
     expect(state.preferences).toMatchObject({
       motionEnabled: true,
