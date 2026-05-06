@@ -13,7 +13,7 @@ function Footer() {
 
   return (
     <>
-      <footer className="mt-auto flex flex-col text-white">
+      <footer className="mt-auto flex flex-col text-text">
         <div className="flex items-between">
           <span className="font-sub-heading text-center">FARKLE!</span>
           <div className="flex gap-3 ml-auto items-center">

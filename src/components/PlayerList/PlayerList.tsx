@@ -44,8 +44,8 @@ function PlayerList({
                   className="h-auto w-full"
                 />
               </div>
-              <div className="flex min-w-0 flex-1 flex-col justify-center">
-                <div className="grid min-w-0 gap-1">
+              <div className="flex min-w-0 flex-1 flex-col justify-center gap-1">
+                <div className="grid min-w-0 gap-2">
                   <p
                     className="font-heading-2 truncate"
                     title={player.username}
@@ -72,7 +72,7 @@ function PlayerList({
                 </span>
                 {progress === null ? null : (
                   <div
-                    className="mt-2 h-2 overflow-hidden rounded-full bg-surface"
+                    className="h-2 overflow-hidden rounded-full bg-surface"
                     aria-label={`${player.username} is ${progress}% of the way to the target score`}
                     role="meter"
                     aria-valuemin={0}

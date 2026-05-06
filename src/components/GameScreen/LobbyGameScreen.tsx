@@ -1,24 +1,20 @@
-"use client";
+'use client';
 
-import Button from "@/components/Button/Button";
-import Footer from "@/components/Footer/Footer";
-import AddPlayerForm, {
-  type AddPlayerFormSchemaType,
-} from "@/components/Form/AddPlayer/AddPlayer";
-import Settings, {
-  type SettingsFormSchemaType,
-} from "@/components/Form/Settings/Settings";
-import { GameSetupSummary } from "@/components/GameSetupSummary/GameSetupSummary";
-import GameShell from "@/components/GameShell/GameShell";
-import Modal from "@/components/Modal/Modal";
-import PlayerList from "@/components/PlayerList/PlayerList";
-import { canStartGame } from "@/domain/game/gameLogic";
-import type { GameState } from "@/domain/game/gameTypes";
-import type { KeyboardEvent, RefObject } from "react";
-import { useState } from "react";
-import { Panel } from "@/components/Panel/Panel";
+import type { KeyboardEvent, RefObject } from 'react';
+import { useState } from 'react';
+import { canStartGame } from '@/domain/game/gameLogic';
+import type { GameState } from '@/domain/game/gameTypes';
+import Button from '@/components/Button/Button';
+import Footer from '@/components/Footer/Footer';
+import AddPlayerForm, { type AddPlayerFormSchemaType } from '@/components/Form/AddPlayer/AddPlayer';
+import Settings, { type SettingsFormSchemaType } from '@/components/Form/Settings/Settings';
+import { GameSetupSummary } from '@/components/GameSetupSummary/GameSetupSummary';
+import GameShell from '@/components/GameShell/GameShell';
+import Modal from '@/components/Modal/Modal';
+import { Panel } from '@/components/Panel/Panel';
+import PlayerList from '@/components/PlayerList/PlayerList';
 
-type LobbyScreen = "players" | "settings";
+type LobbyScreen = 'players' | 'settings';
 
 type LobbyGameScreenProps = {
   lobbyScreen: LobbyScreen;
@@ -71,15 +67,14 @@ export function LobbyGameScreen({
             <Panel>
               <h2 className="font-heading-2">No players yet</h2>
               <p className="mt-1 text-text-muted">
-                Add at least two players, then start the game from the setup
-                panel.
+                Add at least two players, then start the game from the setup panel.
               </p>
             </Panel>
           )}
           <GameSetupSummary
             preferences={state.preferences}
             settings={state.settings}
-            onEditSettings={() => onSelectLobbyScreen("settings")}
+            onEditSettings={() => onSelectLobbyScreen('settings')}
           />
         </GameShell.SidebarMain>
         <GameShell.SidebarFooter>
@@ -109,8 +104,7 @@ export function LobbyGameScreen({
                   <Panel>
                     <h2 className="font-heading-2">No players yet</h2>
                     <p className="mt-1 text-text-muted">
-                      Add at least two players, then start the game from the
-                      setup panel.
+                      Add at least two players, then start the game from the setup panel.
                     </p>
                   </Panel>
                 )}
@@ -119,7 +113,7 @@ export function LobbyGameScreen({
                   settings={state.settings}
                   onEditSettings={() => {
                     setIsSidebarOpen(false);
-                    onSelectLobbyScreen("settings");
+                    onSelectLobbyScreen('settings');
                   }}
                 />
               </GameShell.SidebarMain>
@@ -146,32 +140,30 @@ export function LobbyGameScreen({
               ref={playersTabRef}
               type="button"
               role="tab"
-              aria-selected={lobbyScreen === "players"}
+              aria-selected={lobbyScreen === 'players'}
               aria-controls="players-panel"
               id="players-tab"
-              tabIndex={lobbyScreen === "players" ? 0 : -1}
-              onClick={() => onSelectLobbyScreen("players")}
+              tabIndex={lobbyScreen === 'players' ? 0 : -1}
+              onClick={() => onSelectLobbyScreen('players')}
               onKeyDown={onLobbyTabKeyDown}
-              variant={lobbyScreen === "players" ? "primary" : "secondary"}
+              variant={lobbyScreen === 'players' ? 'primary' : 'secondary'}
               size="small"
               icon="person-circle"
             >
               Players
-              {state.players.length ? (
-                <span className="ml-2">({state.players.length})</span>
-              ) : null}
+              {state.players.length ? <span className="ml-2">({state.players.length})</span> : null}
             </Button>
             <Button
               ref={settingsTabRef}
               type="button"
               role="tab"
-              aria-selected={lobbyScreen === "settings"}
+              aria-selected={lobbyScreen === 'settings'}
               aria-controls="settings-panel"
               id="settings-tab"
-              tabIndex={lobbyScreen === "settings" ? 0 : -1}
-              onClick={() => onSelectLobbyScreen("settings")}
+              tabIndex={lobbyScreen === 'settings' ? 0 : -1}
+              onClick={() => onSelectLobbyScreen('settings')}
               onKeyDown={onLobbyTabKeyDown}
-              variant={lobbyScreen === "settings" ? "primary" : "secondary"}
+              variant={lobbyScreen === 'settings' ? 'primary' : 'secondary'}
               size="small"
               icon="person-circle"
             >
@@ -179,7 +171,7 @@ export function LobbyGameScreen({
             </Button>
           </div>
 
-          {lobbyScreen === "players" ? (
+          {lobbyScreen === 'players' ? (
             <div
               aria-labelledby="players-tab"
               id="players-panel"

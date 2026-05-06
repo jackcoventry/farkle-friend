@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import Button from "@/components/Button/Button";
-import Modal from "@/components/Modal/Modal";
-import Pill from "@/components/Pill/Pill";
-import { useGame } from "@/domain/game/GameProvider";
-import type { ThemePreference } from "@/domain/game/gameTypes";
-import { useState } from "react";
+import { useState } from 'react';
+import { useGame } from '@/domain/game/GameProvider';
+import type { ThemePreference } from '@/domain/game/gameTypes';
+import Button from '@/components/Button/Button';
+import Modal from '@/components/Modal/Modal';
+import Pill from '@/components/Pill/Pill';
 
 type GamePreferencesProps = {
   className?: string;
@@ -21,12 +21,10 @@ export function GamePreferences({ className }: Readonly<GamePreferencesProps>) {
     theme?: ThemePreference;
   }) => {
     dispatch({
-      type: "UPDATE_PREFERENCES",
+      type: 'UPDATE_PREFERENCES',
       preferences: {
-        motionEnabled:
-          settings.motionEnabled ?? state.preferences.motionEnabled,
-        tableFeedback:
-          settings.tableFeedback ?? state.preferences.tableFeedback,
+        motionEnabled: settings.motionEnabled ?? state.preferences.motionEnabled,
+        tableFeedback: settings.tableFeedback ?? state.preferences.tableFeedback,
         theme: settings.theme ?? state.preferences.theme,
       },
     });
@@ -56,7 +54,7 @@ export function GamePreferences({ className }: Readonly<GamePreferencesProps>) {
             <Modal.CloseButton ariaLabel="Close preferences" />
           </div>
           <div className="modal-panel__content">
-            <div className="grid gap-6">
+            <div className="grid gap-4">
               <h2 className="font-heading text-center">Preferences</h2>
               <fieldset className="preference-fieldset | grid gap-3 rounded-2xl border border-border bg-surface-muted p-4">
                 <legend className="contents">Sound & haptics</legend>
@@ -66,9 +64,7 @@ export function GamePreferences({ className }: Readonly<GamePreferencesProps>) {
                       <input
                         type="radio"
                         checked={state.preferences.tableFeedback}
-                        onChange={() =>
-                          updatePreferences({ tableFeedback: true })
-                        }
+                        onChange={() => updatePreferences({ tableFeedback: true })}
                         name="preferenceSound"
                         id="preferenceSound_on"
                       />
@@ -80,9 +76,7 @@ export function GamePreferences({ className }: Readonly<GamePreferencesProps>) {
                       <input
                         type="radio"
                         checked={!state.preferences.tableFeedback}
-                        onChange={() =>
-                          updatePreferences({ tableFeedback: false })
-                        }
+                        onChange={() => updatePreferences({ tableFeedback: false })}
                         name="preferenceSound"
                         id="preferenceSound_off"
                       />
@@ -99,9 +93,7 @@ export function GamePreferences({ className }: Readonly<GamePreferencesProps>) {
                       <input
                         type="radio"
                         checked={state.preferences.motionEnabled}
-                        onChange={() =>
-                          updatePreferences({ motionEnabled: true })
-                        }
+                        onChange={() => updatePreferences({ motionEnabled: true })}
                         name="preferenceMotion"
                         id="preferenceMotion_on"
                       />
@@ -113,9 +105,7 @@ export function GamePreferences({ className }: Readonly<GamePreferencesProps>) {
                       <input
                         type="radio"
                         checked={!state.preferences.motionEnabled}
-                        onChange={() =>
-                          updatePreferences({ motionEnabled: false })
-                        }
+                        onChange={() => updatePreferences({ motionEnabled: false })}
                         name="preferenceMotion"
                         id="preferenceMotion_off"
                       />
@@ -127,13 +117,9 @@ export function GamePreferences({ className }: Readonly<GamePreferencesProps>) {
               <fieldset className="preference-fieldset | grid gap-3 rounded-2xl border border-border bg-surface-muted p-4">
                 <legend className="contents">Theme</legend>
                 <div className="flex flex-wrap gap-3">
-                  {(["system", "light", "dark"] as const).map((option) => {
+                  {(['system', 'light', 'dark'] as const).map((option) => {
                     const label =
-                      option === "system"
-                        ? "System"
-                        : option === "light"
-                          ? "Light"
-                          : "Dark";
+                      option === 'system' ? 'System' : option === 'light' ? 'Light' : 'Dark';
 
                     return (
                       <Pill key={option}>
@@ -146,9 +132,7 @@ export function GamePreferences({ className }: Readonly<GamePreferencesProps>) {
                             id={`preferenceTheme_${option}`}
                           />
                         </Pill.Control>
-                        <Pill.Label htmlFor={`preferenceTheme_${option}`}>
-                          {label}
-                        </Pill.Label>
+                        <Pill.Label htmlFor={`preferenceTheme_${option}`}>{label}</Pill.Label>
                       </Pill>
                     );
                   })}

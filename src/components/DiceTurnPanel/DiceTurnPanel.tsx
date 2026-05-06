@@ -1,22 +1,19 @@
-"use client";
+'use client';
 
-import { GameAction } from "@/domain/game/gameReducer";
-import { GameState } from "@/domain/game/gameTypes";
-import { playGameSound } from "@/domain/game/gameAudio";
-import { getScoringCombinations } from "@/domain/game/dice";
-import DiceIcon from "@/components/DiceIcon/DiceIcon";
-import Modal from "@/components/Modal/Modal";
-import { TurnActionCluster } from "@/components/TurnActionCluster/TurnActionCluster";
-import { useTurnController } from "@/domain/game/useTurnController";
-import { useDiceTurnController } from "@/domain/game/useDiceTurnController";
-import {
-  getDiceActionHint,
-  getDiceTurnCopy,
-} from "@/domain/game/diceTurnPresenter";
-import { useDiceKeyboardShortcuts } from "@/hooks/useDiceKeyboardShortcuts";
-import { useCallback, useEffect } from "react";
-import "./DiceTurnPanel.css";
-import { Panel } from "../Panel/Panel";
+import { useCallback, useEffect } from 'react';
+import { useDiceKeyboardShortcuts } from '@/hooks/useDiceKeyboardShortcuts';
+import { getScoringCombinations } from '@/domain/game/dice';
+import { getDiceActionHint, getDiceTurnCopy } from '@/domain/game/diceTurnPresenter';
+import { playGameSound } from '@/domain/game/gameAudio';
+import { GameAction } from '@/domain/game/gameReducer';
+import { GameState } from '@/domain/game/gameTypes';
+import { useDiceTurnController } from '@/domain/game/useDiceTurnController';
+import { useTurnController } from '@/domain/game/useTurnController';
+import DiceIcon from '@/components/DiceIcon/DiceIcon';
+import Modal from '@/components/Modal/Modal';
+import { Panel } from '@/components/Panel/Panel';
+import { TurnActionCluster } from '@/components/TurnActionCluster/TurnActionCluster';
+import './DiceTurnPanel.css';
 
 type DiceTurnPanelProps = {
   state: GameState;
@@ -52,15 +49,11 @@ export function DiceTurnPanel({
   const currentRoll = activeTurn?.currentRoll ?? null;
   const isFarkled = activeTurn?.isFarkled ?? false;
   const isHotDice =
-    activeTurn?.currentRoll === null &&
-    activeTurn.availableDice === 6 &&
-    activeTurn.tempScore > 0;
+    activeTurn?.currentRoll === null && activeTurn.availableDice === 6 && activeTurn.tempScore > 0;
 
   // List possible combinations for current roll
   const currentCombos =
-    activeTurn?.currentRoll == null
-      ? []
-      : getScoringCombinations(activeTurn.currentRoll);
+    activeTurn?.currentRoll == null ? [] : getScoringCombinations(activeTurn.currentRoll);
   const hasSelectedDice = dice.selectedIndices.length > 0;
   const showSelectionStatus = hasSelectedDice || isFarkled;
   const showTurnCoachAndSidebar = !isFarkled;
@@ -86,19 +79,19 @@ export function DiceTurnPanel({
   const tableFeedbackEnabled = state.preferences.tableFeedback;
 
   const playFeedback = useCallback(
-    (type: "bank" | "farkle" | "roll" | "select") => {
+    (type: 'bank' | 'farkle' | 'roll' | 'select') => {
       playGameSound(type, tableFeedbackEnabled);
     },
-    [tableFeedbackEnabled],
+    [tableFeedbackEnabled]
   );
 
   const handleRoll = () => {
-    playFeedback("roll");
+    playFeedback('roll');
     dice.roll();
   };
 
   const handleBank = () => {
-    playFeedback("bank");
+    playFeedback('bank');
     dice.bankSelected();
   };
 
@@ -108,16 +101,16 @@ export function DiceTurnPanel({
 
   const handleToggleDieSelection = useCallback(
     (index: number) => {
-      playFeedback("select");
+      playFeedback('select');
       dice.toggleDieSelection(index);
     },
-    [dice, playFeedback],
+    [dice, playFeedback]
   );
 
   useEffect(() => {
     if (!isFarkled) return;
 
-    playFeedback("farkle");
+    playFeedback('farkle');
   }, [isFarkled, playFeedback]);
 
   useEffect(() => {
@@ -132,20 +125,13 @@ export function DiceTurnPanel({
     });
 
     return () => onTurnMetricsChange?.(null);
-  }, [
-    activeTurn,
-    activeTurn?.availableDice,
-    activeTurn?.tempScore,
-    onTurnMetricsChange,
-  ]);
+  }, [activeTurn, activeTurn?.availableDice, activeTurn?.tempScore, onTurnMetricsChange]);
 
   useDiceKeyboardShortcuts({
     canBank: dice.canBank,
     canFinish: dice.canFinish,
     canRoll: dice.canRoll,
-    currentRollLength: activeTurn?.isFarkled
-      ? 0
-      : (dice.currentRoll?.length ?? 0),
+    currentRollLength: activeTurn?.isFarkled ? 0 : (dice.currentRoll?.length ?? 0),
     onBank: handleBank,
     onFinish: handleFinish,
     onRoll: handleRoll,
@@ -156,8 +142,7 @@ export function DiceTurnPanel({
     return <p>No active player</p>;
   }
 
-  const actionHintId =
-    showTurnCoachAndSidebar && showActionHint ? "dice-action-hint" : undefined;
+  const actionHintId = showTurnCoachAndSidebar && showActionHint ? 'dice-action-hint' : undefined;
   const coachContent = (
     <>
       <Panel
@@ -172,8 +157,7 @@ export function DiceTurnPanel({
         </div>
         {showSelectionStatus ? (
           <div className="rounded-lg bg-accent px-3 py-2 text-sm text-accent-contrast">
-            <span className="font-body-1">Selection</span>{" "}
-            <span>{turnCopy.selectedStatus}</span>
+            <span className="font-body-1">Selection</span> <span>{turnCopy.selectedStatus}</span>
           </div>
         ) : null}
         {dice.selectedBreakdown.length > 0 ? (
@@ -189,7 +173,10 @@ export function DiceTurnPanel({
           </ul>
         ) : null}
         {showActionHint ? (
-          <p id="dice-action-hint" className="text-sm font-body-1">
+          <p
+            id="dice-action-hint"
+            className="text-sm font-body-1"
+          >
             {actionHint}
           </p>
         ) : null}
@@ -203,15 +190,20 @@ export function DiceTurnPanel({
           <p className="font-body-1">Possible scoring dice</p>
           <ul className="mt-2 grid gap-1 text-sm">
             {currentCombos.slice(0, 5).map((combo, index) => (
-              <li key={index} className="grid w-full grid-cols-2">
+              <li
+                key={index}
+                className="grid w-full grid-cols-2"
+              >
                 <span className="flex gap-1">
                   {combo.dice.map((e) => (
-                    <DiceIcon key={e} count={e} className="w-6" />
+                    <DiceIcon
+                      key={e}
+                      count={e}
+                      className="w-6"
+                    />
                   ))}
                 </span>
-                <span className="text-right text-accent">
-                  {combo.score} pts
-                </span>
+                <span className="text-right text-accent">{combo.score} pts</span>
               </li>
             ))}
           </ul>
@@ -232,12 +224,8 @@ export function DiceTurnPanel({
                   className="animate-bounce-in max-w-[560px] rounded-3xl border-4 border-danger bg-danger-surface p-6 text-center text-danger-contrast shadow-lg"
                 >
                   <p className="font-sub-heading text-danger">Turn over</p>
-                  <h2 className="font-heading text-danger">
-                    You have been Farkled!
-                  </h2>
-                  <p className="mt-2">
-                    No scoring dice were rolled. This turn scores 0 points.
-                  </p>
+                  <h2 className="font-heading text-danger">You have been Farkled!</h2>
+                  <p className="mt-2">No scoring dice were rolled. This turn scores 0 points.</p>
                 </div>
               ) : null}
 
@@ -252,21 +240,19 @@ export function DiceTurnPanel({
                         onClick={() => handleToggleDieSelection(idx)}
                         disabled={activeTurn.isFarkled}
                         aria-pressed={isSelected}
-                        aria-label={`${isSelected ? "Deselect" : "Select"} die ${
+                        aria-label={`${isSelected ? 'Deselect' : 'Select'} die ${
                           idx + 1
                         } showing ${value}`}
                         style={{
                           animationDelay: `${idx * 0.05}s`,
                         }}
-                        className={`animate-bounce-in w-[72px] cursor-pointer rounded-lg p-1 opacity-0 transition-transform hover:z-10 hover:scale-105 sm:w-[100px] ${
-                          isSelected
-                            ? "bg-selected ring-4 ring-selected-border"
-                            : "bg-transparent"
+                        className={`animate-bounce-in w-8 cursor-pointer rounded-lg p-1 opacity-0 transition-transform hover:z-10 hover:scale-105 sm:w-[100px] ${
+                          isSelected ? 'bg-selected ring-4 ring-selected-border' : 'bg-transparent'
                         }`}
                       >
                         <DiceIcon
                           count={value}
-                          state={isSelected ? "active" : "default"}
+                          state={isSelected ? 'active' : 'default'}
                         />
                       </button>
                     );
@@ -287,27 +273,24 @@ export function DiceTurnPanel({
             actions={[
               {
                 ariaDescribedBy: actionHintId,
-                ariaLabel: "Roll dice",
+                ariaLabel: 'Roll dice',
                 disabled: !dice.canRoll,
-                icon: "dice",
-                label: "Roll",
+                icon: 'dice',
+                label: 'Roll',
                 onClick: handleRoll,
               },
               {
                 ariaDescribedBy: actionHintId,
                 disabled: !dice.canBank,
-                icon: "bank",
-                label:
-                  dice.selectedScore > 0
-                    ? `Bank ${dice.selectedScore}`
-                    : "Bank",
+                icon: 'bank',
+                label: dice.selectedScore > 0 ? `Bank ${dice.selectedScore}` : 'Bank',
                 onClick: handleBank,
               },
               {
                 ariaDescribedBy: actionHintId,
                 disabled: !dice.canFinish,
-                icon: "rocket",
-                label: "End turn",
+                icon: 'rocket',
+                label: 'End turn',
                 onClick: handleFinish,
               },
             ]}
@@ -332,25 +315,21 @@ export function DiceTurnPanel({
       </div>
 
       {showTurnCoachAndSidebar ? (
-        <>
-          <Modal
-            id="dice-turn-coach-modal"
-            isOpen={isCoachOpenOnMobile}
-            onClose={onCloseMobileCoach}
-            ariaLabel="Turn information"
-          >
-            <Modal.Body className="dice-turn-coach-modal modal-panel modal-panel--narrow">
-              <div className="modal-panel__header">
-                <Modal.CloseButton ariaLabel="Close turn information" />
-              </div>
-              <div className="modal-panel__content">
-                <div className="dice-turn-table__coach | flex flex-col gap-4">
-                  {coachContent}
-                </div>
-              </div>
-            </Modal.Body>
-          </Modal>
-        </>
+        <Modal
+          id="dice-turn-coach-modal"
+          isOpen={isCoachOpenOnMobile}
+          onClose={onCloseMobileCoach}
+          ariaLabel="Turn information"
+        >
+          <Modal.Body className="dice-turn-coach-modal modal-panel modal-panel--narrow">
+            <div className="modal-panel__header">
+              <Modal.CloseButton ariaLabel="Close turn information" />
+            </div>
+            <div className="modal-panel__content">
+              <div className="dice-turn-table__coach | flex flex-col gap-4">{coachContent}</div>
+            </div>
+          </Modal.Body>
+        </Modal>
       ) : null}
     </div>
   );
