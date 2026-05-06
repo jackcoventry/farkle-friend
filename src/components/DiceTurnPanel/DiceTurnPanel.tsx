@@ -9,10 +9,10 @@ import { GameAction } from '@/domain/game/gameReducer';
 import { GameState } from '@/domain/game/gameTypes';
 import { useDiceTurnController } from '@/domain/game/useDiceTurnController';
 import { useTurnController } from '@/domain/game/useTurnController';
+import { DiceTurnActions } from '@/components/DiceTurnPanel/DiceTurnActions';
 import { DiceBoard } from '@/components/DiceTurnPanel/DiceBoard';
 import { DiceTurnCoach } from '@/components/DiceTurnPanel/DiceTurnCoach';
 import { DiceTurnInfoModal } from '@/components/DiceTurnPanel/DiceTurnInfoModal';
-import { TurnActionCluster } from '@/components/TurnActionCluster/TurnActionCluster';
 import './DiceTurnPanel.css';
 
 type DiceTurnPanelProps = {
@@ -167,31 +167,15 @@ export function DiceTurnPanel({
             selectedIndices={dice.selectedIndices}
           />
 
-          <TurnActionCluster
-            actions={[
-              {
-                ariaDescribedBy: actionHintId,
-                ariaLabel: 'Roll dice',
-                disabled: !dice.canRoll,
-                icon: 'dice',
-                label: 'Roll',
-                onClick: handleRoll,
-              },
-              {
-                ariaDescribedBy: actionHintId,
-                disabled: !dice.canBank,
-                icon: 'bank',
-                label: dice.selectedScore > 0 ? `Bank ${dice.selectedScore}` : 'Bank',
-                onClick: handleBank,
-              },
-              {
-                ariaDescribedBy: actionHintId,
-                disabled: !dice.canFinish,
-                icon: 'rocket',
-                label: 'End turn',
-                onClick: handleFinish,
-              },
-            ]}
+          <DiceTurnActions
+            actionHintId={actionHintId}
+            canBank={dice.canBank}
+            canFinish={dice.canFinish}
+            canRoll={dice.canRoll}
+            onBank={handleBank}
+            onFinish={handleFinish}
+            onRoll={handleRoll}
+            selectedScore={dice.selectedScore}
           />
         </div>
 
