@@ -1,6 +1,6 @@
 import { AvatarImage } from "@/components/AvatarImage/AvatarImage";
 import Button from "@/components/Button/Button";
-import { AvatarId, avatarSet } from "@/components/Form/AddPlayer/AddPlayer";
+import { AvatarId, avatarSet } from "@/domain/game/avatars";
 import Modal from "@/components/Modal/Modal";
 import Splash from "@/components/Modal/Splash";
 import { playGameSound } from "@/domain/game/gameAudio";

@@ -9,7 +9,11 @@ import Modal from "@/components/Modal/Modal";
 import { TurnActionCluster } from "@/components/TurnActionCluster/TurnActionCluster";
 import { useTurnController } from "@/domain/game/useTurnController";
 import { useDiceTurnController } from "@/domain/game/useDiceTurnController";
-import { getDiceTurnCopy } from "@/domain/game/diceTurnPresenter";
+import {
+  getDiceActionHint,
+  getDiceTurnCopy,
+} from "@/domain/game/diceTurnPresenter";
+import { useDiceKeyboardShortcuts } from "@/hooks/useDiceKeyboardShortcuts";
 import { useCallback, useEffect } from "react";
 import "./DiceTurnPanel.css";
 import { Panel } from "../Panel/Panel";
@@ -349,115 +353,5 @@ export function DiceTurnPanel({
         </>
       ) : null}
     </div>
-  );
-}
-
-type DiceActionHintArgs = {
-  canBank: boolean;
-  hasCurrentRoll: boolean;
-  hasSelectedDice: boolean;
-  isFarkled: boolean;
-  selectedHasInvalidDice: boolean;
-  selectedScore: number;
-};
-
-function getDiceActionHint({
-  canBank,
-  hasCurrentRoll,
-  hasSelectedDice,
-  isFarkled,
-  selectedHasInvalidDice,
-  selectedScore,
-}: DiceActionHintArgs): string | null {
-  if (isFarkled) return "End the turn to score 0 and move to the next player.";
-  if (canBank && selectedScore > 0) {
-    return `Bank ${selectedScore} points from this selection, or keep selecting scoring dice.`;
-  }
-  if (selectedHasInvalidDice) {
-    return "Deselect any dice that do not score before banking this selection.";
-  }
-  if (hasSelectedDice) return "Selected dice do not score yet.";
-  if (hasCurrentRoll) return "Tap dice to select them, or use keys 1-6.";
-  return null;
-}
-
-type DiceKeyboardShortcutsArgs = {
-  canBank: boolean;
-  canFinish: boolean;
-  canRoll: boolean;
-  currentRollLength: number;
-  onBank: () => void;
-  onFinish: () => void;
-  onRoll: () => void;
-  onToggleDie: (index: number) => void;
-};
-
-function useDiceKeyboardShortcuts({
-  canBank,
-  canFinish,
-  canRoll,
-  currentRollLength,
-  onBank,
-  onFinish,
-  onRoll,
-  onToggleDie,
-}: DiceKeyboardShortcutsArgs) {
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (shouldIgnoreShortcut(event)) return;
-
-      const key = event.key.toLowerCase();
-      const dieNumber = Number(key);
-
-      if (Number.isInteger(dieNumber) && dieNumber >= 1 && dieNumber <= 6) {
-        if (dieNumber <= currentRollLength) {
-          event.preventDefault();
-          onToggleDie(dieNumber - 1);
-        }
-        return;
-      }
-
-      if (key === "r" && canRoll) {
-        event.preventDefault();
-        onRoll();
-        return;
-      }
-
-      if (key === "b" && canBank) {
-        event.preventDefault();
-        onBank();
-        return;
-      }
-
-      if (event.key === "Enter" && canFinish) {
-        event.preventDefault();
-        onFinish();
-      }
-    };
-
-    globalThis.addEventListener("keydown", handleKeyDown);
-
-    return () => globalThis.removeEventListener("keydown", handleKeyDown);
-  }, [
-    canBank,
-    canFinish,
-    canRoll,
-    currentRollLength,
-    onBank,
-    onFinish,
-    onRoll,
-    onToggleDie,
-  ]);
-}
-
-function shouldIgnoreShortcut(event: KeyboardEvent): boolean {
-  if (event.altKey || event.ctrlKey || event.metaKey) return true;
-
-  const target = event.target;
-  if (!(target instanceof HTMLElement)) return false;
-
-  return (
-    target.isContentEditable ||
-    target.matches("input, textarea, select, button, a")
   );
 }

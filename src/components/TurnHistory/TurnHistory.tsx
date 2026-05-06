@@ -1,6 +1,6 @@
 import type { Player, Turn } from "@/domain/game/gameTypes";
 import { AvatarImage } from "@/components/AvatarImage/AvatarImage";
-import { AvatarId, avatarSet } from "@/components/Form/AddPlayer/AddPlayer";
+import { AvatarId, avatarSet } from "@/domain/game/avatars";
 import {
   getBiggestTurn,
   getLastFarkle,

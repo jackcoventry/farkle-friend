@@ -1,8 +1,8 @@
-import type { AvatarId, avatarSet } from "@/components/Form/AddPlayer/AddPlayer";
+import type { Avatar } from "@/domain/game/avatars";
 
 type AvatarImageProps = {
   alt: string;
-  avatar: (typeof avatarSet)[AvatarId];
+  avatar: Avatar;
   className?: string;
 };
 

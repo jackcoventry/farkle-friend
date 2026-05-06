@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { GameScreenSidebar } from "../GameScreen/ActiveGameScreen";
 
 type RootProps = {
   children: React.ReactNode;
@@ -22,7 +21,7 @@ export default function GameShell({ children }: Readonly<RootProps>) {
   React.Children.forEach(children, (child) => {
     if (!React.isValidElement(child)) return;
 
-    if (child.type === GameShell.Sidebar || child.type === GameScreenSidebar) {
+    if (child.type === GameShell.Sidebar) {
       sidebar = child;
       return;
     }

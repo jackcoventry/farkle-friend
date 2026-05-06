@@ -14,10 +14,7 @@ import PlayerList from "@/components/PlayerList/PlayerList";
 import { PlayerSwitchSplash } from "@/components/PlayerSwitchSplash/PlayerSwitchSplash";
 import { TurnHistory } from "@/components/TurnHistory/TurnHistory";
 import { TurnResultPanel } from "@/components/TurnResultPanel/TurnResultPanel";
-import {
-  avatarSet,
-  type AvatarId,
-} from "@/components/Form/AddPlayer/AddPlayer";
+import { avatarSet, type Avatar, type AvatarId } from "@/domain/game/avatars";
 import type { GameAction } from "@/domain/game/gameReducer";
 import type {
   GameFlowState,
@@ -31,7 +28,7 @@ import Button from "@/components/Button/Button";
 import { Panel } from "@/components/Panel/Panel";
 
 type ActiveGameScreenProps = {
-  avatar: (typeof avatarSet)[AvatarId] | undefined;
+  avatar: Avatar | undefined;
   currentPlayer: Player | null;
   diceTurnMetrics: DiceTurnMetrics | null;
   dispatch: Dispatch<GameAction>;
@@ -47,7 +44,6 @@ type ActiveGameScreenProps = {
 
 type GameScreenSidebarProps = {
   currentPlayer: Player | null;
-  isDesktop: boolean;
   onQuit: () => void;
   onRestart: () => void;
   state: GameState;
@@ -60,10 +56,9 @@ export function GameScreenSidebar({
   state,
   onQuit,
   onRestart,
-  isDesktop,
 }: Readonly<GameScreenSidebarProps>) {
   return (
-    <GameShell.Sidebar isDesktop={isDesktop}>
+    <>
       <GameShell.SidebarMain>
         <Panel>
           <details open>
@@ -102,7 +97,7 @@ export function GameScreenSidebar({
         <GameActions onQuit={onQuit} onRestart={onRestart} />
         <Footer />
       </GameShell.SidebarFooter>
-    </GameShell.Sidebar>
+    </>
   );
 }
 
@@ -150,14 +145,15 @@ export function ActiveGameScreen({
 
   return (
     <GameShell key="active">
-      <GameScreenSidebar
-        summary={summary}
-        currentPlayer={currentPlayer}
-        state={state}
-        onQuit={onQuit}
-        onRestart={onRestart}
-        isDesktop={true}
-      />
+      <GameShell.Sidebar isDesktop>
+        <GameScreenSidebar
+          summary={summary}
+          currentPlayer={currentPlayer}
+          state={state}
+          onQuit={onQuit}
+          onRestart={onRestart}
+        />
+      </GameShell.Sidebar>
 
       {currentPlayer && currentAvatar && flowState === "TURN_ACTIVE" ? (
         <PlayerSwitchSplash
@@ -179,14 +175,15 @@ export function ActiveGameScreen({
             <Modal.CloseButton ariaLabel="Close game menu" />
           </div>
           <div className="modal-panel__content">
-            <GameScreenSidebar
-              summary={summary}
-              currentPlayer={currentPlayer}
-              state={state}
-              onQuit={onQuit}
-              onRestart={onRestart}
-              isDesktop={false}
-            />
+            <GameShell.Sidebar>
+              <GameScreenSidebar
+                summary={summary}
+                currentPlayer={currentPlayer}
+                state={state}
+                onQuit={onQuit}
+                onRestart={onRestart}
+              />
+            </GameShell.Sidebar>
           </div>
         </Modal.Body>
       </Modal>

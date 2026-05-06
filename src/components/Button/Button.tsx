@@ -3,12 +3,20 @@ import React from "react";
 /* -----------------------------
    COMMON PROPS
 ----------------------------- */
-type CommonProps = {
-  ariaLabel?: string;
+type ButtonA11yProps =
+  | {
+      ariaLabel: string;
+      iconOnly: true;
+    }
+  | {
+      ariaLabel?: string;
+      iconOnly?: false;
+    };
+
+type CommonProps = ButtonA11yProps & {
   children?: React.ReactNode;
   className?: string;
   icon?: string;
-  iconOnly?: boolean;
   iconPosition?: "left" | "right";
   size?: "default" | "small" | "large";
   variant?: "primary" | "secondary";
@@ -91,8 +99,7 @@ const Button = React.forwardRef<
 
   if (iconPosition === "left") classes += " flex-row-reverse";
 
-  const childrenWrapper =
-    "content | w-full display flex justify-center align-center";
+  const childrenWrapper = "content | w-full flex justify-center items-center";
 
   // If iconOnly and no ariaLabel, fall back to children (if string)
   let computedAriaLabel = ariaLabel;
@@ -125,6 +132,7 @@ const Button = React.forwardRef<
         {icon && (
           <span className="inline-flex items-center">
             <svg
+              aria-hidden="true"
               className="icon"
               width="1.25em"
               height="1.25em"
@@ -170,6 +178,7 @@ const Button = React.forwardRef<
         {icon && (
           <span className="inline-flex items-center">
             <svg
+              aria-hidden="true"
               className="icon"
               width="1.25em"
               height="1.25em"
@@ -218,6 +227,7 @@ const Button = React.forwardRef<
       {icon && (
         <span className="inline-flex items-center">
           <svg
+            aria-hidden="true"
             className="icon"
             width="1.25em"
             height="1.25em"

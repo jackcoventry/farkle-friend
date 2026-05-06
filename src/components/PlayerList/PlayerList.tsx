@@ -1,6 +1,6 @@
 import { AvatarImage } from "@/components/AvatarImage/AvatarImage";
 import { Player } from "@/domain/game/gameTypes";
-import { AvatarId, avatarSet } from "@/components/Form/AddPlayer/AddPlayer";
+import { AvatarId, avatarSet } from "@/domain/game/avatars";
 
 type PlayerListProps = {
   activePlayerId?: string;

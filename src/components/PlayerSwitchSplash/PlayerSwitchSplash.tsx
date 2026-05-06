@@ -1,7 +1,7 @@
 "use client";
 
 import { AvatarImage } from "@/components/AvatarImage/AvatarImage";
-import { AvatarId, avatarSet } from "@/components/Form/AddPlayer/AddPlayer";
+import { type Avatar } from "@/domain/game/avatars";
 import Modal from "@/components/Modal/Modal";
 import Splash from "@/components/Modal/Splash";
 import { playGameSound } from "@/domain/game/gameAudio";
@@ -9,7 +9,7 @@ import type { Player } from "@/domain/game/gameTypes";
 import { useEffect, useState } from "react";
 
 type PlayerSwitchSplashProps = {
-  avatar: (typeof avatarSet)[AvatarId];
+  avatar: Avatar;
   currentPlayer: Player;
   soundEnabled?: boolean;
 };

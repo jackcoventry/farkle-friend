@@ -1,17 +1,14 @@
 "use client";
 
 import type { DiceTurnMetrics } from "@/components/DiceTurnPanel/DiceTurnPanel";
-import {
-  type AddPlayerFormSchemaType,
-  AvatarId,
-  avatarSet,
-} from "@/components/Form/AddPlayer/AddPlayer";
+import type { AddPlayerFormSchemaType } from "@/components/Form/AddPlayer/AddPlayer";
 import type { SettingsFormSchemaType } from "@/components/Form/Settings/Settings";
 import { ActiveGameScreen } from "@/components/GameScreen/ActiveGameScreen";
 import { LobbyGameScreen } from "@/components/GameScreen/LobbyGameScreen";
 import { ConfirmGameActionModal } from "@/components/GameActions/ConfirmGameActionModal";
 import type { ConfirmGameAction } from "@/components/GameActions/ConfirmGameActionModal";
 import { GameFinishedModal } from "@/components/GameFinishedModal/GameFinishedModal";
+import { AvatarId, avatarSet } from "@/domain/game/avatars";
 import { getGameSummary } from "@/domain/game/gameLogic";
 import {
   getCurrentPlayer,

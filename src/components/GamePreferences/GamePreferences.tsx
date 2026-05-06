@@ -41,6 +41,7 @@ export function GamePreferences({ className }: Readonly<GamePreferencesProps>) {
         onClick={() => setIsOpen(true)}
         icon="three-dots-vertical"
         iconOnly
+        ariaLabel="Preferences"
         className={className}
       >
         Preferences

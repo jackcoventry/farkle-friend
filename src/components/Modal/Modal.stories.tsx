@@ -3,7 +3,7 @@ import Modal from "@/components/Modal/Modal";
 import { Meta, StoryObj } from "@storybook/react-vite";
 import Splash from "@/components/Modal/Splash";
 import Button from "@/components/Button/Button";
-import { AvatarId, avatarSet } from "@/components/Form/AddPlayer/AddPlayer";
+import { AvatarId, avatarSet } from "@/domain/game/avatars";
 import Image from "next/image";
 
 const meta: Meta<typeof Modal> = {

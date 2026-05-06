@@ -139,9 +139,9 @@ describe("Button (polymorphic)", () => {
    * ICON / ARIA LABEL BEHAVIOUR
    * ----------------------------- */
 
-  it("respects icon, iconOnly and computes aria-label from string children (button)", () => {
+  it("respects icon, iconOnly and aria-label for button icons", () => {
     render(
-      <Button icon="arrow-right" iconOnly>
+      <Button icon="arrow-right" iconOnly ariaLabel="Icon label">
         Icon label
       </Button>
     );
@@ -153,6 +153,7 @@ describe("Button (polymorphic)", () => {
 
     const svg = button.querySelector("svg.icon");
     expect(svg).not.toBeNull();
+    expect(svg).toHaveAttribute("aria-hidden", "true");
   });
 
   it("uses provided ariaLabel instead of deriving from children when iconOnly", () => {

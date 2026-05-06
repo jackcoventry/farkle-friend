@@ -14,7 +14,6 @@ import Modal from "@/components/Modal/Modal";
 import PlayerList from "@/components/PlayerList/PlayerList";
 import { canStartGame } from "@/domain/game/gameLogic";
 import type { GameState } from "@/domain/game/gameTypes";
-import { formatScore } from "@/utils/formatScore";
 import type { KeyboardEvent, RefObject } from "react";
 import { useState } from "react";
 import { Panel } from "@/components/Panel/Panel";
@@ -48,16 +47,6 @@ export function LobbyGameScreen({
 }: Readonly<LobbyGameScreenProps>) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const readyToStart = canStartGame(state);
-  const playersNeeded = Math.max(0, 2 - state.players.length);
-  const modeLabel =
-    state.settings.mode === "dice" ? "Dice rolling" : "Manual scoring";
-  const startPanelMessage = readyToStart
-    ? `${state.players.length} players · ${modeLabel} · First to ${formatScore(
-        state.settings.targetScore,
-      )}`
-    : playersNeeded === 1
-      ? "Add 1 more player to start."
-      : "Add at least two players to start.";
   const startGameButton = (
     <Button
       type="button"

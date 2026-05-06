@@ -16,6 +16,15 @@ type DiceTurnCopy = {
   tone: "default" | "danger" | "success" | "warning";
 };
 
+type DiceActionHintArgs = {
+  canBank: boolean;
+  hasCurrentRoll: boolean;
+  hasSelectedDice: boolean;
+  isFarkled: boolean;
+  selectedHasInvalidDice: boolean;
+  selectedScore: number;
+};
+
 export function getDiceTurnCopy({
   canRoll,
   hasSelectedDice,
@@ -92,6 +101,26 @@ export function getDiceTurnCopy({
     title: "Choose scoring dice",
     tone: "default",
   };
+}
+
+export function getDiceActionHint({
+  canBank,
+  hasCurrentRoll,
+  hasSelectedDice,
+  isFarkled,
+  selectedHasInvalidDice,
+  selectedScore,
+}: DiceActionHintArgs): string | null {
+  if (isFarkled) return "End the turn to score 0 and move to the next player.";
+  if (canBank && selectedScore > 0) {
+    return `Bank ${selectedScore} points from this selection, or keep selecting scoring dice.`;
+  }
+  if (selectedHasInvalidDice) {
+    return "Deselect any dice that do not score before banking this selection.";
+  }
+  if (hasSelectedDice) return "Selected dice do not score yet.";
+  if (hasCurrentRoll) return "Tap dice to select them, or use keys 1-6.";
+  return null;
 }
 
 function getSelectedStatus({
