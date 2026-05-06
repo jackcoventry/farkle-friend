@@ -1,15 +1,13 @@
-"use client";
+'use client';
 
-import type { GameState } from "@/domain/game/gameTypes";
-import type { GameAction } from "@/domain/game/gameReducer";
-import type React from "react";
-import { useTurnController } from "@/domain/game/useTurnController";
-import AddScoreForm, {
-  AddScoreSchemaType,
-} from "@/components/Form/AddScore/AddScore";
-import "@/components/DiceTurnPanel/DiceTurnPanel.css";
-import { Panel } from "@/components/Panel/Panel";
-import Modal from "@/components/Modal/Modal";
+import type React from 'react';
+import type { GameAction } from '@/domain/game/gameReducer';
+import type { GameState } from '@/domain/game/gameTypes';
+import { useTurnController } from '@/domain/game/useTurnController';
+import '@/components/DiceTurnPanel/DiceTurnPanel.css';
+import AddScoreForm, { AddScoreSchemaType } from '@/components/Form/AddScore/AddScore';
+import Modal from '@/components/Modal/Modal';
+import { Panel } from '@/components/Panel/Panel';
 
 type ManualTurnProps = {
   state: GameState;
@@ -26,10 +24,7 @@ export function ManualTurn({
   onCloseMobileCoach,
   statusSlot,
 }: Readonly<ManualTurnProps>) {
-  const { currentPlayer, isInProgress, commitTurnScore } = useTurnController(
-    state,
-    dispatch
-  );
+  const { currentPlayer, isInProgress, commitTurnScore } = useTurnController(state, dispatch);
 
   if (!isInProgress || !currentPlayer) {
     return <p>No active player</p>;
@@ -52,14 +47,12 @@ export function ManualTurn({
 
   const coachContent = (
     <Panel
-      className="dice-turn-table__coach-panel | gap-3 text-sm"
+      className="dice-turn-table__coach-panel | gap-3 text-sm flex flex-wrap"
       aria-label="Manual scoring guidance"
     >
       <div className="min-w-0 flex flex-col gap-2">
         <p className="font-heading-2">Manual scoring</p>
-        <p>
-          Enter the turn score, then add it to bank the score and move on.
-        </p>
+        <p>Enter the turn score, then add it to bank the score and move on.</p>
       </div>
       <p className="rounded-lg bg-accent px-3 py-2 text-accent-contrast">
         Use this mode when you are rolling physical dice.
@@ -90,9 +83,7 @@ export function ManualTurn({
           <div className="modal-panel__header">
             <Modal.CloseButton ariaLabel="Close turn information" />
           </div>
-          <div className="modal-panel__content">
-            {coachContent}
-          </div>
+          <div className="modal-panel__content">{coachContent}</div>
         </Modal.Body>
       </Modal>
     </div>

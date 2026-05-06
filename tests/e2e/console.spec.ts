@@ -1,19 +1,11 @@
 import { expect, test } from "@playwright/test";
 import { addTwoPlayers, startGame, waitForTurnSplash } from "../helpers/game";
+import { collectBrowserConsoleIssues } from "../helpers/console";
 
-test("core game screens do not emit browser console errors", async ({
+test("core game screens do not emit browser console issues", async ({
   page,
 }) => {
-  const errors: string[] = [];
-
-  page.on("console", (message) => {
-    if (message.type() === "error") {
-      errors.push(message.text());
-    }
-  });
-  page.on("pageerror", (error) => {
-    errors.push(error.message);
-  });
+  const consoleIssues = collectBrowserConsoleIssues(page);
 
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/game/");
@@ -43,5 +35,5 @@ test("core game screens do not emit browser console errors", async ({
   await page.getByRole("button", { name: "Game menu" }).click();
   await page.getByRole("button", { name: "Close game menu" }).click();
 
-  expect(errors).toEqual([]);
+  expect(consoleIssues).toEqual([]);
 });

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, within } from "storybook/test";
 
 import Pill from "@/components/Pill/Pill";
 
@@ -52,7 +53,21 @@ const Template: Story = {
   ),
 };
 
-export const Default = {
+export const Default: Story = {
   ...Template,
   args: {},
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const auto = canvas.getByRole("radio", { name: "Auto" });
+    const manual = canvas.getByRole("radio", { name: "Manual" });
+    const checkbox = canvas.getByRole("checkbox", { name: "Checkbox" });
+
+    await expect(auto).toBeChecked();
+    await userEvent.click(manual);
+    await expect(manual).toBeChecked();
+    await expect(auto).not.toBeChecked();
+
+    await userEvent.click(checkbox);
+    await expect(checkbox).toBeChecked();
+  },
 };

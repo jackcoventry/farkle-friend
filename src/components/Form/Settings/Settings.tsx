@@ -1,37 +1,24 @@
-"use client";
+'use client';
 
-import Button from "@/components/Button/Button";
-import { Panel } from "@/components/Panel/Panel";
-import Pill from "@/components/Pill/Pill";
-import { useGame } from "@/domain/game/GameProvider";
-import { DiceStyle, GameMode, ThemePreference } from "@/domain/game/gameTypes";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import * as z from "zod/mini";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { useGame } from '@/domain/game/GameProvider';
+import {
+  SettingsFormSchema,
+  type SettingsFormSchemaType,
+  diceStyles,
+  maxTargetScore,
+  minTargetScore,
+  modes,
+  targetScorePresets,
+  themePreferences,
+} from '@/domain/game/formSchemas';
+import { DiceStyle, GameMode, ThemePreference } from '@/domain/game/gameTypes';
+import Button from '@/components/Button/Button';
+import { Panel } from '@/components/Panel/Panel';
+import Pill from '@/components/Pill/Pill';
 
-export const diceStyles = ["default", "medieval"] as const;
-export const modes = ["dice", "manual"] as const;
-export const themePreferences = ["system", "light", "dark"] as const;
-const targetScorePresets = [2500, 5000, 10000] as const;
-const minTargetScore = 500;
-const maxTargetScore = 50000;
-
-const SettingsFormSchema = z.object({
-  autoAdvanceTurns: z.boolean(),
-  diceStyle: z.enum(diceStyles),
-  mode: z.enum(modes),
-  motionEnabled: z.boolean(),
-  targetScore: z.number().check(
-    z.int("Target score must be a whole number."),
-    z.minimum(minTargetScore, `Target score must be at least ${minTargetScore}.`),
-    z.maximum(maxTargetScore, `Target score must be ${maxTargetScore} or less.`),
-  ),
-  showComboSuggestions: z.boolean(),
-  tableFeedback: z.boolean(),
-  theme: z.enum(themePreferences),
-});
-
-export type SettingsFormSchemaType = z.infer<typeof SettingsFormSchema>;
+export type { SettingsFormSchemaType };
 export type SettingsFormResult = {
   message: string;
 };
@@ -61,7 +48,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
       tableFeedback: state.preferences.tableFeedback,
       theme: state.preferences.theme,
     },
-    mode: "onBlur",
+    mode: 'onBlur',
   });
 
   const submitHandler = (data: {
@@ -116,9 +103,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
                         id="autoAdvanceTurns_no"
                       />
                     </Pill.Control>
-                    <Pill.Label htmlFor="autoAdvanceTurns_no">
-                      Manual
-                    </Pill.Label>
+                    <Pill.Label htmlFor="autoAdvanceTurns_no">Manual</Pill.Label>
                   </Pill>
                 </div>
               </fieldset>
@@ -153,7 +138,12 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
                             ref={field.ref}
                           />
                         </Pill.Control>
-                        <Pill.Label htmlFor={id}>{option}</Pill.Label>
+                        <Pill.Label
+                          htmlFor={id}
+                          className="capitalize"
+                        >
+                          {option}
+                        </Pill.Label>
                       </Pill>
                     );
                   })}
@@ -192,7 +182,12 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
                             ref={field.ref}
                           />
                         </Pill.Control>
-                        <Pill.Label htmlFor={id}>{option}</Pill.Label>
+                        <Pill.Label
+                          htmlFor={id}
+                          className="capitalize"
+                        >
+                          {option}
+                        </Pill.Label>
                       </Pill>
                     );
                   })}
@@ -214,18 +209,14 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
                   className="field-control"
                   {...field}
                   placeholder="Enter target score..."
-                  data-valid={errors?.targetScore ? "false" : "true"}
-                  aria-invalid={fieldState.error ? "true" : undefined}
-                  aria-describedby={
-                    fieldState.error ? "target-score-error" : undefined
-                  }
+                  data-valid={errors?.targetScore ? 'false' : 'true'}
+                  aria-invalid={fieldState.error ? 'true' : undefined}
+                  aria-describedby={fieldState.error ? 'target-score-error' : undefined}
                   type="number"
                   min={minTargetScore}
                   max={maxTargetScore}
                   step={50}
-                  onChange={(value) =>
-                    field.onChange(value.target.valueAsNumber)
-                  }
+                  onChange={(value) => field.onChange(value.target.valueAsNumber)}
                 />
 
                 <div className="grid grid-cols-[repeat(auto-fit,minmax(7rem,1fr))] gap-2">
@@ -236,7 +227,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
                       size="small"
                       className="justify-center"
                       onClick={() =>
-                        setValue("targetScore", preset, {
+                        setValue('targetScore', preset, {
                           shouldDirty: true,
                           shouldTouch: true,
                           shouldValidate: true,
@@ -249,7 +240,11 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
                 </div>
 
                 {fieldState.error ? (
-                  <p id="target-score-error" className="field-error">
+                  <p
+                    id="target-score-error"
+                    className="field-error"
+                    role="alert"
+                  >
                     {fieldState.error.message}
                   </p>
                 ) : null}
@@ -305,8 +300,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
               <fieldset className="grid gap-3">
                 <legend className="contents">Sound & haptics</legend>
                 <p className="text-sm">
-                  Adds restrained roll, bank, and Farkle feedback when your
-                  browser allows it.
+                  Adds restrained roll, bank, and Farkle feedback when your browser allows it.
                 </p>
                 <div className="flex gap-4">
                   <Pill>
@@ -390,11 +384,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
                   {themePreferences.map((option) => {
                     const id = `theme_${option}`;
                     const label =
-                      option === "system"
-                        ? "System"
-                        : option === "light"
-                          ? "Light"
-                          : "Dark";
+                      option === 'system' ? 'System' : option === 'light' ? 'Light' : 'Dark';
 
                     return (
                       <Pill key={option}>
@@ -417,7 +407,10 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
           )}
         />
 
-        <Button type="submit" className="justify-center">
+        <Button
+          type="submit"
+          className="justify-center"
+        >
           Save
         </Button>
       </form>

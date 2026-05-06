@@ -2,22 +2,14 @@
 
 import Modal from "@/components/Modal/Modal";
 import { TurnActionCluster } from "@/components/TurnActionCluster/TurnActionCluster";
+import { AddScoreSchema, type AddScoreSchemaType } from "@/domain/game/formSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import * as z from "zod/mini";
 import ScoreGenerator from "../ScoreGenerator/ScoreGenerator";
 import { DieValue, scoreSelectedDice } from "@/domain/game/dice";
 
-const AddScoreSchema = z.object({
-  value: z.number().check(
-    z.minimum(0, {
-      error: `Enter a valid number, or zero if you were farkled!`,
-    }),
-  ),
-});
-
-export type AddScoreSchemaType = z.infer<typeof AddScoreSchema>;
+export type { AddScoreSchemaType };
 export type AddScoreFormResult = {
   message: string;
 };
@@ -74,7 +66,7 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
               <Controller
                 name="value"
                 control={control}
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <>
                     <label htmlFor="turn-score" className="sr-only">
                       Turn score
@@ -85,6 +77,10 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
                       {...field}
                       placeholder="Enter your score..."
                       data-valid={errors?.value ? "false" : "true"}
+                      aria-invalid={fieldState.error ? "true" : undefined}
+                      aria-describedby={
+                        fieldState.error ? "turn-score-error" : undefined
+                      }
                       type="number"
                       min={0}
                       onChange={(value) =>
@@ -92,6 +88,15 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
                       }
                       value={field.value}
                     />
+                    {fieldState.error ? (
+                      <p
+                        id="turn-score-error"
+                        className="field-error"
+                        role="alert"
+                      >
+                        {fieldState.error.message}
+                      </p>
+                    ) : null}
                   </>
                 )}
               />
@@ -117,10 +122,14 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
       </form>
       <Modal
         isOpen={Boolean(showCalculator)}
+        onClose={() => setShowCalculator(false)}
         ariaLabel="Calculate dice score"
         variant="modal"
       >
         <Modal.Body className="grid max-h-dvh h-full mx-auto justify-center bg-surface text-text p-7 rounded-2xl">
+          <div className="mb-4 flex justify-end">
+            <Modal.CloseButton ariaLabel="Close calculator" />
+          </div>
           <ScoreGenerator onChange={onChange} />
         </Modal.Body>
       </Modal>

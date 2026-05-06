@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Modal from "@/components/Modal/Modal";
 import { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, within } from "storybook/test";
 import Splash from "@/components/Modal/Splash";
 import Button from "@/components/Button/Button";
 import { AvatarId, avatarSet } from "@/domain/game/avatars";
@@ -190,7 +191,24 @@ const FarkledTemplate: Story = {
   render: () => <FarkledModalStory />,
 };
 
-export const Default = { ...Template, args: {} };
+export const Default: Story = {
+  ...Template,
+  args: {},
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.click(canvas.getByRole("button", { name: "Open modal" }));
+    const dialog = await within(document.body).findByRole("dialog", {
+      name: "My simple modal",
+    });
+    await expect(dialog).toBeVisible();
+
+    await userEvent.keyboard("{Escape}");
+    await expect(
+      within(document.body).queryByRole("dialog", { name: "My simple modal" }),
+    ).not.toBeInTheDocument();
+  },
+};
 
 export const NextPlayer = { ...NextPlayerTemplate, args: {} };
 

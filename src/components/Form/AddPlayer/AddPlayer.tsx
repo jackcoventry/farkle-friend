@@ -4,24 +4,16 @@ import { AvatarImage } from "@/components/AvatarImage/AvatarImage";
 import Button from "@/components/Button/Button";
 import { Panel } from "@/components/Panel/Panel";
 import { avatarSet, avatarValues } from "@/domain/game/avatars";
+import {
+  AddPlayerFormSchema,
+  type AddPlayerFormSchemaType,
+} from "@/domain/game/formSchemas";
 import { useGame } from "@/domain/game/GameProvider";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import * as z from "zod/mini";
 
-const MINIMUM_USERNAME_LENGTH = 1;
-const AddPlayerFormSchema = z.object({
-  username: z.string().check(
-    z.trim(),
-    z.minLength(MINIMUM_USERNAME_LENGTH, {
-      error: `Name must be at least ${MINIMUM_USERNAME_LENGTH} characters!`,
-    }),
-  ),
-  avatar: z.number("Pick something!"),
-});
-
-export type AddPlayerFormSchemaType = z.infer<typeof AddPlayerFormSchema>;
+export type { AddPlayerFormSchemaType };
 export type AddPlayerFormResult = {
   message: string;
 };
@@ -138,7 +130,11 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
                     }
                   />
                   {errors?.username ? (
-                    <p id="player-name-error" className="field-error">
+                    <p
+                      id="player-name-error"
+                      className="field-error"
+                      role="alert"
+                    >
                       {errors.username.message}
                     </p>
                   ) : null}
@@ -150,7 +146,12 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
               name="avatar"
               control={control}
               render={({ field, fieldState }) => (
-                <fieldset aria-invalid={!!fieldState.error || undefined}>
+                <fieldset
+                  aria-describedby={
+                    fieldState.error ? "player-avatar-error" : undefined
+                  }
+                  aria-invalid={!!fieldState.error || undefined}
+                >
                   <legend className="mb-4 text-text">Choose an avatar</legend>
 
                   <div className="avatar-list-grid | grid grid-cols-3 justify-items-center gap-3 sm:gap-4">
@@ -189,7 +190,15 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
                     })}
                   </div>
 
-                  {fieldState.error && <p>{fieldState.error.message}</p>}
+                  {fieldState.error ? (
+                    <p
+                      id="player-avatar-error"
+                      className="field-error"
+                      role="alert"
+                    >
+                      {fieldState.error.message}
+                    </p>
+                  ) : null}
                 </fieldset>
               )}
             />
