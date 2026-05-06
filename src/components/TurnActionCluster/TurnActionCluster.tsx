@@ -2,6 +2,7 @@ import {
   DynamicImage,
   type ImageKey,
 } from "@/components/DynamicImage/DynamicImage";
+import type { CSSProperties } from "react";
 import "./TurnActionCluster.css";
 
 export type TurnAction = {
@@ -27,7 +28,12 @@ export function TurnActionCluster({
 }: Readonly<TurnActionClusterProps>) {
   return (
     <div
-      className={`turn-action-cluster | grid-cols-[1fr] rounded-lg items-stretch bg-action border-2 border-action-border xl:rounded-full grid gap-1 overflow-hidden w-full xl:flex${className ? ` ${className}` : ""}`}
+      className={`turn-action-cluster | grid-cols-[1fr] rounded-lg items-stretch bg-action border-2 border-action-border xl:rounded-full grid overflow-hidden w-full xl:flex${className ? ` ${className}` : ""}`}
+      style={
+        {
+          "--turn-action-count": actions.length,
+        } as CSSProperties
+      }
       aria-label={ariaLabel}
     >
       {actions.map((action) => (

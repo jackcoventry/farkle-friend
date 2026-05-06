@@ -9,9 +9,9 @@ import { GameActions } from "@/components/GameActions/GameActions";
 import { GameStatusBar } from "@/components/GameScreen/GameStatusBar";
 import GameShell from "@/components/GameShell/GameShell";
 import { ManualTurn } from "@/components/ManualTurn/ManualTurn";
-import Modal from "@/components/Modal/Modal";
 import PlayerList from "@/components/PlayerList/PlayerList";
 import { PlayerSwitchSplash } from "@/components/PlayerSwitchSplash/PlayerSwitchSplash";
+import { SidebarModal } from "@/components/SidebarModal/SidebarModal";
 import { TurnHistory } from "@/components/TurnHistory/TurnHistory";
 import { TurnResultPanel } from "@/components/TurnResultPanel/TurnResultPanel";
 import { avatarSet, type Avatar, type AvatarId } from "@/domain/game/avatars";
@@ -164,33 +164,27 @@ export function ActiveGameScreen({
         />
       ) : null}
 
-      <Modal
+      <SidebarModal
         id="active-game-sidebar-modal"
         isOpen={showSidebarModal}
         onClose={() => setShowSidebarModal(false)}
         ariaLabel="Game menu"
+        closeLabel="Close game menu"
       >
-        <Modal.Body className="game-menu-modal modal-panel modal-panel--narrow">
-          <div className="modal-panel__header">
-            <Modal.CloseButton ariaLabel="Close game menu" />
-          </div>
-          <div className="modal-panel__content">
-            <GameShell.Sidebar>
-              <GameScreenSidebar
-                summary={summary}
-                currentPlayer={currentPlayer}
-                state={state}
-                onQuit={onQuit}
-                onRestart={onRestart}
-              />
-            </GameShell.Sidebar>
-          </div>
-        </Modal.Body>
-      </Modal>
+        <GameShell.Sidebar>
+          <GameScreenSidebar
+            summary={summary}
+            currentPlayer={currentPlayer}
+            state={state}
+            onQuit={onQuit}
+            onRestart={onRestart}
+          />
+        </GameShell.Sidebar>
+      </SidebarModal>
 
       <GameShell.Body>
         <div className="flex h-full min-h-0 flex-col gap-2 lg:gap-4">
-          {isActiveTurnLayout ? null : statusBar}
+          {isActiveTurnLayout || flowState === "TURN_RESULT" ? null : statusBar}
 
           <div className="min-h-0 flex-1 flex">
             {currentPlayer ? (
