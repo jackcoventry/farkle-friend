@@ -29,9 +29,10 @@ export function DiceTurnCoach({
       <Panel
         className="dice-turn-table__coach-panel | gap-4 flex flex-wrap"
         aria-label="Turn status"
-        aria-live="polite"
-        role="status"
       >
+        <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+          {actionHint ? `${turnCopy.title}. ${actionHint}` : turnCopy.title}
+        </p>
         <div className="min-w-0 flex flex-col gap-2">
           <p className="font-heading-2">{turnCopy.title}</p>
           <p className="text-sm">{turnCopy.detail}</p>

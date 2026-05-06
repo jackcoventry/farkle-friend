@@ -1,11 +1,15 @@
 import { getMultipleScore, scoringRules } from "@/domain/game/scoringRules";
 
 export type DieValue = 1 | 2 | 3 | 4 | 5 | 6; // Farkle uses 6-side dice
+export type DiceRandomSource = () => number;
 
-export function rollDice(count: number = 6): DieValue[] {
+export function rollDice(
+  count: number = 6,
+  randomSource: DiceRandomSource = Math.random,
+): DieValue[] {
   return Array.from(
     { length: count },
-    () => (Math.floor(Math.random() * 6) + 1) as DieValue
+    () => (Math.floor(randomSource() * 6) + 1) as DieValue,
   );
 }
 

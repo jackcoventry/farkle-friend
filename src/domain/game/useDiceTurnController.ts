@@ -12,18 +12,20 @@ import {
   getScoreBreakdown,
   scoreSelectedDiceWithUsage,
 } from "@/domain/game/dice";
-import type { DieValue } from "@/domain/game/dice";
+import type { DiceRandomSource, DieValue } from "@/domain/game/dice";
 
 type Args = {
   phase: "LOBBY" | "IN_PROGRESS" | "FINISHED";
   playerId: string | null;
   onCommitScore: (playerId: string, score: number) => void;
+  randomSource?: DiceRandomSource;
 };
 
 export function useDiceTurnController({
   phase,
   playerId,
   onCommitScore,
+  randomSource,
 }: Args) {
   const [activeTurn, setActiveTurn] = useState<ActiveTurn | null>(null);
   const [selectedState, setSelectedState] = useState<{
@@ -87,7 +89,7 @@ export function useDiceTurnController({
       const turn = prev?.playerId === playerId ? prev : startActiveTurn(playerId);
       if (turn.isComplete || turn.isFarkled) return turn;
       if (turn.currentRoll !== null) return turn;
-      return rollInActiveTurn(turn);
+      return rollInActiveTurn(turn, randomSource);
     });
   };
 

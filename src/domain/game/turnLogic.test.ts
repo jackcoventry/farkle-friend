@@ -1,11 +1,25 @@
 import { describe, expect, it } from "vitest";
 import {
   bankDiceFromCurrentRoll,
+  rollInActiveTurn,
   startActiveTurn,
   type ActiveTurn,
 } from "./turnLogic";
 
 describe("turn logic", () => {
+  it("rolls an active turn with an injectable random source", () => {
+    const values = [0, 0.2, 0.4];
+    let index = 0;
+    const turn: ActiveTurn = {
+      ...startActiveTurn("player-1"),
+      availableDice: 3,
+    };
+
+    expect(rollInActiveTurn(turn, () => values[index++]).currentRoll).toEqual([
+      1, 2, 3,
+    ]);
+  });
+
   it("banks a valid scoring selection and updates available dice", () => {
     const turn: ActiveTurn = {
       ...startActiveTurn("player-1"),

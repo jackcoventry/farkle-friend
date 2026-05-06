@@ -103,6 +103,17 @@ function ModalRoot({
     }
   }, [isOpen]);
 
+  useEffect(() => {
+    if (!isOpen || ariaLabel || process.env.NODE_ENV === "production") return;
+
+    const titleElement = document.getElementById(titleId);
+    if (titleElement) return;
+
+    console.warn(
+      "Modal requires an accessible name. Add <Modal.Title> or pass ariaLabel.",
+    );
+  }, [ariaLabel, isOpen, titleId]);
+
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if (!isOpen || !isTopMost) return;
 

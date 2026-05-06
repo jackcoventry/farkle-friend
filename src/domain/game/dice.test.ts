@@ -1,12 +1,20 @@
 import { describe, expect, it } from "vitest";
 import {
   getScoreBreakdown,
+  rollDice,
   scoreSelectedDice,
   scoreSelectedDiceWithUsage,
   type DieValue,
 } from "./dice";
 
 describe("dice scoring", () => {
+  it("rolls dice with an injectable random source", () => {
+    const values = [0, 0.16, 0.33, 0.5, 0.66, 0.83];
+    let index = 0;
+
+    expect(rollDice(6, () => values[index++])).toEqual([1, 1, 2, 4, 4, 5]);
+  });
+
   it.each([
     [[1], 100],
     [[5], 50],

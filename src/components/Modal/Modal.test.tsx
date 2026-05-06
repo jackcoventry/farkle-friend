@@ -63,6 +63,43 @@ describe("Modal (compound API)", () => {
     expect(dialog).toBeInTheDocument();
   });
 
+  it("warns in development when an open modal has no accessible name", () => {
+    const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+    renderWithProvider(
+      <Modal isOpen>
+        <Modal.Body>
+          <button>Inside</button>
+        </Modal.Body>
+      </Modal>,
+    );
+
+    expect(warnSpy).toHaveBeenCalledWith(
+      "Modal requires an accessible name. Add <Modal.Title> or pass ariaLabel.",
+    );
+
+    warnSpy.mockRestore();
+  });
+
+  it("does not warn when an open modal is named by its title", () => {
+    const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+    renderWithProvider(
+      <Modal isOpen>
+        <Modal.Header>
+          <Modal.Title>My modal</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <button>Inside</button>
+        </Modal.Body>
+      </Modal>,
+    );
+
+    expect(warnSpy).not.toHaveBeenCalled();
+
+    warnSpy.mockRestore();
+  });
+
   it("calls onClose when Escape is pressed", () => {
     const onClose = vi.fn();
 
