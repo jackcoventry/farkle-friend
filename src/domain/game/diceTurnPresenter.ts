@@ -13,7 +13,7 @@ export type DiceTurnCopy = {
   detail: string;
   selectedStatus: string;
   title: string;
-  tone: "default" | "danger" | "success" | "warning";
+  tone: 'default' | 'danger' | 'success' | 'warning';
 };
 
 type DiceActionHintArgs = {
@@ -37,10 +37,10 @@ export function getDiceTurnCopy({
 }: DiceTurnCopyArgs): DiceTurnCopy {
   if (isFarkled) {
     return {
-      detail: "No scoring dice were rolled. This turn scores 0 points.",
-      selectedStatus: "Farkle. End the turn to score 0.",
-      title: "This turn scores 0",
-      tone: "danger",
+      detail: 'No scoring dice were rolled. This turn scores 0 points.',
+      selectedStatus: 'Farkle. End the turn to score 0.',
+      title: 'This turn scores 0',
+      tone: 'danger',
     };
   }
 
@@ -52,54 +52,54 @@ export function getDiceTurnCopy({
 
   if (isHotDice) {
     return {
-      detail: "All dice scored. Roll all six again or end your turn.",
+      detail: 'All dice scored. Roll all six again or end your turn.',
       selectedStatus,
-      title: "Hot dice!",
-      tone: "success",
+      title: 'Hot dice!',
+      tone: 'success',
     };
   }
 
   if (hasSelectedDice && selectedScore > 0 && usesAllDice) {
     return {
-      detail: "Bank this selection, then decide whether to roll again.",
+      detail: 'Bank this selection, then decide whether to roll again.',
       selectedStatus,
       title: `Bank ${selectedScore} or keep choosing`,
-      tone: "default",
+      tone: 'default',
     };
   }
 
   if (hasSelectedDice) {
     return {
-      detail: "Every selected die must be part of a scoring combination.",
+      detail: 'Every selected die must be part of a scoring combination.',
       selectedStatus,
-      title: "Choose only scoring dice",
-      tone: "warning",
+      title: 'Choose only scoring dice',
+      tone: 'warning',
     };
   }
 
   if (canRoll && tempScore > 0) {
     return {
-      detail: "You can end the turn with your current score or roll again.",
+      detail: 'You can end the turn with your current score or roll again.',
       selectedStatus,
-      title: "Bank your turn or roll again",
-      tone: "default",
+      title: 'Bank your turn or roll again',
+      tone: 'default',
     };
   }
 
   if (canRoll) {
     return {
-      detail: "Roll all available dice to begin.",
+      detail: 'Roll all available dice to begin.',
       selectedStatus,
-      title: "Ready to roll",
-      tone: "default",
+      title: 'Ready to roll',
+      tone: 'default',
     };
   }
 
   return {
-    detail: "Select dice that score, then bank them.",
+    detail: 'Select dice that score, then bank them.',
     selectedStatus,
-    title: "Choose scoring dice",
-    tone: "default",
+    title: 'Choose scoring dice',
+    tone: 'default',
   };
 }
 
@@ -111,15 +111,15 @@ export function getDiceActionHint({
   selectedHasInvalidDice,
   selectedScore,
 }: DiceActionHintArgs): string | null {
-  if (isFarkled) return "End the turn to score 0 and move to the next player.";
+  if (isFarkled) return 'End the turn to score 0 and move to the next player.';
   if (canBank && selectedScore > 0) {
     return `Bank ${selectedScore} points from this selection, or keep selecting scoring dice.`;
   }
   if (selectedHasInvalidDice) {
-    return "Deselect any dice that do not score before banking this selection.";
+    return 'Deselect any dice that do not score before banking this selection.';
   }
-  if (hasSelectedDice) return "Selected dice do not score yet.";
-  if (hasCurrentRoll) return "Tap dice to select them, or use keys 1-6.";
+  if (hasSelectedDice) return 'Selected dice do not score yet.';
+  if (hasCurrentRoll) return 'Tap dice to select them, or use keys 1-6.';
   return null;
 }
 
@@ -127,19 +127,16 @@ function getSelectedStatus({
   hasSelectedDice,
   selectedHasInvalidDice,
   selectedScore,
-}: Pick<
-  DiceTurnCopyArgs,
-  "hasSelectedDice" | "selectedHasInvalidDice" | "selectedScore"
->): string {
+}: Pick<DiceTurnCopyArgs, 'hasSelectedDice' | 'selectedHasInvalidDice' | 'selectedScore'>): string {
   if (hasSelectedDice && selectedHasInvalidDice) {
-    return "Selection includes dice that do not score.";
+    return 'Selection includes dice that do not score.';
   }
 
   if (hasSelectedDice && selectedScore > 0) {
     return `${selectedScore} points selected.`;
   }
 
-  if (hasSelectedDice) return "Selected dice do not score.";
+  if (hasSelectedDice) return 'Selected dice do not score.';
 
-  return "No dice selected.";
+  return 'No dice selected.';
 }

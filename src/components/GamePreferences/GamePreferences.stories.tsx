@@ -1,10 +1,9 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-
-import { GamePreferences } from "@/components/GamePreferences/GamePreferences";
-import { GameProvider } from "@/domain/game/GameProvider";
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { GameProvider } from '@/domain/game/GameProvider';
+import { GamePreferences } from '@/components/GamePreferences/GamePreferences';
 
 const meta: Meta<typeof GamePreferences> = {
-  title: "Components/Game Preferences",
+  title: 'Components/Game Preferences',
   component: GamePreferences,
   decorators: [
     (Story) => (
@@ -13,7 +12,7 @@ const meta: Meta<typeof GamePreferences> = {
       </GameProvider>
     ),
   ],
-  tags: ["autodocs"],
+  tags: ['autodocs'],
 };
 export default meta;
 
@@ -21,6 +20,6 @@ type Story = StoryObj<typeof GamePreferences>;
 
 export const Default: Story = {
   args: {
-    className: "flex",
+    className: 'flex',
   },
 };

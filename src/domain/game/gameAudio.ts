@@ -1,13 +1,13 @@
 export const gameSoundEvents = [
-  { id: "roll", label: "Roll dice" },
-  { id: "select", label: "Select dice" },
-  { id: "bank", label: "Bank score" },
-  { id: "farkle", label: "Farkle" },
-  { id: "turnStart", label: "Next turn" },
-  { id: "win", label: "Win game" },
+  { id: 'roll', label: 'Roll dice' },
+  { id: 'select', label: 'Select dice' },
+  { id: 'bank', label: 'Bank score' },
+  { id: 'farkle', label: 'Farkle' },
+  { id: 'turnStart', label: 'Next turn' },
+  { id: 'win', label: 'Win game' },
 ] as const;
 
-export type GameSoundEvent = (typeof gameSoundEvents)[number]["id"];
+export type GameSoundEvent = (typeof gameSoundEvents)[number]['id'];
 
 export type GameSoundConfig = {
   src: string;
@@ -26,12 +26,12 @@ export type GameSoundMap = Partial<Record<GameSoundEvent, GameSoundConfig>>;
  * feedback is enabled.
  */
 export const gameSounds: GameSoundMap = {
-  roll: { src: "/sounds/dice-roll.mp3", volume: 0.7 },
-  select: { src: "/sounds/click.mp3", volume: 0.7 },
-  bank: { src: "/sounds/bank.mp3", volume: 0.7 },
-  farkle: { src: "/sounds/farkle.mp3", volume: 0.7 },
-  turnStart: { src: "/sounds/whoosh.mp3", volume: 0.7 },
-  win: { src: "/sounds/win.mp3", volume: 0.7 },
+  roll: { src: '/sounds/dice-roll.mp3', volume: 0.7 },
+  select: { src: '/sounds/click.mp3', volume: 0.7 },
+  bank: { src: '/sounds/bank.mp3', volume: 0.7 },
+  farkle: { src: '/sounds/farkle.mp3', volume: 0.7 },
+  turnStart: { src: '/sounds/whoosh.mp3', volume: 0.7 },
+  win: { src: '/sounds/win.mp3', volume: 0.7 },
 };
 
 type FeedbackWindow = Window & {
@@ -49,7 +49,7 @@ const fallbackFrequencies: Record<GameSoundEvent, number> = {
 };
 
 export function playGameSound(event: GameSoundEvent, enabled: boolean): void {
-  if (!enabled || typeof window === "undefined") return;
+  if (!enabled || typeof window === 'undefined') return;
 
   const sound = gameSounds[event];
   if (sound) {
@@ -59,13 +59,12 @@ export function playGameSound(event: GameSoundEvent, enabled: boolean): void {
     return;
   }
 
-  if ("vibrate" in navigator) {
-    navigator.vibrate(event === "farkle" ? [70, 30, 70] : 35);
+  if ('vibrate' in navigator) {
+    navigator.vibrate(event === 'farkle' ? [70, 30, 70] : 35);
   }
 
   const feedbackWindow = window as FeedbackWindow;
-  const AudioContextCtor =
-    feedbackWindow.AudioContext ?? feedbackWindow.webkitAudioContext;
+  const AudioContextCtor = feedbackWindow.AudioContext ?? feedbackWindow.webkitAudioContext;
   if (!AudioContextCtor) return;
 
   const context = new AudioContextCtor();

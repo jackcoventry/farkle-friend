@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react';
-
 import Modal from '@/components/Modal/Modal';
 
 type SidebarModalProps = {

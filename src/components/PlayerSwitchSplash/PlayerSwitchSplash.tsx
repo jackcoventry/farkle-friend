@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { AvatarImage } from "@/components/AvatarImage/AvatarImage";
-import { type Avatar } from "@/domain/game/avatars";
-import Modal from "@/components/Modal/Modal";
-import Splash from "@/components/Modal/Splash";
-import { playGameSound } from "@/domain/game/gameAudio";
-import type { Player } from "@/domain/game/gameTypes";
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
+import { type Avatar } from '@/domain/game/avatars';
+import { playGameSound } from '@/domain/game/gameAudio';
+import type { Player } from '@/domain/game/gameTypes';
+import { AvatarImage } from '@/components/AvatarImage/AvatarImage';
+import Modal from '@/components/Modal/Modal';
+import Splash from '@/components/Modal/Splash';
 
 type PlayerSwitchSplashProps = {
   avatar: Avatar;
@@ -22,7 +22,7 @@ export function PlayerSwitchSplash({
   const [isOpen, setIsOpen] = useState(true);
 
   useEffect(() => {
-    playGameSound("turnStart", soundEnabled);
+    playGameSound('turnStart', soundEnabled);
 
     const timeout = globalThis.setTimeout(() => {
       setIsOpen(false);
@@ -54,7 +54,7 @@ export function PlayerSwitchSplash({
             </figure>
           }
           subtitle="Current score:"
-          text={currentPlayer?.totalScore?.toString() || "0"}
+          text={currentPlayer?.totalScore?.toString() || '0'}
         />
       </Modal.Body>
     </Modal>

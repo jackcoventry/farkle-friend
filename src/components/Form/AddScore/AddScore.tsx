@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import Modal from "@/components/Modal/Modal";
-import { TurnActionCluster } from "@/components/TurnActionCluster/TurnActionCluster";
-import { AddScoreSchema, type AddScoreSchemaType } from "@/domain/game/formSchemas";
-import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import ScoreGenerator from "../ScoreGenerator/ScoreGenerator";
-import { DieValue, scoreSelectedDice } from "@/domain/game/dice";
+import { zodResolver } from '@hookform/resolvers/zod';
+import React from 'react';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { DieValue, scoreSelectedDice } from '@/domain/game/dice';
+import { AddScoreSchema, type AddScoreSchemaType } from '@/domain/game/formSchemas';
+import Modal from '@/components/Modal/Modal';
+import { TurnActionCluster } from '@/components/TurnActionCluster/TurnActionCluster';
+import ScoreGenerator from '../ScoreGenerator/ScoreGenerator';
 
 export type { AddScoreSchemaType };
 export type AddScoreFormResult = {
@@ -30,7 +30,7 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
     defaultValues: {
       value: 0,
     },
-    mode: "onChange",
+    mode: 'onChange',
   });
 
   const submitHandler = (data: { value: number }) => {
@@ -42,7 +42,7 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
 
   const onChange = (selectedItems: DieValue[]) => {
     const score = scoreSelectedDice(selectedItems);
-    setValue("value", score, {
+    setValue('value', score, {
       shouldDirty: true,
       shouldTouch: true,
       shouldValidate: true,
@@ -68,7 +68,10 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
                 control={control}
                 render={({ field, fieldState }) => (
                   <>
-                    <label htmlFor="turn-score" className="sr-only">
+                    <label
+                      htmlFor="turn-score"
+                      className="sr-only"
+                    >
                       Turn score
                     </label>
                     <input
@@ -76,16 +79,12 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
                       className="border-0 border-b-2 border-border bg-transparent p-4 text-text font-mega w-full text-center appearance-none"
                       {...field}
                       placeholder="Enter your score..."
-                      data-valid={errors?.value ? "false" : "true"}
-                      aria-invalid={fieldState.error ? "true" : undefined}
-                      aria-describedby={
-                        fieldState.error ? "turn-score-error" : undefined
-                      }
+                      data-valid={errors?.value ? 'false' : 'true'}
+                      aria-invalid={fieldState.error ? 'true' : undefined}
+                      aria-describedby={fieldState.error ? 'turn-score-error' : undefined}
                       type="number"
                       min={0}
-                      onChange={(value) =>
-                        field.onChange(value.target.valueAsNumber)
-                      }
+                      onChange={(value) => field.onChange(value.target.valueAsNumber)}
                       value={field.value}
                     />
                     {fieldState.error ? (
@@ -108,14 +107,14 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
           ariaLabel="Manual score actions"
           actions={[
             {
-              icon: "rocket",
-              label: "Calculator",
+              icon: 'rocket',
+              label: 'Calculator',
               onClick: () => setShowCalculator(true),
             },
             {
-              icon: "dice",
-              label: "Submit score",
-              type: "submit",
+              icon: 'dice',
+              label: 'Submit score',
+              type: 'submit',
             },
           ]}
         />

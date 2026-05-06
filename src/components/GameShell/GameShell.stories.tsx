@@ -1,11 +1,10 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-
-import GameShell from "@/components/GameShell/GameShell";
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import GameShell from '@/components/GameShell/GameShell';
 
 const meta: Meta<typeof GameShell> = {
-  title: "Components/Game Shell",
+  title: 'Components/Game Shell',
   component: GameShell,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   args: {},
 };
 export default meta;
@@ -20,7 +19,10 @@ const Template: Story = {
         <GameShell.SidebarFooter>Footer</GameShell.SidebarFooter>
       </GameShell.Sidebar>
       <GameShell.MobileToolbar>
-        <button type="button" className="rounded-lg bg-white px-4 py-2">
+        <button
+          type="button"
+          className="rounded-lg bg-white px-4 py-2"
+        >
           Turn info
         </button>
       </GameShell.MobileToolbar>
@@ -32,10 +34,10 @@ const Template: Story = {
 export const Default = {
   ...Template,
   args: {
-    sidebarCloseLabel: "Close sidebar",
-    sidebarOpenLabel: "Open sidebar",
+    sidebarCloseLabel: 'Close sidebar',
+    sidebarOpenLabel: 'Open sidebar',
   },
   parameters: {
-    layout: "fullscreen",
+    layout: 'fullscreen',
   },
 };

@@ -1,16 +1,13 @@
-import { getMultipleScore, scoringRules } from "@/domain/game/scoringRules";
+import { getMultipleScore, scoringRules } from '@/domain/game/scoringRules';
 
 export type DieValue = 1 | 2 | 3 | 4 | 5 | 6; // Farkle uses 6-side dice
 export type DiceRandomSource = () => number;
 
 export function rollDice(
   count: number = 6,
-  randomSource: DiceRandomSource = Math.random,
+  randomSource: DiceRandomSource = Math.random
 ): DieValue[] {
-  return Array.from(
-    { length: count },
-    () => (Math.floor(randomSource() * 6) + 1) as DieValue,
-  );
+  return Array.from({ length: count }, () => (Math.floor(randomSource() * 6) + 1) as DieValue);
 }
 
 type DiceAnalysis = {
@@ -122,16 +119,16 @@ export function getScoreBreakdown(dice: DieValue[]): ScoreBreakdownItem[] {
 
   if (dice.length === 6) {
     const isStraight = counts.slice(1).every((count) => count === 1);
-    if (isStraight) return [{ label: "Straight", score: scoringRules.straight }];
+    if (isStraight) return [{ label: 'Straight', score: scoringRules.straight }];
 
     const pairCount = counts.filter((count) => count === 2).length;
     if (pairCount === 3) {
-      return [{ label: "Three pairs", score: scoringRules.threePairs }];
+      return [{ label: 'Three pairs', score: scoringRules.threePairs }];
     }
 
     const tripleCount = counts.filter((count) => count === 3).length;
     if (tripleCount === 2) {
-      return [{ label: "Two triples", score: scoringRules.twoTriples }];
+      return [{ label: 'Two triples', score: scoringRules.twoTriples }];
     }
   }
 
@@ -150,14 +147,14 @@ export function getScoreBreakdown(dice: DieValue[]): ScoreBreakdownItem[] {
 
   if (counts[1] > 0) {
     breakdown.push({
-      label: counts[1] === 1 ? "Single 1" : `${counts[1]} single 1s`,
+      label: counts[1] === 1 ? 'Single 1' : `${counts[1]} single 1s`,
       score: counts[1] * scoringRules.singleOne,
     });
   }
 
   if (counts[5] > 0) {
     breakdown.push({
-      label: counts[5] === 1 ? "Single 5" : `${counts[5]} single 5s`,
+      label: counts[5] === 1 ? 'Single 5' : `${counts[5]} single 5s`,
       score: counts[5] * scoringRules.singleFive,
     });
   }
@@ -191,7 +188,7 @@ export function getScoringCombinations(roll: DieValue[]): ScoringCombo[] {
     if (score <= 0 || usedCount !== dice.length) continue;
 
     const sorted = [...dice].sort((a, b) => a - b);
-    const key = `${sorted.join(",")}|${score}`;
+    const key = `${sorted.join(',')}|${score}`;
 
     if (!combosByKey.has(key)) {
       combosByKey.set(key, { indices, dice, score });

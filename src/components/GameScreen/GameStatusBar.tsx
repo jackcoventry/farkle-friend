@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import type { DiceTurnMetrics } from "@/components/DiceTurnPanel/DiceTurnPanel";
-import type { GameFlowState, GameState, Player } from "@/domain/game/gameTypes";
-import { formatScore } from "@/utils/formatScore";
-import { Panel } from "../Panel/Panel";
+import { formatScore } from '@/utils/formatScore';
+import type { GameFlowState, GameState, Player } from '@/domain/game/gameTypes';
+import type { DiceTurnMetrics } from '@/components/DiceTurnPanel/DiceTurnPanel';
+import { Panel } from '../Panel/Panel';
 
 type GameStatusBarProps = {
   currentPlayer: Player;
@@ -22,34 +22,24 @@ export function GameStatusBar({
     <Panel>
       <div className="mb-4">
         <p className="text-sm text-text">
-          {flowState === "TURN_RESULT" ? "Turn complete" : "Now playing"}
+          {flowState === 'TURN_RESULT' ? 'Turn complete' : 'Now playing'}
         </p>
-        <h2 className="font-heading-2 score-chip">
-          {currentPlayer.username}
-        </h2>
+        <h2 className="font-heading-2 score-chip">{currentPlayer.username}</h2>
       </div>
       <dl className="ml-auto flex flex-wrap gap-4 text-sm sm:text-base">
         <div>
           <dt className="text-text">
-            {state.pendingTurnResult ? "Previous total" : "Current total"}
+            {state.pendingTurnResult ? 'Previous total' : 'Current total'}
           </dt>
           <dd className="font-body-1 score-chip">
-            {formatScore(
-              state.pendingTurnResult?.previousTotal ??
-                currentPlayer.totalScore ??
-                0,
-            )}
+            {formatScore(state.pendingTurnResult?.previousTotal ?? currentPlayer.totalScore ?? 0)}
           </dd>
         </div>
-        {state.settings.mode === "dice" &&
-        flowState === "TURN_ACTIVE" &&
-        diceTurnMetrics ? (
+        {state.settings.mode === 'dice' && flowState === 'TURN_ACTIVE' && diceTurnMetrics ? (
           <>
             <div>
               <dt className="text-text">Round score</dt>
-              <dd className="font-body-1 score-chip">
-                {formatScore(diceTurnMetrics.roundScore)}
-              </dd>
+              <dd className="font-body-1 score-chip">{formatScore(diceTurnMetrics.roundScore)}</dd>
             </div>
             <div>
               <dt className="text-text">Dice left</dt>

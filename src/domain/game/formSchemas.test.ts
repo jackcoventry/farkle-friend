@@ -1,10 +1,5 @@
 import { describe, expect, it } from 'vitest';
-
-import {
-  AddPlayerFormSchema,
-  AddScoreSchema,
-  SettingsFormSchema,
-} from '@/domain/game/formSchemas';
+import { AddPlayerFormSchema, AddScoreSchema, SettingsFormSchema } from '@/domain/game/formSchemas';
 
 describe('game form schemas', () => {
   it('trims player names', () => {
@@ -12,7 +7,7 @@ describe('game form schemas', () => {
       AddPlayerFormSchema.parse({
         avatar: 1,
         username: '  Ada  ',
-      }),
+      })
     ).toEqual({
       avatar: 1,
       username: 'Ada',
@@ -24,7 +19,7 @@ describe('game form schemas', () => {
       AddPlayerFormSchema.safeParse({
         avatar: 1,
         username: '   ',
-      }).success,
+      }).success
     ).toBe(false);
   });
 
@@ -43,7 +38,7 @@ describe('game form schemas', () => {
         showComboSuggestions: true,
         tableFeedback: true,
         theme: 'dark',
-      }).success,
+      }).success
     ).toBe(true);
   });
 
@@ -58,7 +53,7 @@ describe('game form schemas', () => {
         showComboSuggestions: true,
         tableFeedback: true,
         theme: 'dark',
-      }).success,
+      }).success
     ).toBe(false);
   });
 });

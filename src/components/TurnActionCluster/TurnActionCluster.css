@@ -12,8 +12,7 @@
 
 .turn-action-cluster__button:not(:disabled):hover {
   background:
-    linear-gradient(180deg, rgb(255 255 255 / 0.26), transparent),
-    var(--color-action-hover);
+    linear-gradient(180deg, rgb(255 255 255 / 0.26), transparent), var(--color-action-hover);
   transform: scaleX(1.04);
   z-index: 1;
 }
@@ -48,10 +47,7 @@
 @media (max-width: 80rem) and (max-height: 820px) {
   .turn-action-cluster {
     border-radius: 999px;
-    grid-template-columns: repeat(
-      var(--turn-action-count, 3),
-      minmax(0, 1fr)
-    ) !important;
+    grid-template-columns: repeat(var(--turn-action-count, 3), minmax(0, 1fr)) !important;
     min-block-size: 3.75rem;
   }
 

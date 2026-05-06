@@ -1,6 +1,5 @@
 import { act, renderHook, waitFor } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
-
 import { useGameState } from '@/hooks/useGameState';
 
 const STORAGE_KEY = 'farkle-friend-settings';
@@ -26,7 +25,7 @@ describe('useGameState settings persistence', () => {
           targetScore: 10000,
           showComboSuggestions: true,
         },
-      }),
+      })
     );
 
     const { result } = renderHook(() => useGameState());
@@ -77,7 +76,7 @@ describe('useGameState settings persistence', () => {
           targetScore: 100,
           mode: 'chaos',
         },
-      }),
+      })
     );
 
     const { result } = renderHook(() => useGameState());

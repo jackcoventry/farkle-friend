@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
 type DiceKeyboardShortcutsArgs = {
   canBank: boolean;
@@ -38,37 +38,28 @@ export function useDiceKeyboardShortcuts({
         return;
       }
 
-      if (key === "r" && canRoll) {
+      if (key === 'r' && canRoll) {
         event.preventDefault();
         onRoll();
         return;
       }
 
-      if (key === "b" && canBank) {
+      if (key === 'b' && canBank) {
         event.preventDefault();
         onBank();
         return;
       }
 
-      if (event.key === "Enter" && canFinish) {
+      if (event.key === 'Enter' && canFinish) {
         event.preventDefault();
         onFinish();
       }
     };
 
-    globalThis.addEventListener("keydown", handleKeyDown);
+    globalThis.addEventListener('keydown', handleKeyDown);
 
-    return () => globalThis.removeEventListener("keydown", handleKeyDown);
-  }, [
-    canBank,
-    canFinish,
-    canRoll,
-    currentRollLength,
-    onBank,
-    onFinish,
-    onRoll,
-    onToggleDie,
-  ]);
+    return () => globalThis.removeEventListener('keydown', handleKeyDown);
+  }, [canBank, canFinish, canRoll, currentRollLength, onBank, onFinish, onRoll, onToggleDie]);
 }
 
 function shouldIgnoreShortcut(event: KeyboardEvent): boolean {
@@ -77,8 +68,5 @@ function shouldIgnoreShortcut(event: KeyboardEvent): boolean {
   const target = event.target;
   if (!(target instanceof HTMLElement)) return false;
 
-  return (
-    target.isContentEditable ||
-    target.matches("input, textarea, select, button, a")
-  );
+  return target.isContentEditable || target.matches('input, textarea, select, button, a');
 }

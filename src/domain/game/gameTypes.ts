@@ -1,10 +1,6 @@
-export type GamePhase = "LOBBY" | "IN_PROGRESS" | "FINISHED";
+export type GamePhase = 'LOBBY' | 'IN_PROGRESS' | 'FINISHED';
 
-export type GameFlowState =
-  | "LOBBY"
-  | "TURN_ACTIVE"
-  | "TURN_RESULT"
-  | "FINISHED";
+export type GameFlowState = 'LOBBY' | 'TURN_ACTIVE' | 'TURN_RESULT' | 'FINISHED';
 
 export type PlayerId = string;
 
@@ -55,9 +51,9 @@ export type GameSummary = {
   winnerId: PlayerId | null;
 };
 
-export type DiceStyle = "default" | "medieval";
-export type GameMode = "dice" | "manual";
-export type ThemePreference = "system" | "light" | "dark";
+export type DiceStyle = 'default' | 'medieval';
+export type GameMode = 'dice' | 'manual';
+export type ThemePreference = 'system' | 'light' | 'dark';
 
 export type GameSettings = {
   autoAdvanceTurns: boolean;

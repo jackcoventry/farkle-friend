@@ -1,14 +1,11 @@
-"use client";
+'use client';
 
-import { useMemo, useCallback } from "react";
-import type { GameState } from "@/domain/game/gameTypes";
-import type { GameAction } from "@/domain/game/gameReducer";
-import { getGameSummary } from "@/domain/game/gameLogic";
+import { useCallback, useMemo } from 'react';
+import { getGameSummary } from '@/domain/game/gameLogic';
+import type { GameAction } from '@/domain/game/gameReducer';
+import type { GameState } from '@/domain/game/gameTypes';
 
-export function useTurnController(
-  state: GameState,
-  dispatch: React.Dispatch<GameAction>
-) {
+export function useTurnController(state: GameState, dispatch: React.Dispatch<GameAction>) {
   const summary = useMemo(() => getGameSummary(state), [state]);
 
   const currentIndex = state.currentPlayerIndex ?? 0;
@@ -17,7 +14,7 @@ export function useTurnController(
   const commitTurnScore = useCallback(
     (playerId: string, score: number) => {
       dispatch({
-        type: "RECORD_TURN",
+        type: 'RECORD_TURN',
         playerId,
         score,
       });
@@ -29,7 +26,7 @@ export function useTurnController(
     summary,
     currentPlayer,
     currentIndex,
-    isInProgress: state.phase === "IN_PROGRESS",
+    isInProgress: state.phase === 'IN_PROGRESS',
     commitTurnScore,
   };
 }

@@ -1,12 +1,11 @@
-import "@testing-library/jest-dom";
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { describe, expect, it, vi } from "vitest";
+import '@testing-library/jest-dom';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { describe, expect, it, vi } from 'vitest';
+import Pill from './Pill';
 
-import Pill from "./Pill";
-
-describe("Pill", () => {
-  it("keeps a native radio input accessible through the visible label", async () => {
+describe('Pill', () => {
+  it('keeps a native radio input accessible through the visible label', async () => {
     const user = userEvent.setup();
     const handleChange = vi.fn();
 
@@ -24,54 +23,61 @@ describe("Pill", () => {
       </Pill>
     );
 
-    const radio = screen.getByRole("radio", { name: "Auto" });
+    const radio = screen.getByRole('radio', { name: 'Auto' });
 
     expect(radio).not.toBeChecked();
 
-    await user.click(screen.getByText("Auto"));
+    await user.click(screen.getByText('Auto'));
 
     expect(radio).toBeChecked();
     expect(handleChange).toHaveBeenCalledTimes(1);
   });
 
-  it("renders the visible pill block immediately after the input", () => {
+  it('renders the visible pill block immediately after the input', () => {
     render(
       <Pill>
         <Pill.Control>
-          <input id="pill-adjacent" name="pill-adjacent" type="radio" />
+          <input
+            id="pill-adjacent"
+            name="pill-adjacent"
+            type="radio"
+          />
         </Pill.Control>
         <Pill.Label htmlFor="pill-adjacent">Manual</Pill.Label>
       </Pill>
     );
 
-    const radio = screen.getByRole("radio", { name: "Manual" });
+    const radio = screen.getByRole('radio', { name: 'Manual' });
 
-    expect(radio).toHaveClass("pill-input");
-    expect(radio.nextElementSibling).toHaveClass("pill-box");
+    expect(radio).toHaveClass('pill-input');
+    expect(radio.nextElementSibling).toHaveClass('pill-box');
   });
 
-  it("supports checkbox controls without changing their native behavior", async () => {
+  it('supports checkbox controls without changing their native behavior', async () => {
     const user = userEvent.setup();
 
     render(
       <Pill>
         <Pill.Control>
-          <input id="pill-checkbox" type="checkbox" />
+          <input
+            id="pill-checkbox"
+            type="checkbox"
+          />
         </Pill.Control>
         <Pill.Label htmlFor="pill-checkbox">Enable sounds</Pill.Label>
       </Pill>
     );
 
-    const checkbox = screen.getByRole("checkbox", { name: "Enable sounds" });
+    const checkbox = screen.getByRole('checkbox', { name: 'Enable sounds' });
 
-    await user.click(screen.getByText("Enable sounds"));
+    await user.click(screen.getByText('Enable sounds'));
     expect(checkbox).toBeChecked();
 
-    await user.click(screen.getByText("Enable sounds"));
+    await user.click(screen.getByText('Enable sounds'));
     expect(checkbox).not.toBeChecked();
   });
 
-  it("preserves disabled input semantics", async () => {
+  it('preserves disabled input semantics', async () => {
     const user = userEvent.setup();
     const handleChange = vi.fn();
 
@@ -89,11 +95,11 @@ describe("Pill", () => {
       </Pill>
     );
 
-    const checkbox = screen.getByRole("checkbox", { name: "Unavailable" });
+    const checkbox = screen.getByRole('checkbox', { name: 'Unavailable' });
 
     expect(checkbox).toBeDisabled();
 
-    await user.click(screen.getByText("Unavailable"));
+    await user.click(screen.getByText('Unavailable'));
 
     expect(checkbox).not.toBeChecked();
     expect(handleChange).not.toHaveBeenCalled();

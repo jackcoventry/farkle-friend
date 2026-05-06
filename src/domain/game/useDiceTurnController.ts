@@ -1,32 +1,24 @@
-"use client";
+'use client';
 
-import { useMemo, useState } from "react";
-import type { ActiveTurn } from "@/domain/game/turnLogic";
+import { useMemo, useState } from 'react';
+import { getScoreBreakdown, scoreSelectedDiceWithUsage } from '@/domain/game/dice';
+import type { DiceRandomSource, DieValue } from '@/domain/game/dice';
+import type { ActiveTurn } from '@/domain/game/turnLogic';
 import {
   bankDiceFromCurrentRoll,
   finishActiveTurn,
   rollInActiveTurn,
   startActiveTurn,
-} from "@/domain/game/turnLogic";
-import {
-  getScoreBreakdown,
-  scoreSelectedDiceWithUsage,
-} from "@/domain/game/dice";
-import type { DiceRandomSource, DieValue } from "@/domain/game/dice";
+} from '@/domain/game/turnLogic';
 
 type Args = {
-  phase: "LOBBY" | "IN_PROGRESS" | "FINISHED";
+  phase: 'LOBBY' | 'IN_PROGRESS' | 'FINISHED';
   playerId: string | null;
   onCommitScore: (playerId: string, score: number) => void;
   randomSource?: DiceRandomSource;
 };
 
-export function useDiceTurnController({
-  phase,
-  playerId,
-  onCommitScore,
-  randomSource,
-}: Args) {
+export function useDiceTurnController({ phase, playerId, onCommitScore, randomSource }: Args) {
   const [activeTurn, setActiveTurn] = useState<ActiveTurn | null>(null);
   const [selectedState, setSelectedState] = useState<{
     playerId: string | null;
@@ -34,7 +26,7 @@ export function useDiceTurnController({
   }>({ playerId: null, indices: [] });
 
   const turnForPlayer = useMemo(() => {
-    if (phase !== "IN_PROGRESS" || !playerId) return null;
+    if (phase !== 'IN_PROGRESS' || !playerId) return null;
     if (activeTurn?.playerId === playerId) return activeTurn;
     return startActiveTurn(playerId);
   }, [activeTurn, phase, playerId]);
@@ -51,23 +43,15 @@ export function useDiceTurnController({
 
   const heldDice: DieValue[] = useMemo(() => {
     if (!currentRoll || selectedIndices.length === 0) return [];
-    return selectedIndices
-      .map((i) => currentRoll[i])
-      .filter((v): v is DieValue => v !== undefined);
+    return selectedIndices.map((i) => currentRoll[i]).filter((v): v is DieValue => v !== undefined);
   }, [currentRoll, selectedIndices]);
 
   const selectedScoring = useMemo(() => {
-    return heldDice.length > 0
-      ? scoreSelectedDiceWithUsage(heldDice)
-      : { score: 0, usedCount: 0 };
+    return heldDice.length > 0 ? scoreSelectedDiceWithUsage(heldDice) : { score: 0, usedCount: 0 };
   }, [heldDice]);
   const selectedScore = selectedScoring.score;
-  const selectedBreakdown = useMemo(
-    () => getScoreBreakdown(heldDice),
-    [heldDice]
-  );
-  const selectedUsesAllDice =
-    heldDice.length > 0 && selectedScoring.usedCount === heldDice.length;
+  const selectedBreakdown = useMemo(() => getScoreBreakdown(heldDice), [heldDice]);
+  const selectedUsesAllDice = heldDice.length > 0 && selectedScoring.usedCount === heldDice.length;
   const selectedHasInvalidDice = selectedScore > 0 && !selectedUsesAllDice;
 
   const toggleDieSelection = (index: number) => {
@@ -75,9 +59,7 @@ export function useDiceTurnController({
       const indices = prev.playerId === playerId ? prev.indices : [];
       return {
         playerId,
-        indices: indices.includes(index)
-        ? indices.filter((i) => i !== index)
-          : [...indices, index],
+        indices: indices.includes(index) ? indices.filter((i) => i !== index) : [...indices, index],
       };
     });
   };
@@ -85,7 +67,7 @@ export function useDiceTurnController({
   const roll = () => {
     setSelectedIndices([]);
     setActiveTurn((prev) => {
-      if (!playerId || phase !== "IN_PROGRESS") return null;
+      if (!playerId || phase !== 'IN_PROGRESS') return null;
       const turn = prev?.playerId === playerId ? prev : startActiveTurn(playerId);
       if (turn.isComplete || turn.isFarkled) return turn;
       if (turn.currentRoll !== null) return turn;
@@ -98,8 +80,7 @@ export function useDiceTurnController({
     if (selectedScore <= 0) return;
 
     setActiveTurn((prev) => {
-      const turn =
-        prev?.playerId === playerId ? prev : turnForPlayer;
+      const turn = prev?.playerId === playerId ? prev : turnForPlayer;
       return turn ? bankDiceFromCurrentRoll(turn, selectedIndices) : turn;
     });
     setSelectedIndices([]);
@@ -110,11 +91,7 @@ export function useDiceTurnController({
 
     let turn = turnForPlayer;
 
-    if (
-      !turn.isFarkled &&
-      turn.currentRoll !== null &&
-      selectedIndices.length === 0
-    ) {
+    if (!turn.isFarkled && turn.currentRoll !== null && selectedIndices.length === 0) {
       return;
     }
 

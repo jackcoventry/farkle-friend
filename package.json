@@ -13,6 +13,7 @@
     "icons": "npm run icon:tokens && svg-sprite --config svg.json --log=info \"src/icons/*.svg\"",
     "lint": "eslint",
     "test": "vitest run",
+    "prettier": "prettier --write \"**/*.{css,tsx,ts}\"",
     "verify": "npm run lint && npm test && npm run build",
     "test:e2e": "playwright test",
     "test:e2e:static": "npm run build && STATIC_E2E=1 playwright test",

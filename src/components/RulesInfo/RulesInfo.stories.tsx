@@ -1,11 +1,10 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-
-import RulesInfo from "@/components/RulesInfo/RulesInfo";
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import RulesInfo from '@/components/RulesInfo/RulesInfo';
 
 const meta: Meta<typeof RulesInfo> = {
-  title: "Components/Rules Info",
+  title: 'Components/Rules Info',
   component: RulesInfo,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
 };
 export default meta;
 

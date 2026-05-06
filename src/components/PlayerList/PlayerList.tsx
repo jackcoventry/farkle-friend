@@ -1,6 +1,6 @@
-import { AvatarImage } from "@/components/AvatarImage/AvatarImage";
-import { Player } from "@/domain/game/gameTypes";
-import { AvatarId, avatarSet } from "@/domain/game/avatars";
+import { AvatarId, avatarSet } from '@/domain/game/avatars';
+import { Player } from '@/domain/game/gameTypes';
+import { AvatarImage } from '@/components/AvatarImage/AvatarImage';
 
 type PlayerListProps = {
   activePlayerId?: string;
@@ -28,12 +28,15 @@ function PlayerList({
             ? Math.min(100, Math.round((totalScore / targetScore) * 100))
             : null;
         const classes = `flex gap-3 bg-surface-raised border border-border text-text p-4 rounded-2xl ${
-          isActive ? "border-accent bg-surface-muted" : "hover:bg-surface-muted"
+          isActive ? 'border-accent bg-surface-muted' : 'hover:bg-surface-muted'
         }`;
         const avatar = avatarSet[player.avatar as AvatarId];
 
         return (
-          <li key={player.id} aria-current={isActive ? "step" : undefined}>
+          <li
+            key={player.id}
+            aria-current={isActive ? 'step' : undefined}
+          >
             <div className={classes}>
               <div
                 className={`flex h-[60px] w-[60px] shrink-0 items-center justify-center rounded-full border-2 p-2 ring ${avatar.color} `}
@@ -67,9 +70,7 @@ function PlayerList({
                     </div>
                   ) : null}
                 </div>
-                <span className="block text-text-muted">
-                  {totalScore} points
-                </span>
+                <span className="block text-text-muted">{totalScore} points</span>
                 {progress === null ? null : (
                   <div
                     className="h-2 overflow-hidden rounded-full bg-surface"

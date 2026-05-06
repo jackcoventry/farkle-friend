@@ -1,36 +1,32 @@
-"use client";
+'use client';
 
-import { useEffect, useReducer } from "react";
-import type { GamePreferences, GameSettings, GameState } from "@/domain/game/gameTypes";
-import { createInitialGameState } from "@/domain/game/gameLogic";
-import { reducer } from "@/domain/game/gameReducer";
-import * as z from "zod/mini";
+import { useEffect, useReducer } from 'react';
+import * as z from 'zod/mini';
+import { createInitialGameState } from '@/domain/game/gameLogic';
+import { reducer } from '@/domain/game/gameReducer';
+import type { GamePreferences, GameSettings, GameState } from '@/domain/game/gameTypes';
 
-const STORAGE_KEY = "farkle-friend-settings";
+const STORAGE_KEY = 'farkle-friend-settings';
 const storedSettingsSchema = z.object({
   preferences: z.optional(
     z.partial(
       z.object({
         motionEnabled: z.boolean(),
         tableFeedback: z.boolean(),
-        theme: z.enum(["system", "light", "dark"]),
-      }),
-    ),
+        theme: z.enum(['system', 'light', 'dark']),
+      })
+    )
   ),
   settings: z.optional(
     z.partial(
       z.object({
         autoAdvanceTurns: z.boolean(),
-        diceStyle: z.enum(["default", "medieval"]),
-        mode: z.enum(["dice", "manual"]),
-        targetScore: z.number().check(
-          z.int(),
-          z.minimum(500),
-          z.maximum(50000),
-        ),
+        diceStyle: z.enum(['default', 'medieval']),
+        mode: z.enum(['dice', 'manual']),
+        targetScore: z.number().check(z.int(), z.minimum(500), z.maximum(50000)),
         showComboSuggestions: z.boolean(),
-      }),
-    ),
+      })
+    )
   ),
 });
 
@@ -40,7 +36,7 @@ type StoredSettings = {
 };
 
 function readStoredSettings(): StoredSettings | null {
-  if (typeof window === "undefined") return null;
+  if (typeof window === 'undefined') return null;
 
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
@@ -81,7 +77,7 @@ export function useGameState() {
         JSON.stringify({
           preferences: state.preferences,
           settings: state.settings,
-        }),
+        })
       );
     } catch {
       // Local storage can be unavailable in private or restricted browser modes.

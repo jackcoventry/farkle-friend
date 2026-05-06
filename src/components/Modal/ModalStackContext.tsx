@@ -1,13 +1,13 @@
 import React, {
-  createContext,
   ReactNode,
+  createContext,
   useCallback,
   useContext,
   useEffect,
   useMemo,
   useRef,
   useState,
-} from "react";
+} from 'react';
 
 type ModalStackContextValue = {
   register: (id: string) => void;
@@ -21,11 +21,9 @@ type ModalStackProviderProps = {
   children: ReactNode;
 };
 
-export function ModalStackProvider({
-  children,
-}: Readonly<ModalStackProviderProps>) {
+export function ModalStackProvider({ children }: Readonly<ModalStackProviderProps>) {
   const [stack, setStack] = useState<string[]>([]);
-  const prevOverflowRef = useRef<string>("");
+  const prevOverflowRef = useRef<string>('');
 
   const register = useCallback((id: string) => {
     setStack((prev) => {
@@ -55,7 +53,7 @@ export function ModalStackProvider({
 
     if (stack.length === 1) {
       prevOverflowRef.current = document.body.style.overflow;
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = 'hidden';
     }
   }, [stack.length]);
 
@@ -68,11 +66,7 @@ export function ModalStackProvider({
     [register, unregister, isTop]
   );
 
-  return (
-    <ModalStackContext.Provider value={value}>
-      {children}
-    </ModalStackContext.Provider>
-  );
+  return <ModalStackContext.Provider value={value}>{children}</ModalStackContext.Provider>;
 }
 
 /**

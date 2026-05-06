@@ -1,5 +1,5 @@
-import React from "react";
-import "./Pill.css";
+import React from 'react';
+import './Pill.css';
 
 type PillProps = {
   children: React.ReactNode;
@@ -17,7 +17,7 @@ type PillControlProps = {
 };
 
 function mergeClassNames(...classNames: Array<string | undefined>) {
-  return classNames.filter(Boolean).join(" ");
+  return classNames.filter(Boolean).join(' ');
 }
 
 export default function Pill({ children, className }: Readonly<PillProps>) {
@@ -32,12 +32,7 @@ export default function Pill({ children, className }: Readonly<PillProps>) {
   });
 
   return (
-    <span
-      className={mergeClassNames(
-        "pill | inline-flex min-w-0 relative",
-        className,
-      )}
-    >
+    <span className={mergeClassNames('pill | inline-flex min-w-0 relative', className)}>
       {control}
       {label}
     </span>
@@ -45,28 +40,22 @@ export default function Pill({ children, className }: Readonly<PillProps>) {
 }
 
 Pill.Control = function PillControl({ children }: Readonly<PillControlProps>) {
-  if (
-    !React.isValidElement<React.InputHTMLAttributes<HTMLInputElement>>(children)
-  ) {
+  if (!React.isValidElement<React.InputHTMLAttributes<HTMLInputElement>>(children)) {
     return null;
   }
 
   return React.cloneElement(children, {
-    className: mergeClassNames("pill-input", children.props.className),
+    className: mergeClassNames('pill-input', children.props.className),
   });
 };
 
-Pill.Label = function PillLabel({
-  children,
-  className,
-  htmlFor,
-}: Readonly<PillLabelProps>) {
+Pill.Label = function PillLabel({ children, className, htmlFor }: Readonly<PillLabelProps>) {
   return (
     <label
       htmlFor={htmlFor}
       className={mergeClassNames(
-        "pill-box | items-center border-2 border-control-border rounded-full text-control-text bg-control cursor-pointer inline-grid gap-2 px-4 py-2 hover:translate-y-px",
-        className,
+        'pill-box | items-center border-2 border-control-border rounded-full text-control-text bg-control cursor-pointer inline-grid gap-2 px-4 py-2 hover:translate-y-px',
+        className
       )}
     >
       <span

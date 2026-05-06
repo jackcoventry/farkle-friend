@@ -4,7 +4,7 @@ import {
   getScoringInfo,
   rollDice,
   scoreSelectedDiceWithUsage,
-} from "./dice";
+} from './dice';
 
 export type ActiveTurn = {
   availableDice: number;
@@ -27,10 +27,7 @@ export function startActiveTurn(playerId: string): ActiveTurn {
 }
 
 // Roll a dice within a player's active turn
-export function rollInActiveTurn(
-  turn: ActiveTurn,
-  randomSource?: DiceRandomSource,
-): ActiveTurn {
+export function rollInActiveTurn(turn: ActiveTurn, randomSource?: DiceRandomSource): ActiveTurn {
   if (turn.isComplete) return turn;
 
   const dice = rollDice(turn.availableDice, randomSource);
@@ -53,10 +50,7 @@ export function rollInActiveTurn(
   };
 }
 
-export function bankDiceFromCurrentRoll(
-  turn: ActiveTurn,
-  heldIndices: number[]
-): ActiveTurn {
+export function bankDiceFromCurrentRoll(turn: ActiveTurn, heldIndices: number[]): ActiveTurn {
   if (!turn.currentRoll || turn.isComplete) return turn;
   if (heldIndices.length === 0) return turn;
 

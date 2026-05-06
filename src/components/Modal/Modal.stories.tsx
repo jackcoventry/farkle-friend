@@ -1,20 +1,20 @@
-import React, { useState } from "react";
-import Modal from "@/components/Modal/Modal";
-import { Meta, StoryObj } from "@storybook/react-vite";
-import { expect, userEvent, within } from "storybook/test";
-import Splash from "@/components/Modal/Splash";
-import Button from "@/components/Button/Button";
-import { AvatarId, avatarSet } from "@/domain/game/avatars";
-import Image from "next/image";
+import { Meta, StoryObj } from '@storybook/react-vite';
+import Image from 'next/image';
+import React, { useState } from 'react';
+import { expect, userEvent, within } from 'storybook/test';
+import { AvatarId, avatarSet } from '@/domain/game/avatars';
+import Button from '@/components/Button/Button';
+import Modal from '@/components/Modal/Modal';
+import Splash from '@/components/Modal/Splash';
 
 const meta: Meta<typeof Modal> = {
-  title: "Components/Modal",
+  title: 'Components/Modal',
   component: Modal,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {
     theme: {
-      options: ["default", "warning", "success"],
-      control: { type: "radio" },
+      options: ['default', 'warning', 'success'],
+      control: { type: 'radio' },
     },
   },
 };
@@ -54,8 +54,8 @@ function NextPlayerModalStory() {
   const [open, setOpen] = useState(false);
 
   const player = {
-    id: "asdfasdf",
-    username: "Wallace",
+    id: 'asdfasdf',
+    username: 'Wallace',
     avatar: 1,
     totalScore: 1000,
   };
@@ -100,8 +100,8 @@ function WinnerModalStory() {
   const [open, setOpen] = useState(false);
 
   const player = {
-    id: "asdfasdf",
-    username: "Wallace",
+    id: 'asdfasdf',
+    username: 'Wallace',
     avatar: 1,
     totalScore: 1000,
   };
@@ -134,10 +134,17 @@ function WinnerModalStory() {
               </figure>
             }
           >
-            <Button onClick={() => {}} className="justify-center">
+            <Button
+              onClick={() => {}}
+              className="justify-center"
+            >
               Another game?
             </Button>
-            <Button as="a" href="/game" className="justify-center">
+            <Button
+              as="a"
+              href="/game"
+              className="justify-center"
+            >
               New players
             </Button>
           </Splash>
@@ -165,7 +172,10 @@ function FarkledModalStory() {
             title="You've been farkled!"
             image={<div className="font-mega mt-6">X</div>}
           >
-            <Button onClick={() => {}} className="justify-center">
+            <Button
+              onClick={() => {}}
+              className="justify-center"
+            >
               End turn
             </Button>
           </Splash>
@@ -197,15 +207,15 @@ export const Default: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    await userEvent.click(canvas.getByRole("button", { name: "Open modal" }));
-    const dialog = await within(document.body).findByRole("dialog", {
-      name: "My simple modal",
+    await userEvent.click(canvas.getByRole('button', { name: 'Open modal' }));
+    const dialog = await within(document.body).findByRole('dialog', {
+      name: 'My simple modal',
     });
     await expect(dialog).toBeVisible();
 
-    await userEvent.keyboard("{Escape}");
+    await userEvent.keyboard('{Escape}');
     await expect(
-      within(document.body).queryByRole("dialog", { name: "My simple modal" }),
+      within(document.body).queryByRole('dialog', { name: 'My simple modal' })
     ).not.toBeInTheDocument();
   },
 };

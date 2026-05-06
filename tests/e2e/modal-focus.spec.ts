@@ -1,12 +1,10 @@
-import { expect, test, type Locator } from '@playwright/test';
+import { type Locator, expect, test } from '@playwright/test';
 
 async function expectFocusedWithin(locator: Locator) {
   await expect
-    .poll(
-      async () =>
-        locator.evaluate((element) => element.contains(document.activeElement)),
-      { message: 'expected focus to remain inside the dialog' },
-    )
+    .poll(async () => locator.evaluate((element) => element.contains(document.activeElement)), {
+      message: 'expected focus to remain inside the dialog',
+    })
     .toBe(true);
 }
 

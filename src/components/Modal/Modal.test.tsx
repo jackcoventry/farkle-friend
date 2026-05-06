@@ -1,20 +1,22 @@
-import "@testing-library/jest-dom";
-import { fireEvent, render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import React, { useState } from "react";
-import { describe, expect, it, vi } from "vitest";
-
-import Modal from "./Modal";
-import { ModalStackProvider } from "./ModalStackContext";
+import '@testing-library/jest-dom';
+import { fireEvent, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import React, { useState } from 'react';
+import { describe, expect, it, vi } from 'vitest';
+import Modal from './Modal';
+import { ModalStackProvider } from './ModalStackContext';
 
 function renderWithProvider(ui: React.ReactElement) {
   return render(<ModalStackProvider>{ui}</ModalStackProvider>);
 }
 
-describe("Modal (compound API)", () => {
-  it("does not expose the dialog when closed", () => {
+describe('Modal (compound API)', () => {
+  it('does not expose the dialog when closed', () => {
     renderWithProvider(
-      <Modal isOpen={false} ariaLabel="My modal">
+      <Modal
+        isOpen={false}
+        ariaLabel="My modal"
+      >
         <Modal.Header>
           <Modal.Title>My modal</Modal.Title>
           <Modal.CloseButton />
@@ -22,17 +24,20 @@ describe("Modal (compound API)", () => {
         <Modal.Body>
           <button>Inside</button>
         </Modal.Body>
-      </Modal>,
+      </Modal>
     );
 
     // Role-based queries should respect aria-hidden="true"
-    const dialog = screen.queryByRole("dialog", { name: /my modal/i });
+    const dialog = screen.queryByRole('dialog', { name: /my modal/i });
     expect(dialog).not.toBeInTheDocument();
   });
 
-  it("renders a dialog with correct accessible name from <Modal.Title>", () => {
+  it('renders a dialog with correct accessible name from <Modal.Title>', () => {
     renderWithProvider(
-      <Modal isOpen ariaLabel={undefined}>
+      <Modal
+        isOpen
+        ariaLabel={undefined}
+      >
         <Modal.Header>
           <Modal.Title>My modal title</Modal.Title>
           <Modal.CloseButton />
@@ -40,49 +45,52 @@ describe("Modal (compound API)", () => {
         <Modal.Body>
           <button>Inside</button>
         </Modal.Body>
-      </Modal>,
+      </Modal>
     );
 
-    const dialog = screen.getByRole("dialog", { name: "My modal title" });
+    const dialog = screen.getByRole('dialog', { name: 'My modal title' });
     expect(dialog).toBeInTheDocument();
   });
 
-  it("falls back to ariaLabel when no <Modal.Title> is used", () => {
+  it('falls back to ariaLabel when no <Modal.Title> is used', () => {
     renderWithProvider(
-      <Modal isOpen ariaLabel="Aria label only">
+      <Modal
+        isOpen
+        ariaLabel="Aria label only"
+      >
         <Modal.Header>
           <Modal.CloseButton />
         </Modal.Header>
         <Modal.Body>
           <button>Inside</button>
         </Modal.Body>
-      </Modal>,
+      </Modal>
     );
 
-    const dialog = screen.getByRole("dialog", { name: "Aria label only" });
+    const dialog = screen.getByRole('dialog', { name: 'Aria label only' });
     expect(dialog).toBeInTheDocument();
   });
 
-  it("warns in development when an open modal has no accessible name", () => {
-    const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+  it('warns in development when an open modal has no accessible name', () => {
+    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
     renderWithProvider(
       <Modal isOpen>
         <Modal.Body>
           <button>Inside</button>
         </Modal.Body>
-      </Modal>,
+      </Modal>
     );
 
     expect(warnSpy).toHaveBeenCalledWith(
-      "Modal requires an accessible name. Add <Modal.Title> or pass ariaLabel.",
+      'Modal requires an accessible name. Add <Modal.Title> or pass ariaLabel.'
     );
 
     warnSpy.mockRestore();
   });
 
-  it("does not warn when an open modal is named by its title", () => {
-    const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+  it('does not warn when an open modal is named by its title', () => {
+    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
     renderWithProvider(
       <Modal isOpen>
@@ -92,7 +100,7 @@ describe("Modal (compound API)", () => {
         <Modal.Body>
           <button>Inside</button>
         </Modal.Body>
-      </Modal>,
+      </Modal>
     );
 
     expect(warnSpy).not.toHaveBeenCalled();
@@ -100,11 +108,15 @@ describe("Modal (compound API)", () => {
     warnSpy.mockRestore();
   });
 
-  it("calls onClose when Escape is pressed", () => {
+  it('calls onClose when Escape is pressed', () => {
     const onClose = vi.fn();
 
     renderWithProvider(
-      <Modal isOpen onClose={onClose} ariaLabel="My modal">
+      <Modal
+        isOpen
+        onClose={onClose}
+        ariaLabel="My modal"
+      >
         <Modal.Header>
           <Modal.Title>My modal</Modal.Title>
           <Modal.CloseButton />
@@ -112,22 +124,26 @@ describe("Modal (compound API)", () => {
         <Modal.Body>
           <button>Inside</button>
         </Modal.Body>
-      </Modal>,
+      </Modal>
     );
 
-    const dialog = screen.getByRole("dialog", { name: "My modal" });
+    const dialog = screen.getByRole('dialog', { name: 'My modal' });
 
-    fireEvent.keyDown(dialog, { key: "Escape" });
+    fireEvent.keyDown(dialog, { key: 'Escape' });
 
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
-  it("calls onClose when clicking on the overlay, but not when clicking inside the dialog", async () => {
+  it('calls onClose when clicking on the overlay, but not when clicking inside the dialog', async () => {
     const user = userEvent.setup();
     const onClose = vi.fn();
 
     renderWithProvider(
-      <Modal isOpen onClose={onClose} ariaLabel="My modal">
+      <Modal
+        isOpen
+        onClose={onClose}
+        ariaLabel="My modal"
+      >
         <Modal.Header>
           <Modal.Title>My modal</Modal.Title>
           <Modal.CloseButton />
@@ -135,11 +151,11 @@ describe("Modal (compound API)", () => {
         <Modal.Body>
           <button>Inside</button>
         </Modal.Body>
-      </Modal>,
+      </Modal>
     );
 
-    const dialog = screen.getByRole("dialog", { name: "My modal" });
-    const overlay = document.querySelector(".modal__overlay");
+    const dialog = screen.getByRole('dialog', { name: 'My modal' });
+    const overlay = document.querySelector('.modal__overlay');
     expect(overlay).not.toBeNull();
 
     // Click inside the dialog: SHOULD NOT close
@@ -151,7 +167,7 @@ describe("Modal (compound API)", () => {
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
-  it("moves focus into the dialog on open and restores it to the trigger on close", async () => {
+  it('moves focus into the dialog on open and restores it to the trigger on close', async () => {
     const user = userEvent.setup();
 
     function Harness() {
@@ -159,7 +175,10 @@ describe("Modal (compound API)", () => {
 
       return (
         <>
-          <button type="button" onClick={() => setOpen(true)}>
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+          >
             Open modal
           </button>
 
@@ -183,7 +202,7 @@ describe("Modal (compound API)", () => {
 
     renderWithProvider(<Harness />);
 
-    const openButton = screen.getByRole("button", { name: /open modal/i });
+    const openButton = screen.getByRole('button', { name: /open modal/i });
 
     // Focus the trigger first
     openButton.focus();
@@ -192,22 +211,26 @@ describe("Modal (compound API)", () => {
     // Open the modal
     await user.click(openButton);
 
-    const firstFocusable = await screen.findByRole("button", {
-      name: "Close dialog",
+    const firstFocusable = await screen.findByRole('button', {
+      name: 'Close dialog',
     });
     expect(firstFocusable).toHaveFocus();
 
     // Press Escape to close
-    await user.keyboard("{Escape}");
+    await user.keyboard('{Escape}');
     expect(openButton).toHaveFocus();
   });
 
-  it("Modal.CloseButton uses context to call close()", async () => {
+  it('Modal.CloseButton uses context to call close()', async () => {
     const user = userEvent.setup();
     const onClose = vi.fn();
 
     renderWithProvider(
-      <Modal isOpen onClose={onClose} ariaLabel="My modal">
+      <Modal
+        isOpen
+        onClose={onClose}
+        ariaLabel="My modal"
+      >
         <Modal.Header>
           <Modal.Title>My modal</Modal.Title>
           <Modal.CloseButton />
@@ -215,10 +238,10 @@ describe("Modal (compound API)", () => {
         <Modal.Body>
           <button>Inside</button>
         </Modal.Body>
-      </Modal>,
+      </Modal>
     );
 
-    const closeButton = screen.getByRole("button", { name: "Close dialog" });
+    const closeButton = screen.getByRole('button', { name: 'Close dialog' });
 
     await user.click(closeButton);
     expect(onClose).toHaveBeenCalledTimes(1);

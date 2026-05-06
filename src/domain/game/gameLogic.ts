@@ -1,33 +1,26 @@
-import { generateId } from "@/utils/generateId";
-import {
-  GameId,
-  GameState,
-  GameSummary,
-  Player,
-  PlayerId,
-  Turn,
-} from "./gameTypes";
+import { generateId } from '@/utils/generateId';
+import { GameId, GameState, GameSummary, Player, PlayerId, Turn } from './gameTypes';
 
 export function createInitialGameState(): GameState {
   const now = new Date().toISOString();
-  const gameId: GameId = "1";
+  const gameId: GameId = '1';
 
   return {
     id: gameId,
     createdAt: now,
     currentPlayerIndex: null,
     pendingTurnResult: null,
-    phase: "LOBBY",
+    phase: 'LOBBY',
     preferences: {
       motionEnabled: true,
       tableFeedback: false,
-      theme: "system",
+      theme: 'system',
     },
     players: [],
     settings: {
       autoAdvanceTurns: false,
-      diceStyle: "default",
-      mode: "dice",
+      diceStyle: 'default',
+      mode: 'dice',
       targetScore: 5000,
       showComboSuggestions: false,
     },
@@ -42,19 +35,11 @@ function withUpdatedAt<T extends { updatedAt: string }>(state: T): T {
 }
 
 // Helper for the add player reducer action
-export function addPlayer(
-  state: GameState,
-  username: string,
-  avatar: number,
-): GameState {
-  if (state.phase !== "LOBBY") return state;
+export function addPlayer(state: GameState, username: string, avatar: number): GameState {
+  if (state.phase !== 'LOBBY') return state;
   const trimmed = username.trim();
   if (!trimmed) return state;
-  if (
-    state.players.some(
-      (player) => player.username.toLowerCase() === trimmed.toLowerCase(),
-    )
-  ) {
+  if (state.players.some((player) => player.username.toLowerCase() === trimmed.toLowerCase())) {
     return state;
   }
 
@@ -71,7 +56,7 @@ export function addPlayer(
 }
 
 export function removePlayer(state: GameState, playerId: PlayerId): GameState {
-  if (state.phase !== "LOBBY") return state;
+  if (state.phase !== 'LOBBY') return state;
   if (!state.players.some((player) => player.id === playerId)) return state;
 
   return withUpdatedAt({
@@ -81,7 +66,7 @@ export function removePlayer(state: GameState, playerId: PlayerId): GameState {
 }
 
 export function canStartGame(state: GameState): boolean {
-  return state.phase === "LOBBY" && state.players.length >= 2;
+  return state.phase === 'LOBBY' && state.players.length >= 2;
 }
 
 export function startGame(state: GameState): GameState {
@@ -91,17 +76,17 @@ export function startGame(state: GameState): GameState {
     ...state,
     currentPlayerIndex: 0,
     pendingTurnResult: null,
-    phase: "IN_PROGRESS",
+    phase: 'IN_PROGRESS',
   });
 }
 
 export function endGame(state: GameState): GameState {
-  if (state.phase !== "IN_PROGRESS") return state;
+  if (state.phase !== 'IN_PROGRESS') return state;
   return withUpdatedAt({
     ...state,
     currentPlayerIndex: null,
     pendingTurnResult: null,
-    phase: "FINISHED",
+    phase: 'FINISHED',
   });
 }
 
@@ -111,25 +96,25 @@ export function resetGame(state: GameState): GameState {
     ...state,
     currentPlayerIndex: null,
     pendingTurnResult: null,
-    phase: "LOBBY",
+    phase: 'LOBBY',
     turns: [],
   });
 }
 
 export function advanceTurn(state: GameState): GameState {
-  if (state.phase !== "IN_PROGRESS" || !state.pendingTurnResult) return state;
+  if (state.phase !== 'IN_PROGRESS' || !state.pendingTurnResult) return state;
 
   if (state.pendingTurnResult.isGameWinner) {
     return withUpdatedAt({
       ...state,
       currentPlayerIndex: null,
       pendingTurnResult: null,
-      phase: "FINISHED",
+      phase: 'FINISHED',
     });
   }
 
   const nextPlayerIndex = state.players.findIndex(
-    (player) => player.id === state.pendingTurnResult?.nextPlayerId,
+    (player) => player.id === state.pendingTurnResult?.nextPlayerId
   );
 
   return withUpdatedAt({
@@ -139,13 +124,9 @@ export function advanceTurn(state: GameState): GameState {
   });
 }
 
-export function recordTurn(
-  state: GameState,
-  playerId: PlayerId,
-  score: number,
-): GameState {
+export function recordTurn(state: GameState, playerId: PlayerId, score: number): GameState {
   // Return if a game is not in progress
-  if (state.phase !== "IN_PROGRESS") return state;
+  if (state.phase !== 'IN_PROGRESS') return state;
 
   if (state.pendingTurnResult) return state;
 
@@ -165,8 +146,7 @@ export function recordTurn(
   };
 
   const currentIndex = state.currentPlayerIndex ?? 0;
-  const nextIndex =
-    state.players.length > 0 ? (currentIndex + 1) % state.players.length : null;
+  const nextIndex = state.players.length > 0 ? (currentIndex + 1) % state.players.length : null;
   const turns = [...state.turns, turn];
   const previousTotals = computeTotals(state);
   const nextState: GameState = {
@@ -174,13 +154,11 @@ export function recordTurn(
     turns,
   };
   const summary = getGameSummary(nextState);
-  const newTotal =
-    summary.players.find((p) => p.id === playerId)?.totalScore ?? 0;
+  const newTotal = summary.players.find((p) => p.id === playerId)?.totalScore ?? 0;
   const turnResult = {
     isGameWinner: summary.isTargetReached,
     newTotal,
-    nextPlayerId:
-      nextIndex == null ? null : (state.players[nextIndex]?.id ?? null),
+    nextPlayerId: nextIndex == null ? null : (state.players[nextIndex]?.id ?? null),
     playerId,
     previousTotal: previousTotals[playerId] ?? 0,
     score: turn.score,
@@ -191,7 +169,7 @@ export function recordTurn(
       ...nextState,
       currentPlayerIndex: null,
       pendingTurnResult: null,
-      phase: "FINISHED",
+      phase: 'FINISHED',
     });
   }
 

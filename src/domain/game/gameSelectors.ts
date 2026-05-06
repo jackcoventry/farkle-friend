@@ -6,27 +6,21 @@ import type {
   PlayerId,
   Turn,
   TurnResult,
-} from "@/domain/game/gameTypes";
+} from '@/domain/game/gameTypes';
 
 export function getGameFlowState(state: GameState): GameFlowState {
-  if (state.phase === "LOBBY") return "LOBBY";
-  if (state.phase === "FINISHED") return "FINISHED";
-  if (state.pendingTurnResult) return "TURN_RESULT";
-  return "TURN_ACTIVE";
+  if (state.phase === 'LOBBY') return 'LOBBY';
+  if (state.phase === 'FINISHED') return 'FINISHED';
+  if (state.pendingTurnResult) return 'TURN_RESULT';
+  return 'TURN_ACTIVE';
 }
 
-export function getCurrentPlayer(
-  state: GameState,
-  summary: GameSummary
-): Player | null {
+export function getCurrentPlayer(state: GameState, summary: GameSummary): Player | null {
   if (state.currentPlayerIndex == null) return null;
   return summary.players[state.currentPlayerIndex] ?? null;
 }
 
-export function getNextPlayer(
-  summary: GameSummary,
-  result: TurnResult | null
-): Player | null {
+export function getNextPlayer(summary: GameSummary, result: TurnResult | null): Player | null {
   if (!result?.nextPlayerId) return null;
   return summary.players.find((player) => player.id === result.nextPlayerId) ?? null;
 }
@@ -56,5 +50,5 @@ export function getLastFarkle(turns: Turn[]): Turn | null {
 }
 
 export function shouldWarnBeforeUnload(state: GameState): boolean {
-  return state.phase === "IN_PROGRESS" && state.players.length > 0;
+  return state.phase === 'IN_PROGRESS' && state.players.length > 0;
 }

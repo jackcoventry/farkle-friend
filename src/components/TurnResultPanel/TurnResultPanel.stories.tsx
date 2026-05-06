@@ -1,23 +1,22 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-
-import { TurnResultPanel } from "@/components/TurnResultPanel/TurnResultPanel";
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { TurnResultPanel } from '@/components/TurnResultPanel/TurnResultPanel';
 
 const currentPlayer = {
   avatar: 1,
-  id: "ada",
-  username: "Ada",
+  id: 'ada',
+  username: 'Ada',
 };
 
 const nextPlayer = {
   avatar: 2,
-  id: "grace",
-  username: "Grace",
+  id: 'grace',
+  username: 'Grace',
 };
 
 const meta: Meta<typeof TurnResultPanel> = {
-  title: "Components/Turn Result Panel",
+  title: 'Components/Turn Result Panel',
   component: TurnResultPanel,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   args: {
     currentPlayer,
     nextPlayer,
@@ -25,8 +24,8 @@ const meta: Meta<typeof TurnResultPanel> = {
     result: {
       isGameWinner: false,
       newTotal: 1550,
-      nextPlayerId: "grace",
-      playerId: "ada",
+      nextPlayerId: 'grace',
+      playerId: 'ada',
       previousTotal: 1200,
       score: 350,
     },
@@ -49,8 +48,8 @@ export const Winner: Story = {
     result: {
       isGameWinner: true,
       newTotal: 10000,
-      nextPlayerId: "grace",
-      playerId: "ada",
+      nextPlayerId: 'grace',
+      playerId: 'ada',
       previousTotal: 9600,
       score: 400,
     },

@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import React, { createContext, useContext, useEffect } from "react";
-import { useGameState } from "@/hooks/useGameState";
-import type { GameState } from "@/domain/game/gameTypes";
-import type { GameAction } from "@/domain/game/gameReducer";
+import React, { createContext, useContext, useEffect } from 'react';
+import { useGameState } from '@/hooks/useGameState';
+import type { GameAction } from '@/domain/game/gameReducer';
+import type { GameState } from '@/domain/game/gameTypes';
 
 type GameContextValue = {
   state: GameState;
@@ -12,20 +12,15 @@ type GameContextValue = {
 
 const GameContext = createContext<GameContextValue | null>(null);
 
-export function GameProvider({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export function GameProvider({ children }: Readonly<{ children: React.ReactNode }>) {
   const value = useGameState();
 
   useEffect(() => {
-    document.documentElement.dataset.motion = value.state.preferences
-      .motionEnabled
-      ? "on"
-      : "off";
+    document.documentElement.dataset.motion = value.state.preferences.motionEnabled ? 'on' : 'off';
   }, [value.state.preferences.motionEnabled]);
 
   useEffect(() => {
-    if (value.state.preferences.theme === "system") {
+    if (value.state.preferences.theme === 'system') {
       delete document.documentElement.dataset.theme;
       return;
     }
@@ -38,6 +33,6 @@ export function GameProvider({
 
 export function useGame() {
   const ctx = useContext(GameContext);
-  if (!ctx) throw new Error("useGame must be used within <GameProvider />");
+  if (!ctx) throw new Error('useGame must be used within <GameProvider />');
   return ctx;
 }

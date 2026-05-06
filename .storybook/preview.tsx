@@ -1,8 +1,7 @@
-import type { Decorator, Preview } from "@storybook/react-vite";
-import { ModalStackProvider } from "../src/components/Modal/ModalStackContext";
-import { GameProvider } from "../src/domain/game/GameProvider";
-
-import "@/styles/globals.css";
+import type { Decorator, Preview } from '@storybook/react-vite';
+import '@/styles/globals.css';
+import { ModalStackProvider } from '../src/components/Modal/ModalStackContext';
+import { GameProvider } from '../src/domain/game/GameProvider';
 
 const withProviderStack: Decorator = (Story) => (
   <ModalStackProvider>
@@ -14,7 +13,7 @@ const withProviderStack: Decorator = (Story) => (
 
 const preview: Preview = {
   parameters: {
-    actions: { argTypesRegex: "^on[A-Z].*" },
+    actions: { argTypesRegex: '^on[A-Z].*' },
     controls: {
       matchers: {
         color: /(background|color)$/i,

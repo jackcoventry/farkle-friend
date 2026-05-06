@@ -1,7 +1,6 @@
-import { useRef, useState, type KeyboardEvent } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { type KeyboardEvent, useRef, useState } from 'react';
 import { expect, userEvent, within } from 'storybook/test';
-
 import Button from '@/components/Button/Button';
 
 function SetupTabsStory() {

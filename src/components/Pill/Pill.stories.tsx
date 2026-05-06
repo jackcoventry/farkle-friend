@@ -1,12 +1,11 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-import { expect, userEvent, within } from "storybook/test";
-
-import Pill from "@/components/Pill/Pill";
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect, userEvent, within } from 'storybook/test';
+import Pill from '@/components/Pill/Pill';
 
 const meta: Meta<typeof Pill> = {
-  title: "Components/Pill",
+  title: 'Components/Pill',
   component: Pill,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {},
 };
 export default meta;
@@ -17,9 +16,9 @@ const Template: Story = {
   render: (args) => (
     <div
       style={{
-        display: "flex",
-        flexWrap: "wrap",
-        gap: "1rem",
+        display: 'flex',
+        flexWrap: 'wrap',
+        gap: '1rem',
       }}
     >
       <Pill {...args}>
@@ -45,7 +44,10 @@ const Template: Story = {
       </Pill>
       <Pill {...args}>
         <Pill.Control>
-          <input id="story-pill-checkbox" type="checkbox" />
+          <input
+            id="story-pill-checkbox"
+            type="checkbox"
+          />
         </Pill.Control>
         <Pill.Label htmlFor="story-pill-checkbox">Checkbox</Pill.Label>
       </Pill>
@@ -58,9 +60,9 @@ export const Default: Story = {
   args: {},
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const auto = canvas.getByRole("radio", { name: "Auto" });
-    const manual = canvas.getByRole("radio", { name: "Manual" });
-    const checkbox = canvas.getByRole("checkbox", { name: "Checkbox" });
+    const auto = canvas.getByRole('radio', { name: 'Auto' });
+    const manual = canvas.getByRole('radio', { name: 'Manual' });
+    const checkbox = canvas.getByRole('checkbox', { name: 'Checkbox' });
 
     await expect(auto).toBeChecked();
     await userEvent.click(manual);

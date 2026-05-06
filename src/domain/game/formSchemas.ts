@@ -13,7 +13,7 @@ export const AddPlayerFormSchema = z.object({
     z.trim(),
     z.minLength(MINIMUM_USERNAME_LENGTH, {
       error: `Name must be at least ${MINIMUM_USERNAME_LENGTH} characters!`,
-    }),
+    })
   ),
   avatar: z.number('Pick something!'),
 });
@@ -22,7 +22,7 @@ export const AddScoreSchema = z.object({
   value: z.number().check(
     z.minimum(0, {
       error: 'Enter a valid number, or zero if you were farkled!',
-    }),
+    })
   ),
 });
 
@@ -31,11 +31,13 @@ export const SettingsFormSchema = z.object({
   diceStyle: z.enum(diceStyles),
   mode: z.enum(modes),
   motionEnabled: z.boolean(),
-  targetScore: z.number().check(
-    z.int('Target score must be a whole number.'),
-    z.minimum(minTargetScore, `Target score must be at least ${minTargetScore}.`),
-    z.maximum(maxTargetScore, `Target score must be ${maxTargetScore} or less.`),
-  ),
+  targetScore: z
+    .number()
+    .check(
+      z.int('Target score must be a whole number.'),
+      z.minimum(minTargetScore, `Target score must be at least ${minTargetScore}.`),
+      z.maximum(maxTargetScore, `Target score must be ${maxTargetScore} or less.`)
+    ),
   showComboSuggestions: z.boolean(),
   tableFeedback: z.boolean(),
   theme: z.enum(themePreferences),

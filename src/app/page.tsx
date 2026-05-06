@@ -1,9 +1,9 @@
-import Button from "@/components/Button/Button";
-import DiceIcon from "@/components/DiceIcon/DiceIcon";
-import Link from "next/link";
+import Link from 'next/link';
+import Button from '@/components/Button/Button';
+import DiceIcon from '@/components/DiceIcon/DiceIcon';
 
 export default function Home() {
-  const title = "FARKLE!".split("");
+  const title = 'FARKLE!'.split('');
 
   return (
     <div className="splash-screen h-dvh flex items-center justify-center bg-gray-800">
@@ -11,13 +11,13 @@ export default function Home() {
         <div
           className="bg-gray-500 border-4 border-white rounded-full w-[200px] h-[200px] mb-4 p-6 rotate-12 opacity-0 animate-fade-in"
           style={{
-            animationDelay: "1.45s",
+            animationDelay: '1.45s',
           }}
         >
           <div
             className="opacity-0 animate-bounce-in"
             style={{
-              animationDelay: "1.65s",
+              animationDelay: '1.65s',
             }}
           >
             <DiceIcon count={6} />
@@ -39,11 +39,14 @@ export default function Home() {
         <div
           className="opacity-0 animate-bounce-in flex w-full max-w-[320px] flex-col gap-4 px-5 sm:px-0"
           style={{
-            animationDelay: "1.45s",
+            animationDelay: '1.45s',
           }}
         >
           <Link href="/game">
-            <Button as="inline" size="large">
+            <Button
+              as="inline"
+              size="large"
+            >
               Start
             </Button>
           </Link>

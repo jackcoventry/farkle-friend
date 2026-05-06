@@ -1,15 +1,15 @@
-import { defineConfig, devices } from "@playwright/test";
+import { defineConfig, devices } from '@playwright/test';
 
 const port = 3101;
-const host = "127.0.0.1";
+const host = '127.0.0.1';
 const baseURL = `http://${host}:${port}`;
 
 export default defineConfig({
-  testDir: "./tests/visual",
+  testDir: './tests/visual',
   timeout: 30_000,
   use: {
     baseURL,
-    trace: "on-first-retry",
+    trace: 'on-first-retry',
   },
   webServer: {
     command: `npm run dev -- --hostname ${host} --port ${port}`,
@@ -19,12 +19,12 @@ export default defineConfig({
   },
   projects: [
     {
-      name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'] },
     },
     {
-      name: "mobile-chrome",
-      use: { ...devices["Pixel 7"] },
+      name: 'mobile-chrome',
+      use: { ...devices['Pixel 7'] },
     },
   ],
 });

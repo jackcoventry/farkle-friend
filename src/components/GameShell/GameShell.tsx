@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import React from "react";
+import React from 'react';
 
 type RootProps = {
   children: React.ReactNode;
@@ -48,13 +48,10 @@ export default function GameShell({ children }: Readonly<RootProps>) {
   );
 }
 
-GameShell.Sidebar = function Header({
-  children,
-  isDesktop = false,
-}: SidebarProps) {
+GameShell.Sidebar = function Header({ children, isDesktop = false }: SidebarProps) {
   return (
     <aside
-      className={`game-shell__sidebar | grid grid-rows-[minmax(0,1fr)_auto] max-h-dvh min-h-0 overflow-hidden p-4 lg:p-6 bg-surface ${isDesktop ? "hidden xl:flex xl:flex-col xl:justify-between" : ""}`}
+      className={`game-shell__sidebar | grid grid-rows-[minmax(0,1fr)_auto] max-h-dvh min-h-0 overflow-hidden p-4 lg:p-6 bg-surface ${isDesktop ? 'hidden xl:flex xl:flex-col xl:justify-between' : ''}`}
       aria-label="Game menu"
       tabIndex={-1}
     >
@@ -73,18 +70,12 @@ GameShell.SidebarMain = function SidebarMain({ children }: SlotProps) {
 
 GameShell.SidebarFooter = function SidebarFooter({ children }: SlotProps) {
   return (
-    <div className="game-shell__sidebar-footer | grid gap-4 overflow-visible pt-4">
-      {children}
-    </div>
+    <div className="game-shell__sidebar-footer | grid gap-4 overflow-visible pt-4">{children}</div>
   );
 };
 
 GameShell.MobileToolbar = function MobileToolbar({ children }: SlotProps) {
-  return (
-    <nav className="bg-canvas xl:hidden p-2 flex justify-between">
-      {children}
-    </nav>
-  );
+  return <nav className="bg-canvas xl:hidden p-2 flex justify-between">{children}</nav>;
 };
 
 GameShell.Body = function Body({ children }: SlotProps) {

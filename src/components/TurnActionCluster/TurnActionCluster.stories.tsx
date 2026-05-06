@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn, userEvent, within } from 'storybook/test';
-
 import { TurnActionCluster } from '@/components/TurnActionCluster/TurnActionCluster';
 
 const meta: Meta<typeof TurnActionCluster> = {

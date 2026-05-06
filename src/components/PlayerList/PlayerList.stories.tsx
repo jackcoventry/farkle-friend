@@ -1,11 +1,10 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-
-import PlayerList from "@/components/PlayerList/PlayerList";
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import PlayerList from '@/components/PlayerList/PlayerList';
 
 const meta: Meta<typeof PlayerList> = {
-  title: "Components/Player List",
+  title: 'Components/Player List',
   component: PlayerList,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   args: {
     players: [],
   },
@@ -17,8 +16,8 @@ type Story = StoryObj<typeof PlayerList>;
 function data(showScores: boolean = false) {
   return [
     {
-      id: "1",
-      username: "Wallace",
+      id: '1',
+      username: 'Wallace',
       avatar: 3,
       ...(showScores
         ? {
@@ -27,8 +26,8 @@ function data(showScores: boolean = false) {
         : null),
     },
     {
-      id: "2",
-      username: "Gromit",
+      id: '2',
+      username: 'Gromit',
       avatar: 1,
       ...(showScores
         ? {
@@ -54,7 +53,7 @@ export const Default = {
     players,
   },
   parameters: {
-    layout: "fullscreen",
+    layout: 'fullscreen',
   },
 };
 
@@ -64,7 +63,7 @@ export const WithScores = {
     players: playersWithScores,
   },
   parameters: {
-    layout: "fullscreen",
+    layout: 'fullscreen',
   },
 };
 
@@ -72,9 +71,9 @@ export const WithScoresAndActive = {
   ...Template,
   args: {
     players: playersWithScores,
-    activePlayerId: "1",
+    activePlayerId: '1',
   },
   parameters: {
-    layout: "fullscreen",
+    layout: 'fullscreen',
   },
 };

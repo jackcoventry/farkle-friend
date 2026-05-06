@@ -1,31 +1,23 @@
-"use client";
+'use client';
 
-import {
-  DiceTurnPanel,
-  type DiceTurnMetrics,
-} from "@/components/DiceTurnPanel/DiceTurnPanel";
-import Footer from "@/components/Footer/Footer";
-import { GameActions } from "@/components/GameActions/GameActions";
-import { GameStatusBar } from "@/components/GameScreen/GameStatusBar";
-import GameShell from "@/components/GameShell/GameShell";
-import { ManualTurn } from "@/components/ManualTurn/ManualTurn";
-import PlayerList from "@/components/PlayerList/PlayerList";
-import { PlayerSwitchSplash } from "@/components/PlayerSwitchSplash/PlayerSwitchSplash";
-import { SidebarModal } from "@/components/SidebarModal/SidebarModal";
-import { TurnHistory } from "@/components/TurnHistory/TurnHistory";
-import { TurnResultPanel } from "@/components/TurnResultPanel/TurnResultPanel";
-import { avatarSet, type Avatar, type AvatarId } from "@/domain/game/avatars";
-import type { GameAction } from "@/domain/game/gameReducer";
-import type {
-  GameFlowState,
-  GameState,
-  GameSummary,
-  Player,
-} from "@/domain/game/gameTypes";
-import type { Dispatch, SetStateAction } from "react";
-import { useState } from "react";
-import Button from "@/components/Button/Button";
-import { Panel } from "@/components/Panel/Panel";
+import type { Dispatch, SetStateAction } from 'react';
+import { useState } from 'react';
+import { type Avatar, type AvatarId, avatarSet } from '@/domain/game/avatars';
+import type { GameAction } from '@/domain/game/gameReducer';
+import type { GameFlowState, GameState, GameSummary, Player } from '@/domain/game/gameTypes';
+import Button from '@/components/Button/Button';
+import { type DiceTurnMetrics, DiceTurnPanel } from '@/components/DiceTurnPanel/DiceTurnPanel';
+import Footer from '@/components/Footer/Footer';
+import { GameActions } from '@/components/GameActions/GameActions';
+import { GameStatusBar } from '@/components/GameScreen/GameStatusBar';
+import GameShell from '@/components/GameShell/GameShell';
+import { ManualTurn } from '@/components/ManualTurn/ManualTurn';
+import { Panel } from '@/components/Panel/Panel';
+import PlayerList from '@/components/PlayerList/PlayerList';
+import { PlayerSwitchSplash } from '@/components/PlayerSwitchSplash/PlayerSwitchSplash';
+import { SidebarModal } from '@/components/SidebarModal/SidebarModal';
+import { TurnHistory } from '@/components/TurnHistory/TurnHistory';
+import { TurnResultPanel } from '@/components/TurnResultPanel/TurnResultPanel';
 
 type ActiveGameScreenProps = {
   avatar: Avatar | undefined;
@@ -62,9 +54,7 @@ export function GameScreenSidebar({
       <GameShell.SidebarMain>
         <Panel>
           <details open>
-            <summary className="cursor-pointer font-heading-2 text-text">
-              Scoreboard
-            </summary>
+            <summary className="cursor-pointer font-heading-2 text-text">Scoreboard</summary>
             <div className="mt-3">
               <PlayerList
                 players={summary.players}
@@ -78,9 +68,7 @@ export function GameScreenSidebar({
 
         <Panel>
           <details>
-            <summary className="cursor-pointer font-heading-2 text-text">
-              Turn log
-            </summary>
+            <summary className="cursor-pointer font-heading-2 text-text">Turn log</summary>
             <div className="mt-3">
               <TurnHistory
                 leadingPlayerId={summary.leadingPlayerId}
@@ -94,7 +82,10 @@ export function GameScreenSidebar({
       </GameShell.SidebarMain>
 
       <GameShell.SidebarFooter>
-        <GameActions onQuit={onQuit} onRestart={onRestart} />
+        <GameActions
+          onQuit={onQuit}
+          onRestart={onRestart}
+        />
         <Footer />
       </GameShell.SidebarFooter>
     </>
@@ -118,22 +109,19 @@ export function ActiveGameScreen({
   const [isTurnCoachOpen, setIsTurnCoachOpen] = useState(false);
   const [showSidebarModal, setShowSidebarModal] = useState(false);
   const currentAvatar =
-    avatar ??
-    (currentPlayer ? avatarSet[currentPlayer.avatar as AvatarId] : undefined);
+    avatar ?? (currentPlayer ? avatarSet[currentPlayer.avatar as AvatarId] : undefined);
   const showTurnInfoToggle =
     currentPlayer &&
-    flowState === "TURN_ACTIVE" &&
-    (state.settings.mode === "dice" || state.settings.mode === "manual") &&
+    flowState === 'TURN_ACTIVE' &&
+    (state.settings.mode === 'dice' || state.settings.mode === 'manual') &&
     !state.pendingTurnResult;
   const turnInfoModalId =
-    state.settings.mode === "manual"
-      ? "manual-turn-coach-modal"
-      : "dice-turn-coach-modal";
+    state.settings.mode === 'manual' ? 'manual-turn-coach-modal' : 'dice-turn-coach-modal';
   const isActiveTurnLayout =
     currentPlayer &&
-    flowState === "TURN_ACTIVE" &&
+    flowState === 'TURN_ACTIVE' &&
     !state.pendingTurnResult &&
-    (state.settings.mode === "dice" || state.settings.mode === "manual");
+    (state.settings.mode === 'dice' || state.settings.mode === 'manual');
   const statusBar = currentPlayer ? (
     <GameStatusBar
       currentPlayer={currentPlayer}
@@ -155,7 +143,7 @@ export function ActiveGameScreen({
         />
       </GameShell.Sidebar>
 
-      {currentPlayer && currentAvatar && flowState === "TURN_ACTIVE" ? (
+      {currentPlayer && currentAvatar && flowState === 'TURN_ACTIVE' ? (
         <PlayerSwitchSplash
           key={currentPlayer.id}
           avatar={currentAvatar}
@@ -184,11 +172,11 @@ export function ActiveGameScreen({
 
       <GameShell.Body>
         <div className="flex h-full min-h-0 flex-col gap-2 lg:gap-4">
-          {isActiveTurnLayout || flowState === "TURN_RESULT" ? null : statusBar}
+          {isActiveTurnLayout || flowState === 'TURN_RESULT' ? null : statusBar}
 
           <div className="min-h-0 flex-1 flex">
             {currentPlayer ? (
-              flowState === "TURN_RESULT" && state.pendingTurnResult ? (
+              flowState === 'TURN_RESULT' && state.pendingTurnResult ? (
                 <TurnResultPanel
                   autoAdvance={state.settings.autoAdvanceTurns}
                   currentPlayer={currentPlayer}
@@ -197,7 +185,7 @@ export function ActiveGameScreen({
                   result={state.pendingTurnResult}
                   onAdvanceTurn={onAdvanceTurn}
                 />
-              ) : state.settings.mode === "dice" ? (
+              ) : state.settings.mode === 'dice' ? (
                 <DiceTurnPanel
                   dispatch={dispatch}
                   isCoachOpenOnMobile={isTurnCoachOpen}
@@ -223,11 +211,7 @@ export function ActiveGameScreen({
       </GameShell.Body>
 
       <GameShell.MobileToolbar>
-        <div
-          className={`grid w-full gap-2 ${
-            showTurnInfoToggle ? "grid-cols-2" : "grid-cols-1"
-          }`}
-        >
+        <div className={`grid w-full gap-2 ${showTurnInfoToggle ? 'grid-cols-2' : 'grid-cols-1'}`}>
           {showTurnInfoToggle ? (
             <Button
               aria-controls={turnInfoModalId}
@@ -237,7 +221,7 @@ export function ActiveGameScreen({
               onClick={() => setIsTurnCoachOpen((current) => !current)}
               icon="arrow-left"
             >
-              {isTurnCoachOpen ? "Hide turn info" : "Turn info"}
+              {isTurnCoachOpen ? 'Hide turn info' : 'Turn info'}
             </Button>
           ) : null}
           <Button

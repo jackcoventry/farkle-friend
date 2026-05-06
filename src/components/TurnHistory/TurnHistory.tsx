@@ -1,13 +1,13 @@
-import type { Player, Turn } from "@/domain/game/gameTypes";
-import { AvatarImage } from "@/components/AvatarImage/AvatarImage";
-import { AvatarId, avatarSet } from "@/domain/game/avatars";
+import { formatScore } from '@/utils/formatScore';
+import { AvatarId, avatarSet } from '@/domain/game/avatars';
 import {
   getBiggestTurn,
   getLastFarkle,
   getPlayerNameMap,
   getRecentTurns,
-} from "@/domain/game/gameSelectors";
-import { formatScore } from "@/utils/formatScore";
+} from '@/domain/game/gameSelectors';
+import type { Player, Turn } from '@/domain/game/gameTypes';
+import { AvatarImage } from '@/components/AvatarImage/AvatarImage';
 
 type TurnHistoryProps = {
   leadingPlayerId?: string | null;
@@ -40,9 +40,7 @@ export function TurnHistory({
         <dl className="mb-3 grid gap-2 border-b border-border pb-3">
           <div className="flex justify-between gap-3">
             <dt>Leader</dt>
-            <dd className="truncate text-right score-chip">
-              {leader.username}
-            </dd>
+            <dd className="truncate text-right score-chip">{leader.username}</dd>
           </div>
           <div className="flex justify-between gap-3">
             <dt>Needs</dt>
@@ -54,7 +52,7 @@ export function TurnHistory({
             <div className="flex justify-between gap-3">
               <dt>Biggest turn</dt>
               <dd className="truncate text-right score-chip">
-                {playerNames.get(biggestTurn.playerId) ?? "Player"} +
+                {playerNames.get(biggestTurn.playerId) ?? 'Player'} +
                 {formatScore(biggestTurn.score)}
               </dd>
             </div>
@@ -63,7 +61,7 @@ export function TurnHistory({
             <div className="flex justify-between gap-3">
               <dt>Last farkle</dt>
               <dd className="truncate text-right score-chip">
-                {playerNames.get(lastFarkle.playerId) ?? "Player"}
+                {playerNames.get(lastFarkle.playerId) ?? 'Player'}
               </dd>
             </div>
           ) : null}
@@ -83,9 +81,7 @@ export function TurnHistory({
                 <li
                   key={turn.id}
                   className={`flex items-center justify-between gap-3 rounded-lg p-2 ${
-                    isFarkle
-                      ? "bg-danger-surface text-danger"
-                      : "bg-surface-muted"
+                    isFarkle ? 'bg-danger-surface text-danger' : 'bg-surface-muted'
                   }`}
                 >
                   <span className="flex min-w-0 items-center gap-2">
@@ -101,16 +97,15 @@ export function TurnHistory({
                       </span>
                     ) : null}
                     <span className="truncate">
-                      {playerNames.get(turn.playerId) ?? "Player"}{" "}
-                      {isFarkle ? "farkled" : "banked"}
+                      {playerNames.get(turn.playerId) ?? 'Player'} {isFarkle ? 'farkled' : 'banked'}
                     </span>
                   </span>
                   <span
                     className={`shrink-0 rounded-full px-2 py-1 text-sm ${
-                      isFarkle ? "bg-danger text-danger-contrast" : "score-chip"
+                      isFarkle ? 'bg-danger text-danger-contrast' : 'score-chip'
                     }`}
                   >
-                    {isFarkle ? "Farkle" : `+${formatScore(turn.score)}`}
+                    {isFarkle ? 'Farkle' : `+${formatScore(turn.score)}`}
                   </span>
                 </li>
               );

@@ -6,25 +6,25 @@ import React, {
   useEffect,
   useId,
   useRef,
-} from "react";
-import { createPortal } from "react-dom";
-import { useModalStack } from "./ModalStackContext";
-import Button from "@/components/Button/Button";
+} from 'react';
+import { createPortal } from 'react-dom';
+import Button from '@/components/Button/Button';
+import { useModalStack } from './ModalStackContext';
 
 const FOCUSABLE_SELECTORS = [
-  "a[href]",
-  "area[href]",
-  "button:not([disabled])",
+  'a[href]',
+  'area[href]',
+  'button:not([disabled])',
   'input:not([disabled]):not([type="hidden"])',
-  "select:not([disabled])",
-  "textarea:not([disabled])",
-  "summary",
-  "details",
+  'select:not([disabled])',
+  'textarea:not([disabled])',
+  'summary',
+  'details',
   '[tabindex]:not([tabindex="-1"])',
-].join(", ");
+].join(', ');
 
-type ModalVariant = "modal" | "splash";
-type ThemeVariant = "default" | "warning" | "success";
+type ModalVariant = 'modal' | 'splash';
+type ThemeVariant = 'default' | 'warning' | 'success';
 
 type ModalContextValue = {
   titleId: string;
@@ -60,8 +60,8 @@ function ModalRoot({
   children,
   ariaLabel,
   id,
-  variant = "modal",
-  theme = "default",
+  variant = 'modal',
+  theme = 'default',
 }: ModalRootProps) {
   const dialogRef = useRef<HTMLDivElement | null>(null);
   const lastFocusedRef = useRef<HTMLElement | null>(null);
@@ -73,9 +73,9 @@ function ModalRoot({
 
   const getFocusableElements = useCallback((): HTMLElement[] => {
     if (!dialogRef.current) return [];
-    return Array.from(
-      dialogRef.current.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTORS),
-    ).filter((el) => !el.hasAttribute("disabled") && el.tabIndex !== -1);
+    return Array.from(dialogRef.current.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTORS)).filter(
+      (el) => !el.hasAttribute('disabled') && el.tabIndex !== -1
+    );
   }, []);
 
   const focusFirstElement = useCallback(() => {
@@ -104,26 +104,24 @@ function ModalRoot({
   }, [isOpen]);
 
   useEffect(() => {
-    if (!isOpen || ariaLabel || process.env.NODE_ENV === "production") return;
+    if (!isOpen || ariaLabel || process.env.NODE_ENV === 'production') return;
 
     const titleElement = document.getElementById(titleId);
     if (titleElement) return;
 
-    console.warn(
-      "Modal requires an accessible name. Add <Modal.Title> or pass ariaLabel.",
-    );
+    console.warn('Modal requires an accessible name. Add <Modal.Title> or pass ariaLabel.');
   }, [ariaLabel, isOpen, titleId]);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if (!isOpen || !isTopMost) return;
 
-    if (e.key === "Escape") {
+    if (e.key === 'Escape') {
       e.preventDefault();
       onClose?.();
       return;
     }
 
-    if (e.key === "Tab") {
+    if (e.key === 'Tab') {
       const items = getFocusableElements();
       if (items.length === 0) {
         e.preventDefault();
@@ -152,11 +150,11 @@ function ModalRoot({
     }
   };
 
-  if (!isOpen || typeof document === "undefined") return null;
+  if (!isOpen || typeof document === 'undefined') return null;
 
   const close = () => onClose?.();
-  const variantAttr = variant ?? "modal";
-  const themeAttr = theme ?? "default";
+  const variantAttr = variant ?? 'modal';
+  const themeAttr = theme ?? 'default';
   const contextValue: ModalContextValue = {
     titleId,
     close,
@@ -164,8 +162,8 @@ function ModalRoot({
 
   const ariaLabelledBy = ariaLabel ? undefined : titleId;
   const rootClasses =
-    "modal modal__overlay | items-center justify-center bg-overlay flex inset-0 fixed z-50 opacity-100 pointer-events-auto";
-  const dialogClasses = "modal__dialog | flex flex-col outline-none";
+    'modal modal__overlay | items-center justify-center bg-overlay flex inset-0 fixed z-50 opacity-100 pointer-events-auto';
+  const dialogClasses = 'modal__dialog | flex flex-col outline-none';
 
   return createPortal(
     <div
@@ -186,12 +184,10 @@ function ModalRoot({
         onKeyDown={handleKeyDown}
         className={dialogClasses}
       >
-        <ModalContext.Provider value={contextValue}>
-          {children}
-        </ModalContext.Provider>
+        <ModalContext.Provider value={contextValue}>{children}</ModalContext.Provider>
       </div>
     </div>,
-    document.body,
+    document.body
   );
 }
 
@@ -211,9 +207,12 @@ function ModalHeader({ children }: Readonly<ModalSlot>) {
  * <Modal.Title> — accessible title, wires up aria-labelledby via titleId
  */
 function ModalTitle({ children, className }: Readonly<ModalSlot>) {
-  const { titleId } = useModalContext("Modal.Title");
+  const { titleId } = useModalContext('Modal.Title');
   return (
-    <h2 id={titleId} className={className}>
+    <h2
+      id={titleId}
+      className={className}
+    >
       {children}
     </h2>
   );
@@ -228,10 +227,10 @@ type ModalCloseButtonProps = {
 };
 
 function ModalCloseButton({
-  ariaLabel = "Close dialog",
+  ariaLabel = 'Close dialog',
   callback,
 }: Readonly<ModalCloseButtonProps>) {
-  const { close } = useModalContext("Modal.CloseButton");
+  const { close } = useModalContext('Modal.CloseButton');
   const handleClose = () => {
     callback?.();
     close();
@@ -277,11 +276,4 @@ const Modal = Object.assign(ModalRoot, {
 });
 
 export default Modal;
-export {
-  ModalBody,
-  ModalCloseButton,
-  ModalFooter,
-  ModalHeader,
-  ModalRoot,
-  ModalTitle,
-};
+export { ModalBody, ModalCloseButton, ModalFooter, ModalHeader, ModalRoot, ModalTitle };
