@@ -1,6 +1,6 @@
+import type { DieValue } from '@/domain/game/dice';
 import DiceIcon from '@/components/DiceIcon/DiceIcon';
 import { Panel } from '@/components/Panel/Panel';
-import type { DieValue } from '@/domain/game/dice';
 
 type DiceBoardProps = {
   currentRoll: DieValue[] | null;

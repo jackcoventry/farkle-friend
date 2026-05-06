@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 /* -----------------------------
    COMMON PROPS
@@ -17,29 +17,29 @@ type CommonProps = ButtonA11yProps & {
   children?: React.ReactNode;
   className?: string;
   icon?: string;
-  iconPosition?: "left" | "right";
-  size?: "default" | "small" | "large";
-  variant?: "primary" | "secondary";
+  iconPosition?: 'left' | 'right';
+  size?: 'default' | 'small' | 'large';
+  variant?: 'primary' | 'secondary';
 };
 
 /* -----------------------------
    BUTTON PROPS
 ----------------------------- */
 type ButtonOnlyProps = {
-  as?: "button";
+  as?: 'button';
   disabled?: boolean;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
-  type?: "button" | "submit" | "reset";
+  type?: 'button' | 'submit' | 'reset';
 } & Omit<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
-  "type" | "onClick" | "disabled" | "className" | "children" | "aria-label"
+  'type' | 'onClick' | 'disabled' | 'className' | 'children' | 'aria-label'
 >;
 
 /* -----------------------------
    ANCHOR PROPS
 ----------------------------- */
 type AnchorOnlyProps = {
-  as: "a";
+  as: 'a';
   disabled?: never;
   href: string;
   onClick?: React.MouseEventHandler<HTMLAnchorElement>;
@@ -48,31 +48,27 @@ type AnchorOnlyProps = {
   type?: never;
 } & Omit<
   React.AnchorHTMLAttributes<HTMLAnchorElement>,
-  "onClick" | "className" | "children" | "aria-label"
+  'onClick' | 'className' | 'children' | 'aria-label'
 >;
 
 /* -----------------------------
    INLINE SPAN PROPS
 ----------------------------- */
 type InlineOnlyProps = {
-  as: "inline";
-} & Omit<
-  React.HTMLAttributes<HTMLSpanElement>,
-  "className" | "children" | "aria-label"
->;
+  as: 'inline';
+} & Omit<React.HTMLAttributes<HTMLSpanElement>, 'className' | 'children' | 'aria-label'>;
 
 /* -----------------------------
    ALL POSSIBLE PROPS
 ----------------------------- */
-export type ButtonProps = CommonProps &
-  (ButtonOnlyProps | AnchorOnlyProps | InlineOnlyProps);
+export type ButtonProps = CommonProps & (ButtonOnlyProps | AnchorOnlyProps | InlineOnlyProps);
 
-function getVariantClasses(variant: CommonProps["variant"]) {
-  if (variant === "secondary") {
-    return "border-control-border shadow-control-shadow bg-control text-control-text hover:bg-control-hover hover:border-accent shadow-offset-solid-style";
+function getVariantClasses(variant: CommonProps['variant']) {
+  if (variant === 'secondary') {
+    return 'border-control-border shadow-control-shadow bg-control text-control-text hover:bg-control-hover hover:border-accent shadow-offset-solid-style';
   }
 
-  return "border-accent shadow-accent-shadow bg-accent text-accent-contrast hover:bg-accent-hover hover:border-action-border shadow-offset-solid-style";
+  return 'border-accent shadow-accent-shadow bg-accent text-accent-contrast hover:bg-accent-hover hover:border-action-border shadow-offset-solid-style';
 }
 
 const Button = React.forwardRef<
@@ -82,35 +78,35 @@ const Button = React.forwardRef<
   const {
     ariaLabel,
     children,
-    className = "",
+    className = '',
     icon,
     iconOnly = false,
-    iconPosition = "right",
-    size = "default",
-    variant = "primary",
+    iconPosition = 'right',
+    size = 'default',
+    variant = 'primary',
     ...rest
   } = props;
 
-  let classes = "button | rounded-full flex relative border-2";
+  let classes = 'button | rounded-full flex relative border-2';
   if (className) classes += ` | ${className}`;
-  if (size === "small") classes += " font-button-small gap-3 py-2 px-5";
-  if (size === "default") classes += " font-button py-3 gap-4 px-6";
-  if (size === "large") classes += " font-button-large gap-5 py-4 px-8";
+  if (size === 'small') classes += ' font-button-small gap-3 py-2 px-5';
+  if (size === 'default') classes += ' font-button py-3 gap-4 px-6';
+  if (size === 'large') classes += ' font-button-large gap-5 py-4 px-8';
 
-  if (iconPosition === "left") classes += " flex-row-reverse";
+  if (iconPosition === 'left') classes += ' flex-row-reverse';
 
-  const childrenWrapper = "content | w-full flex justify-center items-center";
+  const childrenWrapper = 'content | w-full flex justify-center items-center';
 
   // If iconOnly and no ariaLabel, fall back to children (if string)
   let computedAriaLabel = ariaLabel;
-  if (!computedAriaLabel && iconOnly && typeof children === "string") {
+  if (!computedAriaLabel && iconOnly && typeof children === 'string') {
     computedAriaLabel = children;
   }
 
   /* -----------------------------
       INLINE SPAN
   ----------------------------- */
-  if (props.as === "inline") {
+  if (props.as === 'inline') {
     const { as, ...inlineRest } = rest as InlineOnlyProps;
     void as;
 
@@ -126,9 +122,7 @@ const Button = React.forwardRef<
         ref={ref as React.Ref<HTMLSpanElement>}
         {...inlineRest}
       >
-        {children && !iconOnly && (
-          <span className={childrenWrapper}>{children}</span>
-        )}
+        {children && !iconOnly && <span className={childrenWrapper}>{children}</span>}
         {icon && (
           <span className="inline-flex items-center">
             <svg
@@ -149,12 +143,11 @@ const Button = React.forwardRef<
   /* -----------------------------
       ANCHOR
   ----------------------------- */
-  if (props.as === "a") {
-    const { as, href, target, rel, onClick, ...anchorRest } =
-      rest as AnchorOnlyProps;
+  if (props.as === 'a') {
+    const { as, href, target, rel, onClick, ...anchorRest } = rest as AnchorOnlyProps;
     void as;
 
-    const relSafe = target === "_blank" ? rel || "noopener noreferrer" : rel;
+    const relSafe = target === '_blank' ? rel || 'noopener noreferrer' : rel;
 
     classes += ` cursor-pointer ${getVariantClasses(variant)}`;
 
@@ -172,9 +165,7 @@ const Button = React.forwardRef<
         ref={ref as React.Ref<HTMLAnchorElement>}
         {...anchorRest}
       >
-        {children && !iconOnly && (
-          <span className={childrenWrapper}>{children}</span>
-        )}
+        {children && !iconOnly && <span className={childrenWrapper}>{children}</span>}
         {icon && (
           <span className="inline-flex items-center">
             <svg
@@ -195,15 +186,9 @@ const Button = React.forwardRef<
   /* -----------------------------
       BUTTON
   ----------------------------- */
-  const {
-    type = "button",
-    disabled = false,
-    onClick,
-    ...buttonRest
-  } = rest as ButtonOnlyProps;
+  const { type = 'button', disabled = false, onClick, ...buttonRest } = rest as ButtonOnlyProps;
   if (disabled) {
-    classes +=
-      " bg-surface-disabled border-surface-disabled cursor-not-allowed text-text";
+    classes += ' bg-surface-disabled border-surface-disabled cursor-not-allowed text-text';
   } else {
     classes += ` cursor-pointer ${getVariantClasses(variant)}`;
   }
@@ -221,9 +206,7 @@ const Button = React.forwardRef<
       ref={ref as React.Ref<HTMLButtonElement>}
       {...buttonRest}
     >
-      {children && !iconOnly && (
-        <span className={childrenWrapper}>{children}</span>
-      )}
+      {children && !iconOnly && <span className={childrenWrapper}>{children}</span>}
       {icon && (
         <span className="inline-flex items-center">
           <svg

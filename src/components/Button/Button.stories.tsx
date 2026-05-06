@@ -1,33 +1,32 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-
-import Button from "@/components/Button/Button";
-import type { ButtonProps } from "@/components/Button/Button";
-import icons from "@/design-tokens/icons.json";
+import icons from '@/design-tokens/icons.json';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import Button from '@/components/Button/Button';
+import type { ButtonProps } from '@/components/Button/Button';
 
 const meta: Meta<ButtonProps> = {
-  title: "Components/Button",
+  title: 'Components/Button',
   component: Button,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {
     as: {
-      options: ["button", "inline", "a"],
-      control: { type: "radio" },
+      options: ['button', 'inline', 'a'],
+      control: { type: 'radio' },
     },
     size: {
-      options: ["small", "default", "large"],
-      control: { type: "radio" },
+      options: ['small', 'default', 'large'],
+      control: { type: 'radio' },
     },
     variant: {
-      options: ["primary", "secondary"],
-      control: { type: "radio" },
+      options: ['primary', 'secondary'],
+      control: { type: 'radio' },
     },
     iconPosition: {
-      options: ["left", "right", "top"],
-      control: { type: "radio" },
+      options: ['left', 'right', 'top'],
+      control: { type: 'radio' },
     },
     icon: {
       options: icons.icons,
-      control: { type: "select" },
+      control: { type: 'select' },
     },
   },
 };
@@ -42,14 +41,14 @@ const Template: Story = {
 export const Default = {
   ...Template,
   args: {
-    as: "button",
+    as: 'button',
   },
 };
 
 export const Secondary = {
   ...Template,
   args: {
-    as: "button",
-    variant: "secondary",
+    as: 'button',
+    variant: 'secondary',
   },
 };

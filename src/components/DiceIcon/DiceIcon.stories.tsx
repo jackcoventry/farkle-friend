@@ -1,19 +1,18 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-
-import DiceIcon from "@/components/DiceIcon/DiceIcon";
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import DiceIcon from '@/components/DiceIcon/DiceIcon';
 
 const meta: Meta<typeof DiceIcon> = {
-  title: "Components/Dice Icon",
+  title: 'Components/Dice Icon',
   component: DiceIcon,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {
     count: {
       options: [1, 2, 3, 4, 5, 6],
-      control: { type: "radio" },
+      control: { type: 'radio' },
     },
     variant: {
-      options: ["default", "medieval"],
-      control: { type: "radio" },
+      options: ['default', 'medieval'],
+      control: { type: 'radio' },
     },
   },
 };
@@ -37,7 +36,7 @@ const TemplateForGroup: Story = {
   render: (args) => (
     <div
       style={{
-        display: "flex",
+        display: 'flex',
         gap: 10,
         height: 100,
         width: 1000,
@@ -46,7 +45,11 @@ const TemplateForGroup: Story = {
       {args.count ? (
         <>
           {[...new Array(args.count).keys()].map((e) => (
-            <DiceIcon key={e} count={e + 1} variant={args.variant} />
+            <DiceIcon
+              key={e}
+              count={e + 1}
+              variant={args.variant}
+            />
           ))}
         </>
       ) : null}

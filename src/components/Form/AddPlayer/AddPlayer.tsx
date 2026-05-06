@@ -1,17 +1,14 @@
-"use client";
+'use client';
 
-import { AvatarImage } from "@/components/AvatarImage/AvatarImage";
-import Button from "@/components/Button/Button";
-import { Panel } from "@/components/Panel/Panel";
-import { avatarSet, avatarValues } from "@/domain/game/avatars";
-import {
-  AddPlayerFormSchema,
-  type AddPlayerFormSchemaType,
-} from "@/domain/game/formSchemas";
-import { useGame } from "@/domain/game/GameProvider";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect } from 'react';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { useGame } from '@/domain/game/GameProvider';
+import { avatarSet, avatarValues } from '@/domain/game/avatars';
+import { AddPlayerFormSchema, type AddPlayerFormSchemaType } from '@/domain/game/formSchemas';
+import { AvatarImage } from '@/components/AvatarImage/AvatarImage';
+import Button from '@/components/Button/Button';
+import { Panel } from '@/components/Panel/Panel';
 
 export type { AddPlayerFormSchemaType };
 export type AddPlayerFormResult = {
@@ -23,9 +20,7 @@ type AddPlayerFormProps = {
 };
 
 function getNextDefaultUsername(players: { username: string }[]) {
-  const existingNames = new Set(
-    players.map((player) => player.username.trim().toLowerCase()),
-  );
+  const existingNames = new Set(players.map((player) => player.username.trim().toLowerCase()));
   let playerNumber = players.length + 1;
 
   while (existingNames.has(`player #${playerNumber}`)) {
@@ -51,7 +46,7 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
       username: defaultUsername,
       avatar: 1,
     },
-    mode: "onBlur",
+    mode: 'onBlur',
   });
 
   const avatarsInUse = state.players.reduce((acc: number[], currentItem) => {
@@ -63,34 +58,30 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
   useEffect(() => {
     if (dirtyFields.username) return;
 
-    setValue("username", defaultUsername);
+    setValue('username', defaultUsername);
   }, [defaultUsername, dirtyFields.username, setValue]);
 
   const submitHandler = (data: { username: string; avatar: number }) => {
     const duplicateName = state.players.some(
-      (player) =>
-        player.username.trim().toLowerCase() ===
-        data.username.trim().toLowerCase(),
+      (player) => player.username.trim().toLowerCase() === data.username.trim().toLowerCase()
     );
 
     if (duplicateName) {
-      setError("username", {
-        message: "That player name is already in use.",
-        type: "validate",
+      setError('username', {
+        message: 'That player name is already in use.',
+        type: 'validate',
       });
       return;
     }
 
     onSubmit(data);
     reset({
-      username: "",
+      username: '',
       avatar: data.avatar,
     });
     const nextAvailableAvatar =
-      avatarValues.find(
-        (avatar) => avatar !== data.avatar && !avatarsInUse.includes(avatar),
-      ) ?? 1;
-    setValue("avatar", nextAvailableAvatar);
+      avatarValues.find((avatar) => avatar !== data.avatar && !avatarsInUse.includes(avatar)) ?? 1;
+    setValue('avatar', nextAvailableAvatar);
   };
 
   return (
@@ -107,7 +98,10 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
               control={control}
               render={({ field }) => (
                 <>
-                  <label htmlFor="player-name" className="sr-only">
+                  <label
+                    htmlFor="player-name"
+                    className="sr-only"
+                  >
                     Player name
                   </label>
                   <input
@@ -116,18 +110,13 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
                     {...field}
                     placeholder="Enter player name..."
                     onFocus={(event) => {
-                      if (
-                        !dirtyFields.username &&
-                        event.currentTarget.value === defaultUsername
-                      ) {
+                      if (!dirtyFields.username && event.currentTarget.value === defaultUsername) {
                         event.currentTarget.select();
                       }
                     }}
-                    data-valid={errors?.username ? "false" : "true"}
-                    aria-invalid={errors?.username ? "true" : undefined}
-                    aria-describedby={
-                      errors?.username ? "player-name-error" : undefined
-                    }
+                    data-valid={errors?.username ? 'false' : 'true'}
+                    aria-invalid={errors?.username ? 'true' : undefined}
+                    aria-describedby={errors?.username ? 'player-name-error' : undefined}
                   />
                   {errors?.username ? (
                     <p
@@ -147,9 +136,7 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
               control={control}
               render={({ field, fieldState }) => (
                 <fieldset
-                  aria-describedby={
-                    fieldState.error ? "player-avatar-error" : undefined
-                  }
+                  aria-describedby={fieldState.error ? 'player-avatar-error' : undefined}
                   aria-invalid={!!fieldState.error || undefined}
                 >
                   <legend className="mb-4 text-text">Choose an avatar</legend>
@@ -162,9 +149,7 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
                       return (
                         <label
                           key={option}
-                          aria-label={`Avatar ${avatar.name}${
-                            isAvatarInUse ? " unavailable" : ""
-                          }`}
+                          aria-label={`Avatar ${avatar.name}${isAvatarInUse ? ' unavailable' : ''}`}
                           className="avatar-list-option | hover:scale-105 transition-transform"
                         >
                           <input

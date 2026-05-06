@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import Modal from "@/components/Modal/Modal";
-import { useState } from "react";
-import Button from "@/components/Button/Button";
-import { GamePreferences } from "../GamePreferences/GamePreferences";
-import dynamic from "next/dynamic";
+import dynamic from 'next/dynamic';
+import { useState } from 'react';
+import Button from '@/components/Button/Button';
+import Modal from '@/components/Modal/Modal';
+import { GamePreferences } from '../GamePreferences/GamePreferences';
 
-const RulesInfo = dynamic(() => import("@/components/RulesInfo/RulesInfo"), {
+const RulesInfo = dynamic(() => import('@/components/RulesInfo/RulesInfo'), {
   loading: () => <p className="text-text-muted">Loading rules...</p>,
 });
 

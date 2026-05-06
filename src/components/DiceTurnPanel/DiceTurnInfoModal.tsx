@@ -1,5 +1,5 @@
-import Modal from '@/components/Modal/Modal';
 import type { ReactNode } from 'react';
+import Modal from '@/components/Modal/Modal';
 
 type DiceTurnInfoModalProps = {
   children: ReactNode;
@@ -7,11 +7,7 @@ type DiceTurnInfoModalProps = {
   onClose?: () => void;
 };
 
-export function DiceTurnInfoModal({
-  children,
-  isOpen,
-  onClose,
-}: Readonly<DiceTurnInfoModalProps>) {
+export function DiceTurnInfoModal({ children, isOpen, onClose }: Readonly<DiceTurnInfoModalProps>) {
   return (
     <Modal
       id="dice-turn-coach-modal"

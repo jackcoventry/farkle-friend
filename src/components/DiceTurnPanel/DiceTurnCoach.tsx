@@ -1,7 +1,7 @@
+import type { ScoreBreakdownItem, ScoringCombo } from '@/domain/game/dice';
+import type { DiceTurnCopy } from '@/domain/game/diceTurnPresenter';
 import DiceIcon from '@/components/DiceIcon/DiceIcon';
 import { Panel } from '@/components/Panel/Panel';
-import type { ScoringCombo, ScoreBreakdownItem } from '@/domain/game/dice';
-import type { DiceTurnCopy } from '@/domain/game/diceTurnPresenter';
 
 type DiceTurnCoachProps = {
   actionHint: string | null;
@@ -30,7 +30,12 @@ export function DiceTurnCoach({
         className="dice-turn-table__coach-panel | gap-4 flex flex-wrap"
         aria-label="Turn status"
       >
-        <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+        <p
+          className="sr-only"
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           {actionHint ? `${turnCopy.title}. ${actionHint}` : turnCopy.title}
         </p>
         <div className="min-w-0 flex flex-col gap-2">

@@ -1,10 +1,6 @@
 .dice-turn-table {
   background:
-    radial-gradient(
-      circle at 30% 20%,
-      rgb(255 255 255 / 0.22),
-      transparent 28%
-    ),
+    radial-gradient(circle at 30% 20%, rgb(255 255 255 / 0.22), transparent 28%),
     linear-gradient(135deg, var(--color-surface-raised), var(--color-canvas));
   min-height: 300px;
 }
@@ -21,8 +17,7 @@
       color-mix(in srgb, var(--color-accent) 12%, transparent) 0 52%,
       transparent 53%
     );
-  box-shadow: inset 0 0 0 1px
-    color-mix(in srgb, var(--color-accent) 18%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-accent) 18%, transparent);
   width: min(16rem, 70%);
 }
 

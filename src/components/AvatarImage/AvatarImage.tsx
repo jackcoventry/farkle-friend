@@ -1,4 +1,5 @@
-import type { Avatar } from "@/domain/game/avatars";
+/* eslint-disable @next/next/no-img-element */
+import type { Avatar } from '@/domain/game/avatars';
 
 type AvatarImageProps = {
   alt: string;
@@ -6,12 +7,13 @@ type AvatarImageProps = {
   className?: string;
 };
 
-export function AvatarImage({
-  alt,
-  avatar,
-  className,
-}: Readonly<AvatarImageProps>) {
+export function AvatarImage({ alt, avatar, className }: Readonly<AvatarImageProps>) {
   // SVG avatars are local static assets; plain img avoids Next image aspect-ratio warnings.
-  // eslint-disable-next-line @next/next/no-img-element
-  return <img alt={alt} className={className} src={avatar.image} />;
+  return (
+    <img
+      alt={alt}
+      className={className}
+      src={avatar.image}
+    />
+  );
 }

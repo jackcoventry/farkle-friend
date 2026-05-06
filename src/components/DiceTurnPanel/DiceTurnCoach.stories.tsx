@@ -1,10 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-
+import type { ScoreBreakdownItem, ScoringCombo } from '@/domain/game/dice';
+import type { DiceTurnCopy } from '@/domain/game/diceTurnPresenter';
 import { DiceTurnCoach } from '@/components/DiceTurnPanel/DiceTurnCoach';
 import { DiceTurnInfoModal } from '@/components/DiceTurnPanel/DiceTurnInfoModal';
 import { ModalStackProvider } from '@/components/Modal/ModalStackContext';
-import type { DiceTurnCopy } from '@/domain/game/diceTurnPresenter';
-import type { ScoringCombo, ScoreBreakdownItem } from '@/domain/game/dice';
 import './DiceTurnPanel.css';
 
 type CoachStoryArgs = {
@@ -18,14 +17,14 @@ type CoachStoryArgs = {
   turnCopy: DiceTurnCopy;
 };
 
-function CoachStory({
-  isModalOpen,
-  ...args
-}: Readonly<CoachStoryArgs>) {
+function CoachStory({ isModalOpen, ...args }: Readonly<CoachStoryArgs>) {
   if (isModalOpen) {
     return (
       <ModalStackProvider>
-        <DiceTurnInfoModal isOpen onClose={() => {}}>
+        <DiceTurnInfoModal
+          isOpen
+          onClose={() => {}}
+        >
           <DiceTurnCoach {...args} />
         </DiceTurnInfoModal>
       </ModalStackProvider>

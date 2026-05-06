@@ -1,11 +1,10 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-
-import AddPlayer from "@/components/Form/AddPlayer/AddPlayer";
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import AddPlayer from '@/components/Form/AddPlayer/AddPlayer';
 
 const meta: Meta<typeof AddPlayer> = {
-  title: "Components/Form/Add Player",
+  title: 'Components/Form/Add Player',
   component: AddPlayer,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   args: {},
 };
 export default meta;
@@ -13,7 +12,7 @@ export default meta;
 type Story = StoryObj<typeof AddPlayer>;
 
 const onSubmit = () => {
-  console.log("Submit!");
+  console.log('Submit!');
 };
 
 const Template: Story = {
