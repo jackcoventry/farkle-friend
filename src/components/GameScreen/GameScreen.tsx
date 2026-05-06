@@ -5,9 +5,7 @@ import type { AddPlayerFormSchemaType } from "@/components/Form/AddPlayer/AddPla
 import type { SettingsFormSchemaType } from "@/components/Form/Settings/Settings";
 import { ActiveGameScreen } from "@/components/GameScreen/ActiveGameScreen";
 import { LobbyGameScreen } from "@/components/GameScreen/LobbyGameScreen";
-import { ConfirmGameActionModal } from "@/components/GameActions/ConfirmGameActionModal";
 import type { ConfirmGameAction } from "@/components/GameActions/ConfirmGameActionModal";
-import { GameFinishedModal } from "@/components/GameFinishedModal/GameFinishedModal";
 import { AvatarId, avatarSet } from "@/domain/game/avatars";
 import { getGameSummary } from "@/domain/game/gameLogic";
 import {
@@ -19,8 +17,20 @@ import {
 } from "@/domain/game/gameSelectors";
 import { useGame } from "@/domain/game/GameProvider";
 import { useWarnBeforeUnload } from "@/hooks/useWarnBeforeUnload";
+import dynamic from "next/dynamic";
 import { useMemo, useRef, useState } from "react";
 import type { KeyboardEvent } from "react";
+
+const ConfirmGameActionModal = dynamic(() =>
+  import("@/components/GameActions/ConfirmGameActionModal").then(
+    (module) => module.ConfirmGameActionModal,
+  ),
+);
+const GameFinishedModal = dynamic(() =>
+  import("@/components/GameFinishedModal/GameFinishedModal").then(
+    (module) => module.GameFinishedModal,
+  ),
+);
 
 export function GameScreen() {
   const { state, dispatch } = useGame();

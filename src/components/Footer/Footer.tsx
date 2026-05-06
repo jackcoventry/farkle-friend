@@ -1,8 +1,14 @@
+"use client";
+
 import Modal from "@/components/Modal/Modal";
-import RulesInfo from "@/components/RulesInfo/RulesInfo";
 import { useState } from "react";
 import Button from "@/components/Button/Button";
 import { GamePreferences } from "../GamePreferences/GamePreferences";
+import dynamic from "next/dynamic";
+
+const RulesInfo = dynamic(() => import("@/components/RulesInfo/RulesInfo"), {
+  loading: () => <p className="text-text-muted">Loading rules...</p>,
+});
 
 function Footer() {
   const [showRulesModal, setShowRulesModal] = useState<boolean>(false);

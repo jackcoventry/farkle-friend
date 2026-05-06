@@ -1,3 +1,5 @@
+"use client";
+
 import { AvatarImage } from "@/components/AvatarImage/AvatarImage";
 import Button from "@/components/Button/Button";
 import { AvatarId, avatarSet } from "@/domain/game/avatars";

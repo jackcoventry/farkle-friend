@@ -9,7 +9,7 @@ type DiceTurnCopyArgs = {
   usesAllDice: boolean;
 };
 
-type DiceTurnCopy = {
+export type DiceTurnCopy = {
   detail: string;
   selectedStatus: string;
   title: string;
