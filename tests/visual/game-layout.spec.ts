@@ -5,7 +5,7 @@ test("dice turn layout remains stable", async ({ page }) => {
   await page.addInitScript(() => {
     const rolls = [0, 0.18, 0.36, 0.54, 0.72, 0.9];
     let index = 0;
-    Math.random = () => {
+    window.__FARKLE_DICE_RANDOM__ = () => {
       const value = rolls[index % rolls.length];
       index += 1;
       return value;

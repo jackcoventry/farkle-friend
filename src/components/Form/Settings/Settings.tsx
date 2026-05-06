@@ -7,7 +7,7 @@ import { useGame } from "@/domain/game/GameProvider";
 import { DiceStyle, GameMode, ThemePreference } from "@/domain/game/gameTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import z from "zod";
+import * as z from "zod/mini";
 
 export const diceStyles = ["default", "medieval"] as const;
 export const modes = ["dice", "manual"] as const;
@@ -21,11 +21,11 @@ const SettingsFormSchema = z.object({
   diceStyle: z.enum(diceStyles),
   mode: z.enum(modes),
   motionEnabled: z.boolean(),
-  targetScore: z
-    .number()
-    .int("Target score must be a whole number.")
-    .min(minTargetScore, `Target score must be at least ${minTargetScore}.`)
-    .max(maxTargetScore, `Target score must be ${maxTargetScore} or less.`),
+  targetScore: z.number().check(
+    z.int("Target score must be a whole number."),
+    z.minimum(minTargetScore, `Target score must be at least ${minTargetScore}.`),
+    z.maximum(maxTargetScore, `Target score must be ${maxTargetScore} or less.`),
+  ),
   showComboSuggestions: z.boolean(),
   tableFeedback: z.boolean(),
   theme: z.enum(themePreferences),

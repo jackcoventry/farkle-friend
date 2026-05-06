@@ -8,19 +8,17 @@ import { useGame } from "@/domain/game/GameProvider";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import z from "zod";
+import * as z from "zod/mini";
 
 const MINIMUM_USERNAME_LENGTH = 1;
 const AddPlayerFormSchema = z.object({
-  username: z
-    .string()
-    .trim()
-    .min(MINIMUM_USERNAME_LENGTH, {
-      message: `Name must be at least ${MINIMUM_USERNAME_LENGTH} characters!`,
+  username: z.string().check(
+    z.trim(),
+    z.minLength(MINIMUM_USERNAME_LENGTH, {
+      error: `Name must be at least ${MINIMUM_USERNAME_LENGTH} characters!`,
     }),
-  avatar: z.number({
-    error: "Pick something!",
-  }),
+  ),
+  avatar: z.number("Pick something!"),
 });
 
 export type AddPlayerFormSchemaType = z.infer<typeof AddPlayerFormSchema>;

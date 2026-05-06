@@ -5,14 +5,16 @@ import { TurnActionCluster } from "@/components/TurnActionCluster/TurnActionClus
 import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import z from "zod";
+import * as z from "zod/mini";
 import ScoreGenerator from "../ScoreGenerator/ScoreGenerator";
 import { DieValue, scoreSelectedDice } from "@/domain/game/dice";
 
 const AddScoreSchema = z.object({
-  value: z.number().min(0, {
-    message: `Enter a valid number, or zero if you were farkled!`,
-  }),
+  value: z.number().check(
+    z.minimum(0, {
+      error: `Enter a valid number, or zero if you were farkled!`,
+    }),
+  ),
 });
 
 export type AddScoreSchemaType = z.infer<typeof AddScoreSchema>;

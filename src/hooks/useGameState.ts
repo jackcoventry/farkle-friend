@@ -4,28 +4,34 @@ import { useEffect, useReducer } from "react";
 import type { GamePreferences, GameSettings, GameState } from "@/domain/game/gameTypes";
 import { createInitialGameState } from "@/domain/game/gameLogic";
 import { reducer } from "@/domain/game/gameReducer";
-import z from "zod";
+import * as z from "zod/mini";
 
 const STORAGE_KEY = "farkle-friend-settings";
 const storedSettingsSchema = z.object({
-  preferences: z
-    .object({
-      motionEnabled: z.boolean(),
-      tableFeedback: z.boolean(),
-      theme: z.enum(["system", "light", "dark"]),
-    })
-    .partial()
-    .optional(),
-  settings: z
-    .object({
-      autoAdvanceTurns: z.boolean(),
-      diceStyle: z.enum(["default", "medieval"]),
-      mode: z.enum(["dice", "manual"]),
-      targetScore: z.number().int().min(500).max(50000),
-      showComboSuggestions: z.boolean(),
-    })
-    .partial()
-    .optional(),
+  preferences: z.optional(
+    z.partial(
+      z.object({
+        motionEnabled: z.boolean(),
+        tableFeedback: z.boolean(),
+        theme: z.enum(["system", "light", "dark"]),
+      }),
+    ),
+  ),
+  settings: z.optional(
+    z.partial(
+      z.object({
+        autoAdvanceTurns: z.boolean(),
+        diceStyle: z.enum(["default", "medieval"]),
+        mode: z.enum(["dice", "manual"]),
+        targetScore: z.number().check(
+          z.int(),
+          z.minimum(500),
+          z.maximum(50000),
+        ),
+        showComboSuggestions: z.boolean(),
+      }),
+    ),
+  ),
 });
 
 type StoredSettings = {

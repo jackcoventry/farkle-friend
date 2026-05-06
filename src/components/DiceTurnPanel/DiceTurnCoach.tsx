@@ -77,9 +77,9 @@ export function DiceTurnCoach({
                 className="grid w-full grid-cols-2"
               >
                 <span className="flex gap-1">
-                  {combo.dice.map((die) => (
+                  {combo.dice.map((die, dieIndex) => (
                     <DiceIcon
-                      key={die}
+                      key={`${die}-${dieIndex}`}
                       count={die}
                       className="w-6"
                     />

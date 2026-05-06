@@ -124,7 +124,7 @@ test("short mobile dice layout keeps dice inside a larger board", async ({
   await page.addInitScript(() => {
     const rolls = [0, 0.18, 0.36, 0.54, 0.72, 0.9];
     let index = 0;
-    Math.random = () => {
+    window.__FARKLE_DICE_RANDOM__ = () => {
       const value = rolls[index % rolls.length];
       index += 1;
       return value;
@@ -157,7 +157,7 @@ test("short tablet dice layout keeps controls below the board", async ({
   await page.addInitScript(() => {
     const rolls = [0, 0.18, 0.36, 0.54, 0.72, 0.9];
     let index = 0;
-    Math.random = () => {
+    window.__FARKLE_DICE_RANDOM__ = () => {
       const value = rolls[index % rolls.length];
       index += 1;
       return value;
@@ -195,7 +195,7 @@ test("mid-height tablet dice layout keeps full controls visible", async ({
   await page.addInitScript(() => {
     const rolls = [0, 0.18, 0.36, 0.54, 0.72, 0.9];
     let index = 0;
-    Math.random = () => {
+    window.__FARKLE_DICE_RANDOM__ = () => {
       const value = rolls[index % rolls.length];
       index += 1;
       return value;

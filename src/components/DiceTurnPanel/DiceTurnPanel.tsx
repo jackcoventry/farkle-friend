@@ -7,6 +7,7 @@ import { getDiceActionHint, getDiceTurnCopy } from '@/domain/game/diceTurnPresen
 import { playGameSound } from '@/domain/game/gameAudio';
 import { GameAction } from '@/domain/game/gameReducer';
 import { GameState } from '@/domain/game/gameTypes';
+import { getConfiguredDiceRandomSource } from '@/domain/game/randomSource';
 import { useDiceTurnController } from '@/domain/game/useDiceTurnController';
 import { useTurnController } from '@/domain/game/useTurnController';
 import { DiceTurnActions } from '@/components/DiceTurnPanel/DiceTurnActions';
@@ -43,6 +44,7 @@ export function DiceTurnPanel({
     phase: state.phase,
     playerId: currentPlayer?.id ?? null,
     onCommitScore: commitTurnScore,
+    randomSource: getConfiguredDiceRandomSource(),
   });
 
   const activeTurn = dice.activeTurn;
