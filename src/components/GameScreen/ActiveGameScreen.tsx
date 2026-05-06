@@ -14,7 +14,10 @@ import PlayerList from "@/components/PlayerList/PlayerList";
 import { PlayerSwitchSplash } from "@/components/PlayerSwitchSplash/PlayerSwitchSplash";
 import { TurnHistory } from "@/components/TurnHistory/TurnHistory";
 import { TurnResultPanel } from "@/components/TurnResultPanel/TurnResultPanel";
-import { avatarSet, type AvatarId } from "@/components/Form/AddPlayer/AddPlayer";
+import {
+  avatarSet,
+  type AvatarId,
+} from "@/components/Form/AddPlayer/AddPlayer";
 import type { GameAction } from "@/domain/game/gameReducer";
 import type {
   GameFlowState,
@@ -171,11 +174,11 @@ export function ActiveGameScreen({
         onClose={() => setShowSidebarModal(false)}
         ariaLabel="Game menu"
       >
-        <Modal.Body className="game-menu-modal">
-          <div className="game-menu-modal__content | grid gap-3">
-            <div className="flex justify-end">
-              <Modal.CloseButton ariaLabel="Close game menu" />
-            </div>
+        <Modal.Body className="game-menu-modal modal-panel modal-panel--narrow">
+          <div className="modal-panel__header">
+            <Modal.CloseButton ariaLabel="Close game menu" />
+          </div>
+          <div className="modal-panel__content">
             <GameScreenSidebar
               summary={summary}
               currentPlayer={currentPlayer}

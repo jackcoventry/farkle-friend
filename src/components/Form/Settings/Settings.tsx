@@ -79,7 +79,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
   };
 
   return (
-    <div className="form-wrapper | border-accent border p-4 rounded-4xl bg-surface self-center">
+    <div className="form-wrapper | border-accent border p-4 rounded-4xl bg-surface self-center max-w-full">
       <form
         className="form | gap-6 flex flex-col"
         onSubmit={handleSubmit(submitHandler)}
@@ -228,12 +228,13 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
                   }
                 />
 
-                <div className="flex gap-2">
+                <div className="grid grid-cols-[repeat(auto-fit,minmax(7rem,1fr))] gap-2">
                   {targetScorePresets.map((preset) => (
                     <Button
                       key={preset}
                       type="button"
                       size="small"
+                      className="justify-center"
                       onClick={() =>
                         setValue("targetScore", preset, {
                           shouldDirty: true,

@@ -23,10 +23,6 @@ function PlayerList({
         const isActive = player.id === activePlayerId;
         const isLeader = player.id === leadingPlayerId;
         const totalScore = player.totalScore ?? 0;
-        const remainingScore =
-          targetScore && targetScore > 0
-            ? Math.max(0, targetScore - totalScore)
-            : null;
         const progress =
           targetScore && targetScore > 0
             ? Math.min(100, Math.round((totalScore / targetScore) * 100))
@@ -49,17 +45,26 @@ function PlayerList({
                 />
               </div>
               <div className="flex min-w-0 flex-1 flex-col justify-center">
-                <div className="flex min-w-0 items-center gap-2">
-                  <p className="font-heading-2 truncate">{player.username}</p>
-                  {isActive ? (
-                    <span className="rounded-full bg-accent px-2 py-1 text-xs text-accent-contrast">
-                      Current
-                    </span>
-                  ) : null}
-                  {isLeader && totalScore > 0 ? (
-                    <span className="rounded-full bg-control px-2 py-1 text-xs text-control-text">
-                      Leader
-                    </span>
+                <div className="grid min-w-0 gap-1">
+                  <p
+                    className="font-heading-2 truncate"
+                    title={player.username}
+                  >
+                    {player.username}
+                  </p>
+                  {isActive || (isLeader && totalScore > 0) ? (
+                    <div className="flex flex-wrap gap-1">
+                      {isActive ? (
+                        <span className="rounded-full bg-accent px-2 py-1 text-xs text-accent-contrast">
+                          Current
+                        </span>
+                      ) : null}
+                      {isLeader && totalScore > 0 ? (
+                        <span className="rounded-full bg-control px-2 py-1 text-xs text-control-text">
+                          Leader
+                        </span>
+                      ) : null}
+                    </div>
                   ) : null}
                 </div>
                 <span className="block text-text-muted">

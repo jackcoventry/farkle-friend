@@ -50,14 +50,16 @@ export function GamePreferences({ className }: Readonly<GamePreferencesProps>) {
         onClose={() => setIsOpen(false)}
         ariaLabel="Game preferences"
       >
-        <Modal.Body>
-          <div className="w-[min(420px,calc(100dvw-2rem))] rounded-lg bg-surface text-text p-4">
+        <Modal.Body className="modal-panel modal-panel--narrow">
+          <div className="modal-panel__header">
             <Modal.CloseButton ariaLabel="Close preferences" />
-            <div className="grid gap-5">
+          </div>
+          <div className="modal-panel__content">
+            <div className="grid gap-6">
               <h2 className="font-heading text-center">Preferences</h2>
-              <fieldset className="grid gap-3">
-                <legend>Sound & haptics</legend>
-                <div className="flex flex-wrap gap-4">
+              <fieldset className="preference-fieldset | grid gap-3 rounded-2xl border border-border bg-surface-muted p-4">
+                <legend className="contents">Sound & haptics</legend>
+                <div className="flex flex-wrap gap-3">
                   <Pill>
                     <Pill.Control>
                       <input
@@ -88,9 +90,9 @@ export function GamePreferences({ className }: Readonly<GamePreferencesProps>) {
                   </Pill>
                 </div>
               </fieldset>
-              <fieldset className="grid gap-3">
-                <legend>Animations</legend>
-                <div className="flex flex-wrap gap-4">
+              <fieldset className="preference-fieldset | grid gap-3 rounded-2xl border border-border bg-surface-muted p-4">
+                <legend className="contents">Animations</legend>
+                <div className="flex flex-wrap gap-3">
                   <Pill>
                     <Pill.Control>
                       <input
@@ -121,9 +123,9 @@ export function GamePreferences({ className }: Readonly<GamePreferencesProps>) {
                   </Pill>
                 </div>
               </fieldset>
-              <fieldset className="grid gap-3">
-                <legend>Theme</legend>
-                <div className="flex flex-wrap gap-4">
+              <fieldset className="preference-fieldset | grid gap-3 rounded-2xl border border-border bg-surface-muted p-4">
+                <legend className="contents">Theme</legend>
+                <div className="flex flex-wrap gap-3">
                   {(["system", "light", "dark"] as const).map((option) => {
                     const label =
                       option === "system"

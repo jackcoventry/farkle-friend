@@ -171,10 +171,7 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
                     }
                   />
                   {errors?.username ? (
-                    <p
-                      id="player-name-error"
-                      className="field-error"
-                    >
+                    <p id="player-name-error" className="field-error">
                       {errors.username.message}
                     </p>
                   ) : null}
@@ -189,18 +186,18 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
                 <fieldset aria-invalid={!!fieldState.error || undefined}>
                   <legend className="mb-4 text-text">Choose an avatar</legend>
 
-                  <div className="gap-4 grid grid-cols-3 justify-items-center">
+                  <div className="avatar-list-grid | grid grid-cols-3 justify-items-center gap-3 sm:gap-4">
                     {avatarValues.map((option) => {
                       const avatar = avatarSet[option];
                       const isAvatarInUse = avatarsInUse.includes(option);
-                      const classes = `avatar-list-image | cursor-pointer enabled:hover:opacity-85 rounded-full overflow-hidden w-[100px] h-[100px] p-4 flex items-center justify-center ${avatar.color}`;
+                      const classes = `avatar-list-image | cursor-pointer enabled:hover:opacity-85 rounded-full overflow-hidden flex items-center justify-center ${avatar.color}`;
                       return (
                         <label
                           key={option}
                           aria-label={`Avatar ${avatar.name}${
                             isAvatarInUse ? " unavailable" : ""
                           }`}
-                          className="w-[100px] hover:scale-105 transition-transform"
+                          className="avatar-list-option | hover:scale-105 transition-transform"
                         >
                           <input
                             type="radio"

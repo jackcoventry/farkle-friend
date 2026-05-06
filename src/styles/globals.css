@@ -57,17 +57,60 @@ body {
   color: var(--color-accent);
 }
 
-.game-menu-modal {
-  display: grid;
-  max-block-size: calc(100dvh - var(--spacing-5));
-  min-block-size: 0;
-  overflow: hidden;
-  inline-size: min(420px, calc(100dvw - var(--spacing-5)));
+.modal__overlay {
+  padding: var(--spacing-3);
 }
 
-.game-menu-modal__content {
+.modal__dialog {
+  inline-size: auto;
+  max-block-size: calc(100dvh - var(--spacing-6));
+  max-inline-size: calc(100dvw - var(--spacing-6));
+  overflow: hidden;
+}
+
+.modal-panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 1.5rem;
+  box-shadow: 0 1.25rem 4rem rgb(0 0 0 / 0.35);
+  color: var(--color-text);
+  display: grid;
+  gap: var(--spacing-3);
   grid-template-rows: auto minmax(0, 1fr);
+  inline-size: min(42rem, calc(100dvw - var(--spacing-6)));
+  max-block-size: calc(100dvh - var(--spacing-6));
+  overflow: hidden;
+  padding: var(--spacing-4);
+}
+
+.modal-panel--narrow {
+  inline-size: min(28rem, calc(100dvw - var(--spacing-6)));
+}
+
+.modal-panel--wide {
+  inline-size: min(58rem, calc(100dvw - var(--spacing-6)));
+}
+
+.modal-panel__header {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  min-block-size: 2.75rem;
+}
+
+.modal-panel__content {
   min-block-size: 0;
+  overflow: auto;
+  padding: 0 var(--spacing-1) var(--spacing-1);
+}
+
+.modal-panel__section {
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  display: grid;
+  gap: var(--spacing-3);
+  padding: var(--spacing-4);
 }
 
 .game-menu-modal .game-shell__sidebar {
@@ -158,6 +201,21 @@ body {
   cursor: not-allowed;
 }
 
+.avatar-list-grid {
+  --avatar-list-size: clamp(4rem, 22vw, 6.25rem);
+  --avatar-list-padding: clamp(0.625rem, 3vw, 1rem);
+}
+
+.avatar-list-option,
+.avatar-list-image {
+  block-size: var(--avatar-list-size);
+  inline-size: var(--avatar-list-size);
+}
+
+.avatar-list-image {
+  padding: var(--avatar-list-padding);
+}
+
 /***
   Modal
 ***/
@@ -219,12 +277,6 @@ body {
   }
 }
 
-.modal__dialog {
-  max-height: calc(100dvh - var(--spacing-5));
-  max-width: 1200px;
-  width: fit-content;
-}
-
 .splash-avatar-crown::after {
   background-image: url("../../public/crown.svg");
   background-repeat: no-repeat;
@@ -241,12 +293,6 @@ body {
 .splash-avatar {
   height: 200px;
   width: 200px;
-}
-
-@media (max-width: 600px) {
-  .modal__dialog {
-    width: calc(100dvw - var(--spacing-5));
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

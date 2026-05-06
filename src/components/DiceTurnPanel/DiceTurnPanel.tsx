@@ -303,7 +303,7 @@ export function DiceTurnPanel({
                 ariaDescribedBy: actionHintId,
                 disabled: !dice.canFinish,
                 icon: "rocket",
-                label: isFarkled ? "Score 0" : "End turn",
+                label: "End turn",
                 onClick: handleFinish,
               },
             ]}
@@ -335,9 +335,11 @@ export function DiceTurnPanel({
             onClose={onCloseMobileCoach}
             ariaLabel="Turn information"
           >
-            <Modal.Body>
-              <div className="dice-turn-coach-modal">
+            <Modal.Body className="dice-turn-coach-modal modal-panel modal-panel--narrow">
+              <div className="modal-panel__header">
                 <Modal.CloseButton ariaLabel="Close turn information" />
+              </div>
+              <div className="modal-panel__content">
                 <div className="dice-turn-table__coach | flex flex-col gap-4">
                   {coachContent}
                 </div>

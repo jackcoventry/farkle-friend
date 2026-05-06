@@ -86,9 +86,11 @@ export function ManualTurn({
         onClose={onCloseMobileCoach}
         ariaLabel="Turn information"
       >
-        <Modal.Body>
-          <div className="dice-turn-coach-modal">
+        <Modal.Body className="dice-turn-coach-modal modal-panel modal-panel--narrow">
+          <div className="modal-panel__header">
             <Modal.CloseButton ariaLabel="Close turn information" />
+          </div>
+          <div className="modal-panel__content">
             {coachContent}
           </div>
         </Modal.Body>

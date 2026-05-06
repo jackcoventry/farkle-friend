@@ -104,37 +104,41 @@ export function LobbyGameScreen({
         onClose={() => setIsSidebarOpen(false)}
         ariaLabel="Game setup summary"
       >
-        <Modal.Body>
-          <GameShell.Sidebar>
-            <GameShell.SidebarMain>
-              {state.players.length > 0 ? (
-                <PlayerList
-                  players={state.players}
-                  onRemovePlayer={onRemovePlayer}
+        <Modal.Body className="game-menu-modal modal-panel modal-panel--narrow">
+          <div className="modal-panel__header">
+            <Modal.CloseButton ariaLabel="Close setup summary" />
+          </div>
+          <div className="modal-panel__content">
+            <GameShell.Sidebar>
+              <GameShell.SidebarMain>
+                {state.players.length > 0 ? (
+                  <PlayerList
+                    players={state.players}
+                    onRemovePlayer={onRemovePlayer}
+                  />
+                ) : (
+                  <Panel>
+                    <h2 className="font-heading-2">No players yet</h2>
+                    <p className="mt-1 text-text-muted">
+                      Add at least two players, then start the game from the
+                      setup panel.
+                    </p>
+                  </Panel>
+                )}
+                <GameSetupSummary
+                  preferences={state.preferences}
+                  settings={state.settings}
+                  onEditSettings={() => {
+                    setIsSidebarOpen(false);
+                    onSelectLobbyScreen("settings");
+                  }}
                 />
-              ) : (
-                <Panel>
-                  <h2 className="font-heading-2">No players yet</h2>
-                  <p className="mt-1 text-text-muted">
-                    Add at least two players, then start the game from the setup
-                    panel.
-                  </p>
-                </Panel>
-              )}
-              <GameSetupSummary
-                preferences={state.preferences}
-                settings={state.settings}
-                onEditSettings={() => {
-                  setIsSidebarOpen(false);
-                  onSelectLobbyScreen("settings");
-                }}
-              />
-            </GameShell.SidebarMain>
-            <GameShell.SidebarFooter>
-              <Modal.CloseButton ariaLabel="Close setup summary" />
-              <Footer />
-            </GameShell.SidebarFooter>
-          </GameShell.Sidebar>
+              </GameShell.SidebarMain>
+              <GameShell.SidebarFooter>
+                <Footer />
+              </GameShell.SidebarFooter>
+            </GameShell.Sidebar>
+          </div>
         </Modal.Body>
       </Modal>
 
