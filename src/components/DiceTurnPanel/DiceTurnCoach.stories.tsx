@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { ScoreBreakdownItem, ScoringCombo } from '@/domain/game/dice';
-import type { DiceTurnCopy } from '@/domain/game/diceTurnPresenter';
+import type { DiceTurnCopy, DiceTurnText } from '@/domain/game/diceTurnPresenter';
 import { DiceTurnCoach } from '@/components/DiceTurnPanel/DiceTurnCoach';
 import { DiceTurnInfoModal } from '@/components/DiceTurnPanel/DiceTurnInfoModal';
 import { ModalStackProvider } from '@/components/Modal/ModalStackContext';
 import './DiceTurnPanel.css';
 
 type CoachStoryArgs = {
-  actionHint: string | null;
+  actionHint: DiceTurnText | null;
   currentCombos: ScoringCombo[];
   isModalOpen: boolean;
   selectedBreakdown: ScoreBreakdownItem[];
@@ -43,7 +43,7 @@ const meta: Meta<typeof CoachStory> = {
   component: CoachStory,
   tags: ['autodocs'],
   args: {
-    actionHint: 'Tap dice to select them, or use keys 1-6.',
+    actionHint: { key: 'turn.action.selectDice' },
     currentCombos: [
       { dice: [1], indices: [0], score: 100 },
       { dice: [5], indices: [3], score: 50 },
@@ -55,9 +55,9 @@ const meta: Meta<typeof CoachStory> = {
     showComboSuggestions: true,
     showSelectionStatus: false,
     turnCopy: {
-      detail: 'Select dice that score, then bank them.',
-      selectedStatus: 'No dice selected.',
-      title: 'Choose scoring dice',
+      detail: { key: 'turn.detail.chooseScoringDice' },
+      selectedStatus: { key: 'turn.selected.none' },
+      title: { key: 'turn.title.chooseScoringDice' },
       tone: 'default',
     },
   },
@@ -71,12 +71,12 @@ export const Default: Story = {};
 
 export const InvalidSelection: Story = {
   args: {
-    actionHint: 'Deselect any dice that do not score before banking this selection.',
+    actionHint: { key: 'turn.action.deselectInvalid' },
     showSelectionStatus: true,
     turnCopy: {
-      detail: 'Every selected die must be part of a scoring combination.',
-      selectedStatus: 'Selection includes dice that do not score.',
-      title: 'Choose only scoring dice',
+      detail: { key: 'turn.detail.invalidSelection' },
+      selectedStatus: { key: 'turn.selected.invalid' },
+      title: { key: 'turn.title.chooseOnlyScoringDice' },
       tone: 'warning',
     },
   },
@@ -84,13 +84,13 @@ export const InvalidSelection: Story = {
 
 export const HotDice: Story = {
   args: {
-    actionHint: 'Roll all six again, or end the turn with your current score.',
+    actionHint: { key: 'turn.detail.hotDice' },
     selectedBreakdown: [{ label: 'Straight', score: 1500 }],
     showSelectionStatus: true,
     turnCopy: {
-      detail: 'All dice scored. Roll all six again or end your turn.',
-      selectedStatus: '1500 points selected.',
-      title: 'Hot dice!',
+      detail: { key: 'turn.detail.hotDice' },
+      selectedStatus: { key: 'turn.selected.points', values: { score: 1500 } },
+      title: { key: 'turn.title.hotDice' },
       tone: 'success',
     },
   },
@@ -98,14 +98,14 @@ export const HotDice: Story = {
 
 export const Farkle: Story = {
   args: {
-    actionHint: 'End the turn to score 0 and move to the next player.',
+    actionHint: { key: 'turn.action.endFarkle' },
     currentCombos: [],
     showComboSuggestions: false,
     showSelectionStatus: true,
     turnCopy: {
-      detail: 'No scoring dice were rolled. This turn scores 0 points.',
-      selectedStatus: 'Farkle. End the turn to score 0.',
-      title: 'This turn scores 0',
+      detail: { key: 'turn.detail.farkle' },
+      selectedStatus: { key: 'turn.selectedStatus.farkle' },
+      title: { key: 'turn.title.farkle' },
       tone: 'danger',
     },
   },

@@ -1,3 +1,5 @@
+import type { MessageKey, MessageValues } from '@/i18n/messages';
+
 type DiceTurnCopyArgs = {
   canRoll: boolean;
   hasSelectedDice: boolean;
@@ -10,10 +12,15 @@ type DiceTurnCopyArgs = {
 };
 
 export type DiceTurnCopy = {
-  detail: string;
-  selectedStatus: string;
-  title: string;
+  detail: DiceTurnText;
+  selectedStatus: DiceTurnText;
+  title: DiceTurnText;
   tone: 'default' | 'danger' | 'success' | 'warning';
+};
+
+export type DiceTurnText = {
+  key: MessageKey;
+  values?: MessageValues;
 };
 
 type DiceActionHintArgs = {
@@ -37,9 +44,9 @@ export function getDiceTurnCopy({
 }: DiceTurnCopyArgs): DiceTurnCopy {
   if (isFarkled) {
     return {
-      detail: 'No scoring dice were rolled. This turn scores 0 points.',
-      selectedStatus: 'Farkle. End the turn to score 0.',
-      title: 'This turn scores 0',
+      detail: { key: 'turn.detail.farkle' },
+      selectedStatus: { key: 'turn.selectedStatus.farkle' },
+      title: { key: 'turn.title.farkle' },
       tone: 'danger',
     };
   }
@@ -52,53 +59,53 @@ export function getDiceTurnCopy({
 
   if (isHotDice) {
     return {
-      detail: 'All dice scored. Roll all six again or end your turn.',
+      detail: { key: 'turn.detail.hotDice' },
       selectedStatus,
-      title: 'Hot dice!',
+      title: { key: 'turn.title.hotDice' },
       tone: 'success',
     };
   }
 
   if (hasSelectedDice && selectedScore > 0 && usesAllDice) {
     return {
-      detail: 'Bank this selection, then decide whether to roll again.',
+      detail: { key: 'turn.detail.bankSelection' },
       selectedStatus,
-      title: `Bank ${selectedScore} or keep choosing`,
+      title: { key: 'turn.title.bankOrKeepChoosing', values: { score: selectedScore } },
       tone: 'default',
     };
   }
 
   if (hasSelectedDice) {
     return {
-      detail: 'Every selected die must be part of a scoring combination.',
+      detail: { key: 'turn.detail.invalidSelection' },
       selectedStatus,
-      title: 'Choose only scoring dice',
+      title: { key: 'turn.title.chooseOnlyScoringDice' },
       tone: 'warning',
     };
   }
 
   if (canRoll && tempScore > 0) {
     return {
-      detail: 'You can end the turn with your current score or roll again.',
+      detail: { key: 'turn.detail.bankOrRoll' },
       selectedStatus,
-      title: 'Bank your turn or roll again',
+      title: { key: 'turn.title.bankOrRoll' },
       tone: 'default',
     };
   }
 
   if (canRoll) {
     return {
-      detail: 'Roll all available dice to begin.',
+      detail: { key: 'turn.detail.readyToRoll' },
       selectedStatus,
-      title: 'Ready to roll',
+      title: { key: 'turn.title.readyToRoll' },
       tone: 'default',
     };
   }
 
   return {
-    detail: 'Select dice that score, then bank them.',
+    detail: { key: 'turn.detail.chooseScoringDice' },
     selectedStatus,
-    title: 'Choose scoring dice',
+    title: { key: 'turn.title.chooseScoringDice' },
     tone: 'default',
   };
 }
@@ -110,16 +117,16 @@ export function getDiceActionHint({
   isFarkled,
   selectedHasInvalidDice,
   selectedScore,
-}: DiceActionHintArgs): string | null {
-  if (isFarkled) return 'End the turn to score 0 and move to the next player.';
+}: DiceActionHintArgs): DiceTurnText | null {
+  if (isFarkled) return { key: 'turn.action.endFarkle' };
   if (canBank && selectedScore > 0) {
-    return `Bank ${selectedScore} points from this selection, or keep selecting scoring dice.`;
+    return { key: 'turn.action.bankSelection', values: { score: selectedScore } };
   }
   if (selectedHasInvalidDice) {
-    return 'Deselect any dice that do not score before banking this selection.';
+    return { key: 'turn.action.deselectInvalid' };
   }
-  if (hasSelectedDice) return 'Selected dice do not score yet.';
-  if (hasCurrentRoll) return 'Tap dice to select them, or use keys 1-6.';
+  if (hasSelectedDice) return { key: 'turn.action.selectedNoScore' };
+  if (hasCurrentRoll) return { key: 'turn.action.selectDice' };
   return null;
 }
 
@@ -127,16 +134,16 @@ function getSelectedStatus({
   hasSelectedDice,
   selectedHasInvalidDice,
   selectedScore,
-}: Pick<DiceTurnCopyArgs, 'hasSelectedDice' | 'selectedHasInvalidDice' | 'selectedScore'>): string {
+}: Pick<DiceTurnCopyArgs, 'hasSelectedDice' | 'selectedHasInvalidDice' | 'selectedScore'>): DiceTurnText {
   if (hasSelectedDice && selectedHasInvalidDice) {
-    return 'Selection includes dice that do not score.';
+    return { key: 'turn.selected.invalid' };
   }
 
   if (hasSelectedDice && selectedScore > 0) {
-    return `${selectedScore} points selected.`;
+    return { key: 'turn.selected.points', values: { score: selectedScore } };
   }
 
-  if (hasSelectedDice) return 'Selected dice do not score.';
+  if (hasSelectedDice) return { key: 'turn.selected.noScore' };
 
-  return 'No dice selected.';
+  return { key: 'turn.selected.none' };
 }

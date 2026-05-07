@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { fn } from 'storybook/test';
 import AddPlayer from '@/components/Form/AddPlayer/AddPlayer';
 
 const meta: Meta<typeof AddPlayer> = {
@@ -11,9 +12,7 @@ export default meta;
 
 type Story = StoryObj<typeof AddPlayer>;
 
-const onSubmit = () => {
-  console.log('Submit!');
-};
+const onSubmit = fn();
 
 const Template: Story = {
   render: () => <AddPlayer onSubmit={onSubmit} />,

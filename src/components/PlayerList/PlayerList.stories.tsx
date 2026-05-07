@@ -41,8 +41,6 @@ function data(showScores: boolean = false) {
 const players = data();
 const playersWithScores = data(true);
 
-console.log(playersWithScores);
-
 const Template: Story = {
   render: (args) => <PlayerList {...args} />,
 };
