@@ -1,6 +1,7 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
+import { renderWithProviders } from '@/test/renderWithProviders';
 
 import ScoreGenerator from './ScoreGenerator';
 
@@ -9,7 +10,7 @@ describe('ScoreGenerator', () => {
     const user = userEvent.setup();
     const onChange = vi.fn();
 
-    const { rerender } = render(<ScoreGenerator onChange={onChange} />);
+    const { rerender } = renderWithProviders(<ScoreGenerator onChange={onChange} />);
 
     const one = screen.getByRole('button', { name: 'Add die showing 1' });
     await user.click(one);
@@ -40,7 +41,7 @@ describe('ScoreGenerator', () => {
     const user = userEvent.setup();
     const onChange = vi.fn();
 
-    render(<ScoreGenerator onChange={onChange} />);
+    renderWithProviders(<ScoreGenerator onChange={onChange} />);
 
     await user.click(screen.getByRole('button', { name: 'Add die showing 2' }));
 

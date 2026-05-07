@@ -52,7 +52,7 @@ export function GamePreferences({ className }: Readonly<GamePreferencesProps>) {
       <Modal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        ariaLabel={t('preferences.title')}
+        ariaLabel={t('preferences.dialogTitle')}
       >
         <Modal.Body className="modal-panel modal-panel--narrow">
           <div className="modal-panel__header">

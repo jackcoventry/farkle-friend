@@ -32,6 +32,7 @@ test('winner modal layout remains stable', async ({ page }) => {
   await addTwoPlayers(page);
   await startGame(page);
   await waitForTurnSplash(page, 'Ada');
+  await page.getByRole('button', { name: 'Manual' }).click();
   await page.getByLabel('Turn score').fill('500');
   await page.getByRole('button', { name: 'Submit score' }).click();
 
@@ -39,4 +40,39 @@ test('winner modal layout remains stable', async ({ page }) => {
   await expect(dialog).toBeVisible();
   await dialog.focus();
   await expect(dialog).toHaveScreenshot('winner-modal-layout.png');
+});
+
+test('manual score sequence layout remains stable', async ({ page }) => {
+  await page.goto('/game/');
+  await page.getByRole('tab', { name: 'Settings' }).click();
+  await page.getByRole('radio', { name: 'manual', exact: true }).check();
+  await page.getByRole('button', { name: 'Save' }).click();
+
+  await addTwoPlayers(page);
+  await startGame(page);
+  await waitForTurnSplash(page, 'Ada');
+
+  const one = page.getByRole('button', { name: 'Add die showing 1' });
+  const five = page.getByRole('button', { name: 'Add die showing 5' });
+  const two = page.getByRole('button', { name: 'Add die showing 2' });
+  const addGo = page.getByRole('button', { name: 'Add go' });
+
+  await one.click();
+  await one.click();
+  await one.click();
+  await addGo.click();
+
+  await five.click();
+  await addGo.click();
+
+  await one.click();
+  await five.click();
+  await addGo.click();
+
+  await two.click();
+  await two.click();
+  await two.click();
+  await addGo.click();
+
+  await expect(page.locator('.game-shell__body')).toHaveScreenshot('manual-score-sequence-layout.png');
 });

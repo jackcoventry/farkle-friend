@@ -24,6 +24,12 @@ export async function addPlayersAndStartGame(page: Page) {
   await startGame(page);
 }
 
+export async function enterManualScore(page: Page, score: string) {
+  await page.getByRole('button', { name: 'Manual' }).click();
+  await page.getByLabel('Turn score').fill(score);
+  await page.getByRole('button', { name: 'Submit score' }).click();
+}
+
 export async function waitForTurnSplash(page: Page, playerName: string) {
   await expect(page.getByRole('dialog', { name: `${playerName}'s turn` })).toBeVisible();
   await page.waitForTimeout(2100);

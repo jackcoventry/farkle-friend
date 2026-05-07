@@ -3,6 +3,7 @@ import { expect, test } from '@playwright/test';
 import {
   addPlayersAndStartGame,
   addTwoPlayers,
+  enterManualScore,
   startGame,
   waitForTurnSplash,
 } from '../helpers/game';
@@ -40,15 +41,13 @@ test('turn result and finished modal have no detectable accessibility violations
   await startGame(page);
   await waitForTurnSplash(page, 'Ada');
 
-  await page.getByLabel('Turn score').fill('50');
-  await page.getByRole('button', { name: 'Submit score' }).click();
+  await enterManualScore(page, '50');
   await expect(page.getByText('Next up: Grace.')).toBeVisible();
   await expectNoA11yViolations(page);
 
   await page.getByRole('button', { name: 'Next player' }).click();
   await waitForTurnSplash(page, 'Grace');
-  await page.getByLabel('Turn score').fill('500');
-  await page.getByRole('button', { name: 'Submit score' }).click();
+  await enterManualScore(page, '500');
   await expect(page.getByRole('dialog', { name: 'Game finished' })).toBeVisible();
   await expectNoA11yViolations(page);
 });

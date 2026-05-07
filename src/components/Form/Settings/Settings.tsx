@@ -77,14 +77,14 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
         className="form | gap-6 flex flex-col"
         onSubmit={handleSubmit(submitHandler)}
       >
-        <h2 className="font-heading-2 text-text">Settings</h2>
+        <h2 className="font-heading-2 text-text">{t('settings.title')}</h2>
         <Controller
           control={control}
           name="autoAdvanceTurns"
           render={({ field }) => (
             <Panel>
               <fieldset className="grid gap-3">
-                <legend className="contents">Turn hand-off</legend>
+                <legend className="contents">{t('settings.turnHandOff')}</legend>
                 <div className="flex gap-4">
                   <Pill>
                     <Pill.Control>
@@ -96,7 +96,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
                         id="autoAdvanceTurns_yes"
                       />
                     </Pill.Control>
-                    <Pill.Label htmlFor="autoAdvanceTurns_yes">Auto</Pill.Label>
+                    <Pill.Label htmlFor="autoAdvanceTurns_yes">{t('settings.auto')}</Pill.Label>
                   </Pill>
 
                   <Pill>
@@ -109,7 +109,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
                         id="autoAdvanceTurns_no"
                       />
                     </Pill.Control>
-                    <Pill.Label htmlFor="autoAdvanceTurns_no">Manual</Pill.Label>
+                    <Pill.Label htmlFor="autoAdvanceTurns_no">{t('common.manual')}</Pill.Label>
                   </Pill>
                 </div>
               </fieldset>
@@ -156,7 +156,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
                 className="grid gap-3"
                 aria-invalid={!!fieldState.error || undefined}
               >
-                <legend className="contents">Dice Style</legend>
+                <legend className="contents">{t('settings.diceStyle')}</legend>
                 <div className="flex gap-4">
                   {diceStyles.map((option) => {
                     const id = `${option}_${field.name}`;
@@ -198,7 +198,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
                 className="grid gap-3"
                 aria-invalid={!!fieldState.error || undefined}
               >
-                <legend className="contents">Mode</legend>
+                <legend className="contents">{t('settings.mode')}</legend>
 
                 <div className="gap-4 flex">
                   {modes.map((option) => {
@@ -239,12 +239,12 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
           render={({ field, fieldState }) => (
             <Panel>
               <div className="grid gap-3">
-                <label htmlFor="target-score">Point target</label>
+                <label htmlFor="target-score">{t('settings.pointTarget')}</label>
                 <input
                   id="target-score"
                   className="field-control"
                   {...field}
-                  placeholder="Enter target score..."
+                  placeholder={t('settings.targetPlaceholder')}
                   data-valid={errors?.targetScore ? 'false' : 'true'}
                   aria-invalid={fieldState.error ? 'true' : undefined}
                   aria-describedby={fieldState.error ? 'target-score-error' : undefined}
@@ -295,7 +295,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
           render={({ field }) => (
             <Panel>
               <fieldset className="grid gap-3">
-                <legend className="contents">Show combo suggestions</legend>
+                <legend className="contents">{t('settings.showComboSuggestions')}</legend>
                 <div className="flex gap-4">
                   <Pill>
                     <Pill.Control>
@@ -307,7 +307,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
                         id="showCombo_yes"
                       />
                     </Pill.Control>
-                    <Pill.Label htmlFor="showCombo_yes">Yes</Pill.Label>
+                    <Pill.Label htmlFor="showCombo_yes">{t('common.yes')}</Pill.Label>
                   </Pill>
 
                   <Pill>
@@ -320,7 +320,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
                         id="showCombo_no"
                       />
                     </Pill.Control>
-                    <Pill.Label htmlFor="showCombo_no">No</Pill.Label>
+                    <Pill.Label htmlFor="showCombo_no">{t('common.no')}</Pill.Label>
                   </Pill>
                 </div>
               </fieldset>
@@ -334,10 +334,8 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
           render={({ field }) => (
             <Panel>
               <fieldset className="grid gap-3">
-                <legend className="contents">Sound & haptics</legend>
-                <p className="text-sm">
-                  Adds restrained roll, bank, and Farkle feedback when your browser allows it.
-                </p>
+                <legend className="contents">{t('preferences.sound')}</legend>
+                <p className="text-sm">{t('settings.soundDescription')}</p>
                 <div className="flex gap-4">
                   <Pill>
                     <Pill.Control>
@@ -349,7 +347,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
                         id="tableFeedback_yes"
                       />
                     </Pill.Control>
-                    <Pill.Label htmlFor="tableFeedback_yes">On</Pill.Label>
+                    <Pill.Label htmlFor="tableFeedback_yes">{t('common.on')}</Pill.Label>
                   </Pill>
 
                   <Pill>
@@ -362,7 +360,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
                         id="tableFeedback_no"
                       />
                     </Pill.Control>
-                    <Pill.Label htmlFor="tableFeedback_no">Off</Pill.Label>
+                    <Pill.Label htmlFor="tableFeedback_no">{t('common.off')}</Pill.Label>
                   </Pill>
                 </div>
               </fieldset>
@@ -376,7 +374,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
           render={({ field }) => (
             <Panel>
               <fieldset className="grid gap-3">
-                <legend className="contents">Animations</legend>
+                <legend className="contents">{t('settings.animations')}</legend>
                 <div className="flex gap-4">
                   <Pill>
                     <Pill.Control>
@@ -388,7 +386,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
                         id="motionEnabled_yes"
                       />
                     </Pill.Control>
-                    <Pill.Label htmlFor="motionEnabled_yes">On</Pill.Label>
+                    <Pill.Label htmlFor="motionEnabled_yes">{t('common.on')}</Pill.Label>
                   </Pill>
 
                   <Pill>
@@ -401,7 +399,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
                         id="motionEnabled_no"
                       />
                     </Pill.Control>
-                    <Pill.Label htmlFor="motionEnabled_no">Off</Pill.Label>
+                    <Pill.Label htmlFor="motionEnabled_no">{t('common.off')}</Pill.Label>
                   </Pill>
                 </div>
               </fieldset>
@@ -415,12 +413,16 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
           render={({ field }) => (
             <Panel>
               <fieldset className="grid gap-3">
-                <legend className="contents">Theme</legend>
+                <legend className="contents">{t('common.theme')}</legend>
                 <div className="flex flex-wrap gap-4">
                   {themePreferences.map((option) => {
                     const id = `theme_${option}`;
                     const label =
-                      option === 'system' ? 'System' : option === 'light' ? 'Light' : 'Dark';
+                      option === 'system'
+                        ? t('common.system')
+                        : option === 'light'
+                          ? t('common.light')
+                          : t('common.dark');
 
                     return (
                       <Pill key={option}>
@@ -447,7 +449,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
           type="submit"
           className="justify-center"
         >
-          Save
+          {t('settings.save')}
         </Button>
       </form>
     </div>

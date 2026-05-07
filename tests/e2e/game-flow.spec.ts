@@ -2,6 +2,7 @@ import { expect, test } from '@playwright/test';
 import {
   addPlayersAndStartGame,
   addTwoPlayers,
+  enterManualScore,
   startGame,
   waitForTurnSplash,
 } from '../helpers/game';
@@ -27,16 +28,14 @@ test('players can start a manual game, score turns, and reset for new players', 
   await expect(page.getByText("Ada's turn")).toBeVisible();
   await waitForTurnSplash(page, 'Ada');
 
-  await page.getByLabel('Turn score').fill('50');
-  await page.getByRole('button', { name: 'Submit score' }).click();
+  await enterManualScore(page, '50');
   await expect(page.getByText('New total')).toBeVisible();
   await expect(page.getByText('Next up: Grace.')).toBeVisible();
   await page.getByRole('button', { name: 'Next player' }).click();
 
   await waitForTurnSplash(page, 'Grace');
 
-  await page.getByLabel('Turn score').fill('500');
-  await page.getByRole('button', { name: 'Submit score' }).click();
+  await enterManualScore(page, '500');
   await expect(page.getByRole('dialog', { name: 'Game finished' })).toBeVisible();
   await expect(page.getByText('Grace wins!')).toBeVisible();
 
@@ -69,8 +68,7 @@ test('auto-advance setting moves to the next player after a turn result', async 
   await addPlayersAndStartGame(page);
   await waitForTurnSplash(page, 'Ada');
 
-  await page.getByLabel('Turn score').fill('50');
-  await page.getByRole('button', { name: 'Submit score' }).click();
+  await enterManualScore(page, '50');
   await expect(page.getByText('Advancing automatically in')).toBeVisible();
   await expect(page.getByRole('dialog', { name: "Grace's turn" })).toBeVisible({ timeout: 5000 });
 });
@@ -93,7 +91,7 @@ test('sound and animation preferences can be changed during a game', async ({ pa
   await expect(page.locator('html')).toHaveAttribute('data-motion', 'off');
 
   await dialog.getByRole('button', { name: 'Close preferences' }).click();
-  await expect(page.getByLabel('Turn score')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Manual' })).toBeVisible();
 });
 
 test('mobile setup sidebar opens in a modal', async ({ page }) => {

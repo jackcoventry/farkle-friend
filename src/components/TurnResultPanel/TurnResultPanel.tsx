@@ -3,6 +3,7 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import { formatScore } from '@/utils/formatScore';
 import type { Player, TurnResult } from '@/domain/game/gameTypes';
+import { useI18n } from '@/i18n/I18nProvider';
 import Button from '@/components/Button/Button';
 import { Panel } from '../Panel/Panel';
 
@@ -23,7 +24,8 @@ export function TurnResultPanel({
   onAdvanceTurn,
   result,
 }: Readonly<TurnResultPanelProps>) {
-  const actionText = result.isGameWinner ? 'Show winner' : 'Next player';
+  const { t } = useI18n();
+  const actionText = result.isGameWinner ? t('turnResult.showWinner') : t('turnResult.nextPlayer');
   const titleId = useId();
   const panelRef = useRef<HTMLElement | null>(null);
   const [now, setNow] = useState(() => Date.now());
@@ -66,7 +68,7 @@ export function TurnResultPanel({
       tabIndex={-1}
     >
       <div>
-        <p className="font-sub-heading">Turn ended!</p>
+        <p className="font-sub-heading">{t('turnResult.turnEnded')}</p>
         <h2
           id={titleId}
           className="font-heading"
@@ -76,29 +78,29 @@ export function TurnResultPanel({
       </div>
       <dl className="grid gap-3 text-left sm:grid-cols-3">
         <div className="rounded-lg bg-surface-muted border border-border p-4">
-          <dt className="font-body-1 ">Turn score</dt>
+          <dt className="font-body-1 ">{t('turnResult.turnScore')}</dt>
           <dd className="font-heading-2 text-text">{formatScore(result.score)}</dd>
         </div>
         <div className="rounded-lg bg-surface-muted border border-border p-4">
-          <dt className="font-body-1 ">Previous total</dt>
+          <dt className="font-body-1 ">{t('turnResult.previousTotal')}</dt>
           <dd className="font-heading-2">{formatScore(result.previousTotal)}</dd>
         </div>
         <div className="rounded-lg bg-surface-muted border border-border p-4">
-          <dt className="font-body-1 ">New total</dt>
+          <dt className="font-body-1 ">{t('turnResult.newTotal')}</dt>
           <dd className="font-heading-2 text-accent">{formatScore(result.newTotal)}</dd>
         </div>
       </dl>
       <p className="font-sub-heading">
         {result.isGameWinner
-          ? `${currentPlayer.username} reached the target score.`
-          : `Next up: ${nextPlayer?.username ?? 'next player'}.`}
+          ? t('turnResult.reachedTarget', { player: currentPlayer.username })
+          : t('turnResult.nextUp', { player: nextPlayer?.username ?? t('turnResult.nextPlayer') })}
       </p>
       {autoAdvance && !result.isGameWinner ? (
         <p
           className="text-sm "
           aria-live="polite"
         >
-          Advancing automatically in {secondsRemaining}...
+          {t('turnResult.autoAdvance', { seconds: secondsRemaining })}
         </p>
       ) : null}
       <Button
