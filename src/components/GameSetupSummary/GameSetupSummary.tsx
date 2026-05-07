@@ -18,7 +18,7 @@ export function GameSetupSummary({
 
   return (
     <Panel>
-      <h3 className="font-heading-2 mb-2">Game setup</h3>
+      <h3 className="font-heading-2 mb-xs">Game setup</h3>
       <dl className="gap-xs grid">
         <div className="gap-sm flex justify-between">
           <dt>Mode</dt>
@@ -57,7 +57,7 @@ export function GameSetupSummary({
       </dl>
       {onEditSettings ? (
         <Button
-          className="mt-3 ml-auto"
+          className="mt-sm ml-auto"
           onClick={onEditSettings}
           size="small"
         >

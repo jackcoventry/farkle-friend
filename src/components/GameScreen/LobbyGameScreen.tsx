@@ -66,7 +66,7 @@ export function LobbyGameScreen({
           ) : (
             <Panel>
               <h2 className="font-heading-2">No players yet</h2>
-              <p className="text-text-muted mt-1">
+              <p className="text-text-muted mt-2xs">
                 Add at least two players, then start the game from the setup panel.
               </p>
             </Panel>
@@ -99,7 +99,7 @@ export function LobbyGameScreen({
             ) : (
               <Panel>
                 <h2 className="font-heading-2">No players yet</h2>
-                <p className="text-text-muted mt-1">
+                <p className="text-text-muted mt-2xs">
                   Add at least two players, then start the game from the setup panel.
                 </p>
               </Panel>
@@ -145,7 +145,9 @@ export function LobbyGameScreen({
               icon="person-circle"
             >
               Players
-              {state.players.length ? <span className="ml-2">({state.players.length})</span> : null}
+              {state.players.length ? (
+                <span className="ml-xs">({state.players.length})</span>
+              ) : null}
             </Button>
             <Button
               ref={settingsTabRef}

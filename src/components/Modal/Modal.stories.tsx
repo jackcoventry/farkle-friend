@@ -72,7 +72,7 @@ function NextPlayerModalStory() {
             title={`${player.username}'s turn`}
             image={
               <figure
-                className={`p-xl mx-auto my-4 flex aspect-square max-w-[200px] items-center justify-center overflow-hidden rounded-full ${avatar.color}`}
+                className={`p-xl my-md mx-auto flex aspect-square max-w-[200px] items-center justify-center overflow-hidden rounded-full ${avatar.color}`}
               >
                 <Image
                   src={avatar.image}
@@ -117,7 +117,7 @@ function WinnerModalStory() {
             title={`${player.username} wins!`}
             image={
               <figure
-                className={`splash-avatar-crown p-xl relative mx-auto my-4 flex h-[200px] w-[200px] items-center justify-center rounded-full ${avatar.color}`}
+                className={`splash-avatar-crown p-xl my-md relative mx-auto flex h-[200px] w-[200px] items-center justify-center rounded-full ${avatar.color}`}
               >
                 <Image
                   src={avatar.image}
@@ -165,7 +165,7 @@ function FarkledModalStory() {
         <Modal.Body>
           <Splash
             title="You've been farkled!"
-            image={<div className="font-mega mt-6">X</div>}
+            image={<div className="font-mega mt-xl">X</div>}
           >
             <Button
               onClick={() => {}}

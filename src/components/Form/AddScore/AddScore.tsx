@@ -88,7 +88,7 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
                 </p>
               </div>
               <ScoreGenerator
-                className="pb-2"
+                className="pb-xs"
                 onChange={onChange}
                 resetKey={scoreGeneratorResetKey}
               />

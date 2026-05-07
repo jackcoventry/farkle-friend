@@ -37,7 +37,7 @@ export function TurnHistory({
       aria-live="polite"
     >
       {leader ? (
-        <dl className="gap-xs border-border mb-3 grid border-b pb-3">
+        <dl className="gap-xs border-border mb-sm pb-sm grid border-b">
           <div className="gap-sm flex justify-between">
             <dt>Leader</dt>
             <dd className="score-chip truncate text-right">{leader.username}</dd>
@@ -70,7 +70,7 @@ export function TurnHistory({
 
       {recentTurns.length > 0 ? (
         <>
-          <p className="font-heading-3 mb-2">Recent events</p>
+          <p className="font-heading-3 mb-xs">Recent events</p>
           <ol className="gap-xs flex flex-col">
             {recentTurns.map((turn) => {
               const player = playersById.get(turn.playerId);

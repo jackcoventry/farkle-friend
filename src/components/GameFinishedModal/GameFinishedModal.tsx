@@ -76,12 +76,12 @@ export function GameFinishedModal({
               className="gap-sm grid text-left"
             >
               <section className="bg-surface-muted p-sm rounded-lg">
-                <h3 className="font-heading-2 mb-2 text-center">Final standings</h3>
+                <h3 className="font-heading-2 mb-xs text-center">Final standings</h3>
                 <ol className="gap-2xs grid">
                   {standings.map((player, index) => (
                     <li
                       key={player.id}
-                      className="gap-sm border-border flex justify-between border-b pb-2 last:border-0 last:pb-0"
+                      className="gap-sm border-border pb-xs flex justify-between border-b last:border-0 last:pb-0"
                     >
                       <span className="truncate">
                         {index + 1}. {player.username}
@@ -94,7 +94,7 @@ export function GameFinishedModal({
                 </ol>
               </section>
               <section className="bg-surface-muted p-sm rounded-lg">
-                <h3 className="font-heading-2 mb-2 text-center">Game recap</h3>
+                <h3 className="font-heading-2 mb-xs text-center">Game recap</h3>
                 <dl className="gap-xs grid grid-cols-2 text-sm">
                   <div>
                     <dt className="text-text">Winning margin</dt>

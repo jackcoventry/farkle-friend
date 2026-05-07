@@ -55,7 +55,7 @@ export function GameScreenSidebar({
         <Panel>
           <details open>
             <summary className="font-heading-2 text-text cursor-pointer">Scoreboard</summary>
-            <div className="mt-3">
+            <div className="mt-sm">
               <PlayerList
                 players={summary.players}
                 activePlayerId={currentPlayer?.id}
@@ -69,7 +69,7 @@ export function GameScreenSidebar({
         <Panel>
           <details>
             <summary className="font-heading-2 text-text cursor-pointer">Turn log</summary>
-            <div className="mt-3">
+            <div className="mt-sm">
               <TurnHistory
                 leadingPlayerId={summary.leadingPlayerId}
                 players={summary.players}

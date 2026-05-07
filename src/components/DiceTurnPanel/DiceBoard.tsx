@@ -25,7 +25,7 @@ export function DiceBoard({
           >
             <p className="font-sub-heading text-danger">Turn over</p>
             <h2 className="font-heading text-danger">You have been Farkled!</h2>
-            <p className="mt-2">No scoring dice were rolled. This turn scores 0 points.</p>
+            <p className="mt-xs">No scoring dice were rolled. This turn scores 0 points.</p>
           </div>
         ) : null}
 

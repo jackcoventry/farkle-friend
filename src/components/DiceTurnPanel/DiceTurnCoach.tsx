@@ -82,7 +82,7 @@ export function DiceTurnCoach({
           aria-label="Scoring combinations"
         >
           <p className="font-body-1">{t('turn.comboSuggestions')}</p>
-          <ul className="gap-2xs mt-2 grid text-sm">
+          <ul className="gap-2xs mt-xs grid text-sm">
             {currentCombos.slice(0, 5).map((combo, index) => (
               <li
                 key={index}
@@ -93,7 +93,7 @@ export function DiceTurnCoach({
                     <DiceIcon
                       key={`${die}-${dieIndex}`}
                       count={die}
-                      className="w-6"
+                      className="w-5"
                     />
                   ))}
                 </span>

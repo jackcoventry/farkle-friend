@@ -44,7 +44,7 @@ export function PlayerSwitchSplash({
           title={`${currentPlayer.username}'s turn`}
           image={
             <figure
-              className={`p-xl mx-auto my-4 flex aspect-square max-w-[200px] items-center justify-center overflow-hidden rounded-full ${avatar.color}`}
+              className={`p-xl my-md mx-auto flex aspect-square max-w-[200px] items-center justify-center overflow-hidden rounded-full ${avatar.color}`}
             >
               <AvatarImage
                 avatar={avatar}

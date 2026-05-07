@@ -16,7 +16,7 @@ type RulesInfoSectionProps = {
 function RulesInfoRow({ dice = [], points = 0, title }: Readonly<RulesInfoRowProps>) {
   return (
     <div>
-      {title ? <h2 className="font-body-1 mb-2">{title}</h2> : null}
+      {title ? <h2 className="font-body-1 mb-xs">{title}</h2> : null}
       <div className="gap-xs flex items-center">
         {dice.map((die, index) => (
           <span
@@ -110,7 +110,7 @@ function RulesInfo() {
       <Panel>
         <details className="dice-turn-table__coach-panel">
           <summary className="font-body-1 cursor-pointer">Keyboard shortcuts</summary>
-          <p className="mt-2">1-6 select dice, R roll, B bank, Enter end.</p>
+          <p className="mt-xs">1-6 select dice, R roll, B bank, Enter end.</p>
         </details>
       </Panel>
     </div>

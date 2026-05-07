@@ -23,7 +23,7 @@ export function GameStatusBar({
 
   return (
     <Panel>
-      <div className="mb-4">
+      <div className="mb-md">
         <p className="text-text text-sm">
           {flowState === 'TURN_RESULT' ? t('status.turnComplete') : t('status.nowPlaying')}
         </p>

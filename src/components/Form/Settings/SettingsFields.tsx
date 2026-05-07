@@ -88,9 +88,9 @@ export function TurnHandOffField({ control }: Readonly<SettingsFieldProps>) {
       name="autoAdvanceTurns"
       render={({ field }) => (
         <Panel>
-          <fieldset className="grid gap-xs">
+          <fieldset className="gap-xs grid">
             <legend className="contents">{t('settings.turnHandOff')}</legend>
-            <p className="text-sm text-text-muted mb-2">{t('settings.turnHandOffDescription')}</p>
+            <p className="text-text-muted mb-xs text-sm">{t('settings.turnHandOffDescription')}</p>
             <RadioPillGroup
               name={field.name}
               value={field.value}
@@ -116,9 +116,9 @@ export function LanguageField({ control }: Readonly<SettingsFieldProps>) {
       name="locale"
       render={({ field }) => (
         <Panel>
-          <fieldset className="grid gap-xs">
+          <fieldset className="gap-xs grid">
             <legend className="contents">{t('preferences.language')}</legend>
-            <p className="text-sm text-text-muted mb-2">{t('settings.languageDescription')}</p>
+            <p className="text-text-muted mb-xs text-sm">{t('settings.languageDescription')}</p>
             <RadioPillGroup
               name={field.name}
               value={field.value}
@@ -146,11 +146,11 @@ export function ModeField({ control }: Readonly<SettingsFieldProps>) {
       render={({ field, fieldState }) => (
         <Panel>
           <fieldset
-            className="grid gap-xs"
+            className="gap-xs grid"
             aria-invalid={!!fieldState.error || undefined}
           >
             <legend className="contents">{t('settings.mode')}</legend>
-            <p className="text-sm text-text-muted mb-2">{t('settings.modeDescription')}</p>
+            <p className="text-text-muted mb-xs text-sm">{t('settings.modeDescription')}</p>
 
             <RadioPillGroup
               name={field.name}
@@ -181,11 +181,11 @@ export function TargetScoreField({ control, errors, setValue }: Readonly<TargetS
       control={control}
       render={({ field, fieldState }) => (
         <Panel>
-          <div className="grid gap-xs">
+          <div className="gap-xs grid">
             <label htmlFor="target-score">{t('settings.pointTarget')}</label>
             <p
               id="target-score-description"
-              className="text-sm text-text-muted mb-2"
+              className="text-text-muted mb-xs text-sm"
             >
               {t('settings.pointTargetDescription')}
             </p>
@@ -208,7 +208,7 @@ export function TargetScoreField({ control, errors, setValue }: Readonly<TargetS
               onChange={(value) => field.onChange(value.target.valueAsNumber)}
             />
 
-            <div className="grid grid-cols-[repeat(auto-fit,minmax(7rem,1fr))] gap-xs">
+            <div className="gap-xs grid grid-cols-[repeat(auto-fit,minmax(7rem,1fr))]">
               {targetScorePresets.map((preset) => (
                 <Button
                   key={preset}
@@ -253,9 +253,9 @@ export function ComboSuggestionsField({ control }: Readonly<SettingsFieldProps>)
       name="showComboSuggestions"
       render={({ field }) => (
         <Panel>
-          <fieldset className="grid gap-xs">
+          <fieldset className="gap-xs grid">
             <legend className="contents">{t('settings.showComboSuggestions')}</legend>
-            <p className="text-sm text-text-muted mb-2">
+            <p className="text-text-muted mb-xs text-sm">
               {t('settings.showComboSuggestionsDescription')}
             </p>
             <RadioPillGroup
@@ -283,9 +283,9 @@ export function SoundFeedbackField({ control }: Readonly<SettingsFieldProps>) {
       name="tableFeedback"
       render={({ field }) => (
         <Panel>
-          <fieldset className="grid gap-xs">
+          <fieldset className="gap-xs grid">
             <legend className="contents">{t('preferences.sound')}</legend>
-            <p className="text-sm text-text-muted mb-2">{t('settings.soundDescription')}</p>
+            <p className="text-text-muted mb-xs text-sm">{t('settings.soundDescription')}</p>
             <RadioPillGroup
               name={field.name}
               value={field.value}
@@ -311,9 +311,9 @@ export function MotionField({ control }: Readonly<SettingsFieldProps>) {
       name="motionEnabled"
       render={({ field }) => (
         <Panel>
-          <fieldset className="grid gap-xs">
+          <fieldset className="gap-xs grid">
             <legend className="contents">{t('settings.animations')}</legend>
-            <p className="text-sm text-text-muted mb-2">{t('settings.animationsDescription')}</p>
+            <p className="text-text-muted mb-xs text-sm">{t('settings.animationsDescription')}</p>
             <RadioPillGroup
               name={field.name}
               value={field.value}
@@ -339,9 +339,9 @@ export function ThemeField({ control }: Readonly<SettingsFieldProps>) {
       name="theme"
       render={({ field }) => (
         <Panel>
-          <fieldset className="grid gap-xs>
+          <fieldset className="gap-xs grid">
             <legend className="contents">{t('common.theme')}</legend>
-            <p className="text-sm text-text-muted mb-2">{t('settings.themeDescription')}</p>
+            <p className="text-text-muted mb-xs text-sm">{t('settings.themeDescription')}</p>
             <RadioPillGroup
               name={field.name}
               value={field.value}

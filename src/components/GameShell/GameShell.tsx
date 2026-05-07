@@ -61,7 +61,7 @@ GameShell.Sidebar = function Header({ children, isDesktop = false }: SidebarProp
 
 GameShell.SidebarMain = function SidebarMain({ children }: SlotProps) {
   return (
-    <div className="game-shell__sidebar-main | gap-xl flex min-h-0 flex-col overflow-auto pr-1">
+    <div className="game-shell__sidebar-main | gap-xl pr-2xs flex min-h-0 flex-col overflow-auto">
       {children}
     </div>
   );
@@ -69,7 +69,9 @@ GameShell.SidebarMain = function SidebarMain({ children }: SlotProps) {
 
 GameShell.SidebarFooter = function SidebarFooter({ children }: SlotProps) {
   return (
-    <div className="game-shell__sidebar-footer | gap-md grid overflow-visible pt-4">{children}</div>
+    <div className="game-shell__sidebar-footer | gap-md pt-md grid overflow-visible">
+      {children}
+    </div>
   );
 };
 

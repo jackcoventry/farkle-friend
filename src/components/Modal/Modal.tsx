@@ -295,7 +295,7 @@ function ModalPanel({ children, className, size = 'default' }: Readonly<ModalPan
  */
 function ModalContent({ children, className }: Readonly<ModalSlot>) {
   return (
-    <div className={cx('modal-panel__content', 'px-sm overflow-auto pt-0 pb-2', className)}>
+    <div className={cx('modal-panel__content', 'px-sm pb-xs overflow-auto pt-0', className)}>
       {children}
     </div>
   );
