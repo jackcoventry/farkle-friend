@@ -6,7 +6,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
 import { Controller, SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { AddScoreSchema, type AddScoreSchemaType } from '@/domain/game/formSchemas';
-import type { DiceStyle } from '@/domain/game/gameTypes';
 import Button from '@/components/Button/Button';
 import ScoreGenerator from '@/components/Form/ScoreGenerator/ScoreGenerator';
 import Modal from '@/components/Modal/Modal';
@@ -18,11 +17,10 @@ export type AddScoreFormResult = {
 };
 
 type AddScoreFormProps = {
-  diceStyle?: DiceStyle;
   onSubmit: SubmitHandler<AddScoreSchemaType>;
 };
 
-function AddScoreForm({ diceStyle = 'default', onSubmit }: Readonly<AddScoreFormProps>) {
+function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
   const { t } = useI18n();
   const formId = React.useId();
   const {
@@ -91,7 +89,6 @@ function AddScoreForm({ diceStyle = 'default', onSubmit }: Readonly<AddScoreForm
               </div>
               <ScoreGenerator
                 className="pb-2"
-                diceStyle={diceStyle}
                 onChange={onChange}
                 resetKey={scoreGeneratorResetKey}
               />

@@ -79,7 +79,6 @@ export function DiceTurnPanel({
   });
   const showActionHint = actionHint !== null;
   const tableFeedbackEnabled = state.preferences.tableFeedback;
-  const diceStyle = state.settings.diceStyle;
 
   const playFeedback = useCallback(
     (type: 'bank' | 'farkle' | 'roll' | 'select') => {
@@ -151,7 +150,6 @@ export function DiceTurnPanel({
       actionHint={actionHint}
       actionHintId={actionHintId}
       currentCombos={currentCombos}
-      diceStyle={diceStyle}
       selectedBreakdown={dice.selectedBreakdown}
       showActionHint={showActionHint}
       showComboSuggestions={state.settings.showComboSuggestions}
@@ -166,7 +164,6 @@ export function DiceTurnPanel({
         <div className="dice-turn-board-stack | grid h-full min-h-0 grid-rows-[minmax(300px,1fr)_auto] gap-2 lg:gap-3 xl:h-[calc(100dvh-var(--spacing-7))]">
           <DiceBoard
             currentRoll={currentRoll}
-            diceStyle={diceStyle}
             isFarkled={isFarkled}
             onToggleDieSelection={handleToggleDieSelection}
             selectedIndices={dice.selectedIndices}

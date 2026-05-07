@@ -26,13 +26,6 @@
     0 0 0 6px var(--color-red-700);
 }
 
-.dice-icon[data-variant='medieval'] {
-  --dice-color-bg: #fbe683;
-  --dice-color-border: #9d945c;
-  --dice-color-dot: #fbe683;
-  --dice-color-dot-border: #9d945c;
-}
-
 .dice-dot {
   background-color: var(--dice-color-dot);
   border: 0.1rem solid var(--dice-color-dot-border);

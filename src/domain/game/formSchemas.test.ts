@@ -35,7 +35,6 @@ describe('game form schemas', () => {
     expect(
       SettingsFormSchema.safeParse({
         autoAdvanceTurns: true,
-        diceStyle: 'medieval',
         locale: 'es',
         mode: 'manual',
         motionEnabled: false,
@@ -51,7 +50,6 @@ describe('game form schemas', () => {
     expect(
       SettingsFormSchema.safeParse({
         autoAdvanceTurns: true,
-        diceStyle: 'wooden',
         locale: 'es',
         mode: 'manual',
         motionEnabled: false,

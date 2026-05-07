@@ -51,14 +51,12 @@ export type GameSummary = {
   winnerId: PlayerId | null;
 };
 
-export type DiceStyle = 'default' | 'medieval';
 export type GameMode = 'dice' | 'manual';
 export type ThemePreference = 'system' | 'light' | 'dark';
 export type LocalePreference = 'en' | 'es';
 
 export type GameSettings = {
   autoAdvanceTurns: boolean;
-  diceStyle: DiceStyle;
   mode: GameMode;
   targetScore: number;
   showComboSuggestions: boolean;

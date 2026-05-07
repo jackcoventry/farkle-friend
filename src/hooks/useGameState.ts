@@ -22,7 +22,6 @@ const storedSettingsSchema = z.object({
     z.partial(
       z.object({
         autoAdvanceTurns: z.boolean(),
-        diceStyle: z.enum(['default', 'medieval']),
         mode: z.enum(['dice', 'manual']),
         targetScore: z.number().check(z.int(), z.minimum(500), z.maximum(50000)),
         showComboSuggestions: z.boolean(),

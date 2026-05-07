@@ -21,7 +21,6 @@ describe('useGameState settings persistence', () => {
         },
         settings: {
           autoAdvanceTurns: true,
-          diceStyle: 'medieval',
           mode: 'manual',
           targetScore: 10000,
           showComboSuggestions: true,
@@ -39,7 +38,6 @@ describe('useGameState settings persistence', () => {
     });
     expect(result.current.state.settings).toMatchObject({
       autoAdvanceTurns: true,
-      diceStyle: 'medieval',
       mode: 'manual',
       targetScore: 10000,
       showComboSuggestions: true,
@@ -59,7 +57,6 @@ describe('useGameState settings persistence', () => {
     });
     expect(result.current.state.settings).toMatchObject({
       autoAdvanceTurns: false,
-      diceStyle: 'default',
       mode: 'dice',
       targetScore: 5000,
       showComboSuggestions: false,

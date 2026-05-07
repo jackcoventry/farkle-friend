@@ -1,14 +1,12 @@
-import { DiceStyle } from '@/domain/game/gameTypes';
 import './DiceIcon.css';
 
 type DiceIconProps = {
   className?: string;
   count: number;
   state?: 'default' | 'disabled' | 'active';
-  variant?: DiceStyle;
 };
 
-function DiceIcon({ className, count = 1, state, variant = 'default' }: Readonly<DiceIconProps>) {
+function DiceIcon({ className, count = 1, state }: Readonly<DiceIconProps>) {
   let classes = 'dice-icon | aspect-square grid relative';
   if (className) {
     classes += ` ${className}`;
@@ -19,7 +17,6 @@ function DiceIcon({ className, count = 1, state, variant = 'default' }: Readonly
       className={classes}
       data-count={count}
       data-state={state}
-      data-variant={variant}
       role="img"
     >
       {[...new Array(count).keys()].map((e) => (

@@ -20,7 +20,6 @@ export function createInitialGameState(): GameState {
     players: [],
     settings: {
       autoAdvanceTurns: false,
-      diceStyle: 'default',
       mode: 'dice',
       targetScore: 5000,
       showComboSuggestions: false,

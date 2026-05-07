@@ -1,13 +1,11 @@
 import { useI18n } from '@/i18n/I18nProvider';
 import React from 'react';
 import { DieValue, scoreSelectedDiceWithUsage } from '@/domain/game/dice';
-import type { DiceStyle } from '@/domain/game/gameTypes';
 import Button from '@/components/Button/Button';
 import DiceIcon from '@/components/DiceIcon/DiceIcon';
 
 type ScoreGeneratorProps = {
   className?: string;
-  diceStyle?: DiceStyle;
   onChange: (score: number) => void;
   resetKey?: number;
 };
@@ -20,7 +18,6 @@ type ScoreSequenceItem = {
 
 function ScoreGenerator({
   className,
-  diceStyle = 'default',
   onChange,
   resetKey = 0,
 }: Readonly<ScoreGeneratorProps>) {
@@ -87,7 +84,6 @@ function ScoreGenerator({
               <DiceIcon
                 count={die}
                 className="w-full"
-                variant={diceStyle}
               />
             </button>
           );
@@ -108,7 +104,6 @@ function ScoreGenerator({
                 >
                   <DiceIcon
                     count={die}
-                    variant={diceStyle}
                   />
                 </li>
               ))}
@@ -184,7 +179,6 @@ function ScoreGenerator({
                     >
                       <DiceIcon
                         count={die}
-                        variant={diceStyle}
                       />
                     </span>
                   ))}

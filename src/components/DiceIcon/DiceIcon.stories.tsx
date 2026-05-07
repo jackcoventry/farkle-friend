@@ -10,10 +10,6 @@ const meta: Meta<typeof DiceIcon> = {
       options: [1, 2, 3, 4, 5, 6],
       control: { type: 'radio' },
     },
-    variant: {
-      options: ['default', 'medieval'],
-      control: { type: 'radio' },
-    },
   },
 };
 export default meta;
@@ -48,7 +44,6 @@ const TemplateForGroup: Story = {
             <DiceIcon
               key={e}
               count={e + 1}
-              variant={args.variant}
             />
           ))}
         </>

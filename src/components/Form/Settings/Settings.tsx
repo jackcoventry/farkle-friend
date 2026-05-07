@@ -5,11 +5,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useGame } from '@/domain/game/GameProvider';
 import { SettingsFormSchema, type SettingsFormSchemaType } from '@/domain/game/formSchemas';
-import { DiceStyle, GameMode, ThemePreference } from '@/domain/game/gameTypes';
+import { GameMode, ThemePreference } from '@/domain/game/gameTypes';
 import Button from '@/components/Button/Button';
 import {
   ComboSuggestionsField,
-  DiceStyleField,
   LanguageField,
   ModeField,
   MotionField,
@@ -42,7 +41,6 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
     resolver: zodResolver(SettingsFormSchema),
     defaultValues: {
       autoAdvanceTurns: state.settings.autoAdvanceTurns,
-      diceStyle: state.settings.diceStyle,
       locale: state.preferences.locale,
       mode: state.settings.mode,
       motionEnabled: state.preferences.motionEnabled,
@@ -56,7 +54,6 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
 
   const submitHandler = (data: {
     autoAdvanceTurns: boolean;
-    diceStyle: DiceStyle;
     locale: SettingsFormSchemaType['locale'];
     mode: GameMode;
     motionEnabled: boolean;
@@ -78,7 +75,6 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
         <h2 className="font-heading-2 text-text">{t('settings.title')}</h2>
         <TurnHandOffField control={control} />
         <LanguageField control={control} />
-        <DiceStyleField control={control} />
         <ModeField control={control} />
         <TargetScoreField
           control={control}

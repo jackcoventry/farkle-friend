@@ -15,7 +15,6 @@ describe('game logic', () => {
     expect(state.phase).toBe('LOBBY');
     expect(state.settings).toMatchObject({
       autoAdvanceTurns: false,
-      diceStyle: 'default',
       mode: 'dice',
       showComboSuggestions: false,
       targetScore: 5000,
