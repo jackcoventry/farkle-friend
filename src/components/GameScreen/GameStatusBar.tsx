@@ -29,7 +29,7 @@ export function GameStatusBar({
         </p>
         <h2 className="font-heading-2 score-chip">{currentPlayer.username}</h2>
       </div>
-      <dl className="ml-auto flex flex-wrap gap-4 text-sm sm:text-base">
+      <dl className="ml-auto flex flex-wrap gap-md text-sm sm:text-base">
         <div>
           <dt className="text-text">
             {state.pendingTurnResult ? t('status.previousTotal') : t('status.currentTotal')}
@@ -46,7 +46,7 @@ export function GameStatusBar({
             </div>
             <div>
               <dt className="text-text">{t('status.diceLeft')}</dt>
-              <dd className="flex items-center gap-2 font-body-1 score-chip">
+              <dd className="flex items-center gap-xs font-body-1 score-chip">
                 <span>{diceTurnMetrics.diceLeft}</span>
               </dd>
             </div>

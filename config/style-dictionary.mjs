@@ -1,39 +1,93 @@
-import StyleDictionary from "style-dictionary";
+import StyleDictionary from 'style-dictionary';
+
+const spacingUtilities = {
+  gap: 'gap',
+  'gap-x': 'column-gap',
+  'gap-y': 'row-gap',
+
+  p: 'padding',
+  px: 'padding-inline',
+  py: 'padding-block',
+  pl: 'padding-inline-start',
+  pr: 'padding-inline-end',
+  pt: 'padding-block-start',
+  pb: 'padding-block-end',
+
+  m: 'margin',
+  mx: 'margin-inline',
+  my: 'margin-block',
+  ml: 'margin-inline-start',
+  mr: 'margin-inline-end',
+  mt: 'margin-block-start',
+  mb: 'margin-block-end',
+};
+
+StyleDictionary.registerFormat({
+  name: 'custom/css/spacing-utilities',
+
+  format: ({ dictionary }) => {
+    const spacingTokens = dictionary.allTokens.filter((token) => token.path[0] === 'spacing');
+
+    const classes = spacingTokens.flatMap((token) => {
+      const semanticName = token.$extensions?.semantic;
+
+      if (!semanticName) return [];
+
+      const tokenKey = token.path.at(-1);
+      const variableName = `--spacing-${tokenKey}`;
+
+      return Object.entries(spacingUtilities).map(([classPrefix, property]) => {
+        return `  .${classPrefix}-${semanticName} {
+    ${property}: var(${variableName});
+  }`;
+      });
+    });
+
+    return `@layer utilities {
+${classes.join('\n\n')}
+}
+`;
+  },
+});
 
 const sd = new StyleDictionary({
-  source: ["src/design-tokens/**/*.json"],
+  source: ['src/design-tokens/**/*.json'],
   platforms: {
     css: {
-      transformGroup: "css",
-      buildPath: "src/styles/",
+      transformGroup: 'css',
+      buildPath: 'src/styles/',
       files: [
         {
-          destination: "tokens.theme.css",
-          format: "css/variables",
+          destination: 'tokens.theme.css',
+          format: 'css/variables',
+        },
+        {
+          destination: 'spacing.css',
+          format: 'custom/css/spacing-utilities',
         },
       ],
       options: {
         usesDtcg: true,
-        selector: "@theme",
+        selector: '@theme',
       },
     },
     js: {
-      transformGroup: "js",
-      buildPath: "src/styles/",
+      transformGroup: 'js',
+      buildPath: 'src/styles/',
       files: [
         {
-          destination: "tokens.theme.ts",
-          format: "javascript/es6",
+          destination: 'tokens.theme.ts',
+          format: 'javascript/es6',
         },
       ],
     },
     json: {
-      transformGroup: "js",
-      buildPath: "src/styles/",
+      transformGroup: 'js',
+      buildPath: 'src/styles/',
       files: [
         {
-          destination: "tokens.ts",
-          format: "javascript/module",
+          destination: 'tokens.ts',
+          format: 'javascript/module',
         },
       ],
     },

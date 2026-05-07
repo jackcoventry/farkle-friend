@@ -47,10 +47,10 @@ export function ManualTurn({
 
   const coachContent = (
     <Panel
-      className="dice-turn-table__coach-panel | gap-3 text-sm flex flex-wrap"
+      className="dice-turn-table__coach-panel | gap-sm text-sm flex flex-wrap"
       aria-label="Manual scoring guidance"
     >
-      <div className="min-w-0 flex flex-col gap-2">
+      <div className="min-w-0 flex flex-col gap-xs">
         <p className="font-heading-2">Manual scoring</p>
         <p>Enter the turn score, then add it to bank the score and move on.</p>
       </div>
@@ -61,11 +61,11 @@ export function ManualTurn({
   );
 
   return (
-    <div className="turn-frame | grid min-h-0 h-full w-full gap-2 lg:gap-3">
-      <div className="dice-turn-layout | grid h-full min-h-0 grid-cols-[1fr] grid-rows-[auto_minmax(0,1fr)] gap-2 lg:gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(240px,320px)] xl:grid-rows-1">
+    <div className="turn-frame | grid min-h-0 h-full w-full gap-xs lg:gap-sm">
+      <div className="dice-turn-layout | grid h-full min-h-0 grid-cols-[1fr] grid-rows-[auto_minmax(0,1fr)] gap-xs lg:gap-md xl:grid-cols-[minmax(0,1fr)_minmax(240px,320px)] xl:grid-rows-1">
         <AddScoreForm onSubmit={onAddScoreFormSubmit} />
         <aside
-          className="dice-turn-rail | -order-1 xl:order-2 content-start grid gap-2 lg:gap-3 overflow-visible xl:overflow-auto xl:h-[calc(100dvh-var(--spacing-7))]"
+          className="dice-turn-rail | -order-1 xl:order-2 content-start grid gap-xs lg:gap-sm overflow-visible xl:overflow-auto xl:h-[calc(100dvh-var(--spacing-7))]"
           aria-label="Turn information"
         >
           {statusSlot}
@@ -87,9 +87,7 @@ export function ManualTurn({
             <Modal.Title className="font-heading">Turn information</Modal.Title>
             <Modal.CloseButton ariaLabel="Close turn information" />
           </Modal.Header>
-          <Modal.Content>
-            {coachContent}
-          </Modal.Content>
+          <Modal.Content>{coachContent}</Modal.Content>
         </Modal.Panel>
       </Modal>
     </div>

@@ -30,7 +30,7 @@ export function DiceBoard({
         ) : null}
 
         {!isFarkled && currentRoll ? (
-          <div className="flex flex-wrap justify-center gap-3 sm:gap-5">
+          <div className="flex flex-wrap justify-center gap-sm sm:gap-lg">
             {currentRoll.map((value, idx) => {
               const isSelected = selectedIndices.includes(idx);
               return (

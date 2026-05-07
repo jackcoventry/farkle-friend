@@ -33,23 +33,23 @@ export function TurnHistory({
 
   return (
     <section
-      className="surface-callout"
+      className="surface-callout | bg-surface-muted border border-border rounded-xl text-text p-4"
       aria-live="polite"
     >
       {leader ? (
-        <dl className="mb-3 grid gap-2 border-b border-border pb-3">
-          <div className="flex justify-between gap-3">
+        <dl className="mb-3 grid gap-xs border-b border-border pb-3">
+          <div className="flex justify-between gap-sm">
             <dt>Leader</dt>
             <dd className="truncate text-right score-chip">{leader.username}</dd>
           </div>
-          <div className="flex justify-between gap-3">
+          <div className="flex justify-between gap-sm">
             <dt>Needs</dt>
             <dd className="text-right score-chip">
               {formatScore(Math.max(0, targetScore - (leader.totalScore ?? 0)))}
             </dd>
           </div>
           {biggestTurn ? (
-            <div className="flex justify-between gap-3">
+            <div className="flex justify-between gap-sm">
               <dt>Biggest turn</dt>
               <dd className="truncate text-right score-chip">
                 {playerNames.get(biggestTurn.playerId) ?? 'Player'} +
@@ -58,7 +58,7 @@ export function TurnHistory({
             </div>
           ) : null}
           {lastFarkle ? (
-            <div className="flex justify-between gap-3">
+            <div className="flex justify-between gap-sm">
               <dt>Last farkle</dt>
               <dd className="truncate text-right score-chip">
                 {playerNames.get(lastFarkle.playerId) ?? 'Player'}
@@ -71,7 +71,7 @@ export function TurnHistory({
       {recentTurns.length > 0 ? (
         <>
           <p className="font-heading-3 mb-2">Recent events</p>
-          <ol className="flex flex-col gap-2">
+          <ol className="flex flex-col gap-xs">
             {recentTurns.map((turn) => {
               const player = playersById.get(turn.playerId);
               const avatar = avatarSet[player?.avatar as AvatarId];
@@ -80,11 +80,11 @@ export function TurnHistory({
               return (
                 <li
                   key={turn.id}
-                  className={`flex items-center justify-between gap-3 rounded-lg p-2 ${
+                  className={`flex items-center justify-between gap-sm rounded-lg p-2 ${
                     isFarkle ? 'bg-danger-surface text-danger' : 'bg-surface-muted'
                   }`}
                 >
-                  <span className="flex min-w-0 items-center gap-2">
+                  <span className="flex min-w-0 items-center gap-xs">
                     {avatar ? (
                       <span
                         className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full p-1 ${avatar.color}`}

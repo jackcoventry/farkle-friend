@@ -91,7 +91,7 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
   return (
     <Panel className="form-wrapper | self-center">
       <form
-        className="form | gap-6 flex flex-col"
+        className="form | gap-xl flex flex-col"
         onSubmit={handleSubmit(submitHandler)}
       >
         <h2>Add Player</h2>
@@ -145,7 +145,7 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
                 >
                   <legend className="mb-4 text-text">Choose an avatar</legend>
 
-                  <div className="avatar-list-grid | grid grid-cols-3 justify-items-center gap-3 sm:gap-4">
+                  <div className="avatar-list-grid | grid grid-cols-3 justify-items-center gap-sm sm:gap-md">
                     {avatarValues.map((option) => {
                       const avatar = avatarSet[option];
                       const isAvatarInUse = avatarsInUse.includes(option);

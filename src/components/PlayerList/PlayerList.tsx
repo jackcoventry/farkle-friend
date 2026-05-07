@@ -18,7 +18,7 @@ function PlayerList({
   targetScore,
 }: Readonly<PlayerListProps>) {
   return (
-    <ul className="player-list | flex flex-col gap-2">
+    <ul className="player-list | flex flex-col gap-xs">
       {players.map((player) => {
         const isActive = player.id === activePlayerId;
         const isLeader = player.id === leadingPlayerId;
@@ -27,7 +27,7 @@ function PlayerList({
           targetScore && targetScore > 0
             ? Math.min(100, Math.round((totalScore / targetScore) * 100))
             : null;
-        const classes = `flex gap-3 bg-surface-raised border border-border text-text p-4 rounded-2xl ${
+        const classes = `flex gap-sm bg-surface-raised border border-border text-text p-4 rounded-2xl ${
           isActive ? 'border-accent bg-surface-muted' : 'hover:bg-surface-muted'
         }`;
         const avatar = avatarSet[player.avatar as AvatarId];
@@ -47,8 +47,8 @@ function PlayerList({
                   className="h-auto w-full"
                 />
               </div>
-              <div className="flex min-w-0 flex-1 flex-col justify-center gap-1">
-                <div className="grid min-w-0 gap-2">
+              <div className="flex min-w-0 flex-1 flex-col justify-center gap-2xs">
+                <div className="grid min-w-0 gap-xs">
                   <p
                     className="font-heading-2 truncate"
                     title={player.username}
@@ -56,7 +56,7 @@ function PlayerList({
                     {player.username}
                   </p>
                   {isActive || (isLeader && totalScore > 0) ? (
-                    <div className="flex flex-wrap gap-1">
+                    <div className="flex flex-wrap gap-2xs">
                       {isActive ? (
                         <span className="rounded-full bg-accent px-2 py-1 text-xs text-accent-contrast">
                           Current

@@ -63,11 +63,11 @@ export function TurnResultPanel({
       ref={panelRef}
       aria-labelledby={titleId}
       aria-live="polite"
-      className="m-auto flex w-full max-w-[560px] flex-col text-center gap-6 p-6"
+      className="m-auto flex w-full max-w-[560px] flex-col text-center gap-xl p-6"
       onKeyDown={handleKeyDown}
       tabIndex={-1}
     >
-      <dl className="grid gap-3 text-left sm:grid-cols-3">
+      <dl className="grid gap-sm text-left sm:grid-cols-3">
         <div className="rounded-lg bg-surface-muted border border-border p-4">
           <dt className="font-body-1 ">{t('turnResult.turnScore')}</dt>
           <dd className="font-heading-2 text-text">{formatScore(result.score)}</dd>

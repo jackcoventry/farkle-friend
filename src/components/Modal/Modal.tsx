@@ -280,7 +280,7 @@ function ModalPanel({ children, className, size = 'default' }: Readonly<ModalPan
     <Modal.Body
       className={cx(
         'modal-panel',
-        'bg-surface border border-border rounded-3xl text-text grid gap-3 overflow-hidden p-4',
+        'bg-surface border border-border rounded-3xl text-text grid gap-sm overflow-hidden p-4',
         sizeClass,
         className
       )}

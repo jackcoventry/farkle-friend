@@ -17,7 +17,7 @@ function RulesInfoRow({ dice = [], points = 0, title }: Readonly<RulesInfoRowPro
   return (
     <div>
       {title ? <h2 className="font-body-1 mb-2">{title}</h2> : null}
-      <div className="flex gap-2 items-center">
+      <div className="flex gap-xs items-center">
         {dice.map((die, index) => (
           <span
             className="w-[28px] md:w-[50px]"
@@ -35,7 +35,7 @@ function RulesInfoRow({ dice = [], points = 0, title }: Readonly<RulesInfoRowPro
 
 function RulesInfoSection({ title, children }: Readonly<RulesInfoSectionProps>) {
   return (
-    <Panel className="gap-2 flex flex-col">
+    <Panel className="gap-xs flex flex-col">
       {title ? <h2 className="font-heading-2">{title}</h2> : null}
       {children}
     </Panel>
@@ -44,9 +44,9 @@ function RulesInfoSection({ title, children }: Readonly<RulesInfoSectionProps>) 
 
 function RulesInfo() {
   return (
-    <div className="flex flex-col gap-6 text-text">
-      <div className="grid gap-5 md:grid-cols-2">
-        <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-xl text-text">
+      <div className="grid gap-lg md:grid-cols-2">
+        <div className="flex flex-col gap-lg">
           <RulesInfoSection title="Singles">
             <p>Ones and fives score by themselves.</p>
           </RulesInfoSection>
@@ -71,7 +71,7 @@ function RulesInfo() {
             />
           ))}
         </div>
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-lg">
           <RulesInfoSection title="Four / five / six of a kind">
             <p>
               Whatever the triple value is, it is doubled for four, tripled for five and quadrupled
@@ -102,7 +102,7 @@ function RulesInfo() {
       </div>
       <RulesInfoSection title="Combination precedence">
         <p>Some patterns override others:</p>
-        <ul className="list-disc list-inside grid gap-1">
+        <ul className="list-disc list-inside grid gap-2xs">
           <li>Straight / three pairs / two triples override lower patterns</li>
           <li>Six of a kind is handled as a scaled multiple, not two triples!</li>
         </ul>

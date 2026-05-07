@@ -171,7 +171,7 @@ export function ActiveGameScreen({
       </SidebarModal>
 
       <GameShell.Body>
-        <div className="flex h-full min-h-0 flex-col gap-2 lg:gap-4">
+        <div className="flex h-full min-h-0 flex-col gap-xs lg:gap-md">
           {isActiveTurnLayout || flowState === 'TURN_RESULT' ? null : statusBar}
 
           <div className="min-h-0 flex-1 flex">
@@ -211,7 +211,7 @@ export function ActiveGameScreen({
       </GameShell.Body>
 
       <GameShell.MobileToolbar>
-        <div className={`grid w-full gap-2 ${showTurnInfoToggle ? 'grid-cols-2' : 'grid-cols-1'}`}>
+        <div className={`grid w-full gap-xs ${showTurnInfoToggle ? 'grid-cols-2' : 'grid-cols-1'}`}>
           {showTurnInfoToggle ? (
             <Button
               aria-controls={turnInfoModalId}

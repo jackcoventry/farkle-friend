@@ -60,10 +60,10 @@ export function GamePreferences({ className }: Readonly<GamePreferencesProps>) {
             <Modal.CloseButton ariaLabel={t('preferences.close')} />
           </Modal.Header>
           <Modal.Content>
-            <div className="grid gap-4">
-              <fieldset className="preference-fieldset | grid gap-4 rounded-2xl border border-border bg-surface-muted p-4">
+            <div className="grid gap-md">
+              <fieldset className="preference-fieldset | grid gap-md rounded-2xl border border-border bg-surface-muted p-4">
                 <legend className="contents">{t('preferences.language')}</legend>
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-sm">
                   {locales.map((option) => (
                     <Pill key={option}>
                       <Pill.Control>
@@ -82,9 +82,9 @@ export function GamePreferences({ className }: Readonly<GamePreferencesProps>) {
                   ))}
                 </div>
               </fieldset>
-              <fieldset className="preference-fieldset | grid gap-3 rounded-2xl border border-border bg-surface-muted p-4">
+              <fieldset className="preference-fieldset | grid gap-sm rounded-2xl border border-border bg-surface-muted p-4">
                 <legend className="contents">{t('preferences.sound')}</legend>
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-sm">
                   <Pill>
                     <Pill.Control>
                       <input
@@ -111,9 +111,9 @@ export function GamePreferences({ className }: Readonly<GamePreferencesProps>) {
                   </Pill>
                 </div>
               </fieldset>
-              <fieldset className="preference-fieldset | grid gap-3 rounded-2xl border border-border bg-surface-muted p-4">
+              <fieldset className="preference-fieldset | grid gap-sm rounded-2xl border border-border bg-surface-muted p-4">
                 <legend className="contents">{t('preferences.animations')}</legend>
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-sm">
                   <Pill>
                     <Pill.Control>
                       <input
@@ -140,9 +140,9 @@ export function GamePreferences({ className }: Readonly<GamePreferencesProps>) {
                   </Pill>
                 </div>
               </fieldset>
-              <fieldset className="preference-fieldset | grid gap-3 rounded-2xl border border-border bg-surface-muted p-4">
+              <fieldset className="preference-fieldset | grid gap-sm rounded-2xl border border-border bg-surface-muted p-4">
                 <legend className="contents">{t('common.theme')}</legend>
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-sm">
                   {(['system', 'light', 'dark'] as const).map((option) => {
                     const label =
                       option === 'system'

@@ -120,13 +120,13 @@ export function LobbyGameScreen({
       </SidebarModal>
 
       <GameShell.Body>
-        <div className="mx-auto flex h-full w-full max-w-[520px] flex-col justify-start gap-6 overflow-auto p-4">
-          <Panel className="lobby-start-panel | grid gap-5">
+        <div className="mx-auto flex h-full w-full max-w-[520px] flex-col justify-start gap-xl overflow-auto p-4">
+          <Panel className="lobby-start-panel | grid gap-lg">
             <h2 className="font-heading-2 text-text">Ready?</h2>
             {startGameButton}
           </Panel>
           <div
-            className="grid grid-cols-2 gap-2"
+            className="grid grid-cols-2 gap-xs"
             role="tablist"
             aria-label="Game setup"
           >

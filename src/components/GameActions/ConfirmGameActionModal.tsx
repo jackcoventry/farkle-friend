@@ -35,9 +35,9 @@ export function ConfirmGameActionModal({
           <Modal.CloseButton />
         </Modal.Header>
         <Modal.Content>
-          <div className="grid gap-4">
+          <div className="grid gap-md">
             <p>Current scores and turn progress will be lost. Players and settings will be kept.</p>
-            <div className="flex flex-col gap-4 sm:flex-row">
+            <div className="flex flex-col gap-md sm:flex-row">
               <Button
                 onClick={onClose}
                 className="justify-center sm:flex-1"

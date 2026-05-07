@@ -72,13 +72,13 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
     <>
       <form
         id={formId}
-        className="dice-turn-main | grid h-full min-h-0 w-full grid-rows-[minmax(300px,1fr)_auto] gap-3 xl:h-[calc(100dvh-var(--spacing-7))]"
+        className="dice-turn-main | grid h-full min-h-0 w-full grid-rows-[minmax(300px,1fr)_auto] gap-sm xl:h-[calc(100dvh-var(--spacing-7))]"
         onSubmit={handleSubmit(submitHandler)}
       >
         <div className="dice-turn-table | min-h-0 overflow-hidden rounded-3xl border border-border p-4">
           <div className="dice-turn-table__play | flex h-full items-start justify-center overflow-auto">
-            <div className="grid w-full max-w-[680px] gap-5 text-center">
-              <div className="grid gap-1">
+            <div className="grid w-full max-w-[680px] gap-lg text-center">
+              <div className="grid gap-2xs">
                 <h2 className="text-text font-heading">{t('manualScore.buildRoundScore')}</h2>
                 <p
                   className="text-sm text-text-muted"
@@ -132,7 +132,7 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
             <Modal.CloseButton ariaLabel={t('manualScore.closeManualEntry')} />
           </Modal.Header>
           <Modal.Content>
-            <div className="grid gap-6 text-center">
+            <div className="grid gap-xl text-center">
               <Controller
                 name="value"
                 control={control}

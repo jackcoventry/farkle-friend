@@ -69,7 +69,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
   return (
     <div className="form-wrapper | border-accent border p-4 rounded-4xl bg-surface self-center max-w-full">
       <form
-        className="form | gap-6 flex flex-col"
+        className="form | gap-xl flex flex-col"
         onSubmit={handleSubmit(submitHandler)}
       >
         <h2 className="font-heading-2 text-text">{t('settings.title')}</h2>

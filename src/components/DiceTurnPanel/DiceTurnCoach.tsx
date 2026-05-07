@@ -1,5 +1,5 @@
 import { useI18n } from '@/i18n/I18nProvider';
-import { sortDiceValues, type ScoreBreakdownItem, type ScoringCombo } from '@/domain/game/dice';
+import { type ScoreBreakdownItem, type ScoringCombo, sortDiceValues } from '@/domain/game/dice';
 import type { DiceTurnCopy, DiceTurnText } from '@/domain/game/diceTurnPresenter';
 import DiceIcon from '@/components/DiceIcon/DiceIcon';
 import { Panel } from '@/components/Panel/Panel';
@@ -34,7 +34,7 @@ export function DiceTurnCoach({
   return (
     <>
       <Panel
-        className="dice-turn-table__coach-panel | gap-4 flex flex-wrap"
+        className="dice-turn-table__coach-panel | gap-md flex flex-wrap"
         aria-label="Turn status"
       >
         <p
@@ -45,7 +45,7 @@ export function DiceTurnCoach({
         >
           {translatedActionHint ? `${title}. ${translatedActionHint}` : title}
         </p>
-        <div className="min-w-0 flex flex-col gap-2">
+        <div className="min-w-0 flex flex-col gap-xs">
           <p className="font-heading-2">{title}</p>
           <p className="text-sm">{detail}</p>
         </div>
@@ -55,7 +55,7 @@ export function DiceTurnCoach({
           </div>
         ) : null}
         {selectedBreakdown.length > 0 ? (
-          <ul className="flex flex-wrap gap-4 text-sm">
+          <ul className="flex flex-wrap gap-md text-sm">
             {selectedBreakdown.map((item) => (
               <li
                 key={`${item.label}-${item.score}`}
@@ -82,13 +82,13 @@ export function DiceTurnCoach({
           aria-label="Scoring combinations"
         >
           <p className="font-body-1">{t('turn.comboSuggestions')}</p>
-          <ul className="mt-2 grid gap-1 text-sm">
+          <ul className="mt-2 grid gap-2xs text-sm">
             {currentCombos.slice(0, 5).map((combo, index) => (
               <li
                 key={index}
                 className="grid w-full grid-cols-2"
               >
-                <span className="flex gap-1">
+                <span className="flex gap-2xs">
                   {sortDiceValues(combo.dice).map((die, dieIndex) => (
                     <DiceIcon
                       key={`${die}-${dieIndex}`}

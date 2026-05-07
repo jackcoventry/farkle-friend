@@ -89,9 +89,9 @@ const Button = React.forwardRef<
 
   let classes = 'button | rounded-full flex relative border-2';
   if (className) classes += ` | ${className}`;
-  if (size === 'small') classes += ' font-button-small gap-3 py-2 px-5';
-  if (size === 'default') classes += ' font-button py-3 gap-4 px-6';
-  if (size === 'large') classes += ' font-button-large gap-5 py-4 px-8';
+  if (size === 'small') classes += ' font-button-small gap-sm py-2 px-5';
+  if (size === 'default') classes += ' font-button py-3 gap-md px-6';
+  if (size === 'large') classes += ' font-button-large gap-lg py-4 px-8';
 
   if (iconPosition === 'left') classes += ' flex-row-reverse';
 

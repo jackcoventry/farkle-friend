@@ -16,11 +16,7 @@ type ScoreSequenceItem = {
   score: number;
 };
 
-function ScoreGenerator({
-  className,
-  onChange,
-  resetKey = 0,
-}: Readonly<ScoreGeneratorProps>) {
+function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGeneratorProps>) {
   const { t } = useI18n();
   const dies = Array.from({ length: 6 }, (_, i) => (i + 1) as DieValue);
   const nextSequenceIdRef = React.useRef(0);
@@ -68,8 +64,8 @@ function ScoreGenerator({
   };
 
   return (
-    <div className={`grid gap-5${className ? ` ${className}` : ''}`}>
-      <div className="grid grid-cols-3 gap-5 mx-auto h-[200px] w-[300px]">
+    <div className={`grid gap-lg ${className ? ` ${className}` : ''}`}>
+      <div className="grid grid-cols-3 gap-lg mx-auto h-[200px] w-[300px]">
         {dies.map((die) => {
           const classes = `enabled:hover:opacity-50 enabled:hover:scale-110 enabled:cursor-pointer transition-transform disabled:grayscale-50 disabled:cursor-not-allowed ${die === clicked ? 'enabled:hover:scale-120 ' : ''}`;
           return (
@@ -90,11 +86,11 @@ function ScoreGenerator({
         })}
       </div>
 
-      <div className="grid gap-4 rounded-2xl border border-border bg-surface p-4 text-center">
+      <div className="grid gap-md rounded-2xl border border-border bg-surface p-4 text-center">
         <div className="min-h-12">
           {selectedItems.length > 0 ? (
             <ul
-              className="flex flex-wrap justify-center gap-2"
+              className="flex flex-wrap justify-center gap-xs"
               aria-label="Selected dice"
             >
               {selectedItems.map((die, index) => (
@@ -102,9 +98,7 @@ function ScoreGenerator({
                   key={`${die}-${index}`}
                   className="w-7"
                 >
-                  <DiceIcon
-                    count={die}
-                  />
+                  <DiceIcon count={die} />
                 </li>
               ))}
             </ul>
@@ -128,7 +122,7 @@ function ScoreGenerator({
           </p>
         ) : null}
 
-        <div className="flex flex-wrap justify-center gap-3">
+        <div className="flex flex-wrap justify-center gap-sm">
           <Button
             type="button"
             variant="secondary"
@@ -147,8 +141,8 @@ function ScoreGenerator({
         </div>
       </div>
 
-      <div className="grid gap-4 rounded-2xl border border-border bg-surface p-4">
-        <div className="flex flex-wrap items-baseline justify-between gap-3">
+      <div className="grid gap-md rounded-2xl border border-border bg-surface p-4">
+        <div className="flex flex-wrap items-baseline justify-between gap-sm">
           <h2 className="font-heading-2">{t('scoreGenerator.roundTotal')}</h2>
           <p
             className="font-heading-2"
@@ -159,17 +153,17 @@ function ScoreGenerator({
         </div>
 
         {sequenceItems.length > 0 ? (
-          <ol className="grid gap-3">
+          <ol className="grid gap-sm">
             {sequenceItems.map((item, index) => (
               <li
                 key={item.id}
-                className="grid gap-2 rounded-lg border border-border p-3 sm:grid-cols-[auto_1fr_auto] sm:items-center"
+                className="grid gap-xs rounded-lg border border-border p-3 sm:grid-cols-[auto_1fr_auto] sm:items-center"
               >
                 <span className="font-body-1">
                   {t('scoreGenerator.goLabel', { index: index + 1 })}
                 </span>
                 <span
-                  className="flex flex-wrap gap-1"
+                  className="flex flex-wrap gap-2xs"
                   aria-label={`Dice for go ${index + 1}`}
                 >
                   {sortDiceValues(item.dice).map((die, dieIndex) => (
@@ -177,9 +171,7 @@ function ScoreGenerator({
                       key={`${item.id}-${die}-${dieIndex}`}
                       className="w-6"
                     >
-                      <DiceIcon
-                        count={die}
-                      />
+                      <DiceIcon count={die} />
                     </span>
                   ))}
                 </span>
