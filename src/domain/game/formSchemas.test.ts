@@ -15,16 +15,20 @@ describe('game form schemas', () => {
   });
 
   it('rejects empty player names', () => {
-    expect(
-      AddPlayerFormSchema.safeParse({
-        avatar: 1,
-        username: '   ',
-      }).success
-    ).toBe(false);
+    const result = AddPlayerFormSchema.safeParse({
+      avatar: 1,
+      username: '   ',
+    });
+
+    expect(result.success).toBe(false);
+    expect(result.error?.issues[0]?.message).toBe('validation.usernameRequired');
   });
 
   it('rejects negative manual scores', () => {
-    expect(AddScoreSchema.safeParse({ value: -1 }).success).toBe(false);
+    const result = AddScoreSchema.safeParse({ value: -1 });
+
+    expect(result.success).toBe(false);
+    expect(result.error?.issues[0]?.message).toBe('validation.scoreNonNegative');
   });
 
   it('validates supported game settings', () => {

@@ -1,9 +1,7 @@
-import {
-  Controller,
-  type Control,
-  type FieldErrors,
-  type UseFormSetValue,
-} from 'react-hook-form';
+import { useI18n } from '@/i18n/I18nProvider';
+import { localeLabels } from '@/i18n/locales';
+import { translateValidationMessage } from '@/i18n/validation';
+import { type Control, Controller, type FieldErrors, type UseFormSetValue } from 'react-hook-form';
 import {
   type SettingsFormSchemaType,
   diceStyles,
@@ -14,8 +12,6 @@ import {
   targetScorePresets,
   themePreferences,
 } from '@/domain/game/formSchemas';
-import { useI18n } from '@/i18n/I18nProvider';
-import { localeLabels } from '@/i18n/locales';
 import Button from '@/components/Button/Button';
 import { Panel } from '@/components/Panel/Panel';
 import Pill from '@/components/Pill/Pill';
@@ -208,11 +204,7 @@ export function ModeField({ control }: Readonly<SettingsFieldProps>) {
   );
 }
 
-export function TargetScoreField({
-  control,
-  errors,
-  setValue,
-}: Readonly<TargetScoreFieldProps>) {
+export function TargetScoreField({ control, errors, setValue }: Readonly<TargetScoreFieldProps>) {
   const { t } = useI18n();
 
   return (
@@ -264,7 +256,7 @@ export function TargetScoreField({
                 className="field-error"
                 role="alert"
               >
-                {fieldState.error.message}
+                {translateValidationMessage(t, fieldState.error.message)}
               </p>
             ) : null}
           </div>

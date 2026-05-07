@@ -41,7 +41,8 @@ export const messages = {
     'settings.pointTarget': 'Point target',
     'settings.save': 'Save',
     'settings.showComboSuggestions': 'Show combo suggestions',
-    'settings.soundDescription': 'Adds restrained roll, bank, and Farkle feedback when your browser allows it.',
+    'settings.soundDescription':
+      'Adds restrained roll, bank, and Farkle feedback when your browser allows it.',
     'settings.targetPlaceholder': 'Enter target score...',
     'settings.title': 'Settings',
     'settings.turnHandOff': 'Turn hand-off',
@@ -59,8 +60,10 @@ export const messages = {
     'scoreGenerator.goLabel': 'Go {index}',
     'scoreGenerator.invalidSelection': 'Only add dice that are part of the scoring combination.',
     'scoreGenerator.roundTotal': 'Round total',
-    'turn.action.bankSelection': 'Bank {score} points from this selection, or keep selecting scoring dice.',
-    'turn.action.deselectInvalid': 'Deselect any dice that do not score before banking this selection.',
+    'turn.action.bankSelection':
+      'Bank {score} points from this selection, or keep selecting scoring dice.',
+    'turn.action.deselectInvalid':
+      'Deselect any dice that do not score before banking this selection.',
     'turn.action.endFarkle': 'End the turn to score 0 and move to the next player.',
     'turn.action.selectedNoScore': 'Selected dice do not score yet.',
     'turn.action.selectDice': 'Tap dice to select them, or use keys 1-6.',
@@ -95,6 +98,13 @@ export const messages = {
     'turnResult.showWinner': 'Show winner',
     'turnResult.turnEnded': 'Turn ended!',
     'turnResult.turnScore': 'Turn score',
+    'validation.avatarRequired': 'Pick something!',
+    'validation.duplicatePlayerName': 'That player name is already in use.',
+    'validation.scoreNonNegative': 'Enter a valid number, or zero if you were farkled!',
+    'validation.targetScoreInteger': 'Target score must be a whole number.',
+    'validation.targetScoreMax': 'Target score must be 50000 or less.',
+    'validation.targetScoreMin': 'Target score must be at least 500.',
+    'validation.usernameRequired': 'Name must be at least 1 character!',
   },
   es: {
     'actions.addGo': 'Añadir tirada',
@@ -136,7 +146,8 @@ export const messages = {
     'settings.pointTarget': 'Objetivo de puntos',
     'settings.save': 'Guardar',
     'settings.showComboSuggestions': 'Mostrar sugerencias de combinaciones',
-    'settings.soundDescription': 'Añade feedback discreto al tirar, guardar y hacer Farkle cuando el navegador lo permite.',
+    'settings.soundDescription':
+      'Añade feedback discreto al tirar, guardar y hacer Farkle cuando el navegador lo permite.',
     'settings.targetPlaceholder': 'Introduce el objetivo...',
     'settings.title': 'Ajustes',
     'settings.turnHandOff': 'Cambio de turno',
@@ -152,10 +163,13 @@ export const messages = {
     'scoreGenerator.chooseScoringDice': 'Elige dados puntuables para esta tirada',
     'scoreGenerator.currentGo': 'Tirada actual: {score}',
     'scoreGenerator.goLabel': 'Tirada {index}',
-    'scoreGenerator.invalidSelection': 'Añade solo dados que formen parte de la combinación puntuable.',
+    'scoreGenerator.invalidSelection':
+      'Añade solo dados que formen parte de la combinación puntuable.',
     'scoreGenerator.roundTotal': 'Total de la ronda',
-    'turn.action.bankSelection': 'Guarda {score} puntos de esta selección o sigue eligiendo dados puntuables.',
-    'turn.action.deselectInvalid': 'Quita cualquier dado que no puntúe antes de guardar esta selección.',
+    'turn.action.bankSelection':
+      'Guarda {score} puntos de esta selección o sigue eligiendo dados puntuables.',
+    'turn.action.deselectInvalid':
+      'Quita cualquier dado que no puntúe antes de guardar esta selección.',
     'turn.action.endFarkle': 'Termina el turno para puntuar 0 y pasar al siguiente jugador.',
     'turn.action.selectedNoScore': 'Los dados seleccionados todavía no puntúan.',
     'turn.action.selectDice': 'Toca dados para seleccionarlos, o usa las teclas 1-6.',
@@ -164,8 +178,10 @@ export const messages = {
     'turn.detail.bankSelection': 'Guarda esta selección y decide si quieres tirar otra vez.',
     'turn.detail.chooseScoringDice': 'Selecciona dados que puntúen y guárdalos.',
     'turn.detail.farkle': 'No salió ningún dado puntuable. Este turno vale 0 puntos.',
-    'turn.detail.hotDice': 'Todos los dados han puntuado. Tira los seis otra vez o termina tu turno.',
-    'turn.detail.invalidSelection': 'Cada dado seleccionado debe formar parte de una combinación puntuable.',
+    'turn.detail.hotDice':
+      'Todos los dados han puntuado. Tira los seis otra vez o termina tu turno.',
+    'turn.detail.invalidSelection':
+      'Cada dado seleccionado debe formar parte de una combinación puntuable.',
     'turn.detail.readyToRoll': 'Tira todos los dados disponibles para empezar.',
     'turn.pts': '{score} pts',
     'turn.selection': 'Selección',
@@ -190,8 +206,19 @@ export const messages = {
     'turnResult.showWinner': 'Mostrar ganador',
     'turnResult.turnEnded': 'Turno terminado!',
     'turnResult.turnScore': 'Puntuación del turno',
+    'validation.avatarRequired': 'Elige algo!',
+    'validation.duplicatePlayerName': 'Ese nombre de jugador ya está en uso.',
+    'validation.scoreNonNegative': 'Introduce un número válido, o cero si hiciste Farkle!',
+    'validation.targetScoreInteger': 'El objetivo debe ser un número entero.',
+    'validation.targetScoreMax': 'El objetivo debe ser 50000 o menos.',
+    'validation.targetScoreMin': 'El objetivo debe ser al menos 500.',
+    'validation.usernameRequired': 'El nombre debe tener al menos 1 carácter!',
   },
 } as const satisfies Record<Locale, Record<string, string>>;
 
 export type MessageKey = keyof (typeof messages)['en'];
 export type MessageValues = Record<string, string | number>;
+
+export function isMessageKey(value: unknown): value is MessageKey {
+  return typeof value === 'string' && Object.hasOwn(messages.en, value);
+}

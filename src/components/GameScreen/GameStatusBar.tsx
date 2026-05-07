@@ -1,10 +1,10 @@
 'use client';
 
+import { useI18n } from '@/i18n/I18nProvider';
 import { formatScore } from '@/utils/formatScore';
 import type { GameFlowState, GameState, Player } from '@/domain/game/gameTypes';
-import { useI18n } from '@/i18n/I18nProvider';
 import type { DiceTurnMetrics } from '@/components/DiceTurnPanel/DiceTurnPanel';
-import { Panel } from '../Panel/Panel';
+import { Panel } from '@/components/Panel/Panel';
 
 type GameStatusBarProps = {
   currentPlayer: Player;

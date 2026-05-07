@@ -1,9 +1,6 @@
-import React from 'react';
-import {
-  DieValue,
-  scoreSelectedDiceWithUsage,
-} from '@/domain/game/dice';
 import { useI18n } from '@/i18n/I18nProvider';
+import React from 'react';
+import { DieValue, scoreSelectedDiceWithUsage } from '@/domain/game/dice';
 import Button from '@/components/Button/Button';
 import DiceIcon from '@/components/DiceIcon/DiceIcon';
 
@@ -117,7 +114,10 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
           {t('scoreGenerator.currentGo', { score: selectedScore })}
         </p>
         {selectedItems.length > 0 && !selectionIsValid ? (
-          <p className="field-error" role="alert">
+          <p
+            className="field-error"
+            role="alert"
+          >
             {t('scoreGenerator.invalidSelection')}
           </p>
         ) : null}
@@ -127,7 +127,7 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
             type="button"
             variant="secondary"
             disabled={selectedItems.length === 0}
-          onClick={() => setSelectedItems([])}
+            onClick={() => setSelectedItems([])}
           >
             {t('actions.clear')}
           </Button>
@@ -144,7 +144,10 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
       <div className="grid gap-4 rounded-2xl border border-border bg-surface p-4">
         <div className="flex flex-wrap items-baseline justify-between gap-3">
           <h2 className="font-heading-2">{t('scoreGenerator.roundTotal')}</h2>
-          <p className="font-heading-2" aria-live="polite">
+          <p
+            className="font-heading-2"
+            aria-live="polite"
+          >
             {roundTotal}
           </p>
         </div>
@@ -159,9 +162,15 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
                 <span className="font-body-1">
                   {t('scoreGenerator.goLabel', { index: index + 1 })}
                 </span>
-                <span className="flex flex-wrap gap-1" aria-label={`Dice for go ${index + 1}`}>
+                <span
+                  className="flex flex-wrap gap-1"
+                  aria-label={`Dice for go ${index + 1}`}
+                >
                   {item.dice.map((die, dieIndex) => (
-                    <span key={`${item.id}-${die}-${dieIndex}`} className="w-6">
+                    <span
+                      key={`${item.id}-${die}-${dieIndex}`}
+                      className="w-6"
+                    >
                       <DiceIcon count={die} />
                     </span>
                   ))}
@@ -173,7 +182,6 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
         ) : (
           <p className="text-sm text-text-muted">{t('scoreGenerator.addedGoesEmpty')}</p>
         )}
-
       </div>
     </div>
   );

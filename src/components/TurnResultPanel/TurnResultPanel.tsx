@@ -1,11 +1,11 @@
 'use client';
 
+import { useI18n } from '@/i18n/I18nProvider';
 import { useEffect, useId, useRef, useState } from 'react';
 import { formatScore } from '@/utils/formatScore';
 import type { Player, TurnResult } from '@/domain/game/gameTypes';
-import { useI18n } from '@/i18n/I18nProvider';
 import Button from '@/components/Button/Button';
-import { Panel } from '../Panel/Panel';
+import { Panel } from '@/components/Panel/Panel';
 
 const AUTO_ADVANCE_SECONDS = 3;
 

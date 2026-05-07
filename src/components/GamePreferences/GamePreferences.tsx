@@ -1,10 +1,10 @@
 'use client';
 
+import { useI18n } from '@/i18n/I18nProvider';
+import { type Locale, localeLabels, locales } from '@/i18n/locales';
 import { useState } from 'react';
 import { useGame } from '@/domain/game/GameProvider';
 import type { ThemePreference } from '@/domain/game/gameTypes';
-import { useI18n } from '@/i18n/I18nProvider';
-import { localeLabels, locales, type Locale } from '@/i18n/locales';
 import Button from '@/components/Button/Button';
 import Modal from '@/components/Modal/Modal';
 import Pill from '@/components/Pill/Pill';

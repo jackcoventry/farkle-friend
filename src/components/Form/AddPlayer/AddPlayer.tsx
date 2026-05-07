@@ -1,5 +1,7 @@
 'use client';
 
+import { useI18n } from '@/i18n/I18nProvider';
+import { translateValidationMessage } from '@/i18n/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
@@ -32,6 +34,7 @@ function getNextDefaultUsername(players: { username: string }[]) {
 
 function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
   const { state } = useGame();
+  const { t } = useI18n();
   const defaultUsername = getNextDefaultUsername(state.players);
   const {
     control,
@@ -68,7 +71,7 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
 
     if (duplicateName) {
       setError('username', {
-        message: 'That player name is already in use.',
+        message: 'validation.duplicatePlayerName',
         type: 'validate',
       });
       return;
@@ -124,7 +127,7 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
                       className="field-error"
                       role="alert"
                     >
-                      {errors.username.message}
+                      {translateValidationMessage(t, errors.username.message)}
                     </p>
                   ) : null}
                 </>
@@ -181,7 +184,7 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
                       className="field-error"
                       role="alert"
                     >
-                      {fieldState.error.message}
+                      {translateValidationMessage(t, fieldState.error.message)}
                     </p>
                   ) : null}
                 </fieldset>

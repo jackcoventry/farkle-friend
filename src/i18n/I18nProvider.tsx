@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useMemo } from 'react';
 import { useGame } from '@/domain/game/GameProvider';
-import { defaultLocale, type Locale } from './locales';
+import { type Locale, defaultLocale } from './locales';
 import { MessageKey, MessageValues, messages } from './messages';
 
 type I18nContextValue = {
@@ -37,7 +37,8 @@ export function I18nProvider({ children }: Readonly<{ children: React.ReactNode 
   const value = useMemo<I18nContextValue>(
     () => ({
       locale,
-      t: (key, values) => formatMessage(messages[locale][key] ?? messages[defaultLocale][key] ?? key, values),
+      t: (key, values) =>
+        formatMessage(messages[locale][key] ?? messages[defaultLocale][key] ?? key, values),
     }),
     [locale]
   );

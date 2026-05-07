@@ -1,11 +1,11 @@
 'use client';
 
+import { useI18n } from '@/i18n/I18nProvider';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useGame } from '@/domain/game/GameProvider';
 import { SettingsFormSchema, type SettingsFormSchemaType } from '@/domain/game/formSchemas';
 import { DiceStyle, GameMode, ThemePreference } from '@/domain/game/gameTypes';
-import { useI18n } from '@/i18n/I18nProvider';
 import Button from '@/components/Button/Button';
 import {
   ComboSuggestionsField,

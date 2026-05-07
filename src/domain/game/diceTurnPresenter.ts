@@ -134,7 +134,10 @@ function getSelectedStatus({
   hasSelectedDice,
   selectedHasInvalidDice,
   selectedScore,
-}: Pick<DiceTurnCopyArgs, 'hasSelectedDice' | 'selectedHasInvalidDice' | 'selectedScore'>): DiceTurnText {
+}: Pick<
+  DiceTurnCopyArgs,
+  'hasSelectedDice' | 'selectedHasInvalidDice' | 'selectedScore'
+>): DiceTurnText {
   if (hasSelectedDice && selectedHasInvalidDice) {
     return { key: 'turn.selected.invalid' };
   }

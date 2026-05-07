@@ -74,5 +74,7 @@ test('manual score sequence layout remains stable', async ({ page }) => {
   await two.click();
   await addGo.click();
 
-  await expect(page.locator('.game-shell__body')).toHaveScreenshot('manual-score-sequence-layout.png');
+  await expect(page.locator('.game-shell__body')).toHaveScreenshot(
+    'manual-score-sequence-layout.png'
+  );
 });

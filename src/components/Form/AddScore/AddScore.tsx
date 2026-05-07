@@ -1,14 +1,15 @@
 'use client';
 
+import { useI18n } from '@/i18n/I18nProvider';
+import { translateValidationMessage } from '@/i18n/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
 import { Controller, SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { AddScoreSchema, type AddScoreSchemaType } from '@/domain/game/formSchemas';
-import { useI18n } from '@/i18n/I18nProvider';
 import Button from '@/components/Button/Button';
+import ScoreGenerator from '@/components/Form/ScoreGenerator/ScoreGenerator';
 import Modal from '@/components/Modal/Modal';
 import { TurnActionCluster } from '@/components/TurnActionCluster/TurnActionCluster';
-import ScoreGenerator from '../ScoreGenerator/ScoreGenerator';
 
 export type { AddScoreSchemaType };
 export type AddScoreFormResult = {
@@ -161,7 +162,7 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
                         className="field-error"
                         role="alert"
                       >
-                        {fieldState.error.message}
+                        {translateValidationMessage(t, fieldState.error.message)}
                       </p>
                     ) : null}
                   </>
