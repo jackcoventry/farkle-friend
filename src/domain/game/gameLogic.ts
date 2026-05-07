@@ -12,6 +12,7 @@ export function createInitialGameState(): GameState {
     pendingTurnResult: null,
     phase: 'LOBBY',
     preferences: {
+      locale: 'en',
       motionEnabled: true,
       tableFeedback: false,
       theme: 'system',

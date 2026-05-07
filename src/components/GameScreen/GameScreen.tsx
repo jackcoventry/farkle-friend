@@ -60,7 +60,7 @@ export function GameScreen() {
   };
 
   const onSettingsSubmit = (data: SettingsFormSchemaType) => {
-    const { motionEnabled, tableFeedback, theme, ...settings } = data;
+    const { locale, motionEnabled, tableFeedback, theme, ...settings } = data;
 
     dispatch({
       type: 'UPDATE_SETTINGS',
@@ -69,6 +69,7 @@ export function GameScreen() {
     dispatch({
       type: 'UPDATE_PREFERENCES',
       preferences: {
+        locale,
         motionEnabled,
         tableFeedback,
         theme,

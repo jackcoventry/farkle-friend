@@ -3,6 +3,7 @@ import * as z from 'zod/mini';
 export const MINIMUM_USERNAME_LENGTH = 1;
 export const diceStyles = ['default', 'medieval'] as const;
 export const modes = ['dice', 'manual'] as const;
+export const localePreferences = ['en', 'es'] as const;
 export const themePreferences = ['system', 'light', 'dark'] as const;
 export const targetScorePresets = [2500, 5000, 10000] as const;
 export const minTargetScore = 500;
@@ -29,6 +30,7 @@ export const AddScoreSchema = z.object({
 export const SettingsFormSchema = z.object({
   autoAdvanceTurns: z.boolean(),
   diceStyle: z.enum(diceStyles),
+  locale: z.enum(localePreferences),
   mode: z.enum(modes),
   motionEnabled: z.boolean(),
   targetScore: z
