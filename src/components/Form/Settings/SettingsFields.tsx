@@ -123,6 +123,10 @@ export function DiceStyleField({ control }: Readonly<SettingsFieldProps>) {
             <div className="flex gap-4">
               {diceStyles.map((option) => {
                 const id = `${option}_${field.name}`;
+                const labelKey =
+                  option === 'default'
+                    ? 'settings.diceStyle.default'
+                    : 'settings.diceStyle.medieval';
                 return (
                   <Pill key={option}>
                     <Pill.Control>
@@ -137,12 +141,7 @@ export function DiceStyleField({ control }: Readonly<SettingsFieldProps>) {
                         ref={field.ref}
                       />
                     </Pill.Control>
-                    <Pill.Label
-                      htmlFor={id}
-                      className="capitalize"
-                    >
-                      {option}
-                    </Pill.Label>
+                    <Pill.Label htmlFor={id}>{t(labelKey)}</Pill.Label>
                   </Pill>
                 );
               })}

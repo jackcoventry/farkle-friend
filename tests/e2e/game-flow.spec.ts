@@ -30,8 +30,8 @@ test('players can start a manual game, score turns, and reset for new players', 
 
   await enterManualScore(page, '50');
   await expect(page.getByText('New total')).toBeVisible();
-  await expect(page.getByText('Next up: Grace.')).toBeVisible();
-  await page.getByRole('button', { name: 'Next player' }).click();
+  await expect(page.getByText('Grace is up next!')).toBeVisible();
+  await page.getByRole('button', { name: 'Start turn' }).click();
 
   await waitForTurnSplash(page, 'Grace');
 

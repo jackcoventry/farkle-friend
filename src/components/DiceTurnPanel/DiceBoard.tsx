@@ -1,9 +1,11 @@
 import type { DieValue } from '@/domain/game/dice';
+import type { DiceStyle } from '@/domain/game/gameTypes';
 import DiceIcon from '@/components/DiceIcon/DiceIcon';
 import { Panel } from '@/components/Panel/Panel';
 
 type DiceBoardProps = {
   currentRoll: DieValue[] | null;
+  diceStyle?: DiceStyle;
   isFarkled: boolean;
   onToggleDieSelection: (index: number) => void;
   selectedIndices: number[];
@@ -11,6 +13,7 @@ type DiceBoardProps = {
 
 export function DiceBoard({
   currentRoll,
+  diceStyle = 'default',
   isFarkled,
   onToggleDieSelection,
   selectedIndices,
@@ -50,6 +53,7 @@ export function DiceBoard({
                   <DiceIcon
                     count={value}
                     state={isSelected ? 'active' : 'default'}
+                    variant={diceStyle}
                   />
                 </button>
               );

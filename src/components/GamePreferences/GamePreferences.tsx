@@ -54,12 +54,12 @@ export function GamePreferences({ className }: Readonly<GamePreferencesProps>) {
         onClose={() => setIsOpen(false)}
         ariaLabel={t('preferences.dialogTitle')}
       >
-        <Modal.Body className="modal-panel modal-panel--narrow">
-          <div className="modal-panel__header">
-            <h2 className="font-heading text-center">{t('preferences.title')}</h2>
+        <Modal.Panel size="narrow">
+          <Modal.Header>
+            <Modal.Title className="font-heading text-center">{t('preferences.title')}</Modal.Title>
             <Modal.CloseButton ariaLabel={t('preferences.close')} />
-          </div>
-          <div className="modal-panel__content">
+          </Modal.Header>
+          <Modal.Content>
             <div className="grid gap-4">
               <fieldset className="preference-fieldset | grid gap-3 rounded-2xl border border-border bg-surface-muted p-4">
                 <legend className="contents">{t('preferences.language')}</legend>
@@ -169,8 +169,8 @@ export function GamePreferences({ className }: Readonly<GamePreferencesProps>) {
                 </div>
               </fieldset>
             </div>
-          </div>
-        </Modal.Body>
+          </Modal.Content>
+        </Modal.Panel>
       </Modal>
     </>
   );

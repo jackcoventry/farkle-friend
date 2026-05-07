@@ -63,7 +63,10 @@ export function ManualTurn({
   return (
     <div className="turn-frame | grid min-h-0 h-full w-full gap-2 lg:gap-3">
       <div className="dice-turn-layout | grid h-full min-h-0 grid-cols-[1fr] grid-rows-[auto_minmax(0,1fr)] gap-2 lg:gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(240px,320px)] xl:grid-rows-1">
-        <AddScoreForm onSubmit={onAddScoreFormSubmit} />
+        <AddScoreForm
+          diceStyle={state.settings.diceStyle}
+          onSubmit={onAddScoreFormSubmit}
+        />
         <aside
           className="dice-turn-rail | -order-1 xl:order-2 content-start grid gap-2 lg:gap-3 overflow-visible xl:overflow-auto xl:h-[calc(100dvh-var(--spacing-7))]"
           aria-label="Turn information"
@@ -79,13 +82,16 @@ export function ManualTurn({
         onClose={onCloseMobileCoach}
         ariaLabel="Turn information"
       >
-        <Modal.Body className="dice-turn-coach-modal modal-panel modal-panel--narrow">
-          <div className="modal-panel__header">
-            <h2 className="font-heading">Turn information</h2>
+        <Modal.Panel
+          size="narrow"
+          className="dice-turn-coach-modal"
+        >
+          <Modal.Header>
+            <Modal.Title className="font-heading">Turn information</Modal.Title>
             <Modal.CloseButton ariaLabel="Close turn information" />
-          </div>
-          <div className="modal-panel__content">{coachContent}</div>
-        </Modal.Body>
+          </Modal.Header>
+          <Modal.Content>{coachContent}</Modal.Content>
+        </Modal.Panel>
       </Modal>
     </div>
   );

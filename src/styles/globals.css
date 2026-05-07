@@ -101,7 +101,7 @@ body {
 .modal-panel__content {
   min-block-size: 0;
   overflow: auto;
-  padding: 0 var(--spacing-1) var(--spacing-1);
+  padding: 0 var(--spacing-3) var(--spacing-2);
 }
 
 .modal-panel__section {

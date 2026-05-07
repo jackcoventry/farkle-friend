@@ -1,11 +1,13 @@
 import { useI18n } from '@/i18n/I18nProvider';
 import React from 'react';
 import { DieValue, scoreSelectedDiceWithUsage } from '@/domain/game/dice';
+import type { DiceStyle } from '@/domain/game/gameTypes';
 import Button from '@/components/Button/Button';
 import DiceIcon from '@/components/DiceIcon/DiceIcon';
 
 type ScoreGeneratorProps = {
   className?: string;
+  diceStyle?: DiceStyle;
   onChange: (score: number) => void;
   resetKey?: number;
 };
@@ -16,7 +18,12 @@ type ScoreSequenceItem = {
   score: number;
 };
 
-function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGeneratorProps>) {
+function ScoreGenerator({
+  className,
+  diceStyle = 'default',
+  onChange,
+  resetKey = 0,
+}: Readonly<ScoreGeneratorProps>) {
   const { t } = useI18n();
   const dies = Array.from({ length: 6 }, (_, i) => (i + 1) as DieValue);
   const nextSequenceIdRef = React.useRef(0);
@@ -80,6 +87,7 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
               <DiceIcon
                 count={die}
                 className="w-full"
+                variant={diceStyle}
               />
             </button>
           );
@@ -98,7 +106,10 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
                   key={`${die}-${index}`}
                   className="w-7"
                 >
-                  <DiceIcon count={die} />
+                  <DiceIcon
+                    count={die}
+                    variant={diceStyle}
+                  />
                 </li>
               ))}
             </ul>
@@ -171,7 +182,10 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
                       key={`${item.id}-${die}-${dieIndex}`}
                       className="w-6"
                     >
-                      <DiceIcon count={die} />
+                      <DiceIcon
+                        count={die}
+                        variant={diceStyle}
+                      />
                     </span>
                   ))}
                 </span>

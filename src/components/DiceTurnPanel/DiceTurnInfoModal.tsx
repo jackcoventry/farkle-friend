@@ -15,15 +15,18 @@ export function DiceTurnInfoModal({ children, isOpen, onClose }: Readonly<DiceTu
       onClose={onClose}
       ariaLabel="Turn information"
     >
-      <Modal.Body className="dice-turn-coach-modal modal-panel modal-panel--narrow">
-        <div className="modal-panel__header">
-          <h2 className="font-heading">Turn info</h2>
+      <Modal.Panel
+        size="narrow"
+        className="dice-turn-coach-modal"
+      >
+        <Modal.Header>
+          <Modal.Title className="font-heading">Turn info</Modal.Title>
           <Modal.CloseButton ariaLabel="Close turn information" />
-        </div>
-        <div className="modal-panel__content">
+        </Modal.Header>
+        <Modal.Content>
           <div className="dice-turn-table__coach | flex flex-col gap-4">{children}</div>
-        </div>
-      </Modal.Body>
+        </Modal.Content>
+      </Modal.Panel>
     </Modal>
   );
 }

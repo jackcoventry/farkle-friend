@@ -1,6 +1,7 @@
 import { useI18n } from '@/i18n/I18nProvider';
 import type { ScoreBreakdownItem, ScoringCombo } from '@/domain/game/dice';
 import type { DiceTurnCopy, DiceTurnText } from '@/domain/game/diceTurnPresenter';
+import type { DiceStyle } from '@/domain/game/gameTypes';
 import DiceIcon from '@/components/DiceIcon/DiceIcon';
 import { Panel } from '@/components/Panel/Panel';
 
@@ -8,6 +9,7 @@ type DiceTurnCoachProps = {
   actionHint: DiceTurnText | null;
   actionHintId?: string;
   currentCombos: ScoringCombo[];
+  diceStyle?: DiceStyle;
   selectedBreakdown: ScoreBreakdownItem[];
   showActionHint: boolean;
   showComboSuggestions: boolean;
@@ -19,6 +21,7 @@ export function DiceTurnCoach({
   actionHint,
   actionHintId,
   currentCombos,
+  diceStyle = 'default',
   selectedBreakdown,
   showActionHint,
   showComboSuggestions,
@@ -89,13 +92,16 @@ export function DiceTurnCoach({
                 className="grid w-full grid-cols-2"
               >
                 <span className="flex gap-1">
-                  {combo.dice.map((die, dieIndex) => (
-                    <DiceIcon
-                      key={`${die}-${dieIndex}`}
-                      count={die}
-                      className="w-6"
-                    />
-                  ))}
+                  {[...combo.dice]
+                    .sort((firstDie, secondDie) => firstDie - secondDie)
+                    .map((die, dieIndex) => (
+                      <DiceIcon
+                        key={`${die}-${dieIndex}`}
+                        count={die}
+                        className="w-6"
+                        variant={diceStyle}
+                      />
+                    ))}
                 </span>
                 <span className="text-right text-accent">
                   {t('turn.pts', { score: combo.score })}

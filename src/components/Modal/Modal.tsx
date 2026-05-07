@@ -196,11 +196,19 @@ type ModalSlot = {
   className?: string;
 };
 
+type ModalPanelProps = ModalSlot & {
+  size?: 'default' | 'narrow' | 'wide';
+};
+
+function cx(...classes: Array<string | undefined | false>) {
+  return classes.filter(Boolean).join(' ');
+}
+
 /**
  * <Modal.Header> — structural wrapper for the header area
  */
-function ModalHeader({ children }: Readonly<ModalSlot>) {
-  return <header>{children}</header>;
+function ModalHeader({ children, className }: Readonly<ModalSlot>) {
+  return <header className={cx('modal-panel__header', className)}>{children}</header>;
 }
 
 /**
@@ -257,6 +265,23 @@ function ModalBody({ children, className }: Readonly<ModalSlot>) {
 }
 
 /**
+ * <Modal.Panel> — standard modal surface with consistent sizing
+ */
+function ModalPanel({ children, className, size = 'default' }: Readonly<ModalPanelProps>) {
+  const sizeClass =
+    size === 'narrow' ? 'modal-panel--narrow' : size === 'wide' ? 'modal-panel--wide' : undefined;
+
+  return <Modal.Body className={cx('modal-panel', sizeClass, className)}>{children}</Modal.Body>;
+}
+
+/**
+ * <Modal.Content> — scrollable content region inside a modal panel
+ */
+function ModalContent({ children, className }: Readonly<ModalSlot>) {
+  return <div className={cx('modal-panel__content', className)}>{children}</div>;
+}
+
+/**
  * <Modal.Footer> — structural wrapper for the footer area
  */
 function ModalFooter({ children }: Readonly<ModalSlot>) {
@@ -272,8 +297,19 @@ const Modal = Object.assign(ModalRoot, {
   Title: ModalTitle,
   CloseButton: ModalCloseButton,
   Body: ModalBody,
+  Panel: ModalPanel,
+  Content: ModalContent,
   Footer: ModalFooter,
 });
 
 export default Modal;
-export { ModalBody, ModalCloseButton, ModalFooter, ModalHeader, ModalRoot, ModalTitle };
+export {
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalPanel,
+  ModalRoot,
+  ModalTitle,
+};

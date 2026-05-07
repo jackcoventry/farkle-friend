@@ -52,15 +52,15 @@ function Footer() {
         ariaLabel="Game rules and scoring"
         variant="modal"
       >
-        <Modal.Body className="modal-panel modal-panel--wide">
-          <div className="modal-panel__header">
-            <h2 className="font-heading text-center">Rules & scoring</h2>
+        <Modal.Panel size="wide">
+          <Modal.Header>
+            <Modal.Title className="font-heading text-center">Rules & scoring</Modal.Title>
             <Modal.CloseButton ariaLabel="Close rules and scoring" />
-          </div>
-          <div className="modal-panel__content">
+          </Modal.Header>
+          <Modal.Content>
             <RulesInfo />
-          </div>
-        </Modal.Body>
+          </Modal.Content>
+        </Modal.Panel>
       </Modal>
     </>
   );

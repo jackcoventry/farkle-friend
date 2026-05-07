@@ -1,6 +1,8 @@
 .pill {
   --pill-bg: var(--color-control);
+  --pill-bg-hover: var(--color-control-hover);
   --pill-bg-checked: var(--color-accent);
+  --pill-bg-checked-hover: var(--color-accent-hover);
   --pill-border: var(--color-control-border);
   --pill-border-checked: var(--color-accent);
   --pill-shadow: var(--color-control-shadow);
@@ -32,8 +34,7 @@
     background-color 160ms ease,
     border-color 160ms ease,
     box-shadow 160ms ease,
-    color 160ms ease,
-    transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    color 160ms ease;
 }
 
 .pill-box__indicator::after {
@@ -50,6 +51,29 @@
   border-color: var(--pill-border-checked);
   box-shadow: var(--shadow-offset-solid-style) var(--pill-shadow);
   color: var(--pill-text-checked);
+}
+
+.pill-input:checked:not(:disabled):hover + .pill-box {
+  background: var(--pill-bg-checked-hover);
+  box-shadow:
+    0 0 0 1px var(--pill-border-checked),
+    var(--shadow-offset-solid-style) var(--pill-shadow);
+}
+
+.pill-input:not(:checked):not(:disabled):hover + .pill-box {
+  background: var(--pill-bg-hover);
+  border-color: var(--pill-border-checked);
+  box-shadow:
+    0 0 0 1px var(--pill-border-checked),
+    var(--shadow-offset-solid-style) var(--pill-shadow);
+}
+
+.pill-input:not(:checked):not(:disabled):hover + .pill-box .pill-box__indicator {
+  border-color: currentColor;
+}
+
+.pill-input:not(:checked):not(:disabled):active + .pill-box {
+  background: var(--pill-bg);
 }
 
 .pill-input:checked + .pill-box .pill-box__indicator {

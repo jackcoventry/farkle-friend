@@ -53,7 +53,6 @@ export function PlayerSwitchSplash({
               />
             </figure>
           }
-          subtitle="Current score:"
           text={currentPlayer?.totalScore?.toString() || '0'}
         />
       </Modal.Body>
