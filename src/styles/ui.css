@@ -1,0 +1,10 @@
+.status-chip {
+  background: var(--color-accent);
+  border-radius: 999px;
+  color: var(--color-accent-contrast);
+  padding: var(--spacing-1) var(--spacing-2);
+}
+
+.score-chip {
+  color: var(--color-accent);
+}

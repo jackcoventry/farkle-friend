@@ -49,7 +49,7 @@ export function PlayerSwitchSplash({
               <AvatarImage
                 avatar={avatar}
                 alt={`${currentPlayer.username}'s ${avatar.name} avatar`}
-                className="splash-avatar"
+                className="splash-avatar | w-[200px] h-[200px]"
               />
             </figure>
           }

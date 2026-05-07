@@ -11,6 +11,7 @@ import { AddPlayerFormSchema, type AddPlayerFormSchemaType } from '@/domain/game
 import { AvatarImage } from '@/components/AvatarImage/AvatarImage';
 import Button from '@/components/Button/Button';
 import { Panel } from '@/components/Panel/Panel';
+import './AddPlayer.css';
 
 export type { AddPlayerFormSchemaType };
 export type AddPlayerFormResult = {

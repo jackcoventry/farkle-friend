@@ -9,6 +9,7 @@ import React, {
 } from 'react';
 import { createPortal } from 'react-dom';
 import Button from '@/components/Button/Button';
+import './Modal.css';
 import { useModalStack } from './ModalStackContext';
 
 const FOCUSABLE_SELECTORS = [
@@ -162,9 +163,9 @@ function ModalRoot({
 
   const ariaLabelledBy = ariaLabel ? undefined : titleId;
   const rootClasses =
-    'modal modal__overlay | items-center justify-center bg-overlay flex inset-0 fixed z-50 opacity-100 pointer-events-auto';
+    'modal modal__overlay | p-3 items-center justify-center bg-overlay flex inset-0 fixed z-50 opacity-100 pointer-events-auto';
   const dialogClasses =
-    'modal__dialog | flex flex-col outline-none ring-4 ring-yellow-500 ring-offset-4 rounded-4xl';
+    'modal__dialog | overflow-hidden flex flex-col outline-none ring-4 ring-yellow-500 ring-offset-4 rounded-4xl';
 
   return createPortal(
     <div
@@ -208,7 +209,11 @@ function cx(...classes: Array<string | undefined | false>) {
  * <Modal.Header> — structural wrapper for the header area
  */
 function ModalHeader({ children, className }: Readonly<ModalSlot>) {
-  return <header className={cx('modal-panel__header', className)}>{children}</header>;
+  return (
+    <header className={cx('modal-panel__header', 'items-center flex justify-between', className)}>
+      {children}
+    </header>
+  );
 }
 
 /**
@@ -271,14 +276,29 @@ function ModalPanel({ children, className, size = 'default' }: Readonly<ModalPan
   const sizeClass =
     size === 'narrow' ? 'modal-panel--narrow' : size === 'wide' ? 'modal-panel--wide' : undefined;
 
-  return <Modal.Body className={cx('modal-panel', sizeClass, className)}>{children}</Modal.Body>;
+  return (
+    <Modal.Body
+      className={cx(
+        'modal-panel',
+        'bg-surface border border-border rounded-3xl text-text grid gap-3 overflow-hidden p-4',
+        sizeClass,
+        className
+      )}
+    >
+      {children}
+    </Modal.Body>
+  );
 }
 
 /**
  * <Modal.Content> — scrollable content region inside a modal panel
  */
 function ModalContent({ children, className }: Readonly<ModalSlot>) {
-  return <div className={cx('modal-panel__content', className)}>{children}</div>;
+  return (
+    <div className={cx('modal-panel__content', 'overflow-auto pt-0 px-3 pb-2', className)}>
+      {children}
+    </div>
+  );
 }
 
 /**

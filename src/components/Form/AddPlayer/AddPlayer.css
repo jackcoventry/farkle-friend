@@ -1,0 +1,28 @@
+.avatar-list-input:checked + .avatar-list-image,
+.avatar-list-input:focus-visible + .avatar-list-image {
+  outline: none;
+  border-radius: 100%;
+  box-shadow:
+    0 0 0 4px var(--color-white),
+    0 0 0 8px var(--color-yellow-500);
+}
+
+.avatar-list-input:disabled + .avatar-list-image {
+  filter: grayscale(0.8);
+  cursor: not-allowed;
+}
+
+.avatar-list-grid {
+  --avatar-list-size: clamp(4rem, 22vw, 6.25rem);
+  --avatar-list-padding: clamp(0.625rem, 3vw, 1rem);
+}
+
+.avatar-list-option,
+.avatar-list-image {
+  block-size: var(--avatar-list-size);
+  inline-size: var(--avatar-list-size);
+}
+
+.avatar-list-image {
+  padding: var(--avatar-list-padding);
+}

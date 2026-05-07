@@ -79,7 +79,7 @@ function NextPlayerModalStory() {
                   alt={`${player.username}'s ${avatar.name} avatar`}
                   width={200}
                   height={200}
-                  className="splash-avatar"
+                  className="splash-avatar | w-[200px] h-[200px]"
                 />
               </figure>
             }
@@ -124,7 +124,7 @@ function WinnerModalStory() {
                   alt={`${player.username}'s ${avatar.name} avatar`}
                   width={200}
                   height={200}
-                  className="splash-avatar"
+                  className="splash-avatar | w-[200px] h-[200px]"
                 />
               </figure>
             }
