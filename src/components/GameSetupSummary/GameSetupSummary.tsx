@@ -22,31 +22,31 @@ export function GameSetupSummary({
       <dl className="gap-xs grid">
         <div className="gap-sm flex justify-between">
           <dt>Mode</dt>
-          <dd className="score-chip text-right">{modeLabel}</dd>
+          <dd className="text-accent text-right">{modeLabel}</dd>
         </div>
         <div className="gap-sm flex justify-between">
           <dt>Target</dt>
-          <dd className="score-chip text-right">{formatScore(settings.targetScore)}</dd>
+          <dd className="text-accent text-right">{formatScore(settings.targetScore)}</dd>
         </div>
         <div className="gap-sm flex justify-between">
           <dt>Turn hand-off</dt>
-          <dd className="score-chip text-right">{settings.autoAdvanceTurns ? 'Auto' : 'Manual'}</dd>
+          <dd className="text-accent text-right">{settings.autoAdvanceTurns ? 'Auto' : 'Manual'}</dd>
         </div>
         <div className="gap-sm flex justify-between">
           <dt>Combo hints</dt>
-          <dd className="score-chip text-right">{settings.showComboSuggestions ? 'On' : 'Off'}</dd>
+          <dd className="text-accent text-right">{settings.showComboSuggestions ? 'On' : 'Off'}</dd>
         </div>
         <div className="gap-sm flex justify-between">
           <dt>Feedback</dt>
-          <dd className="score-chip text-right">{preferences.tableFeedback ? 'On' : 'Off'}</dd>
+          <dd className="text-accent text-right">{preferences.tableFeedback ? 'On' : 'Off'}</dd>
         </div>
         <div className="gap-sm flex justify-between">
           <dt>Animations</dt>
-          <dd className="score-chip text-right">{preferences.motionEnabled ? 'On' : 'Off'}</dd>
+          <dd className="text-accent text-right">{preferences.motionEnabled ? 'On' : 'Off'}</dd>
         </div>
         <div className="gap-sm flex justify-between">
           <dt>Theme</dt>
-          <dd className="score-chip text-right">
+          <dd className="text-accent text-right">
             {preferences.theme === 'system'
               ? 'System'
               : preferences.theme === 'light'

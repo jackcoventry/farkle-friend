@@ -27,14 +27,14 @@ export function GameStatusBar({
         <p className="text-text text-sm">
           {flowState === 'TURN_RESULT' ? t('status.turnComplete') : t('status.nowPlaying')}
         </p>
-        <h2 className="font-heading-2 score-chip">{currentPlayer.username}</h2>
+        <h2 className="font-heading-2 text-accent">{currentPlayer.username}</h2>
       </div>
       <dl className="gap-md ml-auto flex flex-wrap text-sm sm:text-base">
         <div>
           <dt className="text-text">
             {state.pendingTurnResult ? t('status.previousTotal') : t('status.currentTotal')}
           </dt>
-          <dd className="font-body-1 score-chip">
+          <dd className="font-body-1 text-accent">
             {formatScore(state.pendingTurnResult?.previousTotal ?? currentPlayer.totalScore ?? 0)}
           </dd>
         </div>
@@ -42,11 +42,11 @@ export function GameStatusBar({
           <>
             <div>
               <dt className="text-text">{t('status.roundScore')}</dt>
-              <dd className="font-body-1 score-chip">{formatScore(diceTurnMetrics.roundScore)}</dd>
+              <dd className="font-body-1 text-accent">{formatScore(diceTurnMetrics.roundScore)}</dd>
             </div>
             <div>
               <dt className="text-text">{t('status.diceLeft')}</dt>
-              <dd className="gap-xs font-body-1 score-chip flex items-center">
+              <dd className="gap-xs font-body-1 text-accent flex items-center">
                 <span>{diceTurnMetrics.diceLeft}</span>
               </dd>
             </div>
@@ -55,7 +55,7 @@ export function GameStatusBar({
         {state.pendingTurnResult ? (
           <div>
             <dt className="text-text">{t('status.updatedTotal')}</dt>
-            <dd className="font-body-1 score-chip">
+            <dd className="font-body-1 text-accent">
               {formatScore(state.pendingTurnResult.newTotal)}
             </dd>
           </div>

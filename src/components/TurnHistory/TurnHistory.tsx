@@ -40,18 +40,18 @@ export function TurnHistory({
         <dl className="gap-xs border-border mb-sm pb-sm grid border-b">
           <div className="gap-sm flex justify-between">
             <dt>Leader</dt>
-            <dd className="score-chip truncate text-right">{leader.username}</dd>
+            <dd className="text-accent truncate text-right">{leader.username}</dd>
           </div>
           <div className="gap-sm flex justify-between">
             <dt>Needs</dt>
-            <dd className="score-chip text-right">
+            <dd className="text-accent text-right">
               {formatScore(Math.max(0, targetScore - (leader.totalScore ?? 0)))}
             </dd>
           </div>
           {biggestTurn ? (
             <div className="gap-sm flex justify-between">
               <dt>Biggest turn</dt>
-              <dd className="score-chip truncate text-right">
+              <dd className="text-accent truncate text-right">
                 {playerNames.get(biggestTurn.playerId) ?? 'Player'} +
                 {formatScore(biggestTurn.score)}
               </dd>
@@ -60,7 +60,7 @@ export function TurnHistory({
           {lastFarkle ? (
             <div className="gap-sm flex justify-between">
               <dt>Last farkle</dt>
-              <dd className="score-chip truncate text-right">
+              <dd className="text-accent truncate text-right">
                 {playerNames.get(lastFarkle.playerId) ?? 'Player'}
               </dd>
             </div>
@@ -102,7 +102,7 @@ export function TurnHistory({
                   </span>
                   <span
                     className={`px-xs py-2xs shrink-0 rounded-full text-sm ${
-                      isFarkle ? 'bg-danger text-danger-contrast' : 'score-chip'
+                    isFarkle ? 'bg-danger text-danger-contrast' : 'text-accent'
                     }`}
                   >
                     {isFarkle ? 'Farkle' : `+${formatScore(turn.score)}`}

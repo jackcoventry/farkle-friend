@@ -25,10 +25,6 @@
   inline-size: min(420px, calc(100dvw - var(--spacing-6)));
 }
 
-.dice-turn-coach-modal .dice-turn-table__coach {
-  display: grid;
-}
-
 @media (min-width: 48rem) and (max-width: 79.99rem) and (max-height: 820px) {
   .dice-turn-layout {
     grid-template-columns: minmax(0, 1fr) minmax(220px, 280px) !important;

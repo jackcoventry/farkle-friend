@@ -4,7 +4,6 @@
 @import './font.css';
 @import './spacing.css';
 @import './forms.css';
-@import './ui.css';
 
 @theme {
   --shadow-offset-solid-style: 0.075em 0.125em 0 0;
