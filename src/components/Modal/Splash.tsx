@@ -11,7 +11,7 @@ type SplashProps = {
 function Splash({ title, text, image, children, className = '' }: Readonly<SplashProps>) {
   return (
     <div
-      className={`animate-bounce-in bg-surface-raised border border-accent text-text flex max-h-[calc(100dvh-var(--spacing-5))] w-[min(500px,calc(100dvw-var(--spacing-5)))] flex-col gap-md overflow-auto rounded-3xl p-lg text-center shadow-lg sm:p-3xl ${className}`}
+      className={`animate-bounce-in bg-surface-raised border-accent text-text gap-md p-lg sm:p-3xl flex max-h-[calc(100dvh-var(--spacing-5))] w-[min(500px,calc(100dvw-var(--spacing-5)))] flex-col overflow-auto rounded-3xl border text-center shadow-lg ${className}`}
     >
       <h2 className="font-heading">{title}</h2>
       {image}

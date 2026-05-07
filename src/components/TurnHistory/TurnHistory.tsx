@@ -33,34 +33,34 @@ export function TurnHistory({
 
   return (
     <section
-      className="surface-callout | bg-surface-muted border border-border rounded-xl text-text p-md"
+      className="surface-callout | bg-surface-muted border-border text-text p-md rounded-xl border"
       aria-live="polite"
     >
       {leader ? (
-        <dl className="mb-3 grid gap-xs border-b border-border pb-3">
-          <div className="flex justify-between gap-sm">
+        <dl className="gap-xs border-border mb-3 grid border-b pb-3">
+          <div className="gap-sm flex justify-between">
             <dt>Leader</dt>
-            <dd className="truncate text-right score-chip">{leader.username}</dd>
+            <dd className="score-chip truncate text-right">{leader.username}</dd>
           </div>
-          <div className="flex justify-between gap-sm">
+          <div className="gap-sm flex justify-between">
             <dt>Needs</dt>
-            <dd className="text-right score-chip">
+            <dd className="score-chip text-right">
               {formatScore(Math.max(0, targetScore - (leader.totalScore ?? 0)))}
             </dd>
           </div>
           {biggestTurn ? (
-            <div className="flex justify-between gap-sm">
+            <div className="gap-sm flex justify-between">
               <dt>Biggest turn</dt>
-              <dd className="truncate text-right score-chip">
+              <dd className="score-chip truncate text-right">
                 {playerNames.get(biggestTurn.playerId) ?? 'Player'} +
                 {formatScore(biggestTurn.score)}
               </dd>
             </div>
           ) : null}
           {lastFarkle ? (
-            <div className="flex justify-between gap-sm">
+            <div className="gap-sm flex justify-between">
               <dt>Last farkle</dt>
-              <dd className="truncate text-right score-chip">
+              <dd className="score-chip truncate text-right">
                 {playerNames.get(lastFarkle.playerId) ?? 'Player'}
               </dd>
             </div>
@@ -71,7 +71,7 @@ export function TurnHistory({
       {recentTurns.length > 0 ? (
         <>
           <p className="font-heading-3 mb-2">Recent events</p>
-          <ol className="flex flex-col gap-xs">
+          <ol className="gap-xs flex flex-col">
             {recentTurns.map((turn) => {
               const player = playersById.get(turn.playerId);
               const avatar = avatarSet[player?.avatar as AvatarId];
@@ -80,14 +80,14 @@ export function TurnHistory({
               return (
                 <li
                   key={turn.id}
-                  className={`flex items-center justify-between gap-sm rounded-lg p-xs ${
+                  className={`gap-sm p-xs flex items-center justify-between rounded-lg ${
                     isFarkle ? 'bg-danger-surface text-danger' : 'bg-surface-muted'
                   }`}
                 >
-                  <span className="flex min-w-0 items-center gap-xs">
+                  <span className="gap-xs flex min-w-0 items-center">
                     {avatar ? (
                       <span
-                        className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full p-2xs ${avatar.color}`}
+                        className={`p-2xs flex h-5 w-5 shrink-0 items-center justify-center rounded-full ${avatar.color}`}
                       >
                         <AvatarImage
                           avatar={avatar}
@@ -101,7 +101,7 @@ export function TurnHistory({
                     </span>
                   </span>
                   <span
-                    className={`shrink-0 rounded-full px-xs py-2xs text-sm ${
+                    className={`px-xs py-2xs shrink-0 rounded-full text-sm ${
                       isFarkle ? 'bg-danger text-danger-contrast' : 'score-chip'
                     }`}
                   >

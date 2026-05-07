@@ -210,7 +210,7 @@ function cx(...classes: Array<string | undefined | false>) {
  */
 function ModalHeader({ children, className }: Readonly<ModalSlot>) {
   return (
-    <header className={cx('modal-panel__header', 'items-center flex justify-between', className)}>
+    <header className={cx('modal-panel__header', 'flex items-center justify-between', className)}>
       {children}
     </header>
   );
@@ -280,7 +280,7 @@ function ModalPanel({ children, className, size = 'default' }: Readonly<ModalPan
     <Modal.Body
       className={cx(
         'modal-panel',
-        'bg-surface border border-border rounded-3xl text-text grid gap-sm overflow-hidden p-md',
+        'bg-surface border-border text-text gap-sm p-md grid overflow-hidden rounded-3xl border',
         sizeClass,
         className
       )}
@@ -295,7 +295,7 @@ function ModalPanel({ children, className, size = 'default' }: Readonly<ModalPan
  */
 function ModalContent({ children, className }: Readonly<ModalSlot>) {
   return (
-    <div className={cx('modal-panel__content', 'overflow-auto pt-0 px-sm pb-2', className)}>
+    <div className={cx('modal-panel__content', 'px-sm overflow-auto pt-0 pb-2', className)}>
       {children}
     </div>
   );

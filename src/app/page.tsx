@@ -6,16 +6,16 @@ export default function Home() {
   const title = 'FARKLE!'.split('');
 
   return (
-    <div className="splash-screen h-dvh flex items-center justify-center bg-gray-800">
-      <div className="flex flex-col gap-md items-center">
+    <div className="splash-screen flex h-dvh items-center justify-center bg-gray-800">
+      <div className="gap-md flex flex-col items-center">
         <div
-          className="bg-gray-500 border-4 border-white rounded-full w-[200px] h-[200px] mb-4 p-xl rotate-12 opacity-0 animate-fade-in"
+          className="p-xl animate-fade-in mb-4 h-[200px] w-[200px] rotate-12 rounded-full border-4 border-white bg-gray-500 opacity-0"
           style={{
             animationDelay: '1.45s',
           }}
         >
           <div
-            className="opacity-0 animate-bounce-in"
+            className="animate-bounce-in opacity-0"
             style={{
               animationDelay: '1.65s',
             }}
@@ -37,7 +37,7 @@ export default function Home() {
           ))}
         </h1>
         <div
-          className="opacity-0 animate-bounce-in flex w-full max-w-[320px] flex-col gap-md px-lg sm:px-0"
+          className="animate-bounce-in gap-md px-lg flex w-full max-w-[320px] flex-col opacity-0 sm:px-0"
           style={{
             animationDelay: '1.45s',
           }}

@@ -72,14 +72,14 @@ function NextPlayerModalStory() {
             title={`${player.username}'s turn`}
             image={
               <figure
-                className={`rounded-full overflow-hidden aspect-square max-w-[200px] mx-auto my-4 p-xl flex items-center justify-center ${avatar.color}`}
+                className={`p-xl mx-auto my-4 flex aspect-square max-w-[200px] items-center justify-center overflow-hidden rounded-full ${avatar.color}`}
               >
                 <Image
                   src={avatar.image}
                   alt={`${player.username}'s ${avatar.name} avatar`}
                   width={200}
                   height={200}
-                  className="splash-avatar | w-[200px] h-[200px]"
+                  className="splash-avatar | h-[200px] w-[200px]"
                 />
               </figure>
             }
@@ -117,14 +117,14 @@ function WinnerModalStory() {
             title={`${player.username} wins!`}
             image={
               <figure
-                className={`splash-avatar-crown relative rounded-full w-[200px] h-[200px] mx-auto my-4 p-xl flex items-center justify-center ${avatar.color}`}
+                className={`splash-avatar-crown p-xl relative mx-auto my-4 flex h-[200px] w-[200px] items-center justify-center rounded-full ${avatar.color}`}
               >
                 <Image
                   src={avatar.image}
                   alt={`${player.username}'s ${avatar.name} avatar`}
                   width={200}
                   height={200}
-                  className="splash-avatar | w-[200px] h-[200px]"
+                  className="splash-avatar | h-[200px] w-[200px]"
                 />
               </figure>
             }

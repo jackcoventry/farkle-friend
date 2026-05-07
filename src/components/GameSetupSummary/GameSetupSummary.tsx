@@ -19,34 +19,34 @@ export function GameSetupSummary({
   return (
     <Panel>
       <h3 className="font-heading-2 mb-2">Game setup</h3>
-      <dl className="grid gap-xs">
-        <div className="flex justify-between gap-sm">
+      <dl className="gap-xs grid">
+        <div className="gap-sm flex justify-between">
           <dt>Mode</dt>
-          <dd className="text-right score-chip">{modeLabel}</dd>
+          <dd className="score-chip text-right">{modeLabel}</dd>
         </div>
-        <div className="flex justify-between gap-sm">
+        <div className="gap-sm flex justify-between">
           <dt>Target</dt>
-          <dd className="text-right score-chip">{formatScore(settings.targetScore)}</dd>
+          <dd className="score-chip text-right">{formatScore(settings.targetScore)}</dd>
         </div>
-        <div className="flex justify-between gap-sm">
+        <div className="gap-sm flex justify-between">
           <dt>Turn hand-off</dt>
-          <dd className="text-right score-chip">{settings.autoAdvanceTurns ? 'Auto' : 'Manual'}</dd>
+          <dd className="score-chip text-right">{settings.autoAdvanceTurns ? 'Auto' : 'Manual'}</dd>
         </div>
-        <div className="flex justify-between gap-sm">
+        <div className="gap-sm flex justify-between">
           <dt>Combo hints</dt>
-          <dd className="text-right score-chip">{settings.showComboSuggestions ? 'On' : 'Off'}</dd>
+          <dd className="score-chip text-right">{settings.showComboSuggestions ? 'On' : 'Off'}</dd>
         </div>
-        <div className="flex justify-between gap-sm">
+        <div className="gap-sm flex justify-between">
           <dt>Feedback</dt>
-          <dd className="text-right score-chip">{preferences.tableFeedback ? 'On' : 'Off'}</dd>
+          <dd className="score-chip text-right">{preferences.tableFeedback ? 'On' : 'Off'}</dd>
         </div>
-        <div className="flex justify-between gap-sm">
+        <div className="gap-sm flex justify-between">
           <dt>Animations</dt>
-          <dd className="text-right score-chip">{preferences.motionEnabled ? 'On' : 'Off'}</dd>
+          <dd className="score-chip text-right">{preferences.motionEnabled ? 'On' : 'Off'}</dd>
         </div>
-        <div className="flex justify-between gap-sm">
+        <div className="gap-sm flex justify-between">
           <dt>Theme</dt>
-          <dd className="text-right score-chip">
+          <dd className="score-chip text-right">
             {preferences.theme === 'system'
               ? 'System'
               : preferences.theme === 'light'

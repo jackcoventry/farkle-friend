@@ -45,21 +45,21 @@ export function DiceTurnCoach({
         >
           {translatedActionHint ? `${title}. ${translatedActionHint}` : title}
         </p>
-        <div className="min-w-0 flex flex-col gap-xs">
+        <div className="gap-xs flex min-w-0 flex-col">
           <p className="font-heading-2">{title}</p>
           <p className="text-sm">{detail}</p>
         </div>
         {showSelectionStatus ? (
-          <div className="rounded-lg bg-accent px-sm py-xs text-sm text-accent-contrast">
+          <div className="bg-accent px-sm py-xs text-accent-contrast rounded-lg text-sm">
             <span className="font-body-1">{t('turn.selection')}</span> <span>{selectedStatus}</span>
           </div>
         ) : null}
         {selectedBreakdown.length > 0 ? (
-          <ul className="flex flex-wrap gap-md text-sm">
+          <ul className="gap-md flex flex-wrap text-sm">
             {selectedBreakdown.map((item) => (
               <li
                 key={`${item.label}-${item.score}`}
-                className="rounded-full bg-control px-sm py-2xs text-control-text"
+                className="bg-control px-sm py-2xs text-control-text rounded-full"
               >
                 {item.label} = {item.score}
               </li>
@@ -69,7 +69,7 @@ export function DiceTurnCoach({
         {showActionHint ? (
           <p
             id={actionHintId}
-            className="text-sm font-body-1"
+            className="font-body-1 text-sm"
           >
             {translatedActionHint}
           </p>
@@ -82,13 +82,13 @@ export function DiceTurnCoach({
           aria-label="Scoring combinations"
         >
           <p className="font-body-1">{t('turn.comboSuggestions')}</p>
-          <ul className="mt-2 grid gap-2xs text-sm">
+          <ul className="gap-2xs mt-2 grid text-sm">
             {currentCombos.slice(0, 5).map((combo, index) => (
               <li
                 key={index}
                 className="grid w-full grid-cols-2"
               >
-                <span className="flex gap-2xs">
+                <span className="gap-2xs flex">
                   {sortDiceValues(combo.dice).map((die, dieIndex) => (
                     <DiceIcon
                       key={`${die}-${dieIndex}`}
@@ -97,7 +97,7 @@ export function DiceTurnCoach({
                     />
                   ))}
                 </span>
-                <span className="text-right text-accent">
+                <span className="text-accent text-right">
                   {t('turn.pts', { score: combo.score })}
                 </span>
               </li>

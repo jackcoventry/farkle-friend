@@ -33,9 +33,7 @@ export function SidebarModal({
           <Modal.Title className="font-heading">Game menu</Modal.Title>
           <Modal.CloseButton ariaLabel={closeLabel} />
         </Modal.Header>
-        <Modal.Content>
-          {children}
-        </Modal.Content>
+        <Modal.Content>{children}</Modal.Content>
       </Modal.Panel>
     </Modal>
   );

@@ -64,8 +64,8 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
   };
 
   return (
-    <div className={`grid gap-lg ${className ? ` ${className}` : ''}`}>
-      <div className="grid grid-cols-3 gap-lg mx-auto h-[200px] w-[300px]">
+    <div className={`gap-lg grid ${className ? ` ${className}` : ''}`}>
+      <div className="gap-lg mx-auto grid h-[200px] w-[300px] grid-cols-3">
         {dies.map((die) => {
           const classes = `enabled:hover:opacity-50 enabled:hover:scale-110 enabled:cursor-pointer transition-transform disabled:grayscale-50 disabled:cursor-not-allowed ${die === clicked ? 'enabled:hover:scale-120 ' : ''}`;
           return (
@@ -86,11 +86,11 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
         })}
       </div>
 
-      <div className="grid gap-md rounded-2xl border border-border bg-surface p-md text-center">
+      <div className="gap-md border-border bg-surface p-md grid rounded-2xl border text-center">
         <div className="min-h-12">
           {selectedItems.length > 0 ? (
             <ul
-              className="flex flex-wrap justify-center gap-xs"
+              className="gap-xs flex flex-wrap justify-center"
               aria-label="Selected dice"
             >
               {selectedItems.map((die, index) => (
@@ -103,7 +103,7 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
               ))}
             </ul>
           ) : (
-            <p className="text-sm text-text-muted">{t('scoreGenerator.chooseScoringDice')}</p>
+            <p className="text-text-muted text-sm">{t('scoreGenerator.chooseScoringDice')}</p>
           )}
         </div>
 
@@ -122,7 +122,7 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
           </p>
         ) : null}
 
-        <div className="flex flex-wrap justify-center gap-sm">
+        <div className="gap-sm flex flex-wrap justify-center">
           <Button
             type="button"
             variant="secondary"
@@ -141,8 +141,8 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
         </div>
       </div>
 
-      <div className="grid gap-md rounded-2xl border border-border bg-surface p-md">
-        <div className="flex flex-wrap items-baseline justify-between gap-sm">
+      <div className="gap-md border-border bg-surface p-md grid rounded-2xl border">
+        <div className="gap-sm flex flex-wrap items-baseline justify-between">
           <h2 className="font-heading-2">{t('scoreGenerator.roundTotal')}</h2>
           <p
             className="font-heading-2"
@@ -153,17 +153,17 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
         </div>
 
         {sequenceItems.length > 0 ? (
-          <ol className="grid gap-sm">
+          <ol className="gap-sm grid">
             {sequenceItems.map((item, index) => (
               <li
                 key={item.id}
-                className="grid gap-xs rounded-lg border border-border p-sm sm:grid-cols-[auto_1fr_auto] sm:items-center"
+                className="gap-xs border-border p-sm grid rounded-lg border sm:grid-cols-[auto_1fr_auto] sm:items-center"
               >
                 <span className="font-body-1">
                   {t('scoreGenerator.goLabel', { index: index + 1 })}
                 </span>
                 <span
-                  className="flex flex-wrap gap-2xs"
+                  className="gap-2xs flex flex-wrap"
                   aria-label={`Dice for go ${index + 1}`}
                 >
                   {sortDiceValues(item.dice).map((die, dieIndex) => (
@@ -180,7 +180,7 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
             ))}
           </ol>
         ) : (
-          <p className="text-sm text-text-muted">{t('scoreGenerator.addedGoesEmpty')}</p>
+          <p className="text-text-muted text-sm">{t('scoreGenerator.addedGoesEmpty')}</p>
         )}
       </div>
     </div>

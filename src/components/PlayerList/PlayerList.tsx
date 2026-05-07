@@ -18,7 +18,7 @@ function PlayerList({
   targetScore,
 }: Readonly<PlayerListProps>) {
   return (
-    <ul className="player-list | flex flex-col gap-xs">
+    <ul className="player-list | gap-xs flex flex-col">
       {players.map((player) => {
         const isActive = player.id === activePlayerId;
         const isLeader = player.id === leadingPlayerId;
@@ -39,7 +39,7 @@ function PlayerList({
           >
             <div className={classes}>
               <div
-                className={`flex h-[60px] w-[60px] shrink-0 items-center justify-center rounded-full border-2 p-xs ring ${avatar.color} `}
+                className={`p-xs flex h-[60px] w-[60px] shrink-0 items-center justify-center rounded-full border-2 ring ${avatar.color} `}
               >
                 <AvatarImage
                   avatar={avatar}
@@ -47,8 +47,8 @@ function PlayerList({
                   className="h-auto w-full"
                 />
               </div>
-              <div className="flex min-w-0 flex-1 flex-col justify-center gap-2xs">
-                <div className="grid min-w-0 gap-xs">
+              <div className="gap-2xs flex min-w-0 flex-1 flex-col justify-center">
+                <div className="gap-xs grid min-w-0">
                   <p
                     className="font-heading-2 truncate"
                     title={player.username}
@@ -56,24 +56,24 @@ function PlayerList({
                     {player.username}
                   </p>
                   {isActive || (isLeader && totalScore > 0) ? (
-                    <div className="flex flex-wrap gap-2xs">
+                    <div className="gap-2xs flex flex-wrap">
                       {isActive ? (
-                        <span className="rounded-full bg-accent px-xs py-2xs text-xs text-accent-contrast">
+                        <span className="bg-accent px-xs py-2xs text-accent-contrast rounded-full text-xs">
                           Current
                         </span>
                       ) : null}
                       {isLeader && totalScore > 0 ? (
-                        <span className="rounded-full bg-control px-xs py-2xs text-xs text-control-text">
+                        <span className="bg-control px-xs py-2xs text-control-text rounded-full text-xs">
                           Leader
                         </span>
                       ) : null}
                     </div>
                   ) : null}
                 </div>
-                <span className="block text-text-muted">{totalScore} points</span>
+                <span className="text-text-muted block">{totalScore} points</span>
                 {progress === null ? null : (
                   <div
-                    className="h-2 overflow-hidden rounded-full bg-surface"
+                    className="bg-surface h-2 overflow-hidden rounded-full"
                     aria-label={`${player.username} is ${progress}% of the way to the target score`}
                     role="meter"
                     aria-valuemin={0}
@@ -81,7 +81,7 @@ function PlayerList({
                     aria-valuenow={progress}
                   >
                     <div
-                      className="h-full bg-accent transition-[width] duration-500 ease-out"
+                      className="bg-accent h-full transition-[width] duration-500 ease-out"
                       style={{ width: `${progress}%` }}
                     />
                   </div>
@@ -91,7 +91,7 @@ function PlayerList({
                 <button
                   type="button"
                   aria-label={`Remove ${player.username}`}
-                  className="ml-auto self-center cursor-pointer rounded-lg px-sm py-xs text-sm text-text-muted hover:bg-surface focus-visible:outline-2 focus-visible:outline-accent"
+                  className="px-sm py-xs text-text-muted hover:bg-surface focus-visible:outline-accent ml-auto cursor-pointer self-center rounded-lg text-sm focus-visible:outline-2"
                   onClick={() => onRemovePlayer(player.id)}
                 >
                   Remove

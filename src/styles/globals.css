@@ -22,7 +22,7 @@ body {
 
 @layer base {
   :focus-visible {
-    @apply outline-none ring-4 ring-yellow-500 ring-offset-4;
+    @apply ring-4 ring-yellow-500 ring-offset-4 outline-none;
   }
 }
 

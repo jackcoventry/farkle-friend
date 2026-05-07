@@ -66,7 +66,7 @@ export function LobbyGameScreen({
           ) : (
             <Panel>
               <h2 className="font-heading-2">No players yet</h2>
-              <p className="mt-1 text-text-muted">
+              <p className="text-text-muted mt-1">
                 Add at least two players, then start the game from the setup panel.
               </p>
             </Panel>
@@ -99,7 +99,7 @@ export function LobbyGameScreen({
             ) : (
               <Panel>
                 <h2 className="font-heading-2">No players yet</h2>
-                <p className="mt-1 text-text-muted">
+                <p className="text-text-muted mt-1">
                   Add at least two players, then start the game from the setup panel.
                 </p>
               </Panel>
@@ -120,13 +120,13 @@ export function LobbyGameScreen({
       </SidebarModal>
 
       <GameShell.Body>
-        <div className="mx-auto flex h-full w-full max-w-[520px] flex-col justify-start gap-xl overflow-auto p-md">
-          <Panel className="lobby-start-panel | grid gap-lg">
+        <div className="gap-xl p-md mx-auto flex h-full w-full max-w-[520px] flex-col justify-start overflow-auto">
+          <Panel className="lobby-start-panel | gap-lg grid">
             <h2 className="font-heading-2 text-text">Ready?</h2>
             {startGameButton}
           </Panel>
           <div
-            className="grid grid-cols-2 gap-xs"
+            className="gap-xs grid grid-cols-2"
             role="tablist"
             aria-label="Game setup"
           >

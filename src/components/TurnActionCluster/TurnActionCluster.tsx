@@ -25,7 +25,7 @@ export function TurnActionCluster({
 }: Readonly<TurnActionClusterProps>) {
   return (
     <div
-      className={`turn-action-cluster | grid-cols-[1fr] shadow-accent-shadow md:shadow-offset-solid-style rounded-lg items-stretch xl:rounded-full grid w-full xl:flex${className ? ` ${className}` : ''}`}
+      className={`turn-action-cluster | shadow-accent-shadow md:shadow-offset-solid-style grid w-full grid-cols-[1fr] items-stretch rounded-lg xl:rounded-full xl:flex${className ? ` ${className}` : ''}`}
       style={
         {
           '--turn-action-count': actions.length,
@@ -40,12 +40,12 @@ export function TurnActionCluster({
           type={action.type ?? 'button'}
           aria-describedby={action.ariaDescribedBy}
           aria-label={action.ariaLabel}
-          className="turn-action-cluster__button | focus-visible:z-10 items-center text-action-contrast bg-action cursor-pointer flex gap-xs justify-center relative p-sm disabled:bg-surface-disabled disabled:text-text-muted disabled:cursor-not-allowed"
+          className="turn-action-cluster__button | text-action-contrast bg-action gap-xs p-sm disabled:bg-surface-disabled disabled:text-text-muted relative flex cursor-pointer items-center justify-center focus-visible:z-10 disabled:cursor-not-allowed"
           disabled={action.disabled}
           onClick={action.onClick}
         >
           <span
-            className="turn-action-cluster__icon | items-center rounded-full inline-flex justify-center p-xs"
+            className="turn-action-cluster__icon | p-xs inline-flex items-center justify-center rounded-full"
             aria-hidden="true"
           >
             <DynamicImage

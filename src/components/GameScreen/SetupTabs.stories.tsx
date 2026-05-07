@@ -21,9 +21,9 @@ function SetupTabsStory() {
   };
 
   return (
-    <div className="grid max-w-md gap-md">
+    <div className="gap-md grid max-w-md">
       <div
-        className="grid grid-cols-2 gap-xs"
+        className="gap-xs grid grid-cols-2"
         role="tablist"
         aria-label="Game setup"
       >

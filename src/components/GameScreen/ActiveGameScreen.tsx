@@ -54,7 +54,7 @@ export function GameScreenSidebar({
       <GameShell.SidebarMain>
         <Panel>
           <details open>
-            <summary className="cursor-pointer font-heading-2 text-text">Scoreboard</summary>
+            <summary className="font-heading-2 text-text cursor-pointer">Scoreboard</summary>
             <div className="mt-3">
               <PlayerList
                 players={summary.players}
@@ -68,7 +68,7 @@ export function GameScreenSidebar({
 
         <Panel>
           <details>
-            <summary className="cursor-pointer font-heading-2 text-text">Turn log</summary>
+            <summary className="font-heading-2 text-text cursor-pointer">Turn log</summary>
             <div className="mt-3">
               <TurnHistory
                 leadingPlayerId={summary.leadingPlayerId}
@@ -171,10 +171,10 @@ export function ActiveGameScreen({
       </SidebarModal>
 
       <GameShell.Body>
-        <div className="flex h-full min-h-0 flex-col gap-xs lg:gap-md">
+        <div className="gap-xs lg:gap-md flex h-full min-h-0 flex-col">
           {isActiveTurnLayout || flowState === 'TURN_RESULT' ? null : statusBar}
 
-          <div className="min-h-0 flex-1 flex">
+          <div className="flex min-h-0 flex-1">
             {currentPlayer ? (
               flowState === 'TURN_RESULT' && state.pendingTurnResult ? (
                 <TurnResultPanel
@@ -211,7 +211,7 @@ export function ActiveGameScreen({
       </GameShell.Body>
 
       <GameShell.MobileToolbar>
-        <div className={`grid w-full gap-xs ${showTurnInfoToggle ? 'grid-cols-2' : 'grid-cols-1'}`}>
+        <div className={`gap-xs grid w-full ${showTurnInfoToggle ? 'grid-cols-2' : 'grid-cols-1'}`}>
           {showTurnInfoToggle ? (
             <Button
               aria-controls={turnInfoModalId}

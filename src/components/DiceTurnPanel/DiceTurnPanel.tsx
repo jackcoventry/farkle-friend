@@ -159,9 +159,9 @@ export function DiceTurnPanel({
   );
 
   return (
-    <div className="turn-frame | grid min-h-0 h-full w-full gap-xs lg:gap-sm">
-      <div className="dice-turn-layout | grid h-full min-h-0 grid-cols-[1fr] grid-rows-[auto_minmax(0,1fr)] gap-xs lg:gap-md xl:grid-cols-[minmax(0,1fr)_minmax(240px,320px)] xl:grid-rows-1">
-        <div className="dice-turn-board-stack | grid h-full min-h-0 grid-rows-[minmax(300px,1fr)_auto] gap-xs lg:gap-sm xl:h-[calc(100dvh-var(--spacing-7))]">
+    <div className="turn-frame | gap-xs lg:gap-sm grid h-full min-h-0 w-full">
+      <div className="dice-turn-layout | gap-xs lg:gap-md grid h-full min-h-0 grid-cols-[1fr] grid-rows-[auto_minmax(0,1fr)] xl:grid-cols-[minmax(0,1fr)_minmax(240px,320px)] xl:grid-rows-1">
+        <div className="dice-turn-board-stack | gap-xs lg:gap-sm grid h-full min-h-0 grid-rows-[minmax(300px,1fr)_auto] xl:h-[calc(100dvh-var(--spacing-7))]">
           <DiceBoard
             currentRoll={currentRoll}
             isFarkled={isFarkled}
@@ -182,14 +182,14 @@ export function DiceTurnPanel({
         </div>
 
         <aside
-          className="dice-turn-rail | -order-1 xl:order-2 content-start grid gap-xs lg:gap-sm overflow-visible xl:overflow-auto xl:h-[calc(100dvh-var(--spacing-7))]"
+          className="dice-turn-rail | gap-xs lg:gap-sm -order-1 grid content-start overflow-visible xl:order-2 xl:h-[calc(100dvh-var(--spacing-7))] xl:overflow-auto"
           aria-label="Turn information"
         >
           {statusSlot}
           {showTurnCoachAndSidebar ? (
             <div
               id="dice-turn-coach"
-              className="dice-turn-table__coach | content-start self-start hidden xl:grid gap-sm overflow-auto"
+              className="dice-turn-table__coach | gap-sm hidden content-start self-start overflow-auto xl:grid"
               aria-label="Turn guidance"
             >
               {coachContent}

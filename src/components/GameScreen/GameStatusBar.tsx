@@ -24,12 +24,12 @@ export function GameStatusBar({
   return (
     <Panel>
       <div className="mb-4">
-        <p className="text-sm text-text">
+        <p className="text-text text-sm">
           {flowState === 'TURN_RESULT' ? t('status.turnComplete') : t('status.nowPlaying')}
         </p>
         <h2 className="font-heading-2 score-chip">{currentPlayer.username}</h2>
       </div>
-      <dl className="ml-auto flex flex-wrap gap-md text-sm sm:text-base">
+      <dl className="gap-md ml-auto flex flex-wrap text-sm sm:text-base">
         <div>
           <dt className="text-text">
             {state.pendingTurnResult ? t('status.previousTotal') : t('status.currentTotal')}
@@ -46,7 +46,7 @@ export function GameStatusBar({
             </div>
             <div>
               <dt className="text-text">{t('status.diceLeft')}</dt>
-              <dd className="flex items-center gap-xs font-body-1 score-chip">
+              <dd className="gap-xs font-body-1 score-chip flex items-center">
                 <span>{diceTurnMetrics.diceLeft}</span>
               </dd>
             </div>

@@ -38,7 +38,7 @@ export default function GameShell({ children }: Readonly<RootProps>) {
   });
 
   return (
-    <main className="game-shell | h-dvh min-h-dvh grid grid-cols-1 grid-rows-[1fr_auto] xl:grid-cols-[400px_1fr] xl:grid-rows-1">
+    <main className="game-shell | grid h-dvh min-h-dvh grid-cols-1 grid-rows-[1fr_auto] xl:grid-cols-[400px_1fr] xl:grid-rows-1">
       <h1 className="sr-only">Farkle Friend</h1>
       {sidebar}
       {extras}
@@ -51,7 +51,7 @@ export default function GameShell({ children }: Readonly<RootProps>) {
 GameShell.Sidebar = function Header({ children, isDesktop = false }: SidebarProps) {
   return (
     <aside
-      className={`game-shell__sidebar | grid grid-rows-[minmax(0,1fr)_auto] max-h-dvh min-h-0 overflow-hidden p-md lg:p-xl bg-surface ${isDesktop ? 'hidden xl:flex xl:flex-col xl:justify-between' : ''}`}
+      className={`game-shell__sidebar | p-md lg:p-xl bg-surface grid max-h-dvh min-h-0 grid-rows-[minmax(0,1fr)_auto] overflow-hidden ${isDesktop ? 'hidden xl:flex xl:flex-col xl:justify-between' : ''}`}
       aria-label="Game menu"
     >
       {children}
@@ -61,7 +61,7 @@ GameShell.Sidebar = function Header({ children, isDesktop = false }: SidebarProp
 
 GameShell.SidebarMain = function SidebarMain({ children }: SlotProps) {
   return (
-    <div className="game-shell__sidebar-main | pr-1 overflow-auto min-h-0 flex flex-col gap-xl">
+    <div className="game-shell__sidebar-main | gap-xl flex min-h-0 flex-col overflow-auto pr-1">
       {children}
     </div>
   );
@@ -69,12 +69,12 @@ GameShell.SidebarMain = function SidebarMain({ children }: SlotProps) {
 
 GameShell.SidebarFooter = function SidebarFooter({ children }: SlotProps) {
   return (
-    <div className="game-shell__sidebar-footer | grid gap-md overflow-visible pt-4">{children}</div>
+    <div className="game-shell__sidebar-footer | gap-md grid overflow-visible pt-4">{children}</div>
   );
 };
 
 GameShell.MobileToolbar = function MobileToolbar({ children }: SlotProps) {
-  return <nav className="bg-canvas xl:hidden p-xs flex justify-between">{children}</nav>;
+  return <nav className="bg-canvas p-xs flex justify-between xl:hidden">{children}</nav>;
 };
 
 GameShell.Body = function Body({ children }: SlotProps) {

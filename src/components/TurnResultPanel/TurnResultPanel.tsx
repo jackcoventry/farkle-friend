@@ -63,21 +63,21 @@ export function TurnResultPanel({
       ref={panelRef}
       aria-labelledby={titleId}
       aria-live="polite"
-      className="m-auto flex w-full max-w-[560px] flex-col text-center gap-xl p-xl"
+      className="gap-xl p-xl m-auto flex w-full max-w-[560px] flex-col text-center"
       onKeyDown={handleKeyDown}
       tabIndex={-1}
     >
-      <dl className="grid gap-sm text-left sm:grid-cols-3">
-        <div className="rounded-lg bg-surface-muted border border-border p-md">
-          <dt className="font-body-1 ">{t('turnResult.turnScore')}</dt>
+      <dl className="gap-sm grid text-left sm:grid-cols-3">
+        <div className="bg-surface-muted border-border p-md rounded-lg border">
+          <dt className="font-body-1">{t('turnResult.turnScore')}</dt>
           <dd className="font-heading-2 text-text">{formatScore(result.score)}</dd>
         </div>
-        <div className="rounded-lg bg-surface-muted border border-border p-md">
-          <dt className="font-body-1 ">{t('turnResult.previousTotal')}</dt>
+        <div className="bg-surface-muted border-border p-md rounded-lg border">
+          <dt className="font-body-1">{t('turnResult.previousTotal')}</dt>
           <dd className="font-heading-2">{formatScore(result.previousTotal)}</dd>
         </div>
-        <div className="rounded-lg bg-surface-muted border border-border p-md">
-          <dt className="font-body-1 ">{t('turnResult.newTotal')}</dt>
+        <div className="bg-surface-muted border-border p-md rounded-lg border">
+          <dt className="font-body-1">{t('turnResult.newTotal')}</dt>
           <dd className="font-heading-2 text-accent">{formatScore(result.newTotal)}</dd>
         </div>
       </dl>
@@ -93,7 +93,7 @@ export function TurnResultPanel({
       </div>
       {autoAdvance && !result.isGameWinner ? (
         <p
-          className="text-sm "
+          className="text-sm"
           aria-live="polite"
         >
           {t('turnResult.autoAdvance', { seconds: secondsRemaining })}

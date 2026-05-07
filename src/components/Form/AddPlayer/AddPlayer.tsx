@@ -143,9 +143,9 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
                   aria-describedby={fieldState.error ? 'player-avatar-error' : undefined}
                   aria-invalid={!!fieldState.error || undefined}
                 >
-                  <legend className="mb-4 text-text">Choose an avatar</legend>
+                  <legend className="text-text mb-4">Choose an avatar</legend>
 
-                  <div className="avatar-list-grid | grid grid-cols-3 justify-items-center gap-sm sm:gap-md">
+                  <div className="avatar-list-grid | gap-sm sm:gap-md grid grid-cols-3 justify-items-center">
                     {avatarValues.map((option) => {
                       const avatar = avatarSet[option];
                       const isAvatarInUse = avatarsInUse.includes(option);
@@ -154,7 +154,7 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
                         <label
                           key={option}
                           aria-label={`Avatar ${avatar.name}${isAvatarInUse ? ' unavailable' : ''}`}
-                          className="avatar-list-option | hover:scale-105 transition-transform"
+                          className="avatar-list-option | transition-transform hover:scale-105"
                         >
                           <input
                             type="radio"

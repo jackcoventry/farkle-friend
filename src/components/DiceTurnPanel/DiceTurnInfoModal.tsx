@@ -24,7 +24,7 @@ export function DiceTurnInfoModal({ children, isOpen, onClose }: Readonly<DiceTu
           <Modal.CloseButton ariaLabel="Close turn information" />
         </Modal.Header>
         <Modal.Content>
-          <div className="dice-turn-table__coach | flex flex-col gap-md">{children}</div>
+          <div className="dice-turn-table__coach | gap-md flex flex-col">{children}</div>
         </Modal.Content>
       </Modal.Panel>
     </Modal>

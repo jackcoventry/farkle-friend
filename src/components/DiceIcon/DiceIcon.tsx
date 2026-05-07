@@ -21,7 +21,7 @@ function DiceIcon({ className, count = 1, state }: Readonly<DiceIconProps>) {
     >
       {[...new Array(count).keys()].map((e) => (
         <span
-          className="dice-dot | rounded-full block absolute"
+          className="dice-dot | absolute block rounded-full"
           key={e}
         />
       ))}

@@ -47,25 +47,25 @@ export function ManualTurn({
 
   const coachContent = (
     <Panel
-      className="dice-turn-table__coach-panel | gap-sm text-sm flex flex-wrap"
+      className="dice-turn-table__coach-panel | gap-sm flex flex-wrap text-sm"
       aria-label="Manual scoring guidance"
     >
-      <div className="min-w-0 flex flex-col gap-xs">
+      <div className="gap-xs flex min-w-0 flex-col">
         <p className="font-heading-2">Manual scoring</p>
         <p>Enter the turn score, then add it to bank the score and move on.</p>
       </div>
-      <p className="rounded-lg bg-accent px-sm py-xs text-accent-contrast">
+      <p className="bg-accent px-sm py-xs text-accent-contrast rounded-lg">
         Use this mode when you are rolling physical dice.
       </p>
     </Panel>
   );
 
   return (
-    <div className="turn-frame | grid min-h-0 h-full w-full gap-xs lg:gap-sm">
-      <div className="dice-turn-layout | grid h-full min-h-0 grid-cols-[1fr] grid-rows-[auto_minmax(0,1fr)] gap-xs lg:gap-md xl:grid-cols-[minmax(0,1fr)_minmax(240px,320px)] xl:grid-rows-1">
+    <div className="turn-frame | gap-xs lg:gap-sm grid h-full min-h-0 w-full">
+      <div className="dice-turn-layout | gap-xs lg:gap-md grid h-full min-h-0 grid-cols-[1fr] grid-rows-[auto_minmax(0,1fr)] xl:grid-cols-[minmax(0,1fr)_minmax(240px,320px)] xl:grid-rows-1">
         <AddScoreForm onSubmit={onAddScoreFormSubmit} />
         <aside
-          className="dice-turn-rail | -order-1 xl:order-2 content-start grid gap-xs lg:gap-sm overflow-visible xl:overflow-auto xl:h-[calc(100dvh-var(--spacing-7))]"
+          className="dice-turn-rail | gap-xs lg:gap-sm -order-1 grid content-start overflow-visible xl:order-2 xl:h-[calc(100dvh-var(--spacing-7))] xl:overflow-auto"
           aria-label="Turn information"
         >
           {statusSlot}

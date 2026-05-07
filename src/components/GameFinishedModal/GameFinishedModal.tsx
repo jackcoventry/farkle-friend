@@ -58,7 +58,7 @@ export function GameFinishedModal({
           title={winner ? `${winner.username} wins!` : 'Game finished'}
           image={
             <figure
-              className={`splash-avatar-crown relative rounded-full w-24 h-24 mx-auto my-2xs p-sm flex items-center justify-center ${avatar?.color ?? 'bg-surface-muted'}`}
+              className={`splash-avatar-crown my-2xs p-sm relative mx-auto flex h-24 w-24 items-center justify-center rounded-full ${avatar?.color ?? 'bg-surface-muted'}`}
             >
               {avatar ? (
                 <AvatarImage
@@ -73,29 +73,29 @@ export function GameFinishedModal({
           {standings.length > 0 ? (
             <div
               aria-label="Final standings and game recap"
-              className="grid gap-sm text-left"
+              className="gap-sm grid text-left"
             >
-              <section className="rounded-lg bg-surface-muted p-sm">
+              <section className="bg-surface-muted p-sm rounded-lg">
                 <h3 className="font-heading-2 mb-2 text-center">Final standings</h3>
-                <ol className="grid gap-2xs">
+                <ol className="gap-2xs grid">
                   {standings.map((player, index) => (
                     <li
                       key={player.id}
-                      className="flex justify-between gap-sm border-b border-border pb-2 last:border-0 last:pb-0"
+                      className="gap-sm border-border flex justify-between border-b pb-2 last:border-0 last:pb-0"
                     >
                       <span className="truncate">
                         {index + 1}. {player.username}
                       </span>
-                      <span className="shrink-0 text-accent">
+                      <span className="text-accent shrink-0">
                         {formatScore(player.totalScore ?? 0)}
                       </span>
                     </li>
                   ))}
                 </ol>
               </section>
-              <section className="rounded-lg bg-surface-muted p-sm">
+              <section className="bg-surface-muted p-sm rounded-lg">
                 <h3 className="font-heading-2 mb-2 text-center">Game recap</h3>
-                <dl className="grid grid-cols-2 gap-xs text-sm">
+                <dl className="gap-xs grid grid-cols-2 text-sm">
                   <div>
                     <dt className="text-text">Winning margin</dt>
                     <dd className="font-body-1 text-accent">

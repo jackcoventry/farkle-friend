@@ -67,7 +67,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
   };
 
   return (
-    <div className="form-wrapper | border-accent border p-md rounded-4xl bg-surface self-center max-w-full">
+    <div className="form-wrapper | border-accent p-md bg-surface max-w-full self-center rounded-4xl border">
       <form
         className="form | gap-xl flex flex-col"
         onSubmit={handleSubmit(submitHandler)}

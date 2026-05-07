@@ -23,7 +23,7 @@ const meta: Meta<typeof GameStatusBar> = {
   decorators: [
     (Story) => (
       <GameProvider>
-        <div className="bg-gray-800 p-xl">
+        <div className="p-xl bg-gray-800">
           <Story />
         </div>
       </GameProvider>

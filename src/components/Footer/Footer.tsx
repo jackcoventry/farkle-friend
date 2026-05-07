@@ -19,10 +19,10 @@ function Footer() {
 
   return (
     <>
-      <footer className="mt-auto flex flex-col text-text">
-        <div className="flex items-between">
+      <footer className="text-text mt-auto flex flex-col">
+        <div className="items-between flex">
           <span className="font-sub-heading text-center">FARKLE!</span>
-          <div className="flex gap-sm ml-auto items-center">
+          <div className="gap-sm ml-auto flex items-center">
             <Button
               type="button"
               onClick={handleShowRulesModal}

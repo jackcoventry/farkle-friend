@@ -72,16 +72,16 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
     <>
       <form
         id={formId}
-        className="dice-turn-main | grid h-full min-h-0 w-full grid-rows-[minmax(300px,1fr)_auto] gap-sm xl:h-[calc(100dvh-var(--spacing-7))]"
+        className="dice-turn-main | gap-sm grid h-full min-h-0 w-full grid-rows-[minmax(300px,1fr)_auto] xl:h-[calc(100dvh-var(--spacing-7))]"
         onSubmit={handleSubmit(submitHandler)}
       >
-        <div className="dice-turn-table | min-h-0 overflow-hidden rounded-3xl border border-border p-md">
+        <div className="dice-turn-table | border-border p-md min-h-0 overflow-hidden rounded-3xl border">
           <div className="dice-turn-table__play | flex h-full items-start justify-center overflow-auto">
-            <div className="grid w-full max-w-[680px] gap-lg text-center">
-              <div className="grid gap-2xs">
+            <div className="gap-lg grid w-full max-w-[680px] text-center">
+              <div className="gap-2xs grid">
                 <h2 className="text-text font-heading">{t('manualScore.buildRoundScore')}</h2>
                 <p
-                  className="text-sm text-text-muted"
+                  className="text-text-muted text-sm"
                   aria-live="polite"
                 >
                   {t('manualScore.ready', { score: scoreValue })}
@@ -132,7 +132,7 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
             <Modal.CloseButton ariaLabel={t('manualScore.closeManualEntry')} />
           </Modal.Header>
           <Modal.Content>
-            <div className="grid gap-xl text-center">
+            <div className="gap-xl grid text-center">
               <Controller
                 name="value"
                 control={control}
@@ -146,7 +146,7 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
                     </label>
                     <input
                       id="turn-score"
-                      className="border-0 border-b-2 border-border bg-transparent p-md text-text font-title-1 w-full text-center appearance-none"
+                      className="border-border p-md text-text font-title-1 w-full appearance-none border-0 border-b-2 bg-transparent text-center"
                       {...field}
                       placeholder="Enter your score..."
                       data-valid={errors?.value ? 'false' : 'true'}

@@ -7,8 +7,8 @@ type GameActionsProps = {
 
 export function GameActions({ onQuit, onRestart }: Readonly<GameActionsProps>) {
   return (
-    <section className="mt-4 flex flex-col gap-xs">
-      <div className="flex flex-col gap-xs">
+    <section className="gap-xs mt-4 flex flex-col">
+      <div className="gap-xs flex flex-col">
         <Button
           onClick={onRestart}
           className="justify-center"
