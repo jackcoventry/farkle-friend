@@ -11,14 +11,7 @@
 }
 
 .turn-action-cluster__button:not(:disabled):hover {
-  background:
-    linear-gradient(180deg, rgb(255 255 255 / 0.26), transparent), var(--color-action-hover);
-  transform: scaleX(1.04);
   z-index: 1;
-}
-
-.turn-action-cluster__button:not(:disabled):active {
-  transform: scale(0.98);
 }
 
 .turn-action-cluster__button:focus-visible {

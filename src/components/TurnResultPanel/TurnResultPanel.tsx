@@ -63,19 +63,10 @@ export function TurnResultPanel({
       ref={panelRef}
       aria-labelledby={titleId}
       aria-live="polite"
-      className="m-auto flex w-full max-w-[560px] flex-col text-center gap-4 p-6"
+      className="m-auto flex w-full max-w-[560px] flex-col text-center gap-6 p-6"
       onKeyDown={handleKeyDown}
       tabIndex={-1}
     >
-      <div>
-        <p className="font-sub-heading">{t('turnResult.turnEnded')}</p>
-        <h2
-          id={titleId}
-          className="font-heading"
-        >
-          {currentPlayer.username}
-        </h2>
-      </div>
       <dl className="grid gap-3 text-left sm:grid-cols-3">
         <div className="rounded-lg bg-surface-muted border border-border p-4">
           <dt className="font-body-1 ">{t('turnResult.turnScore')}</dt>
@@ -90,11 +81,16 @@ export function TurnResultPanel({
           <dd className="font-heading-2 text-accent">{formatScore(result.newTotal)}</dd>
         </div>
       </dl>
-      <p className="font-sub-heading">
-        {result.isGameWinner
-          ? t('turnResult.reachedTarget', { player: currentPlayer.username })
-          : t('turnResult.nextUp', { player: nextPlayer?.username ?? t('turnResult.nextPlayer') })}
-      </p>
+      <div>
+        <p className="font-sub-heading">{t('turnResult.turnEnded')}</p>
+        <p className="font-heading text-accent">
+          {result.isGameWinner
+            ? t('turnResult.reachedTarget', { player: currentPlayer.username })
+            : t('turnResult.nextUp', {
+                player: nextPlayer?.username ?? t('turnResult.nextPlayer'),
+              })}
+        </p>
+      </div>
       {autoAdvance && !result.isGameWinner ? (
         <p
           className="text-sm "

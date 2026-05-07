@@ -159,7 +159,7 @@ export function LobbyGameScreen({
               onKeyDown={onLobbyTabKeyDown}
               variant={lobbyScreen === 'settings' ? 'primary' : 'secondary'}
               size="small"
-              icon="person-circle"
+              icon="gear"
             >
               Settings
             </Button>

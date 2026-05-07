@@ -163,7 +163,8 @@ function ModalRoot({
   const ariaLabelledBy = ariaLabel ? undefined : titleId;
   const rootClasses =
     'modal modal__overlay | items-center justify-center bg-overlay flex inset-0 fixed z-50 opacity-100 pointer-events-auto';
-  const dialogClasses = 'modal__dialog | flex flex-col outline-none';
+  const dialogClasses =
+    'modal__dialog | flex flex-col outline-none ring-4 ring-yellow-500 ring-offset-4 rounded-4xl';
 
   return createPortal(
     <div
@@ -180,7 +181,6 @@ function ModalRoot({
         aria-modal="true"
         aria-label={ariaLabel}
         aria-labelledby={ariaLabelledBy}
-        tabIndex={-1}
         onKeyDown={handleKeyDown}
         className={dialogClasses}
       >

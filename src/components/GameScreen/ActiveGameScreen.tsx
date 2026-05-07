@@ -219,7 +219,7 @@ export function ActiveGameScreen({
               className="justify-center"
               size="small"
               onClick={() => setIsTurnCoachOpen((current) => !current)}
-              icon="arrow-left"
+              icon="question-circle"
             >
               {isTurnCoachOpen ? 'Hide turn info' : 'Turn info'}
             </Button>

@@ -81,6 +81,7 @@ export function ManualTurn({
       >
         <Modal.Body className="dice-turn-coach-modal modal-panel modal-panel--narrow">
           <div className="modal-panel__header">
+            <h2 className="font-heading">Turn information</h2>
             <Modal.CloseButton ariaLabel="Close turn information" />
           </div>
           <div className="modal-panel__content">{coachContent}</div>

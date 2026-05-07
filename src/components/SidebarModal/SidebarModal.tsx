@@ -27,6 +27,7 @@ export function SidebarModal({
     >
       <Modal.Body className="game-menu-modal modal-panel modal-panel--narrow">
         <div className="modal-panel__header">
+          <h2 className="font-heading">Game menu</h2>
           <Modal.CloseButton ariaLabel={closeLabel} />
         </div>
         <div className="modal-panel__content">{children}</div>

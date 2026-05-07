@@ -56,11 +56,11 @@ export function GamePreferences({ className }: Readonly<GamePreferencesProps>) {
       >
         <Modal.Body className="modal-panel modal-panel--narrow">
           <div className="modal-panel__header">
+            <h2 className="font-heading text-center">{t('preferences.title')}</h2>
             <Modal.CloseButton ariaLabel={t('preferences.close')} />
           </div>
           <div className="modal-panel__content">
             <div className="grid gap-4">
-              <h2 className="font-heading text-center">{t('preferences.title')}</h2>
               <fieldset className="preference-fieldset | grid gap-3 rounded-2xl border border-border bg-surface-muted p-4">
                 <legend className="contents">{t('preferences.language')}</legend>
                 <div className="flex flex-wrap gap-3">

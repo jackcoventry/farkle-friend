@@ -45,7 +45,6 @@ function RulesInfoSection({ title, children }: Readonly<RulesInfoSectionProps>) 
 function RulesInfo() {
   return (
     <div className="flex flex-col gap-6 text-text">
-      <h1 className="font-heading text-center">Rules & scoring</h1>
       <div className="grid gap-5 md:grid-cols-2">
         <div className="flex flex-col gap-5">
           <RulesInfoSection title="Singles">

@@ -87,7 +87,6 @@ function NextPlayerModalStory() {
                 />
               </figure>
             }
-            subtitle="Current score:"
             text={player.totalScore.toString()}
           />
         </Modal.Body>

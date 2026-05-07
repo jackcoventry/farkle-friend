@@ -100,7 +100,7 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
           ariaLabel="Manual score actions"
           actions={[
             {
-              icon: 'rocket',
+              icon: 'dice',
               label: t('actions.manual'),
               onClick: () => setShowManualEntry(true),
             },
@@ -111,7 +111,7 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
               onClick: handleResetTotal,
             },
             {
-              icon: 'dice',
+              icon: 'rocket',
               label: t('actions.submit'),
               type: 'submit',
             },
@@ -126,12 +126,11 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
       >
         <Modal.Body className="modal-panel modal-panel--narrow">
           <div className="modal-panel__header">
+            <h2 className="text-text font-heading">{t('manualScore.enterRoundScore')}</h2>
             <Modal.CloseButton ariaLabel={t('manualScore.closeManualEntry')} />
           </div>
           <div className="modal-panel__content">
             <div className="grid gap-6 text-center">
-              <h2 className="text-text font-heading">{t('manualScore.enterRoundScore')}</h2>
-
               <Controller
                 name="value"
                 control={control}

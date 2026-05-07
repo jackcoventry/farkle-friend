@@ -4,7 +4,7 @@
 @import './font.css';
 
 @theme {
-  --shadow-offset-solid-style: 0.125em 0.25em 0 0;
+  --shadow-offset-solid-style: 0.075em 0.125em 0 0;
 }
 
 body {
@@ -94,7 +94,7 @@ body {
 .modal-panel__header {
   align-items: center;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   min-block-size: 2.75rem;
 }
 
@@ -122,6 +122,12 @@ body {
   animation: slide-in ease-in 0.5s forwards;
   animation-delay: 0.5s;
   opacity: 0;
+}
+
+@layer base {
+  :focus-visible {
+    @apply outline-none ring-4 ring-yellow-500 ring-offset-4 rounded-full;
+  }
 }
 
 @keyframes slide-in {
@@ -191,9 +197,11 @@ body {
 
 .avatar-list-input:checked + .avatar-list-image,
 .avatar-list-input:focus-visible + .avatar-list-image {
+  outline: none;
+  border-radius: 100%;
   box-shadow:
-    0 0 0 2px white,
-    0 0 0 6px var(--color-pink-500);
+    0 0 0 4px var(--color-white),
+    0 0 0 8px var(--color-yellow-500);
 }
 
 .avatar-list-input:disabled + .avatar-list-image {
@@ -283,11 +291,11 @@ body {
   content: '';
   transform: rotate(-44deg);
   background-size: 100% 100%;
-  width: 60%;
+  width: 50%;
   height: 30%;
   position: absolute;
   top: -4%;
-  left: -20%;
+  left: -10%;
 }
 
 .splash-avatar {

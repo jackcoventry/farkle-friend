@@ -54,7 +54,7 @@ Pill.Label = function PillLabel({ children, className, htmlFor }: Readonly<PillL
     <label
       htmlFor={htmlFor}
       className={mergeClassNames(
-        'pill-box | items-center border-2 border-control-border rounded-full text-control-text bg-control cursor-pointer inline-grid gap-2 px-4 py-2 hover:translate-y-px',
+        'pill-box | items-center border-2 border-control-border rounded-full text-control-text bg-control cursor-pointer inline-grid gap-2 px-4 py-2 ',
         className
       )}
     >

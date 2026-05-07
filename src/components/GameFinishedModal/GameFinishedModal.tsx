@@ -74,7 +74,6 @@ export function GameFinishedModal({
             <div
               aria-label="Final standings and game recap"
               className="grid gap-3 text-left"
-              tabIndex={0}
             >
               <section className="rounded-lg bg-surface-muted p-3">
                 <h3 className="font-heading-2 mb-2 text-center">Final standings</h3>

@@ -53,7 +53,6 @@ GameShell.Sidebar = function Header({ children, isDesktop = false }: SidebarProp
     <aside
       className={`game-shell__sidebar | grid grid-rows-[minmax(0,1fr)_auto] max-h-dvh min-h-0 overflow-hidden p-4 lg:p-6 bg-surface ${isDesktop ? 'hidden xl:flex xl:flex-col xl:justify-between' : ''}`}
       aria-label="Game menu"
-      tabIndex={-1}
     >
       {children}
     </aside>

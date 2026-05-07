@@ -25,7 +25,7 @@ export function TurnActionCluster({
 }: Readonly<TurnActionClusterProps>) {
   return (
     <div
-      className={`turn-action-cluster | grid-cols-[1fr] rounded-lg items-stretch bg-action border-2 border-action-border xl:rounded-full grid overflow-hidden w-full xl:flex${className ? ` ${className}` : ''}`}
+      className={`turn-action-cluster | grid-cols-[1fr] rounded-lg items-stretch bg-action border-2 border-action-border xl:rounded-full grid w-full xl:flex${className ? ` ${className}` : ''}`}
       style={
         {
           '--turn-action-count': actions.length,
