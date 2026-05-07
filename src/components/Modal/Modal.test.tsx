@@ -246,4 +246,35 @@ describe('Modal (compound API)', () => {
     await user.click(closeButton);
     expect(onClose).toHaveBeenCalledTimes(1);
   });
+
+  it('Modal.Panel, Header, and Content provide the standard composed modal structure', async () => {
+    const user = userEvent.setup();
+    const onClose = vi.fn();
+
+    renderWithProvider(
+      <Modal
+        isOpen
+        onClose={onClose}
+      >
+        <Modal.Panel size="narrow">
+          <Modal.Header>
+            <Modal.Title>Standard modal</Modal.Title>
+            <Modal.CloseButton ariaLabel="Close standard modal" />
+          </Modal.Header>
+          <Modal.Content>
+            <button>Inside frame</button>
+          </Modal.Content>
+        </Modal.Panel>
+      </Modal>
+    );
+
+    expect(screen.getByRole('dialog', { name: 'Standard modal' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Inside frame' })).toBeInTheDocument();
+    expect(document.querySelector('.modal-panel--narrow')).not.toBeNull();
+    expect(document.querySelector('.modal-panel__header')).not.toBeNull();
+    expect(document.querySelector('.modal-panel__content')).not.toBeNull();
+
+    await user.click(screen.getByRole('button', { name: 'Close standard modal' }));
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
 });

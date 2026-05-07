@@ -1,27 +1,49 @@
-.turn-action-cluster__button {
-  border-block-start: 1px solid rgb(255 255 255 / 0.24);
-  transition:
-    background-color 160ms ease,
-    flex-grow 220ms cubic-bezier(0.34, 1.56, 0.64, 1),
-    transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1);
+.turn-action-cluster {
+  --turn-action-separator: rgb(255 255 255 / 0.42);
+  --turn-action-separator-disabled: rgb(0 0 0 / 0.18);
+  --turn-action-focus: var(--color-accent);
 }
 
-.turn-action-cluster__button:first-child {
-  border-block-start: 0;
+.turn-action-cluster__button {
+  min-block-size: 3.75rem;
+  min-inline-size: 0;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.turn-action-cluster__button::before {
+  background: var(--turn-action-separator);
+  block-size: 1px;
+  content: '';
+  inline-size: calc(100% - var(--spacing-6));
+  inset-block-start: 0;
+  inset-inline-start: var(--spacing-3);
+  position: absolute;
+}
+
+.turn-action-cluster__button:first-child::before {
+  content: none;
 }
 
 .turn-action-cluster__button:not(:disabled):hover {
+  background: var(--color-action-hover);
   z-index: 1;
 }
 
-.turn-action-cluster__button:focus-visible {
-  outline: 3px solid var(--color-accent);
-  outline-offset: -6px;
-  z-index: 2;
+.turn-action-cluster__button:not(:disabled):active {
+  background: var(--color-action);
+}
+
+.turn-action-cluster__button:disabled::before,
+.turn-action-cluster__button:has(+ .turn-action-cluster__button:disabled)::before {
+  background: var(--turn-action-separator-disabled);
 }
 
 .turn-action-cluster__icon {
   background: rgb(255 255 255 / 0.18);
+  flex: 0 0 auto;
 }
 
 .turn-action-cluster__icon img {
@@ -35,26 +57,31 @@
 
 .turn-action-cluster__label {
   font: var(--font-title-2);
+  hyphens: manual;
+  line-height: 1.05;
+  max-inline-size: 100%;
+  overflow-wrap: normal;
+  text-wrap: balance;
+  word-break: normal;
 }
 
-@media (min-width: 48rem) and (max-width: 79.99rem), (max-width: 80rem) and (max-height: 820px) {
+@media (min-width: 48rem) and (max-width: 79.99rem), (min-width: 80rem) and (max-height: 820px) {
   .turn-action-cluster {
     border-radius: 999px;
-    grid-template-columns: repeat(var(--turn-action-count, 3), minmax(0, 1fr)) !important;
-    min-block-size: 3.75rem;
+    grid-template-columns: repeat(var(--turn-action-count, 3), minmax(7.5rem, 1fr)) !important;
   }
 
   .turn-action-cluster__button {
-    border-block-start: 0;
-    border-inline-start: 1px solid rgb(255 255 255 / 0.24);
     gap: var(--spacing-1);
     min-block-size: 3.5rem;
-    min-width: 0;
     padding: var(--spacing-2);
   }
 
-  .turn-action-cluster__button:first-child {
-    border-inline-start: 0;
+  .turn-action-cluster__button::before {
+    block-size: calc(100% - var(--spacing-4));
+    inline-size: 1px;
+    inset-block-start: var(--spacing-2);
+    inset-inline-start: 0;
   }
 
   .turn-action-cluster__icon {
@@ -68,28 +95,44 @@
 
   .turn-action-cluster__label {
     font: var(--font-button-small);
-    white-space: nowrap;
   }
 }
 
 @media (min-width: 80rem) {
   .turn-action-cluster__button {
-    border-block-start: 0;
-    border-inline-start: 1px solid rgb(255 255 255 / 0.24);
+    flex: 1 1 9rem;
+  }
+
+  .turn-action-cluster__button::before {
+    block-size: calc(100% - var(--spacing-4));
+    inline-size: 1px;
+    inset-block-start: var(--spacing-2);
+    inset-inline-start: 0;
+  }
+}
+
+@media (min-width: 80rem) and (min-height: 821px) {
+  .turn-action-cluster__button {
+    flex-direction: column;
+  }
+
+  .turn-action-cluster__label {
+    max-inline-size: 8.5rem;
   }
 
   .turn-action-cluster__button:first-child {
-    border-inline-start: 0;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+  }
+
+  .turn-action-cluster__button:last-child {
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .turn-action-cluster__button {
     transition: none;
-  }
-
-  .turn-action-cluster__button:not(:disabled):hover,
-  .turn-action-cluster__button:not(:disabled):active {
-    transform: none;
   }
 }

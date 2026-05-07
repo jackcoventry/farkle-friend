@@ -35,16 +35,27 @@ export const messages = {
     'preferences.sound': 'Sound & haptics',
     'preferences.title': 'Preferences',
     'settings.animations': 'Animations',
+    'settings.animationsDescription':
+      'Turns table motion and transition effects on or off for this browser.',
     'settings.auto': 'Auto',
+    'settings.languageDescription': 'Changes the language used for game labels and guidance.',
     'settings.mode': 'Mode',
+    'settings.modeDescription':
+      'Use dice mode for in-browser rolls, or manual mode when scoring physical dice.',
     'settings.pointTarget': 'Point target',
+    'settings.pointTargetDescription': 'The first player to reach this score wins the game.',
     'settings.save': 'Save',
     'settings.showComboSuggestions': 'Show combo suggestions',
+    'settings.showComboSuggestionsDescription':
+      'Displays possible scoring combinations after each roll.',
     'settings.soundDescription':
       'Adds restrained roll, bank, and Farkle feedback when your browser allows it.',
     'settings.targetPlaceholder': 'Enter target score...',
+    'settings.themeDescription': 'Choose a light or dark theme, or follow your system setting.',
     'settings.title': 'Settings',
     'settings.turnHandOff': 'Turn hand-off',
+    'settings.turnHandOffDescription':
+      'Choose whether the game moves to the next player automatically after a turn.',
     'status.currentTotal': 'Current total',
     'status.diceLeft': 'Dice left',
     'status.nowPlaying': 'Now playing',
@@ -139,16 +150,27 @@ export const messages = {
     'preferences.sound': 'Sonido y vibración',
     'preferences.title': 'Preferencias',
     'settings.animations': 'Animaciones',
+    'settings.animationsDescription':
+      'Activa o desactiva el movimiento de la mesa y las transiciones en este navegador.',
     'settings.auto': 'Automático',
+    'settings.languageDescription': 'Cambia el idioma de las etiquetas y ayudas del juego.',
     'settings.mode': 'Modo',
+    'settings.modeDescription':
+      'Usa el modo dados para tirar en el navegador, o manual para puntuar dados físicos.',
     'settings.pointTarget': 'Objetivo de puntos',
+    'settings.pointTargetDescription': 'El primer jugador que alcance esta puntuación gana.',
     'settings.save': 'Guardar',
     'settings.showComboSuggestions': 'Mostrar sugerencias de combinaciones',
+    'settings.showComboSuggestionsDescription':
+      'Muestra posibles combinaciones puntuables después de cada tirada.',
     'settings.soundDescription':
       'Añade feedback discreto al tirar, guardar y hacer Farkle cuando el navegador lo permite.',
     'settings.targetPlaceholder': 'Introduce el objetivo...',
+    'settings.themeDescription': 'Elige tema claro u oscuro, o usa la configuración del sistema.',
     'settings.title': 'Ajustes',
     'settings.turnHandOff': 'Cambio de turno',
+    'settings.turnHandOffDescription':
+      'Elige si el juego pasa automáticamente al siguiente jugador al terminar un turno.',
     'status.currentTotal': 'Total actual',
     'status.diceLeft': 'Dados restantes',
     'status.nowPlaying': 'Jugando ahora',

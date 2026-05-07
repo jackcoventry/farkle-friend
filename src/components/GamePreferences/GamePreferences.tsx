@@ -61,7 +61,7 @@ export function GamePreferences({ className }: Readonly<GamePreferencesProps>) {
           </Modal.Header>
           <Modal.Content>
             <div className="grid gap-4">
-              <fieldset className="preference-fieldset | grid gap-3 rounded-2xl border border-border bg-surface-muted p-4">
+              <fieldset className="preference-fieldset | grid gap-4 rounded-2xl border border-border bg-surface-muted p-4">
                 <legend className="contents">{t('preferences.language')}</legend>
                 <div className="flex flex-wrap gap-3">
                   {locales.map((option) => (

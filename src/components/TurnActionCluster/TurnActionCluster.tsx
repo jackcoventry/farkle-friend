@@ -25,7 +25,7 @@ export function TurnActionCluster({
 }: Readonly<TurnActionClusterProps>) {
   return (
     <div
-      className={`turn-action-cluster | grid-cols-[1fr] rounded-lg items-stretch bg-action border-2 border-action-border xl:rounded-full grid w-full xl:flex${className ? ` ${className}` : ''}`}
+      className={`turn-action-cluster | grid-cols-[1fr] shadow-accent-shadow shadow-offset-solid-style rounded-lg items-stretch xl:rounded-full grid w-full xl:flex${className ? ` ${className}` : ''}`}
       style={
         {
           '--turn-action-count': actions.length,
@@ -40,7 +40,7 @@ export function TurnActionCluster({
           type={action.type ?? 'button'}
           aria-describedby={action.ariaDescribedBy}
           aria-label={action.ariaLabel}
-          className="turn-action-cluster__button | xl:flex-[1_1_0] items-center text-action-contrast cursor-pointer flex gap-2 justify-center relative p-3 disabled:bg-surface-disabled disabled:text-text-muted disabled:cursor-not-allowed"
+          className="turn-action-cluster__button | focus-visible:z-10 items-center text-action-contrast bg-action cursor-pointer flex gap-2 justify-center relative p-3 disabled:bg-surface-disabled disabled:text-text-muted disabled:cursor-not-allowed"
           disabled={action.disabled}
           onClick={action.onClick}
         >

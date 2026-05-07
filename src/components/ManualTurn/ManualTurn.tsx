@@ -87,7 +87,9 @@ export function ManualTurn({
             <Modal.Title className="font-heading">Turn information</Modal.Title>
             <Modal.CloseButton ariaLabel="Close turn information" />
           </Modal.Header>
-          <Modal.Content>{coachContent}</Modal.Content>
+          <Modal.Content>
+            {coachContent}
+          </Modal.Content>
         </Modal.Panel>
       </Modal>
     </div>

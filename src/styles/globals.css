@@ -126,7 +126,7 @@ body {
 
 @layer base {
   :focus-visible {
-    @apply outline-none ring-4 ring-yellow-500 ring-offset-4 rounded-full;
+    @apply outline-none ring-4 ring-yellow-500 ring-offset-4;
   }
 }
 

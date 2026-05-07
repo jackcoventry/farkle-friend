@@ -36,7 +36,7 @@ export function DiceTurnActions({
           ariaDescribedBy: actionHintId,
           disabled: !canBank,
           icon: 'bank',
-          label: selectedScore > 0 ? `Bank ${selectedScore}` : 'Bank',
+          label: 'Bank',
           onClick: onBank,
         },
         {

@@ -31,20 +31,16 @@ function DefaultModalStory() {
       <Modal
         isOpen={open}
         onClose={() => setOpen(false)}
-        ariaLabel="My simple modal"
       >
-        <Modal.Header>
-          <Modal.Title>My simple modal</Modal.Title>
-          <Modal.CloseButton />
-        </Modal.Header>
-
-        <Modal.Body>
-          <p>Hello from the modal</p>
-        </Modal.Body>
-
-        <Modal.Footer>
-          <p>Footer!</p>
-        </Modal.Footer>
+        <Modal.Panel>
+          <Modal.Header>
+            <Modal.Title>My simple modal</Modal.Title>
+            <Modal.CloseButton ariaLabel="Close modal" />
+          </Modal.Header>
+          <Modal.Content>
+            <p>Hello from the modal</p>
+          </Modal.Content>
+        </Modal.Panel>
       </Modal>
     </div>
   );
