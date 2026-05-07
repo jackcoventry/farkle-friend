@@ -1,5 +1,5 @@
 import { useI18n } from '@/i18n/I18nProvider';
-import type { ScoreBreakdownItem, ScoringCombo } from '@/domain/game/dice';
+import { sortDiceValues, type ScoreBreakdownItem, type ScoringCombo } from '@/domain/game/dice';
 import type { DiceTurnCopy, DiceTurnText } from '@/domain/game/diceTurnPresenter';
 import DiceIcon from '@/components/DiceIcon/DiceIcon';
 import { Panel } from '@/components/Panel/Panel';
@@ -89,15 +89,13 @@ export function DiceTurnCoach({
                 className="grid w-full grid-cols-2"
               >
                 <span className="flex gap-1">
-                  {[...combo.dice]
-                    .sort((firstDie, secondDie) => firstDie - secondDie)
-                    .map((die, dieIndex) => (
-                      <DiceIcon
-                        key={`${die}-${dieIndex}`}
-                        count={die}
-                        className="w-6"
-                      />
-                    ))}
+                  {sortDiceValues(combo.dice).map((die, dieIndex) => (
+                    <DiceIcon
+                      key={`${die}-${dieIndex}`}
+                      count={die}
+                      className="w-6"
+                    />
+                  ))}
                 </span>
                 <span className="text-right text-accent">
                   {t('turn.pts', { score: combo.score })}

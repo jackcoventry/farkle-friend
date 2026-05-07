@@ -30,6 +30,15 @@ export async function enterManualScore(page: Page, score: string) {
   await page.getByRole('button', { name: 'Submit score' }).click();
 }
 
+export async function expectTurnResult(page: Page, nextPlayerName: string) {
+  await expect(page.getByText('New total')).toBeVisible();
+  await expect(page.getByText(`${nextPlayerName} is up next!`)).toBeVisible();
+}
+
+export async function startNextTurn(page: Page) {
+  await page.getByRole('button', { name: 'Start turn' }).click();
+}
+
 export async function waitForTurnSplash(page: Page, playerName: string) {
   await expect(page.getByRole('dialog', { name: `${playerName}'s turn` })).toBeVisible();
   await page.waitForTimeout(2100);

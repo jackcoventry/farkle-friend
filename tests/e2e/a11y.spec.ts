@@ -4,7 +4,9 @@ import {
   addPlayersAndStartGame,
   addTwoPlayers,
   enterManualScore,
+  expectTurnResult,
   startGame,
+  startNextTurn,
   waitForTurnSplash,
 } from '../helpers/game';
 
@@ -42,10 +44,10 @@ test('turn result and finished modal have no detectable accessibility violations
   await waitForTurnSplash(page, 'Ada');
 
   await enterManualScore(page, '50');
-  await expect(page.getByText('Grace is up next!')).toBeVisible();
+  await expectTurnResult(page, 'Grace');
   await expectNoA11yViolations(page);
 
-  await page.getByRole('button', { name: 'Start turn' }).click();
+  await startNextTurn(page);
   await waitForTurnSplash(page, 'Grace');
   await enterManualScore(page, '500');
   await expect(page.getByRole('dialog', { name: 'Game finished' })).toBeVisible();

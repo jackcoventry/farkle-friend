@@ -3,6 +3,10 @@ import { getMultipleScore, scoringRules } from '@/domain/game/scoringRules';
 export type DieValue = 1 | 2 | 3 | 4 | 5 | 6; // Farkle uses 6-side dice
 export type DiceRandomSource = () => number;
 
+export function sortDiceValues(dice: DieValue[]): DieValue[] {
+  return [...dice].sort((a, b) => a - b);
+}
+
 export function rollDice(
   count: number = 6,
   randomSource: DiceRandomSource = Math.random
@@ -187,7 +191,7 @@ export function getScoringCombinations(roll: DieValue[]): ScoringCombo[] {
 
     if (score <= 0 || usedCount !== dice.length) continue;
 
-    const sorted = [...dice].sort((a, b) => a - b);
+    const sorted = sortDiceValues(dice);
     const key = `${sorted.join(',')}|${score}`;
 
     if (!combosByKey.has(key)) {

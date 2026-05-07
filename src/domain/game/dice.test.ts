@@ -5,6 +5,7 @@ import {
   rollDice,
   scoreSelectedDice,
   scoreSelectedDiceWithUsage,
+  sortDiceValues,
 } from './dice';
 
 describe('dice scoring', () => {
@@ -60,5 +61,12 @@ describe('dice scoring', () => {
     ]);
     expect(getScoreBreakdown([1, 2, 3, 4, 5, 6])).toEqual([{ label: 'Straight', score: 1500 }]);
     expect(getScoreBreakdown([1, 2, 3] as DieValue[])).toEqual([]);
+  });
+
+  it('sorts dice values for consistent display without mutating the source', () => {
+    const dice: DieValue[] = [5, 1, 3, 1];
+
+    expect(sortDiceValues(dice)).toEqual([1, 1, 3, 5]);
+    expect(dice).toEqual([5, 1, 3, 1]);
   });
 });

@@ -1,6 +1,6 @@
 import { useI18n } from '@/i18n/I18nProvider';
 import React from 'react';
-import { DieValue, scoreSelectedDiceWithUsage } from '@/domain/game/dice';
+import { DieValue, scoreSelectedDiceWithUsage, sortDiceValues } from '@/domain/game/dice';
 import Button from '@/components/Button/Button';
 import DiceIcon from '@/components/DiceIcon/DiceIcon';
 
@@ -172,7 +172,7 @@ function ScoreGenerator({
                   className="flex flex-wrap gap-1"
                   aria-label={`Dice for go ${index + 1}`}
                 >
-                  {item.dice.map((die, dieIndex) => (
+                  {sortDiceValues(item.dice).map((die, dieIndex) => (
                     <span
                       key={`${item.id}-${die}-${dieIndex}`}
                       className="w-6"

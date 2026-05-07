@@ -3,7 +3,9 @@ import {
   addPlayersAndStartGame,
   addTwoPlayers,
   enterManualScore,
+  expectTurnResult,
   startGame,
+  startNextTurn,
   waitForTurnSplash,
 } from '../helpers/game';
 
@@ -29,9 +31,8 @@ test('players can start a manual game, score turns, and reset for new players', 
   await waitForTurnSplash(page, 'Ada');
 
   await enterManualScore(page, '50');
-  await expect(page.getByText('New total')).toBeVisible();
-  await expect(page.getByText('Grace is up next!')).toBeVisible();
-  await page.getByRole('button', { name: 'Start turn' }).click();
+  await expectTurnResult(page, 'Grace');
+  await startNextTurn(page);
 
   await waitForTurnSplash(page, 'Grace');
 

@@ -32,6 +32,7 @@ export function TurnActionCluster({
         } as CSSProperties
       }
       aria-label={ariaLabel}
+      role="group"
     >
       {actions.map((action) => (
         <button
