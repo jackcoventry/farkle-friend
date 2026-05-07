@@ -2,9 +2,9 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { DieValue, scoreSelectedDice } from '@/domain/game/dice';
+import { Controller, SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { AddScoreSchema, type AddScoreSchemaType } from '@/domain/game/formSchemas';
+import Button from '@/components/Button/Button';
 import Modal from '@/components/Modal/Modal';
 import { TurnActionCluster } from '@/components/TurnActionCluster/TurnActionCluster';
 import ScoreGenerator from '../ScoreGenerator/ScoreGenerator';
@@ -19,6 +19,7 @@ type AddScoreFormProps = {
 };
 
 function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
+  const formId = React.useId();
   const {
     control,
     handleSubmit,
@@ -36,32 +37,97 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
   const submitHandler = (data: { value: number }) => {
     onSubmit(data);
     reset();
+    setScoreGeneratorResetKey((current) => current + 1);
+    setShowManualEntry(false);
   };
 
-  const [showCalculator, setShowCalculator] = React.useState(false);
+  const [showManualEntry, setShowManualEntry] = React.useState(false);
+  const [scoreGeneratorResetKey, setScoreGeneratorResetKey] = React.useState(0);
+  const scoreValue = useWatch({ control, name: 'value' }) ?? 0;
 
-  const onChange = (selectedItems: DieValue[]) => {
-    const score = scoreSelectedDice(selectedItems);
-    setValue('value', score, {
+  const onChange = React.useCallback(
+    (score: number) => {
+      setValue('value', score, {
+        shouldDirty: true,
+        shouldTouch: true,
+        shouldValidate: true,
+      });
+    },
+    [setValue]
+  );
+
+  const handleResetTotal = () => {
+    setScoreGeneratorResetKey((current) => current + 1);
+    setValue('value', 0, {
       shouldDirty: true,
       shouldTouch: true,
       shouldValidate: true,
     });
-    setShowCalculator(false);
   };
 
   return (
     <>
       <form
-        className="dice-turn-main | grid w-full grid-rows-[minmax(0,1fr)_auto] gap-3 sm:h-[calc(50dvh-var(--spacing-7))] xl:h-[calc(100dvh-var(--spacing-7))]"
+        id={formId}
+        className="dice-turn-main | grid h-full min-h-0 w-full grid-rows-[minmax(300px,1fr)_auto] gap-3 xl:h-[calc(100dvh-var(--spacing-7))]"
         onSubmit={handleSubmit(submitHandler)}
       >
-        <div className="dice-turn-table | min-h-0 rounded-3xl border border-border p-4">
-          <div className="dice-turn-table__play | flex h-full items-center justify-center overflow-hidden">
-            <div className="grid w-full max-w-[680px] gap-6 text-center">
-              <h2 className="text-text font-heading">
-                Enter your score below or use the calculator.
-              </h2>
+        <div className="dice-turn-table | min-h-0 overflow-hidden rounded-3xl border border-border p-4">
+          <div className="dice-turn-table__play | flex h-full items-start justify-center overflow-auto">
+            <div className="grid w-full max-w-[680px] gap-5 text-center">
+              <div className="grid gap-1">
+                <h2 className="text-text font-heading">Build this round score</h2>
+                <p
+                  className="text-sm text-text-muted"
+                  aria-live="polite"
+                >
+                  Score ready: {scoreValue}
+                </p>
+              </div>
+              <ScoreGenerator
+                className="pb-2"
+                onChange={onChange}
+                resetKey={scoreGeneratorResetKey}
+              />
+            </div>
+          </div>
+        </div>
+
+        <TurnActionCluster
+          ariaLabel="Manual score actions"
+          actions={[
+            {
+              icon: 'rocket',
+              label: 'Manual',
+              onClick: () => setShowManualEntry(true),
+            },
+            {
+              disabled: scoreValue === 0,
+              icon: 'cancel',
+              label: 'Reset',
+              onClick: handleResetTotal,
+            },
+            {
+              icon: 'dice',
+              label: 'Submit',
+              type: 'submit',
+            },
+          ]}
+        />
+      </form>
+      <Modal
+        isOpen={Boolean(showManualEntry)}
+        onClose={() => setShowManualEntry(false)}
+        ariaLabel="Enter score manually"
+        variant="modal"
+      >
+        <Modal.Body className="modal-panel modal-panel--narrow">
+          <div className="modal-panel__header">
+            <Modal.CloseButton ariaLabel="Close manual score entry" />
+          </div>
+          <div className="modal-panel__content">
+            <div className="grid gap-6 text-center">
+              <h2 className="text-text font-heading">Enter your round score</h2>
 
               <Controller
                 name="value"
@@ -76,7 +142,7 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
                     </label>
                     <input
                       id="turn-score"
-                      className="border-0 border-b-2 border-border bg-transparent p-4 text-text font-mega w-full text-center appearance-none"
+                      className="border-0 border-b-2 border-border bg-transparent p-4 text-text font-title-1 w-full text-center appearance-none"
                       {...field}
                       placeholder="Enter your score..."
                       data-valid={errors?.value ? 'false' : 'true'}
@@ -99,37 +165,14 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
                   </>
                 )}
               />
+              <Button
+                type="submit"
+                form={formId}
+              >
+                Submit score
+              </Button>
             </div>
           </div>
-        </div>
-
-        <TurnActionCluster
-          ariaLabel="Manual score actions"
-          actions={[
-            {
-              icon: 'rocket',
-              label: 'Calculator',
-              onClick: () => setShowCalculator(true),
-            },
-            {
-              icon: 'dice',
-              label: 'Submit score',
-              type: 'submit',
-            },
-          ]}
-        />
-      </form>
-      <Modal
-        isOpen={Boolean(showCalculator)}
-        onClose={() => setShowCalculator(false)}
-        ariaLabel="Calculate dice score"
-        variant="modal"
-      >
-        <Modal.Body className="grid max-h-dvh h-full mx-auto justify-center bg-surface text-text p-7 rounded-2xl">
-          <div className="mb-4 flex justify-end">
-            <Modal.CloseButton ariaLabel="Close calculator" />
-          </div>
-          <ScoreGenerator onChange={onChange} />
         </Modal.Body>
       </Modal>
     </>

@@ -61,11 +61,11 @@ export function ManualTurn({
   );
 
   return (
-    <div className="turn-frame | grid gap-3 h-full w-full">
-      <div className="xl:grid-cols-[minmax(0,1fr)_minmax(240px,320px)] grid-cols-[1fr] grid gap-4 content-start">
+    <div className="turn-frame | grid min-h-0 h-full w-full gap-2 lg:gap-3">
+      <div className="dice-turn-layout | grid h-full min-h-0 grid-cols-[1fr] grid-rows-[auto_minmax(0,1fr)] gap-2 lg:gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(240px,320px)] xl:grid-rows-1">
         <AddScoreForm onSubmit={onAddScoreFormSubmit} />
         <aside
-          className="dice-turn-rail | -order-1 xl:order-2 content-start grid gap-3 overflow-auto xl:h-[calc(100dvh-var(--spacing-7))]"
+          className="dice-turn-rail | -order-1 xl:order-2 content-start grid gap-2 lg:gap-3 overflow-visible xl:overflow-auto xl:h-[calc(100dvh-var(--spacing-7))]"
           aria-label="Turn information"
         >
           {statusSlot}

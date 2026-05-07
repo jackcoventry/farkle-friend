@@ -44,7 +44,7 @@
   font: var(--font-title-2);
 }
 
-@media (max-width: 80rem) and (max-height: 820px) {
+@media (min-width: 48rem) and (max-width: 79.99rem), (max-width: 80rem) and (max-height: 820px) {
   .turn-action-cluster {
     border-radius: 999px;
     grid-template-columns: repeat(var(--turn-action-count, 3), minmax(0, 1fr)) !important;
