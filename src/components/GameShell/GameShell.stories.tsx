@@ -21,7 +21,7 @@ const Template: Story = {
       <GameShell.MobileToolbar>
         <button
           type="button"
-          className="rounded-lg bg-white px-4 py-2"
+          className="rounded-lg bg-white px-md py-xs"
         >
           Turn info
         </button>

@@ -9,7 +9,7 @@ export default function Home() {
     <div className="splash-screen h-dvh flex items-center justify-center bg-gray-800">
       <div className="flex flex-col gap-md items-center">
         <div
-          className="bg-gray-500 border-4 border-white rounded-full w-[200px] h-[200px] mb-4 p-6 rotate-12 opacity-0 animate-fade-in"
+          className="bg-gray-500 border-4 border-white rounded-full w-[200px] h-[200px] mb-4 p-xl rotate-12 opacity-0 animate-fade-in"
           style={{
             animationDelay: '1.45s',
           }}
@@ -37,7 +37,7 @@ export default function Home() {
           ))}
         </h1>
         <div
-          className="opacity-0 animate-bounce-in flex w-full max-w-[320px] flex-col gap-md px-5 sm:px-0"
+          className="opacity-0 animate-bounce-in flex w-full max-w-[320px] flex-col gap-md px-lg sm:px-0"
           style={{
             animationDelay: '1.45s',
           }}

@@ -75,7 +75,7 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
         className="dice-turn-main | grid h-full min-h-0 w-full grid-rows-[minmax(300px,1fr)_auto] gap-sm xl:h-[calc(100dvh-var(--spacing-7))]"
         onSubmit={handleSubmit(submitHandler)}
       >
-        <div className="dice-turn-table | min-h-0 overflow-hidden rounded-3xl border border-border p-4">
+        <div className="dice-turn-table | min-h-0 overflow-hidden rounded-3xl border border-border p-md">
           <div className="dice-turn-table__play | flex h-full items-start justify-center overflow-auto">
             <div className="grid w-full max-w-[680px] gap-lg text-center">
               <div className="grid gap-2xs">
@@ -146,7 +146,7 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
                     </label>
                     <input
                       id="turn-score"
-                      className="border-0 border-b-2 border-border bg-transparent p-4 text-text font-title-1 w-full text-center appearance-none"
+                      className="border-0 border-b-2 border-border bg-transparent p-md text-text font-title-1 w-full text-center appearance-none"
                       {...field}
                       placeholder="Enter your score..."
                       data-valid={errors?.value ? 'false' : 'true'}

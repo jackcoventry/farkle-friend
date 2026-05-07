@@ -50,7 +50,7 @@ export function DiceTurnCoach({
           <p className="text-sm">{detail}</p>
         </div>
         {showSelectionStatus ? (
-          <div className="rounded-lg bg-accent px-3 py-2 text-sm text-accent-contrast">
+          <div className="rounded-lg bg-accent px-sm py-xs text-sm text-accent-contrast">
             <span className="font-body-1">{t('turn.selection')}</span> <span>{selectedStatus}</span>
           </div>
         ) : null}
@@ -59,7 +59,7 @@ export function DiceTurnCoach({
             {selectedBreakdown.map((item) => (
               <li
                 key={`${item.label}-${item.score}`}
-                className="rounded-full bg-control px-3 py-1 text-control-text"
+                className="rounded-full bg-control px-sm py-2xs text-control-text"
               >
                 {item.label} = {item.score}
               </li>

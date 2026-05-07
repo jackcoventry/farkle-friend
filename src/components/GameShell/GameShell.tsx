@@ -51,7 +51,7 @@ export default function GameShell({ children }: Readonly<RootProps>) {
 GameShell.Sidebar = function Header({ children, isDesktop = false }: SidebarProps) {
   return (
     <aside
-      className={`game-shell__sidebar | grid grid-rows-[minmax(0,1fr)_auto] max-h-dvh min-h-0 overflow-hidden p-4 lg:p-6 bg-surface ${isDesktop ? 'hidden xl:flex xl:flex-col xl:justify-between' : ''}`}
+      className={`game-shell__sidebar | grid grid-rows-[minmax(0,1fr)_auto] max-h-dvh min-h-0 overflow-hidden p-md lg:p-xl bg-surface ${isDesktop ? 'hidden xl:flex xl:flex-col xl:justify-between' : ''}`}
       aria-label="Game menu"
     >
       {children}
@@ -74,12 +74,12 @@ GameShell.SidebarFooter = function SidebarFooter({ children }: SlotProps) {
 };
 
 GameShell.MobileToolbar = function MobileToolbar({ children }: SlotProps) {
-  return <nav className="bg-canvas xl:hidden p-2 flex justify-between">{children}</nav>;
+  return <nav className="bg-canvas xl:hidden p-xs flex justify-between">{children}</nav>;
 };
 
 GameShell.Body = function Body({ children }: SlotProps) {
   return (
-    <section className="game-shell__body | bg-canvas p-4 lg:p-6 min-w-0 overflow-auto">
+    <section className="game-shell__body | bg-canvas p-md lg:p-xl min-w-0 overflow-auto">
       {children}
     </section>
   );

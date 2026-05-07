@@ -33,7 +33,7 @@ export function TurnHistory({
 
   return (
     <section
-      className="surface-callout | bg-surface-muted border border-border rounded-xl text-text p-4"
+      className="surface-callout | bg-surface-muted border border-border rounded-xl text-text p-md"
       aria-live="polite"
     >
       {leader ? (
@@ -80,14 +80,14 @@ export function TurnHistory({
               return (
                 <li
                   key={turn.id}
-                  className={`flex items-center justify-between gap-sm rounded-lg p-2 ${
+                  className={`flex items-center justify-between gap-sm rounded-lg p-xs ${
                     isFarkle ? 'bg-danger-surface text-danger' : 'bg-surface-muted'
                   }`}
                 >
                   <span className="flex min-w-0 items-center gap-xs">
                     {avatar ? (
                       <span
-                        className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full p-1 ${avatar.color}`}
+                        className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full p-2xs ${avatar.color}`}
                       >
                         <AvatarImage
                           avatar={avatar}
@@ -101,7 +101,7 @@ export function TurnHistory({
                     </span>
                   </span>
                   <span
-                    className={`shrink-0 rounded-full px-2 py-1 text-sm ${
+                    className={`shrink-0 rounded-full px-xs py-2xs text-sm ${
                       isFarkle ? 'bg-danger text-danger-contrast' : 'score-chip'
                     }`}
                   >

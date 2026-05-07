@@ -40,12 +40,12 @@ export function TurnActionCluster({
           type={action.type ?? 'button'}
           aria-describedby={action.ariaDescribedBy}
           aria-label={action.ariaLabel}
-          className="turn-action-cluster__button | focus-visible:z-10 items-center text-action-contrast bg-action cursor-pointer flex gap-xs justify-center relative p-3 disabled:bg-surface-disabled disabled:text-text-muted disabled:cursor-not-allowed"
+          className="turn-action-cluster__button | focus-visible:z-10 items-center text-action-contrast bg-action cursor-pointer flex gap-xs justify-center relative p-sm disabled:bg-surface-disabled disabled:text-text-muted disabled:cursor-not-allowed"
           disabled={action.disabled}
           onClick={action.onClick}
         >
           <span
-            className="turn-action-cluster__icon | items-center rounded-full inline-flex justify-center p-2"
+            className="turn-action-cluster__icon | items-center rounded-full inline-flex justify-center p-xs"
             aria-hidden="true"
           >
             <DynamicImage

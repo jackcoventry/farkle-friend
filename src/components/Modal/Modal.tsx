@@ -163,7 +163,7 @@ function ModalRoot({
 
   const ariaLabelledBy = ariaLabel ? undefined : titleId;
   const rootClasses =
-    'modal modal__overlay | p-3 items-center justify-center bg-overlay flex inset-0 fixed z-50 opacity-100 pointer-events-auto';
+    'modal modal__overlay | p-sm items-center justify-center bg-overlay flex inset-0 fixed z-50 opacity-100 pointer-events-auto';
   const dialogClasses =
     'modal__dialog | overflow-hidden flex flex-col outline-none ring-4 ring-yellow-500 ring-offset-4 rounded-4xl';
 
@@ -280,7 +280,7 @@ function ModalPanel({ children, className, size = 'default' }: Readonly<ModalPan
     <Modal.Body
       className={cx(
         'modal-panel',
-        'bg-surface border border-border rounded-3xl text-text grid gap-sm overflow-hidden p-4',
+        'bg-surface border border-border rounded-3xl text-text grid gap-sm overflow-hidden p-md',
         sizeClass,
         className
       )}
@@ -295,7 +295,7 @@ function ModalPanel({ children, className, size = 'default' }: Readonly<ModalPan
  */
 function ModalContent({ children, className }: Readonly<ModalSlot>) {
   return (
-    <div className={cx('modal-panel__content', 'overflow-auto pt-0 px-3 pb-2', className)}>
+    <div className={cx('modal-panel__content', 'overflow-auto pt-0 px-sm pb-2', className)}>
       {children}
     </div>
   );

@@ -54,11 +54,11 @@ export function GameFinishedModal({
     >
       <Modal.Body>
         <Splash
-          className="gap-sm p-4 sm:p-5"
+          className="gap-sm p-md sm:p-lg"
           title={winner ? `${winner.username} wins!` : 'Game finished'}
           image={
             <figure
-              className={`splash-avatar-crown relative rounded-full w-24 h-24 mx-auto my-1 p-3 flex items-center justify-center ${avatar?.color ?? 'bg-surface-muted'}`}
+              className={`splash-avatar-crown relative rounded-full w-24 h-24 mx-auto my-2xs p-sm flex items-center justify-center ${avatar?.color ?? 'bg-surface-muted'}`}
             >
               {avatar ? (
                 <AvatarImage
@@ -75,7 +75,7 @@ export function GameFinishedModal({
               aria-label="Final standings and game recap"
               className="grid gap-sm text-left"
             >
-              <section className="rounded-lg bg-surface-muted p-3">
+              <section className="rounded-lg bg-surface-muted p-sm">
                 <h3 className="font-heading-2 mb-2 text-center">Final standings</h3>
                 <ol className="grid gap-2xs">
                   {standings.map((player, index) => (
@@ -93,7 +93,7 @@ export function GameFinishedModal({
                   ))}
                 </ol>
               </section>
-              <section className="rounded-lg bg-surface-muted p-3">
+              <section className="rounded-lg bg-surface-muted p-sm">
                 <h3 className="font-heading-2 mb-2 text-center">Game recap</h3>
                 <dl className="grid grid-cols-2 gap-xs text-sm">
                   <div>

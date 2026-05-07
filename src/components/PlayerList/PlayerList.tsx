@@ -27,7 +27,7 @@ function PlayerList({
           targetScore && targetScore > 0
             ? Math.min(100, Math.round((totalScore / targetScore) * 100))
             : null;
-        const classes = `flex gap-sm bg-surface-raised border border-border text-text p-4 rounded-2xl ${
+        const classes = `flex gap-sm bg-surface-raised border border-border text-text p-md rounded-2xl ${
           isActive ? 'border-accent bg-surface-muted' : 'hover:bg-surface-muted'
         }`;
         const avatar = avatarSet[player.avatar as AvatarId];
@@ -39,7 +39,7 @@ function PlayerList({
           >
             <div className={classes}>
               <div
-                className={`flex h-[60px] w-[60px] shrink-0 items-center justify-center rounded-full border-2 p-2 ring ${avatar.color} `}
+                className={`flex h-[60px] w-[60px] shrink-0 items-center justify-center rounded-full border-2 p-xs ring ${avatar.color} `}
               >
                 <AvatarImage
                   avatar={avatar}
@@ -58,12 +58,12 @@ function PlayerList({
                   {isActive || (isLeader && totalScore > 0) ? (
                     <div className="flex flex-wrap gap-2xs">
                       {isActive ? (
-                        <span className="rounded-full bg-accent px-2 py-1 text-xs text-accent-contrast">
+                        <span className="rounded-full bg-accent px-xs py-2xs text-xs text-accent-contrast">
                           Current
                         </span>
                       ) : null}
                       {isLeader && totalScore > 0 ? (
-                        <span className="rounded-full bg-control px-2 py-1 text-xs text-control-text">
+                        <span className="rounded-full bg-control px-xs py-2xs text-xs text-control-text">
                           Leader
                         </span>
                       ) : null}
@@ -91,7 +91,7 @@ function PlayerList({
                 <button
                   type="button"
                   aria-label={`Remove ${player.username}`}
-                  className="ml-auto self-center cursor-pointer rounded-lg px-3 py-2 text-sm text-text-muted hover:bg-surface focus-visible:outline-2 focus-visible:outline-accent"
+                  className="ml-auto self-center cursor-pointer rounded-lg px-sm py-xs text-sm text-text-muted hover:bg-surface focus-visible:outline-2 focus-visible:outline-accent"
                   onClick={() => onRemovePlayer(player.id)}
                 >
                   Remove

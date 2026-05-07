@@ -86,7 +86,7 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
         })}
       </div>
 
-      <div className="grid gap-md rounded-2xl border border-border bg-surface p-4 text-center">
+      <div className="grid gap-md rounded-2xl border border-border bg-surface p-md text-center">
         <div className="min-h-12">
           {selectedItems.length > 0 ? (
             <ul
@@ -141,7 +141,7 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
         </div>
       </div>
 
-      <div className="grid gap-md rounded-2xl border border-border bg-surface p-4">
+      <div className="grid gap-md rounded-2xl border border-border bg-surface p-md">
         <div className="flex flex-wrap items-baseline justify-between gap-sm">
           <h2 className="font-heading-2">{t('scoreGenerator.roundTotal')}</h2>
           <p
@@ -157,7 +157,7 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
             {sequenceItems.map((item, index) => (
               <li
                 key={item.id}
-                className="grid gap-xs rounded-lg border border-border p-3 sm:grid-cols-[auto_1fr_auto] sm:items-center"
+                className="grid gap-xs rounded-lg border border-border p-sm sm:grid-cols-[auto_1fr_auto] sm:items-center"
               >
                 <span className="font-body-1">
                   {t('scoreGenerator.goLabel', { index: index + 1 })}

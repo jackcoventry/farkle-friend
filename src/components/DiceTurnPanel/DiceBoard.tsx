@@ -21,7 +21,7 @@ export function DiceBoard({
         {isFarkled ? (
           <div
             role="alert"
-            className="animate-bounce-in max-w-[560px] rounded-3xl border-4 border-danger bg-danger-surface p-6 text-center text-danger-contrast shadow-lg"
+            className="animate-bounce-in max-w-[560px] rounded-3xl border-4 border-danger bg-danger-surface p-xl text-center text-danger-contrast shadow-lg"
           >
             <p className="font-sub-heading text-danger">Turn over</p>
             <h2 className="font-heading text-danger">You have been Farkled!</h2>
@@ -43,7 +43,7 @@ export function DiceBoard({
                   style={{
                     animationDelay: `${idx * 0.05}s`,
                   }}
-                  className={`animate-bounce-in w-8 cursor-pointer rounded-lg p-1 opacity-0 transition-transform hover:z-10 hover:scale-105 sm:w-[100px] ${
+                  className={`animate-bounce-in w-8 cursor-pointer rounded-lg p-2xs opacity-0 transition-transform hover:z-10 hover:scale-105 sm:w-[100px] ${
                     isSelected ? 'bg-selected ring-4 ring-selected-border' : 'bg-transparent'
                   }`}
                 >
