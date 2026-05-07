@@ -14,6 +14,7 @@ describe('useGameState settings persistence', () => {
       STORAGE_KEY,
       JSON.stringify({
         preferences: {
+          locale: 'es',
           motionEnabled: false,
           tableFeedback: true,
           theme: 'dark',
@@ -31,6 +32,7 @@ describe('useGameState settings persistence', () => {
     const { result } = renderHook(() => useGameState());
 
     expect(result.current.state.preferences).toMatchObject({
+      locale: 'es',
       motionEnabled: false,
       tableFeedback: true,
       theme: 'dark',
@@ -50,6 +52,7 @@ describe('useGameState settings persistence', () => {
     const { result } = renderHook(() => useGameState());
 
     expect(result.current.state.preferences).toMatchObject({
+      locale: 'en',
       motionEnabled: true,
       tableFeedback: false,
       theme: 'system',
@@ -107,6 +110,7 @@ describe('useGameState settings persistence', () => {
         type: 'UPDATE_PREFERENCES',
         preferences: {
           motionEnabled: false,
+          locale: 'es',
           theme: 'light',
         },
       });
@@ -118,6 +122,7 @@ describe('useGameState settings persistence', () => {
       expect(JSON.parse(stored!)).toMatchObject({
         preferences: {
           motionEnabled: false,
+          locale: 'es',
           theme: 'light',
         },
         settings: {

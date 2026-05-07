@@ -3,6 +3,7 @@ import {
   DieValue,
   scoreSelectedDiceWithUsage,
 } from '@/domain/game/dice';
+import { useI18n } from '@/i18n/I18nProvider';
 import Button from '@/components/Button/Button';
 import DiceIcon from '@/components/DiceIcon/DiceIcon';
 
@@ -19,6 +20,7 @@ type ScoreSequenceItem = {
 };
 
 function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGeneratorProps>) {
+  const { t } = useI18n();
   const dies = Array.from({ length: 6 }, (_, i) => (i + 1) as DieValue);
   const nextSequenceIdRef = React.useRef(0);
   const [selectedItems, setSelectedItems] = React.useState<DieValue[]>([]);
@@ -76,7 +78,7 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
               onClick={() => handleClick(die)}
               disabled={selectedItems.length >= 6}
               className={classes}
-              aria-label={`Add die showing ${die}`}
+              aria-label={t('scoreGenerator.addDie', { value: die })}
             >
               <DiceIcon
                 count={die}
@@ -104,7 +106,7 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
               ))}
             </ul>
           ) : (
-            <p className="text-sm text-text-muted">Choose scoring dice for this go</p>
+            <p className="text-sm text-text-muted">{t('scoreGenerator.chooseScoringDice')}</p>
           )}
         </div>
 
@@ -112,11 +114,11 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
           className="font-heading-2"
           aria-live="polite"
         >
-          Current go: {selectedScore}
+          {t('scoreGenerator.currentGo', { score: selectedScore })}
         </p>
         {selectedItems.length > 0 && !selectionIsValid ? (
           <p className="field-error" role="alert">
-            Only add dice that are part of the scoring combination.
+            {t('scoreGenerator.invalidSelection')}
           </p>
         ) : null}
 
@@ -125,23 +127,23 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
             type="button"
             variant="secondary"
             disabled={selectedItems.length === 0}
-            onClick={() => setSelectedItems([])}
+          onClick={() => setSelectedItems([])}
           >
-            Clear
+            {t('actions.clear')}
           </Button>
           <Button
             type="button"
             disabled={!selectionIsValid}
             onClick={handleAddGo}
           >
-            Add go
+            {t('actions.addGo')}
           </Button>
         </div>
       </div>
 
       <div className="grid gap-4 rounded-2xl border border-border bg-surface p-4">
         <div className="flex flex-wrap items-baseline justify-between gap-3">
-          <h2 className="font-heading-2">Round total</h2>
+          <h2 className="font-heading-2">{t('scoreGenerator.roundTotal')}</h2>
           <p className="font-heading-2" aria-live="polite">
             {roundTotal}
           </p>
@@ -154,7 +156,9 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
                 key={item.id}
                 className="grid gap-2 rounded-lg border border-border p-3 sm:grid-cols-[auto_1fr_auto] sm:items-center"
               >
-                <span className="font-body-1">Go {index + 1}</span>
+                <span className="font-body-1">
+                  {t('scoreGenerator.goLabel', { index: index + 1 })}
+                </span>
                 <span className="flex flex-wrap gap-1" aria-label={`Dice for go ${index + 1}`}>
                   {item.dice.map((die, dieIndex) => (
                     <span key={`${item.id}-${die}-${dieIndex}`} className="w-6">
@@ -167,7 +171,7 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
             ))}
           </ol>
         ) : (
-          <p className="text-sm text-text-muted">Added goes will appear here.</p>
+          <p className="text-sm text-text-muted">{t('scoreGenerator.addedGoesEmpty')}</p>
         )}
 
       </div>

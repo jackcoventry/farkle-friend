@@ -7,6 +7,7 @@ import {
   SettingsFormSchema,
   type SettingsFormSchemaType,
   diceStyles,
+  localePreferences,
   maxTargetScore,
   minTargetScore,
   modes,
@@ -14,6 +15,8 @@ import {
   themePreferences,
 } from '@/domain/game/formSchemas';
 import { DiceStyle, GameMode, ThemePreference } from '@/domain/game/gameTypes';
+import { useI18n } from '@/i18n/I18nProvider';
+import { localeLabels } from '@/i18n/locales';
 import Button from '@/components/Button/Button';
 import { Panel } from '@/components/Panel/Panel';
 import Pill from '@/components/Pill/Pill';
@@ -29,6 +32,7 @@ type SettingsFormProps = {
 
 function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
   const { state } = useGame();
+  const { t } = useI18n();
 
   const {
     control,
@@ -41,6 +45,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
     defaultValues: {
       autoAdvanceTurns: state.settings.autoAdvanceTurns,
       diceStyle: state.settings.diceStyle,
+      locale: state.preferences.locale,
       mode: state.settings.mode,
       motionEnabled: state.preferences.motionEnabled,
       targetScore: state.settings.targetScore,
@@ -54,6 +59,7 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
   const submitHandler = (data: {
     autoAdvanceTurns: boolean;
     diceStyle: DiceStyle;
+    locale: SettingsFormSchemaType['locale'];
     mode: GameMode;
     motionEnabled: boolean;
     targetScore: number;
@@ -105,6 +111,36 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
                     </Pill.Control>
                     <Pill.Label htmlFor="autoAdvanceTurns_no">Manual</Pill.Label>
                   </Pill>
+                </div>
+              </fieldset>
+            </Panel>
+          )}
+        />
+
+        <Controller
+          control={control}
+          name="locale"
+          render={({ field }) => (
+            <Panel>
+              <fieldset className="grid gap-3">
+                <legend className="contents">{t('preferences.language')}</legend>
+                <div className="flex flex-wrap gap-4">
+                  {localePreferences.map((option) => (
+                    <Pill key={option}>
+                      <Pill.Control>
+                        <input
+                          type="radio"
+                          checked={field.value === option}
+                          onChange={() => field.onChange(option)}
+                          name={field.name}
+                          id={`settingsLocale_${option}`}
+                        />
+                      </Pill.Control>
+                      <Pill.Label htmlFor={`settingsLocale_${option}`}>
+                        {localeLabels[option]}
+                      </Pill.Label>
+                    </Pill>
+                  ))}
                 </div>
               </fieldset>
             </Panel>

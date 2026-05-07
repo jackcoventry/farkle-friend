@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
 import { Controller, SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { AddScoreSchema, type AddScoreSchemaType } from '@/domain/game/formSchemas';
+import { useI18n } from '@/i18n/I18nProvider';
 import Button from '@/components/Button/Button';
 import Modal from '@/components/Modal/Modal';
 import { TurnActionCluster } from '@/components/TurnActionCluster/TurnActionCluster';
@@ -19,6 +20,7 @@ type AddScoreFormProps = {
 };
 
 function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
+  const { t } = useI18n();
   const formId = React.useId();
   const {
     control,
@@ -76,12 +78,12 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
           <div className="dice-turn-table__play | flex h-full items-start justify-center overflow-auto">
             <div className="grid w-full max-w-[680px] gap-5 text-center">
               <div className="grid gap-1">
-                <h2 className="text-text font-heading">Build this round score</h2>
+                <h2 className="text-text font-heading">{t('manualScore.buildRoundScore')}</h2>
                 <p
                   className="text-sm text-text-muted"
                   aria-live="polite"
                 >
-                  Score ready: {scoreValue}
+                  {t('manualScore.ready', { score: scoreValue })}
                 </p>
               </div>
               <ScoreGenerator
@@ -98,18 +100,18 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
           actions={[
             {
               icon: 'rocket',
-              label: 'Manual',
+              label: t('actions.manual'),
               onClick: () => setShowManualEntry(true),
             },
             {
               disabled: scoreValue === 0,
               icon: 'cancel',
-              label: 'Reset',
+              label: t('actions.reset'),
               onClick: handleResetTotal,
             },
             {
               icon: 'dice',
-              label: 'Submit',
+              label: t('actions.submit'),
               type: 'submit',
             },
           ]}
@@ -118,16 +120,16 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
       <Modal
         isOpen={Boolean(showManualEntry)}
         onClose={() => setShowManualEntry(false)}
-        ariaLabel="Enter score manually"
+        ariaLabel={t('manualScore.enterManually')}
         variant="modal"
       >
         <Modal.Body className="modal-panel modal-panel--narrow">
           <div className="modal-panel__header">
-            <Modal.CloseButton ariaLabel="Close manual score entry" />
+            <Modal.CloseButton ariaLabel={t('manualScore.closeManualEntry')} />
           </div>
           <div className="modal-panel__content">
             <div className="grid gap-6 text-center">
-              <h2 className="text-text font-heading">Enter your round score</h2>
+              <h2 className="text-text font-heading">{t('manualScore.enterRoundScore')}</h2>
 
               <Controller
                 name="value"
@@ -138,7 +140,7 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
                       htmlFor="turn-score"
                       className="sr-only"
                     >
-                      Turn score
+                      {t('manualScore.turnScore')}
                     </label>
                     <input
                       id="turn-score"
@@ -169,7 +171,7 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
                 type="submit"
                 form={formId}
               >
-                Submit score
+                {t('actions.submitScore')}
               </Button>
             </div>
           </div>

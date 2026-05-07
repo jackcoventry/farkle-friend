@@ -12,6 +12,7 @@ const storedSettingsSchema = z.object({
     z.partial(
       z.object({
         motionEnabled: z.boolean(),
+        locale: z.enum(['en', 'es']),
         tableFeedback: z.boolean(),
         theme: z.enum(['system', 'light', 'dark']),
       })
