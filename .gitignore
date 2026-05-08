@@ -40,9 +40,3 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-# Design tokens
-/src/styles/tokens.theme.css
-/src/styles/tokens.theme.ts
-/src/styles/tokens.ts
-/src/design-tokens/icons.json

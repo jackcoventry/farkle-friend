@@ -6,7 +6,7 @@ export default function Home() {
   const title = 'FARKLE!'.split('');
 
   return (
-    <div className="splash-screen flex h-dvh items-center justify-center bg-gray-800">
+    <div className="splash-screen bg-surface flex h-dvh items-center justify-center">
       <div className="gap-md flex flex-col items-center">
         <div
           className="p-xl animate-fade-in mb-md h-[200px] w-[200px] rotate-12 rounded-full border-4 border-white bg-gray-500 opacity-0"

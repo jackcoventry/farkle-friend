@@ -1,0 +1,82 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+@theme {
+  --color-canvas: var(--theme-color-canvas);
+  --color-surface: var(--theme-color-surface);
+  --color-surface-raised: var(--theme-color-surface-raised);
+  --color-surface-muted: var(--theme-color-surface-muted);
+  --color-surface-disabled: var(--theme-color-surface-disabled);
+  --color-text: var(--theme-color-text);
+  --color-text-muted: var(--theme-color-text-muted);
+  --color-text-inverse: var(--theme-color-text-inverse);
+  --color-border: var(--theme-color-border);
+  --color-border-strong: var(--theme-color-border-strong);
+  --color-accent: var(--theme-color-accent);
+  --color-accent-hover: var(--theme-color-accent-hover);
+  --color-accent-contrast: var(--theme-color-accent-contrast);
+  --color-accent-shadow: var(--theme-color-accent-shadow);
+  --color-control: var(--theme-color-control);
+  --color-control-hover: var(--theme-color-control-hover);
+  --color-control-text: var(--theme-color-control-text);
+  --color-control-border: var(--theme-color-control-border);
+  --color-control-shadow: var(--theme-color-control-shadow);
+  --color-action: var(--theme-color-action);
+  --color-action-hover: var(--theme-color-action-hover);
+  --color-action-border: var(--theme-color-action-border);
+  --color-action-contrast: var(--theme-color-action-contrast);
+  --color-overlay: var(--theme-color-overlay);
+  --color-danger: var(--theme-color-danger);
+  --color-danger-surface: var(--theme-color-danger-surface);
+  --color-danger-contrast: var(--theme-color-danger-contrast);
+  --color-selected: var(--theme-color-selected);
+  --color-selected-border: var(--theme-color-selected-border);
+  --color-selected-contrast: var(--theme-color-selected-contrast);
+  --color-sun-100: #eeddfd;
+  --color-sun-200: #dcbbfc;
+  --color-sun-300: #cb99fa;
+  --color-sun-400: #ba77f9;
+  --color-sun-500: #a855f7; /** Base colour */
+  --color-sun-600: #8815f4;
+  --color-sun-700: #6609be;
+  --color-sun-800: #44067f;
+  --color-sun-900: #22033f;
+  --font-family-1: Nunito, system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --font-family-2: Outfit, system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --font-size-1: 14px;
+  --font-size-2: 18px;
+  --font-size-3: 24px;
+  --font-size-4: 32px;
+  --font-size-5: 40px;
+  --font-size-6: 110px;
+  --font-size-base: 18px;
+  --font-size-clamp: clamp(3rem, -0.875rem + 8.333vw, 10rem);
+  --font-line-height-1: 1.5;
+  --font-line-height-2: 1.75;
+  --font-line-height-3: 1.25;
+  --font-line-height-4: 1.1;
+  --font-letter-spacing-1: 0;
+  --font-letter-spacing-2: 1px;
+  --font-weight-1: 400;
+  --font-weight-2: 700;
+  --font-title-1: 400 32px/1.1 Nunito, system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --font-title-2: 400 24px/1.1 Outfit, system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --font-title-3: 400 40px/1.5 Nunito, system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --font-title-mega: 400 clamp(3rem, -0.875rem + 8.333vw, 10rem)/1.1 Nunito, system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --font-body-1: 400 18px/1.5 Outfit, system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --font-button-1: 700 18px/1.5 Outfit, system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --font-button-2: 700 24px/1.5 Outfit, system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --font-button-3: 700 32px/1.5 Outfit, system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --spacing-0: 0px;
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 24px;
+  --spacing-6: 32px;
+  --spacing-7: 56px;
+  --spacing-8: 72px;
+  --spacing-9: 96px;
+  --spacing-10: 120px;
+}
