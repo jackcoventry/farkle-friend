@@ -7,7 +7,7 @@ type DiceIconProps = {
 };
 
 function DiceIcon({ className, count = 1, state }: Readonly<DiceIconProps>) {
-  let classes = 'dice-icon | aspect-square grid relative';
+  let classes = 'dice-icon | aspect-square grid relative rounded-lg';
   if (className) {
     classes += ` ${className}`;
   }

@@ -9,7 +9,7 @@ export default function Home() {
     <div className="splash-screen bg-surface flex h-dvh items-center justify-center">
       <div className="gap-md flex flex-col items-center">
         <div
-          className="p-xl animate-fade-in mb-md h-[200px] w-[200px] rotate-12 rounded-full border-4 border-white bg-gray-500 opacity-0"
+          className="p-xl animate-fade-in mb-md bg-surface border-border h-[200px] w-[200px] rotate-12 rounded-full border-4 opacity-0"
           style={{
             animationDelay: '1.45s',
           }}

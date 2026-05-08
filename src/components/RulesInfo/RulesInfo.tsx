@@ -21,7 +21,7 @@ function RulesInfoRow({ dice = [], points = 0, title }: Readonly<RulesInfoRowPro
         {dice.map((die, index) => (
           <span
             className="w-[28px] md:w-[50px]"
-            key={index}
+            key={`${die}_${index}`}
           >
             <DiceIcon count={die} />
           </span>

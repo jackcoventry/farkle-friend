@@ -64,7 +64,7 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
   };
 
   return (
-    <div className={`gap-lg grid ${className ? ` ${className}` : ''}`}>
+    <div className={`gap-lg grid ${className ?? ''}`}>
       <div className="gap-lg mx-auto grid h-[200px] w-[300px] grid-cols-3">
         {dies.map((die) => {
           const classes = `enabled:hover:opacity-50 enabled:hover:scale-110 enabled:cursor-pointer transition-transform disabled:grayscale-50 disabled:cursor-not-allowed ${die === clicked ? 'enabled:hover:scale-120 ' : ''}`;
