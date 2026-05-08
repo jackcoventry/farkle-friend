@@ -23,7 +23,7 @@ export default function Home() {
             <DiceIcon count={6} />
           </div>
         </div>
-        <h1 className="font-mega text-white">
+        <h1 className="font-mega text-text">
           {title.map((e, i) => (
             <span
               key={i}

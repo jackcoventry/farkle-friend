@@ -102,7 +102,7 @@ export function TurnHistory({
                   </span>
                   <span
                     className={`px-xs py-2xs shrink-0 rounded-full text-sm ${
-                    isFarkle ? 'bg-danger text-danger-contrast' : 'text-accent'
+                      isFarkle ? 'bg-danger text-danger-contrast' : 'text-accent'
                     }`}
                   >
                     {isFarkle ? 'Farkle' : `+${formatScore(turn.score)}`}

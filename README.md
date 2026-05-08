@@ -29,12 +29,20 @@ The repo includes `vercel.json` for static-first Vercel deployment:
 
 - Framework preset: Next.js
 - Build command: `npm run build`
-- Output directory: `out`
+- Output directory: leave blank / do not override
+
+The app uses Next.js static export, so `next build` still writes the generated
+static files to `out/`. Vercel's Next.js builder handles that automatically when
+`output: 'export'` is set in `next.config.ts`; setting the Vercel output
+directory to `out` will make the builder look for Next internals in the wrong
+folder.
 
 ## Checks
 
 ```bash
 npm run lint
+npm run typecheck
+npm run format:check
 npm test
 npm run test:e2e
 npm run test:e2e:static

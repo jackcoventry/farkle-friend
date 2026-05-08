@@ -30,7 +30,9 @@ export function GameSetupSummary({
         </div>
         <div className="gap-sm flex justify-between">
           <dt>Turn hand-off</dt>
-          <dd className="text-accent text-right">{settings.autoAdvanceTurns ? 'Auto' : 'Manual'}</dd>
+          <dd className="text-accent text-right">
+            {settings.autoAdvanceTurns ? 'Auto' : 'Manual'}
+          </dd>
         </div>
         <div className="gap-sm flex justify-between">
           <dt>Combo hints</dt>

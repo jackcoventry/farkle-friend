@@ -1,5 +1,6 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
+import type { Page } from '@playwright/test';
 import {
   addPlayersAndStartGame,
   addTwoPlayers,
@@ -10,7 +11,7 @@ import {
   waitForTurnSplash,
 } from '../helpers/game';
 
-async function expectNoA11yViolations(page: Parameters<typeof AxeBuilder>[0]) {
+async function expectNoA11yViolations(page: Page) {
   const results = await new AxeBuilder({ page }).analyze();
   expect(results.violations).toEqual([]);
 }
