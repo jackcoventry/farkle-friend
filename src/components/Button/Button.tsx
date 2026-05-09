@@ -56,7 +56,27 @@ type AnchorOnlyProps = {
 ----------------------------- */
 type InlineOnlyProps = {
   as: 'inline';
-} & Omit<React.HTMLAttributes<HTMLSpanElement>, 'className' | 'children' | 'aria-label'>;
+  /**
+   * Inline is for presentation only.
+   */
+  onClick?: never;
+  onKeyDown?: never;
+  onKeyUp?: never;
+  onKeyPress?: never;
+  tabIndex?: never;
+  role?: never;
+} & Omit<
+  React.HTMLAttributes<HTMLSpanElement>,
+  | 'className'
+  | 'children'
+  | 'aria-label'
+  | 'onClick'
+  | 'onKeyDown'
+  | 'onKeyUp'
+  | 'onKeyPress'
+  | 'tabIndex'
+  | 'role'
+>;
 
 /* -----------------------------
    ALL POSSIBLE PROPS
