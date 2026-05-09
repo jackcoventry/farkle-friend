@@ -110,7 +110,7 @@ function ModalRoot({
     const titleElement = document.getElementById(titleId);
     if (titleElement) return;
 
-    console.warn('Modal requires an accessible name. Add <Modal.Title> or pass ariaLabel.');
+    console.error('Modal requires an accessible name. Add <Modal.Title> or pass ariaLabel.');
   }, [ariaLabel, isOpen, titleId]);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {

@@ -15,7 +15,7 @@ function getAllowedDevOrigins(): string[] | undefined {
 const nextConfig: NextConfig = {
   devIndicators: false,
   images: {
-    unoptimized: true,
+    unoptimized: false,
   },
   output: 'export',
   trailingSlash: true,

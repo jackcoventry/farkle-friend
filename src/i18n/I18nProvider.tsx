@@ -20,7 +20,7 @@ const I18nContext = createContext<I18nContextValue>(fallbackContext);
 function formatMessage(message: string, values?: MessageValues) {
   if (!values) return message;
 
-  return message.replace(/\{(\w+)\}/g, (match, key: string) => {
+  return message.replaceAll(/\{(\w+)\}/g, (match, key: string) => {
     const value = values[key];
     return value == null ? match : String(value);
   });

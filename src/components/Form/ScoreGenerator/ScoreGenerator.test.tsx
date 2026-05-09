@@ -15,10 +15,10 @@ describe('ScoreGenerator', () => {
     await user.click(one);
     await user.click(one);
     await user.click(one);
-    await user.click(screen.getByRole('button', { name: 'Add go' }));
+    await user.click(screen.getByRole('button', { name: 'Add throw' }));
 
     await user.click(screen.getByRole('button', { name: 'Add die showing 5' }));
-    await user.click(screen.getByRole('button', { name: 'Add go' }));
+    await user.click(screen.getByRole('button', { name: 'Add throw' }));
 
     expect(screen.getByText('Go 1')).toBeInTheDocument();
     expect(screen.getByText('Go 2')).toBeInTheDocument();
@@ -44,7 +44,7 @@ describe('ScoreGenerator', () => {
 
     await user.click(screen.getByRole('button', { name: 'Add die showing 2' }));
 
-    expect(screen.getByRole('button', { name: 'Add go' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Add throw' })).toBeDisabled();
     expect(screen.getByText(/Only add dice/)).toBeInTheDocument();
   });
 });

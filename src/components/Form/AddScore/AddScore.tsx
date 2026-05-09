@@ -127,12 +127,13 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
         <Modal.Panel size="narrow">
           <Modal.Header>
             <Modal.Title className="text-text font-heading">
-              {t('manualScore.enterRoundScore')}
+              {t('manualScore.enterManuallyTitle')}
             </Modal.Title>
             <Modal.CloseButton ariaLabel={t('manualScore.closeManualEntry')} />
           </Modal.Header>
           <Modal.Content>
             <div className="gap-xl grid text-center">
+              <p> {t('manualScore.enterRoundScore')}</p>
               <Controller
                 name="value"
                 control={control}

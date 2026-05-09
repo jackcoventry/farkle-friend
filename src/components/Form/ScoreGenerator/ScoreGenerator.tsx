@@ -65,7 +65,7 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
 
   return (
     <div className={`gap-lg grid ${className ?? ''}`}>
-      <div className="gap-lg mx-auto grid h-[200px] w-[300px] grid-cols-3">
+      <div className="gap-lg mx-auto grid h-[200px] w-full grid-cols-6">
         {dies.map((die) => {
           const classes = `enabled:hover:opacity-50 enabled:hover:scale-110 enabled:cursor-pointer transition-transform disabled:grayscale-50 disabled:cursor-not-allowed ${die === clicked ? 'enabled:hover:scale-120 ' : ''}`;
           return (
@@ -87,8 +87,8 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
       </div>
 
       <div className="gap-md border-border bg-surface p-md grid rounded-2xl border text-center">
-        <div className="min-h-12">
-          {selectedItems.length > 0 ? (
+        {selectedItems.length > 0 ? (
+          <div className="min-h-12">
             <ul
               className="gap-xs flex flex-wrap justify-center"
               aria-label="Selected dice"
@@ -102,10 +102,8 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
                 </li>
               ))}
             </ul>
-          ) : (
-            <p className="text-text-muted text-sm">{t('scoreGenerator.chooseScoringDice')}</p>
-          )}
-        </div>
+          </div>
+        ) : null}
 
         <p
           className="font-heading-2"
@@ -128,6 +126,7 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
             variant="secondary"
             disabled={selectedItems.length === 0}
             onClick={() => setSelectedItems([])}
+            size="small"
           >
             {t('actions.clear')}
           </Button>
@@ -135,36 +134,24 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
             type="button"
             disabled={!selectionIsValid}
             onClick={handleAddGo}
+            size="small"
           >
             {t('actions.addGo')}
           </Button>
         </div>
       </div>
 
-      <div className="gap-md border-border bg-surface p-md grid rounded-2xl border">
-        <div className="gap-sm flex flex-wrap items-baseline justify-between">
-          <h2 className="font-heading-2">{t('scoreGenerator.roundTotal')}</h2>
-          <p
-            className="font-heading-2"
-            aria-live="polite"
-          >
-            {roundTotal}
-          </p>
-        </div>
-
-        {sequenceItems.length > 0 ? (
+      {sequenceItems.length > 0 ? (
+        <div className="gap-md border-border bg-surface p-md grid rounded-2xl border">
           <ol className="gap-sm grid">
             {sequenceItems.map((item, index) => (
               <li
                 key={item.id}
                 className="gap-xs border-border p-sm grid rounded-lg border sm:grid-cols-[auto_1fr_auto] sm:items-center"
               >
-                <span className="font-body-1">
-                  {t('scoreGenerator.goLabel', { index: index + 1 })}
-                </span>
                 <span
                   className="gap-2xs flex flex-wrap"
-                  aria-label={`Dice for go ${index + 1}`}
+                  aria-label={`Dice for throw ${index + 1}`}
                 >
                   {sortDiceValues(item.dice).map((die, dieIndex) => (
                     <span
@@ -175,14 +162,12 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
                     </span>
                   ))}
                 </span>
-                <span className="font-body-1">{item.score}</span>
+                <span className="font-body-1 text-right">{item.score}</span>
               </li>
             ))}
           </ol>
-        ) : (
-          <p className="text-text-muted text-sm">{t('scoreGenerator.addedGoesEmpty')}</p>
-        )}
-      </div>
+        </div>
+      ) : null}
     </div>
   );
 }

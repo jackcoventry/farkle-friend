@@ -1,6 +1,6 @@
 import { scoringRuleExamples } from '@/domain/game/scoringRules';
 import DiceIcon from '@/components/DiceIcon/DiceIcon';
-import { Panel } from '../Panel/Panel';
+import { Panel } from '@/components/Panel/Panel';
 
 type RulesInfoRowProps = {
   dice?: Array<1 | 2 | 3 | 4 | 5 | 6>;

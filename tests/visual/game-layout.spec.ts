@@ -55,7 +55,7 @@ test('manual score sequence layout remains stable', async ({ page }) => {
   const one = page.getByRole('button', { name: 'Add die showing 1' });
   const five = page.getByRole('button', { name: 'Add die showing 5' });
   const two = page.getByRole('button', { name: 'Add die showing 2' });
-  const addGo = page.getByRole('button', { name: 'Add go' });
+  const addGo = page.getByRole('button', { name: 'Add throw' });
 
   await one.click();
   await one.click();
