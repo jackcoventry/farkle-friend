@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { ReactNode, RefObject } from 'react';
 import Modal from '@/components/Modal/Modal';
 
 type SidebarModalProps = {
@@ -8,6 +8,7 @@ type SidebarModalProps = {
   id: string;
   isOpen: boolean;
   onClose: () => void;
+  returnFocusRef?: RefObject<HTMLElement | null>;
 };
 
 export function SidebarModal({
@@ -17,6 +18,7 @@ export function SidebarModal({
   id,
   isOpen,
   onClose,
+  returnFocusRef,
 }: Readonly<SidebarModalProps>) {
   return (
     <Modal
@@ -24,6 +26,7 @@ export function SidebarModal({
       isOpen={isOpen}
       onClose={onClose}
       ariaLabel={ariaLabel}
+      returnFocusRef={returnFocusRef}
     >
       <Modal.Panel
         size="narrow"

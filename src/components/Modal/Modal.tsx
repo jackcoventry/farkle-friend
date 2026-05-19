@@ -1,6 +1,7 @@
 import React, {
   KeyboardEvent,
   ReactNode,
+  RefObject,
   useCallback,
   useContext,
   useEffect,
@@ -36,6 +37,16 @@ function getModalPortalRoot() {
   return root;
 }
 
+function getAriaControlsTrigger(id: string | undefined) {
+  if (!id) return null;
+
+  return (
+    Array.from(document.querySelectorAll<HTMLElement>('[aria-controls]')).find(
+      (element) => element.getAttribute('aria-controls') === id
+    ) ?? null
+  );
+}
+
 type ModalVariant = 'modal' | 'splash';
 type ThemeVariant = 'default' | 'warning' | 'success';
 
@@ -65,6 +76,7 @@ type ModalRootProps = {
   id?: string;
   theme?: ThemeVariant;
   variant?: ModalVariant;
+  returnFocusRef?: RefObject<HTMLElement | null>;
 };
 
 function ModalRoot({
@@ -73,11 +85,13 @@ function ModalRoot({
   children,
   ariaLabel,
   id,
+  returnFocusRef,
   variant = 'modal',
   theme = 'default',
 }: ModalRootProps) {
   const dialogRef = useRef<HTMLDivElement | null>(null);
   const lastFocusedRef = useRef<HTMLElement | null>(null);
+  const wasOpenRef = useRef(false);
 
   const instanceId = useId();
   const titleId = useId();
@@ -102,19 +116,39 @@ function ModalRoot({
 
   // Move focus into the dialog when it opens and is top-most
   useEffect(() => {
-    if (!isOpen || !isTopMost) return;
+    if (!isOpen) {
+      wasOpenRef.current = false;
+      return;
+    }
 
-    lastFocusedRef.current = document.activeElement as HTMLElement | null;
+    if (!wasOpenRef.current) {
+      lastFocusedRef.current = document.activeElement as HTMLElement | null;
+      wasOpenRef.current = true;
+    }
 
-    focusFirstElement();
+    if (isTopMost) {
+      focusFirstElement();
+    }
   }, [isOpen, isTopMost, focusFirstElement]);
 
   // Restore focus when closed
   useEffect(() => {
-    if (!isOpen && lastFocusedRef.current) {
-      lastFocusedRef.current.focus();
-    }
-  }, [isOpen]);
+    if (isOpen || !lastFocusedRef.current) return;
+
+    const fallbackElement = returnFocusRef?.current ?? getAriaControlsTrigger(id);
+    const preferredElement =
+      lastFocusedRef.current === document.body ? fallbackElement : lastFocusedRef.current;
+
+    const restoreFocus = () => {
+      const elementToRestore = preferredElement?.isConnected ? preferredElement : fallbackElement;
+      elementToRestore?.focus({ preventScroll: true });
+    };
+
+    restoreFocus();
+    const timeout = window.setTimeout(restoreFocus, 50);
+
+    return () => window.clearTimeout(timeout);
+  }, [id, isOpen, returnFocusRef]);
 
   useEffect(() => {
     if (!isOpen || ariaLabel || process.env.NODE_ENV === 'production') return;

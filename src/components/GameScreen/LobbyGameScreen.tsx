@@ -1,7 +1,7 @@
 'use client';
 
 import type { KeyboardEvent, RefObject } from 'react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Button from '@/components/Button/Button';
 import Footer from '@/components/Footer/Footer';
 import AddPlayerForm, { type AddPlayerFormSchemaType } from '@/components/Form/AddPlayer/AddPlayer';
@@ -41,6 +41,10 @@ export function LobbyGameScreen({
   view,
 }: Readonly<LobbyGameScreenProps>) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const sidebarTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const closeSidebar = () => {
+    setIsSidebarOpen(false);
+  };
   const startGameButton = (
     <Button
       type="button"
@@ -83,9 +87,10 @@ export function LobbyGameScreen({
       <SidebarModal
         id="lobby-sidebar-modal"
         isOpen={isSidebarOpen}
-        onClose={() => setIsSidebarOpen(false)}
+        onClose={closeSidebar}
         ariaLabel="Game setup summary"
         closeLabel="Close setup summary"
+        returnFocusRef={sidebarTriggerRef}
       >
         <GameShell.Sidebar>
           <GameShell.SidebarMain>
@@ -189,6 +194,7 @@ export function LobbyGameScreen({
           aria-expanded={isSidebarOpen}
           icon="three-dots-vertical"
           onClick={() => setIsSidebarOpen(true)}
+          ref={sidebarTriggerRef}
           size="small"
         >
           Setup summary

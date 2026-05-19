@@ -1,7 +1,9 @@
 {
   "background_color": "#ffffff",
+  "categories": ["games", "entertainment"],
   "description": "A client-side Farkle scorekeeper and dice game.",
   "display": "standalone",
+  "id": "/",
   "icons": [
     {
       "src": "/dice.svg",
@@ -10,6 +12,7 @@
     }
   ],
   "name": "Farkle Friend",
+  "scope": "/",
   "short_name": "Farkle",
   "start_url": "/",
   "theme_color": "#b91c1c"
