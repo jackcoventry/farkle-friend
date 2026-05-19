@@ -91,6 +91,78 @@ function getVariantClasses(variant: CommonProps['variant']) {
   return 'border-accent shadow-accent-shadow active:shadow-none active:translate-px bg-accent text-accent-contrast hover:bg-accent-hover hover:border-action-border shadow-offset-solid-style';
 }
 
+function getButtonClasses({
+  className,
+  disabled,
+  iconPosition,
+  size,
+  variant,
+}: {
+  className: string;
+  disabled?: boolean;
+  iconPosition: CommonProps['iconPosition'];
+  size: CommonProps['size'];
+  variant: CommonProps['variant'];
+}) {
+  let classes = 'button | rounded-full flex relative border-2';
+  if (className) classes += ` | ${className}`;
+  if (size === 'small') classes += ' font-button-small gap-sm py-xs px-lg';
+  if (size === 'default') classes += ' font-button py-sm gap-md px-xl';
+  if (size === 'large') classes += ' font-button-large gap-lg py-md px-3xl';
+  if (iconPosition === 'left') classes += ' flex-row-reverse';
+
+  if (disabled) {
+    return `${classes} bg-surface-disabled border-surface-disabled cursor-not-allowed text-text`;
+  }
+
+  return `${classes} cursor-pointer ${getVariantClasses(variant)}`;
+}
+
+function getComputedAriaLabel({
+  ariaLabel,
+  children,
+  iconOnly,
+}: {
+  ariaLabel?: string;
+  children?: React.ReactNode;
+  iconOnly: boolean;
+}) {
+  if (ariaLabel) return ariaLabel;
+  if (iconOnly && typeof children === 'string') return children;
+  return undefined;
+}
+
+function renderButtonContent({
+  children,
+  icon,
+  iconOnly,
+}: {
+  children?: React.ReactNode;
+  icon?: string;
+  iconOnly: boolean;
+}) {
+  return (
+    <>
+      {children && !iconOnly && (
+        <span className="content | flex w-full items-center justify-center">{children}</span>
+      )}
+      {icon && (
+        <span className="inline-flex items-center">
+          <svg
+            aria-hidden="true"
+            className="icon"
+            width="1.25em"
+            height="1.25em"
+            fill="currentColor"
+          >
+            <use xlinkHref={`/icons/icons.svg#${icon}`} />
+          </svg>
+        </span>
+      )}
+    </>
+  );
+}
+
 const Button = React.forwardRef<
   HTMLButtonElement | HTMLAnchorElement | HTMLSpanElement,
   Readonly<ButtonProps>
@@ -107,21 +179,8 @@ const Button = React.forwardRef<
     ...rest
   } = props;
 
-  let classes = 'button | rounded-full flex relative border-2';
-  if (className) classes += ` | ${className}`;
-  if (size === 'small') classes += ' font-button-small gap-sm py-xs px-lg';
-  if (size === 'default') classes += ' font-button py-sm gap-md px-xl';
-  if (size === 'large') classes += ' font-button-large gap-lg py-md px-3xl';
-
-  if (iconPosition === 'left') classes += ' flex-row-reverse';
-
-  const childrenWrapper = 'content | w-full flex justify-center items-center';
-
-  // If iconOnly and no ariaLabel, fall back to children (if string)
-  let computedAriaLabel = ariaLabel;
-  if (!computedAriaLabel && iconOnly && typeof children === 'string') {
-    computedAriaLabel = children;
-  }
+  const computedAriaLabel = getComputedAriaLabel({ ariaLabel, children, iconOnly });
+  const content = renderButtonContent({ children, icon, iconOnly });
 
   /* -----------------------------
       INLINE SPAN
@@ -130,7 +189,7 @@ const Button = React.forwardRef<
     const { as, ...inlineRest } = rest as InlineOnlyProps;
     void as;
 
-    classes += ` ${getVariantClasses(variant)}`;
+    const classes = getButtonClasses({ className, iconPosition, size, variant });
 
     return (
       <span
@@ -142,20 +201,7 @@ const Button = React.forwardRef<
         ref={ref as React.Ref<HTMLSpanElement>}
         {...inlineRest}
       >
-        {children && !iconOnly && <span className={childrenWrapper}>{children}</span>}
-        {icon && (
-          <span className="inline-flex items-center">
-            <svg
-              aria-hidden="true"
-              className="icon"
-              width="1.25em"
-              height="1.25em"
-              fill="currentColor"
-            >
-              <use xlinkHref={`/icons/icons.svg#${icon}`} />
-            </svg>
-          </span>
-        )}
+        {content}
       </span>
     );
   }
@@ -169,7 +215,7 @@ const Button = React.forwardRef<
 
     const relSafe = target === '_blank' ? rel || 'noopener noreferrer' : rel;
 
-    classes += ` cursor-pointer ${getVariantClasses(variant)}`;
+    const classes = getButtonClasses({ className, iconPosition, size, variant });
 
     return (
       <a
@@ -185,20 +231,7 @@ const Button = React.forwardRef<
         ref={ref as React.Ref<HTMLAnchorElement>}
         {...anchorRest}
       >
-        {children && !iconOnly && <span className={childrenWrapper}>{children}</span>}
-        {icon && (
-          <span className="inline-flex items-center">
-            <svg
-              aria-hidden="true"
-              className="icon"
-              width="1.25em"
-              height="1.25em"
-              fill="currentColor"
-            >
-              <use xlinkHref={`/icons/icons.svg#${icon}`} />
-            </svg>
-          </span>
-        )}
+        {content}
       </a>
     );
   }
@@ -207,11 +240,7 @@ const Button = React.forwardRef<
       BUTTON
   ----------------------------- */
   const { type = 'button', disabled = false, onClick, ...buttonRest } = rest as ButtonOnlyProps;
-  if (disabled) {
-    classes += ' bg-surface-disabled border-surface-disabled cursor-not-allowed text-text';
-  } else {
-    classes += ` cursor-pointer ${getVariantClasses(variant)}`;
-  }
+  const classes = getButtonClasses({ className, disabled, iconPosition, size, variant });
 
   return (
     <button
@@ -226,20 +255,7 @@ const Button = React.forwardRef<
       ref={ref as React.Ref<HTMLButtonElement>}
       {...buttonRest}
     >
-      {children && !iconOnly && <span className={childrenWrapper}>{children}</span>}
-      {icon && (
-        <span className="inline-flex items-center">
-          <svg
-            aria-hidden="true"
-            className="icon"
-            width="1.25em"
-            height="1.25em"
-            fill="currentColor"
-          >
-            <use xlinkHref={`/icons/icons.svg#${icon}`} />
-          </svg>
-        </span>
-      )}
+      {content}
     </button>
   );
 });

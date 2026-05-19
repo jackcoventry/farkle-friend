@@ -68,7 +68,7 @@ export const messages = {
     'scoreGenerator.addDie': 'Add die showing {value}',
     'scoreGenerator.chooseScoringDice': 'Choose scoring dice for this throw',
     'scoreGenerator.currentGo': 'Current throw total: {score}',
-    'scoreGenerator.goLabel': 'Throw',
+    'scoreGenerator.goLabel': 'Throw {index}',
     'scoreGenerator.invalidSelection': 'Only add dice that are part of the scoring combination.',
     'scoreGenerator.roundTotal': 'Turn total',
     'turn.action.bankSelection':
@@ -243,4 +243,8 @@ export type MessageValues = Record<string, string | number>;
 
 export function isMessageKey(value: unknown): value is MessageKey {
   return typeof value === 'string' && Object.hasOwn(messages.en, value);
+}
+
+export function getMessagePlaceholders(message: string) {
+  return Array.from(message.matchAll(/\{(\w+)\}/g), (match) => match[1]).sort();
 }

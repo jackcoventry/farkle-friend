@@ -15,7 +15,6 @@ const meta: Meta<typeof DiceTurnActions> = {
     onBank: fn(),
     onFinish: fn(),
     onRoll: fn(),
-    selectedScore: 0,
   },
   decorators: [
     (Story) => (
@@ -37,7 +36,6 @@ export const SelectionReady: Story = {
     canBank: true,
     canFinish: true,
     canRoll: false,
-    selectedScore: 300,
   },
 };
 
@@ -46,6 +44,5 @@ export const Farkled: Story = {
     canBank: false,
     canFinish: true,
     canRoll: false,
-    selectedScore: 0,
   },
 };

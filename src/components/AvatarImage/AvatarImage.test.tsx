@@ -1,16 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import type { Avatar } from '@/domain/game/avatars';
+import { avatarSet } from '@/domain/game/avatars';
 import { AvatarImage } from './AvatarImage';
 
 describe('AvatarImage', () => {
   it('renders an img with alt text and src', () => {
-    const avatar: Avatar = {
-      id: 1,
-      name: 'Hotdog',
-      color: 'bg-red-500',
-      image: '/avatar/food/hotdog.svg',
-    };
+    const avatar = avatarSet[2];
 
     render(
       <AvatarImage

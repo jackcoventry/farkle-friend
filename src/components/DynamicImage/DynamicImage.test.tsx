@@ -1,11 +1,12 @@
 import { render, screen } from '@testing-library/react';
+import type { ComponentPropsWithoutRef } from 'react';
 import { describe, expect, it, vi } from 'vitest';
 import { DynamicImage } from './DynamicImage';
 
 // next/image doesn't behave like a normal img in jsdom; mock it to a plain img for unit tests.
 vi.mock('next/image', () => ({
-  default: (props: never) => {
-    // eslint-disable-next-line jsx-a11y/alt-text
+  default: (props: ComponentPropsWithoutRef<'img'>) => {
+    // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text
     return <img {...props} />;
   },
 }));

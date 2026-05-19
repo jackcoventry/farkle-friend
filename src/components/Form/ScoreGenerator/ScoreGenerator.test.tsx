@@ -20,9 +20,9 @@ describe('ScoreGenerator', () => {
     await user.click(screen.getByRole('button', { name: 'Add die showing 5' }));
     await user.click(screen.getByRole('button', { name: 'Add throw' }));
 
-    expect(screen.getByText('Go 1')).toBeInTheDocument();
-    expect(screen.getByText('Go 2')).toBeInTheDocument();
-    expect(screen.getByText('1050')).toBeInTheDocument();
+    expect(screen.getByText('Throw 1')).toBeInTheDocument();
+    expect(screen.getByText('Throw 2')).toBeInTheDocument();
+    expect(screen.getByText(/1050/)).toBeInTheDocument();
     expect(onChange).toHaveBeenLastCalledWith(1050);
 
     rerender(
@@ -32,7 +32,7 @@ describe('ScoreGenerator', () => {
       />
     );
 
-    expect(screen.queryByText('Go 1')).not.toBeInTheDocument();
+    expect(screen.queryByText('Throw 1')).not.toBeInTheDocument();
     expect(onChange).toHaveBeenLastCalledWith(0);
   });
 

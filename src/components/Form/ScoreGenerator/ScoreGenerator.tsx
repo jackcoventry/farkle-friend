@@ -149,6 +149,9 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
                 key={item.id}
                 className="gap-xs border-border p-sm grid rounded-lg border sm:grid-cols-[auto_1fr_auto] sm:items-center"
               >
+                <span className="font-body-2">
+                  {t('scoreGenerator.goLabel', { index: index + 1 })}
+                </span>
                 <span
                   className="gap-2xs flex flex-wrap"
                   aria-label={`Dice for throw ${index + 1}`}
@@ -166,6 +169,9 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
               </li>
             ))}
           </ol>
+          <p className="font-heading-2 text-right">
+            {t('scoreGenerator.roundTotal')}: {roundTotal}
+          </p>
         </div>
       ) : null}
     </div>

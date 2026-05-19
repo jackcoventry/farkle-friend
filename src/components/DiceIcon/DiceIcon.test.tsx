@@ -27,4 +27,3 @@ describe('DiceIcon', () => {
     expect(root).toHaveAttribute('data-state', 'active');
   });
 });
-

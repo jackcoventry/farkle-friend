@@ -134,6 +134,7 @@ export function DiceTurnPanel({
     canFinish: dice.canFinish,
     canRoll: dice.canRoll,
     currentRollLength: activeTurn?.isFarkled ? 0 : (dice.currentRoll?.length ?? 0),
+    enabled: !isCoachOpenOnMobile,
     onBank: handleBank,
     onFinish: handleFinish,
     onRoll: handleRoll,
@@ -177,7 +178,6 @@ export function DiceTurnPanel({
             onBank={handleBank}
             onFinish={handleFinish}
             onRoll={handleRoll}
-            selectedScore={dice.selectedScore}
           />
         </div>
 

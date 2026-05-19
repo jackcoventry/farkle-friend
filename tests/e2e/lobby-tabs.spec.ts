@@ -41,4 +41,3 @@ test('lobby tabs support roving tabindex + arrow/Home/End navigation', async ({ 
   await expect(playersTab).toBeFocused();
   await expect(page.locator(`#${playersPanelId}`)).toBeVisible();
 });
-

@@ -8,7 +8,6 @@ type DiceTurnActionsProps = {
   onBank: () => void;
   onFinish: () => void;
   onRoll: () => void;
-  selectedScore: number;
 };
 
 export function DiceTurnActions({
@@ -19,7 +18,6 @@ export function DiceTurnActions({
   onBank,
   onFinish,
   onRoll,
-  selectedScore,
 }: Readonly<DiceTurnActionsProps>) {
   return (
     <TurnActionCluster
