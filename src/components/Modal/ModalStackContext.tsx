@@ -15,6 +15,8 @@ type ModalStackContextValue = {
   isTop: (id: string) => boolean;
 };
 
+export const MODAL_PORTAL_ROOT_ID = 'modal-root';
+
 const ModalStackContext = createContext<ModalStackContextValue | null>(null);
 
 type ModalStackProviderProps = {
@@ -23,7 +25,13 @@ type ModalStackProviderProps = {
 
 export function ModalStackProvider({ children }: Readonly<ModalStackProviderProps>) {
   const [stack, setStack] = useState<string[]>([]);
-  const prevOverflowRef = useRef<string>('');
+  const hiddenSiblingsRef = useRef<
+    Array<{
+      ariaHidden: string | null;
+      element: HTMLElement;
+      inert: boolean;
+    }>
+  >([]);
 
   const register = useCallback((id: string) => {
     setStack((prev) => {
@@ -44,17 +52,50 @@ export function ModalStackProvider({ children }: Readonly<ModalStackProviderProp
     [stack]
   );
 
-  // Centralised scroll lock: lock when at least one modal is open
   useEffect(() => {
+    const restoreHiddenSiblings = () => {
+      for (const item of hiddenSiblingsRef.current) {
+        if (item.ariaHidden == null) {
+          item.element.removeAttribute('aria-hidden');
+        } else {
+          item.element.setAttribute('aria-hidden', item.ariaHidden);
+        }
+
+        item.element.inert = item.inert;
+        if (!item.inert) {
+          item.element.removeAttribute('inert');
+        }
+      }
+      hiddenSiblingsRef.current = [];
+    };
+
+    restoreHiddenSiblings();
+
     if (stack.length === 0) {
-      document.body.style.overflow = prevOverflowRef.current;
+      document.body.classList.remove('modal-open');
       return;
     }
 
-    if (stack.length === 1) {
-      prevOverflowRef.current = document.body.style.overflow;
-      document.body.style.overflow = 'hidden';
+    document.body.classList.add('modal-open');
+
+    const portalRoot = document.getElementById(MODAL_PORTAL_ROOT_ID);
+    if (!portalRoot) return;
+
+    for (const element of Array.from(document.body.children)) {
+      if (!(element instanceof HTMLElement)) continue;
+      if (element === portalRoot) continue;
+
+      hiddenSiblingsRef.current.push({
+        ariaHidden: element.getAttribute('aria-hidden'),
+        element,
+        inert: element.inert,
+      });
+      element.setAttribute('aria-hidden', 'true');
+      element.setAttribute('inert', '');
+      element.inert = true;
     }
+
+    return restoreHiddenSiblings;
   }, [stack.length]);
 
   const value = useMemo(

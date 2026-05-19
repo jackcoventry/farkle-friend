@@ -1,8 +1,7 @@
 'use client';
 
 import type { Dispatch, SetStateAction } from 'react';
-import { useState } from 'react';
-import { type Avatar, type AvatarId, avatarSet } from '@/domain/game/avatars';
+import type { Avatar } from '@/domain/game/avatars';
 import type { GameAction } from '@/domain/game/gameReducer';
 import type { GameFlowState, GameState, GameSummary, Player } from '@/domain/game/gameTypes';
 import Button from '@/components/Button/Button';
@@ -10,6 +9,7 @@ import { type DiceTurnMetrics, DiceTurnPanel } from '@/components/DiceTurnPanel/
 import Footer from '@/components/Footer/Footer';
 import { GameActions } from '@/components/GameActions/GameActions';
 import { GameStatusBar } from '@/components/GameScreen/GameStatusBar';
+import { useActiveGameLayout } from '@/components/GameScreen/useActiveGameLayout';
 import GameShell from '@/components/GameShell/GameShell';
 import { ManualTurn } from '@/components/ManualTurn/ManualTurn';
 import { Panel } from '@/components/Panel/Panel';
@@ -106,22 +106,16 @@ export function ActiveGameScreen({
   state,
   summary,
 }: Readonly<ActiveGameScreenProps>) {
-  const [isTurnCoachOpen, setIsTurnCoachOpen] = useState(false);
-  const [showSidebarModal, setShowSidebarModal] = useState(false);
-  const currentAvatar =
-    avatar ?? (currentPlayer ? avatarSet[currentPlayer.avatar as AvatarId] : undefined);
-  const showTurnInfoToggle =
-    currentPlayer &&
-    flowState === 'TURN_ACTIVE' &&
-    (state.settings.mode === 'dice' || state.settings.mode === 'manual') &&
-    !state.pendingTurnResult;
-  const turnInfoModalId =
-    state.settings.mode === 'manual' ? 'manual-turn-coach-modal' : 'dice-turn-coach-modal';
-  const isActiveTurnLayout =
-    currentPlayer &&
-    flowState === 'TURN_ACTIVE' &&
-    !state.pendingTurnResult &&
-    (state.settings.mode === 'dice' || state.settings.mode === 'manual');
+  const {
+    currentAvatar,
+    isActiveTurnLayout,
+    isTurnCoachOpen,
+    setIsTurnCoachOpen,
+    setShowSidebarModal,
+    showSidebarModal,
+    showTurnInfoToggle,
+    turnInfoModalId,
+  } = useActiveGameLayout({ avatar, currentPlayer, flowState, state });
   const statusBar = currentPlayer ? (
     <GameStatusBar
       currentPlayer={currentPlayer}

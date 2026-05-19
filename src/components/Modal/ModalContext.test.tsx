@@ -16,8 +16,8 @@ function TestModal({ id, active }: { id: string; active: boolean }) {
 
 describe('ModalStackContext', () => {
   beforeEach(() => {
-    // Reset any styles that might linger between tests
-    document.body.style.overflow = '';
+    // Reset any state that might linger between tests
+    document.body.classList.remove('modal-open');
   });
 
   it('marks the only active modal as top-most', async () => {
@@ -67,7 +67,7 @@ describe('ModalStackContext', () => {
 
     // Initially no active modals -> no scroll lock
     await waitFor(() => {
-      expect(document.body.style.overflow).toBe('');
+      expect(document.body).not.toHaveClass('modal-open');
     });
 
     // Activate the modal -> scroll should lock
@@ -81,7 +81,7 @@ describe('ModalStackContext', () => {
     );
 
     await waitFor(() => {
-      expect(document.body.style.overflow).toBe('hidden');
+      expect(document.body).toHaveClass('modal-open');
     });
 
     // Deactivate again -> scroll should restore
@@ -95,7 +95,7 @@ describe('ModalStackContext', () => {
     );
 
     await waitFor(() => {
-      expect(document.body.style.overflow).toBe('');
+      expect(document.body).not.toHaveClass('modal-open');
     });
   });
 });

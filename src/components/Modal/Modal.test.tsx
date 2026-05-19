@@ -72,7 +72,7 @@ describe('Modal (compound API)', () => {
   });
 
   it('warns in development when an open modal has no accessible name', () => {
-    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
     renderWithProvider(
       <Modal isOpen>
@@ -82,15 +82,15 @@ describe('Modal (compound API)', () => {
       </Modal>
     );
 
-    expect(warnSpy).toHaveBeenCalledWith(
+    expect(errorSpy).toHaveBeenCalledWith(
       'Modal requires an accessible name. Add <Modal.Title> or pass ariaLabel.'
     );
 
-    warnSpy.mockRestore();
+    errorSpy.mockRestore();
   });
 
   it('does not warn when an open modal is named by its title', () => {
-    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
     renderWithProvider(
       <Modal isOpen>
@@ -103,9 +103,9 @@ describe('Modal (compound API)', () => {
       </Modal>
     );
 
-    expect(warnSpy).not.toHaveBeenCalled();
+    expect(errorSpy).not.toHaveBeenCalled();
 
-    warnSpy.mockRestore();
+    errorSpy.mockRestore();
   });
 
   it('calls onClose when Escape is pressed', () => {
@@ -219,6 +219,87 @@ describe('Modal (compound API)', () => {
     // Press Escape to close
     await user.keyboard('{Escape}');
     expect(openButton).toHaveFocus();
+  });
+
+  it('focuses the dialog itself when no tabbable children exist', async () => {
+    const user = userEvent.setup();
+
+    function Harness() {
+      const [open, setOpen] = useState(false);
+
+      return (
+        <>
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+          >
+            Open modal
+          </button>
+
+          <Modal
+            isOpen={open}
+            ariaLabel="Empty modal"
+          >
+            <Modal.Body>
+              <p>No controls here</p>
+            </Modal.Body>
+          </Modal>
+        </>
+      );
+    }
+
+    renderWithProvider(<Harness />);
+
+    await user.click(screen.getByRole('button', { name: /open modal/i }));
+
+    const dialog = screen.getByRole('dialog', { name: 'Empty modal' });
+    expect(dialog).toHaveAttribute('tabindex', '-1');
+    expect(dialog).toHaveFocus();
+  });
+
+  it('hides and inerts body siblings behind the modal portal', async () => {
+    const user = userEvent.setup();
+
+    function Harness() {
+      const [open, setOpen] = useState(false);
+
+      return (
+        <>
+          <main data-testid="page-content">Page content</main>
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+          >
+            Open modal
+          </button>
+          <Modal
+            isOpen={open}
+            onClose={() => setOpen(false)}
+            ariaLabel="My modal"
+          >
+            <Modal.Body>
+              <button>Inside</button>
+            </Modal.Body>
+          </Modal>
+        </>
+      );
+    }
+
+    renderWithProvider(<Harness />);
+
+    const pageContent = screen.getByTestId('page-content');
+    await user.click(screen.getByRole('button', { name: /open modal/i }));
+
+    const renderRoot = pageContent.closest('div');
+    expect(renderRoot).toHaveAttribute('aria-hidden', 'true');
+    expect(renderRoot).toHaveAttribute('inert');
+    expect(document.body).toHaveClass('modal-open');
+
+    await user.keyboard('{Escape}');
+
+    expect(renderRoot).not.toHaveAttribute('aria-hidden');
+    expect(renderRoot).not.toHaveAttribute('inert');
+    expect(document.body).not.toHaveClass('modal-open');
   });
 
   it('Modal.CloseButton uses context to call close()', async () => {

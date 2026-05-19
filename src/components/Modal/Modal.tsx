@@ -10,7 +10,7 @@ import React, {
 import { createPortal } from 'react-dom';
 import Button from '@/components/Button/Button';
 import './Modal.css';
-import { useModalStack } from './ModalStackContext';
+import { MODAL_PORTAL_ROOT_ID, useModalStack } from './ModalStackContext';
 
 const FOCUSABLE_SELECTORS = [
   'a[href]',
@@ -23,6 +23,18 @@ const FOCUSABLE_SELECTORS = [
   'details',
   '[tabindex]:not([tabindex="-1"])',
 ].join(', ');
+
+function getModalPortalRoot() {
+  let root = document.getElementById(MODAL_PORTAL_ROOT_ID);
+
+  if (!root) {
+    root = document.createElement('div');
+    root.id = MODAL_PORTAL_ROOT_ID;
+    document.body.appendChild(root);
+  }
+
+  return root;
+}
 
 type ModalVariant = 'modal' | 'splash';
 type ThemeVariant = 'default' | 'warning' | 'success';
@@ -179,16 +191,18 @@ function ModalRoot({
       <div
         ref={dialogRef}
         role="dialog"
+        aria-hidden={isTopMost ? undefined : true}
         aria-modal="true"
         aria-label={ariaLabel}
         aria-labelledby={ariaLabelledBy}
         onKeyDown={handleKeyDown}
         className={dialogClasses}
+        tabIndex={-1}
       >
         <ModalContext.Provider value={contextValue}>{children}</ModalContext.Provider>
       </div>
     </div>,
-    document.body
+    getModalPortalRoot()
   );
 }
 
