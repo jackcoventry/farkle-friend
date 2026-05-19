@@ -188,6 +188,8 @@ function ModalRoot({
       role="none"
       className={rootClasses}
     >
+      {/* Dialog owns Escape and Tab handling for the focus trap. */}
+      {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
       <div
         ref={dialogRef}
         role="dialog"
