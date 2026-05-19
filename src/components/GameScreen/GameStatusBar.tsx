@@ -2,7 +2,7 @@
 
 import { useI18n } from '@/i18n/I18nProvider';
 import { formatScore } from '@/utils/formatScore';
-import type { GameFlowState, GameState, Player } from '@/domain/game/gameTypes';
+import type { GameFlowState, GameMode, Player, TurnResult } from '@/domain/game/gameTypes';
 import type { DiceTurnMetrics } from '@/components/DiceTurnPanel/DiceTurnPanel';
 import { Panel } from '@/components/Panel/Panel';
 
@@ -10,14 +10,16 @@ type GameStatusBarProps = {
   currentPlayer: Player;
   diceTurnMetrics: DiceTurnMetrics | null;
   flowState: GameFlowState;
-  state: GameState;
+  mode: GameMode;
+  pendingTurnResult: TurnResult | null;
 };
 
 export function GameStatusBar({
   currentPlayer,
   diceTurnMetrics,
   flowState,
-  state,
+  mode,
+  pendingTurnResult,
 }: Readonly<GameStatusBarProps>) {
   const { t } = useI18n();
 
@@ -32,13 +34,13 @@ export function GameStatusBar({
       <dl className="gap-md ml-auto flex flex-wrap text-sm sm:text-base">
         <div>
           <dt className="text-text">
-            {state.pendingTurnResult ? t('status.previousTotal') : t('status.currentTotal')}
+            {pendingTurnResult ? t('status.previousTotal') : t('status.currentTotal')}
           </dt>
           <dd className="font-body-1 text-accent">
-            {formatScore(state.pendingTurnResult?.previousTotal ?? currentPlayer.totalScore ?? 0)}
+            {formatScore(pendingTurnResult?.previousTotal ?? currentPlayer.totalScore ?? 0)}
           </dd>
         </div>
-        {state.settings.mode === 'dice' && flowState === 'TURN_ACTIVE' && diceTurnMetrics ? (
+        {mode === 'dice' && flowState === 'TURN_ACTIVE' && diceTurnMetrics ? (
           <>
             <div>
               <dt className="text-text">{t('status.roundScore')}</dt>
@@ -52,12 +54,10 @@ export function GameStatusBar({
             </div>
           </>
         ) : null}
-        {state.pendingTurnResult ? (
+        {pendingTurnResult ? (
           <div>
             <dt className="text-text">{t('status.updatedTotal')}</dt>
-            <dd className="font-body-1 text-accent">
-              {formatScore(state.pendingTurnResult.newTotal)}
-            </dd>
+            <dd className="font-body-1 text-accent">{formatScore(pendingTurnResult.newTotal)}</dd>
           </div>
         ) : null}
       </dl>

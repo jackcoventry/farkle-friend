@@ -24,7 +24,8 @@ const GameFinishedModal = dynamic(() =>
 export function GameScreen() {
   const { state, dispatch } = useGame();
   const [diceTurnMetrics, setDiceTurnMetrics] = useState<DiceTurnMetrics | null>(null);
-  const { avatar, currentPlayer, flowState, nextPlayer, summary, winner } = useGameViewModel(state);
+  const { activeView, avatar, currentPlayer, flowState, lobbyView, nextPlayer, summary, winner } =
+    useGameViewModel(state);
   const {
     lobbyScreen,
     onLobbyTabKeyDown,
@@ -47,7 +48,7 @@ export function GameScreen() {
         onStartGame={actions.onStartGame}
         playersTabRef={playersTabRef}
         settingsTabRef={settingsTabRef}
-        state={state}
+        view={lobbyView}
       />
     );
   }
@@ -60,8 +61,8 @@ export function GameScreen() {
           onResetGame={actions.onResetGame}
           onResetPlayers={actions.onResetPlayers}
           players={summary.players}
-          soundEnabled={state.preferences.tableFeedback}
-          turns={state.turns}
+          soundEnabled={activeView.tableFeedback}
+          turns={activeView.turns}
           winner={winner}
         />
       </main>
@@ -83,6 +84,7 @@ export function GameScreen() {
         setDiceTurnMetrics={setDiceTurnMetrics}
         state={state}
         summary={summary}
+        view={activeView}
       />
       <ConfirmGameActionModal
         action={actions.confirmAction}

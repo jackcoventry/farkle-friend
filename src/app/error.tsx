@@ -10,11 +10,11 @@ type ErrorPageProps = {
 export default function ErrorPage({ error, reset }: Readonly<ErrorPageProps>) {
   return (
     <main className="p-xl bg-surface flex min-h-dvh items-center justify-center">
-      <section className="gap-md p-xl flex max-w-[520px] flex-col rounded-lg bg-white text-center shadow-lg">
+      <section className="gap-md p-xl bg-surface-raised text-text flex max-w-[520px] flex-col rounded-lg shadow-lg">
         <h1 className="font-heading">Something went wrong</h1>
         <p>The game hit an unexpected error. Try again to return to the current screen.</p>
         {error.digest ? (
-          <p className="text-sm text-gray-700">Error reference: {error.digest}</p>
+          <p className="text-text-muted text-sm">Error reference: {error.digest}</p>
         ) : null}
         <Button
           onClick={reset}

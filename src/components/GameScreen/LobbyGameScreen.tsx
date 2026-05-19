@@ -2,12 +2,11 @@
 
 import type { KeyboardEvent, RefObject } from 'react';
 import { useState } from 'react';
-import { canStartGame } from '@/domain/game/gameLogic';
-import type { GameState } from '@/domain/game/gameTypes';
 import Button from '@/components/Button/Button';
 import Footer from '@/components/Footer/Footer';
 import AddPlayerForm, { type AddPlayerFormSchemaType } from '@/components/Form/AddPlayer/AddPlayer';
 import Settings, { type SettingsFormSchemaType } from '@/components/Form/Settings/Settings';
+import type { LobbyGameView } from '@/components/GameScreen/useGameViewModel';
 import { GameSetupSummary } from '@/components/GameSetupSummary/GameSetupSummary';
 import GameShell from '@/components/GameShell/GameShell';
 import { Panel } from '@/components/Panel/Panel';
@@ -26,7 +25,7 @@ type LobbyGameScreenProps = {
   onStartGame: () => void;
   playersTabRef: RefObject<HTMLButtonElement | null>;
   settingsTabRef: RefObject<HTMLButtonElement | null>;
-  state: GameState;
+  view: LobbyGameView;
 };
 
 export function LobbyGameScreen({
@@ -39,16 +38,15 @@ export function LobbyGameScreen({
   onStartGame,
   playersTabRef,
   settingsTabRef,
-  state,
+  view,
 }: Readonly<LobbyGameScreenProps>) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const readyToStart = canStartGame(state);
   const startGameButton = (
     <Button
       type="button"
       onClick={onStartGame}
       className="w-full justify-center"
-      disabled={!readyToStart}
+      disabled={!view.readyToStart}
     >
       Start game
     </Button>
@@ -58,9 +56,9 @@ export function LobbyGameScreen({
     <GameShell key="lobby">
       <GameShell.Sidebar isDesktop>
         <GameShell.SidebarMain>
-          {state.players.length > 0 ? (
+          {view.players.length > 0 ? (
             <PlayerList
-              players={state.players}
+              players={view.players}
               onRemovePlayer={onRemovePlayer}
             />
           ) : (
@@ -72,8 +70,8 @@ export function LobbyGameScreen({
             </Panel>
           )}
           <GameSetupSummary
-            preferences={state.preferences}
-            settings={state.settings}
+            preferences={view.preferences}
+            settings={view.settings}
             onEditSettings={() => onSelectLobbyScreen('settings')}
           />
         </GameShell.SidebarMain>
@@ -91,9 +89,9 @@ export function LobbyGameScreen({
       >
         <GameShell.Sidebar>
           <GameShell.SidebarMain>
-            {state.players.length > 0 ? (
+            {view.players.length > 0 ? (
               <PlayerList
-                players={state.players}
+                players={view.players}
                 onRemovePlayer={onRemovePlayer}
               />
             ) : (
@@ -105,8 +103,8 @@ export function LobbyGameScreen({
               </Panel>
             )}
             <GameSetupSummary
-              preferences={state.preferences}
-              settings={state.settings}
+              preferences={view.preferences}
+              settings={view.settings}
               onEditSettings={() => {
                 setIsSidebarOpen(false);
                 onSelectLobbyScreen('settings');
@@ -145,9 +143,7 @@ export function LobbyGameScreen({
               icon="person-circle"
             >
               Players
-              {state.players.length ? (
-                <span className="ml-xs">({state.players.length})</span>
-              ) : null}
+              {view.players.length ? <span className="ml-xs">({view.players.length})</span> : null}
             </Button>
             <Button
               ref={settingsTabRef}

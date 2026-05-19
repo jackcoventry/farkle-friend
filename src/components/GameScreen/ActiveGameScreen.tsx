@@ -10,6 +10,7 @@ import Footer from '@/components/Footer/Footer';
 import { GameActions } from '@/components/GameActions/GameActions';
 import { GameStatusBar } from '@/components/GameScreen/GameStatusBar';
 import { useActiveGameLayout } from '@/components/GameScreen/useActiveGameLayout';
+import type { ActiveGameView } from '@/components/GameScreen/useGameViewModel';
 import GameShell from '@/components/GameShell/GameShell';
 import { ManualTurn } from '@/components/ManualTurn/ManualTurn';
 import { Panel } from '@/components/Panel/Panel';
@@ -32,22 +33,25 @@ type ActiveGameScreenProps = {
   setDiceTurnMetrics: Dispatch<SetStateAction<DiceTurnMetrics | null>>;
   state: GameState;
   summary: GameSummary;
+  view: ActiveGameView;
 };
 
 type GameScreenSidebarProps = {
   currentPlayer: Player | null;
   onQuit: () => void;
   onRestart: () => void;
-  state: GameState;
   summary: GameSummary;
+  targetScore: number;
+  turns: GameState['turns'];
 };
 
 export function GameScreenSidebar({
   summary,
   currentPlayer,
-  state,
   onQuit,
   onRestart,
+  targetScore,
+  turns,
 }: Readonly<GameScreenSidebarProps>) {
   return (
     <>
@@ -60,7 +64,7 @@ export function GameScreenSidebar({
                 players={summary.players}
                 activePlayerId={currentPlayer?.id}
                 leadingPlayerId={summary.leadingPlayerId}
-                targetScore={state.settings.targetScore}
+                targetScore={targetScore}
               />
             </div>
           </details>
@@ -73,8 +77,8 @@ export function GameScreenSidebar({
               <TurnHistory
                 leadingPlayerId={summary.leadingPlayerId}
                 players={summary.players}
-                targetScore={state.settings.targetScore}
-                turns={state.turns}
+                targetScore={targetScore}
+                turns={turns}
               />
             </div>
           </details>
@@ -105,6 +109,7 @@ export function ActiveGameScreen({
   setDiceTurnMetrics,
   state,
   summary,
+  view,
 }: Readonly<ActiveGameScreenProps>) {
   const {
     currentAvatar,
@@ -115,13 +120,20 @@ export function ActiveGameScreen({
     showSidebarModal,
     showTurnInfoToggle,
     turnInfoModalId,
-  } = useActiveGameLayout({ avatar, currentPlayer, flowState, state });
+  } = useActiveGameLayout({
+    avatar,
+    currentPlayer,
+    flowState,
+    mode: view.mode,
+    pendingTurnResult: view.pendingTurnResult,
+  });
   const statusBar = currentPlayer ? (
     <GameStatusBar
       currentPlayer={currentPlayer}
       diceTurnMetrics={diceTurnMetrics}
       flowState={flowState}
-      state={state}
+      mode={view.mode}
+      pendingTurnResult={view.pendingTurnResult}
     />
   ) : null;
 
@@ -131,9 +143,10 @@ export function ActiveGameScreen({
         <GameScreenSidebar
           summary={summary}
           currentPlayer={currentPlayer}
-          state={state}
           onQuit={onQuit}
           onRestart={onRestart}
+          targetScore={view.targetScore}
+          turns={view.turns}
         />
       </GameShell.Sidebar>
 
@@ -142,7 +155,7 @@ export function ActiveGameScreen({
           key={currentPlayer.id}
           avatar={currentAvatar}
           currentPlayer={currentPlayer}
-          soundEnabled={state.preferences.tableFeedback}
+          soundEnabled={view.tableFeedback}
         />
       ) : null}
 
@@ -157,9 +170,10 @@ export function ActiveGameScreen({
           <GameScreenSidebar
             summary={summary}
             currentPlayer={currentPlayer}
-            state={state}
             onQuit={onQuit}
             onRestart={onRestart}
+            targetScore={view.targetScore}
+            turns={view.turns}
           />
         </GameShell.Sidebar>
       </SidebarModal>
@@ -170,16 +184,16 @@ export function ActiveGameScreen({
 
           <div className="flex min-h-0 flex-1">
             {currentPlayer ? (
-              flowState === 'TURN_RESULT' && state.pendingTurnResult ? (
+              flowState === 'TURN_RESULT' && view.pendingTurnResult ? (
                 <TurnResultPanel
-                  autoAdvance={state.settings.autoAdvanceTurns}
+                  autoAdvance={view.autoAdvanceTurns}
                   currentPlayer={currentPlayer}
-                  key={`${state.pendingTurnResult.playerId}-${state.pendingTurnResult.score}-${state.pendingTurnResult.newTotal}`}
+                  key={`${view.pendingTurnResult.playerId}-${view.pendingTurnResult.score}-${view.pendingTurnResult.newTotal}`}
                   nextPlayer={nextPlayer}
-                  result={state.pendingTurnResult}
+                  result={view.pendingTurnResult}
                   onAdvanceTurn={onAdvanceTurn}
                 />
-              ) : state.settings.mode === 'dice' ? (
+              ) : view.mode === 'dice' ? (
                 <DiceTurnPanel
                   dispatch={dispatch}
                   isCoachOpenOnMobile={isTurnCoachOpen}

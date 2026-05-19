@@ -25,7 +25,7 @@ body.modal-open {
 
 @layer base {
   :focus-visible {
-    @apply ring-4 ring-yellow-500 ring-offset-4 outline-none;
+    @apply ring-selected-border ring-4 ring-offset-4 outline-none;
   }
 }
 

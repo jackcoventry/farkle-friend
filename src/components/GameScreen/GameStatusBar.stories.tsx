@@ -23,7 +23,7 @@ const meta: Meta<typeof GameStatusBar> = {
   decorators: [
     (Story) => (
       <GameProvider>
-        <div className="p-xl bg-gray-800">
+        <div className="p-xl bg-canvas">
           <Story />
         </div>
       </GameProvider>
@@ -43,7 +43,8 @@ export const ActiveDiceTurn: Story = {
       roundScore: 350,
     },
     flowState: 'TURN_ACTIVE',
-    state,
+    mode: state.settings.mode,
+    pendingTurnResult: null,
   },
 };
 
@@ -52,16 +53,14 @@ export const TurnResult: Story = {
     currentPlayer: state.players[0],
     diceTurnMetrics: null,
     flowState: 'TURN_RESULT',
-    state: {
-      ...state,
-      pendingTurnResult: {
-        isGameWinner: false,
-        newTotal: 1550,
-        nextPlayerId: 'grace',
-        playerId: 'ada',
-        previousTotal: 1200,
-        score: 350,
-      },
+    mode: state.settings.mode,
+    pendingTurnResult: {
+      isGameWinner: false,
+      newTotal: 1550,
+      nextPlayerId: 'grace',
+      playerId: 'ada',
+      previousTotal: 1200,
+      score: 350,
     },
   },
 };

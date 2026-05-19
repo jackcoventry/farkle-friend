@@ -177,7 +177,7 @@ function ModalRoot({
   const rootClasses =
     'modal modal__overlay | p-sm items-center justify-center bg-overlay flex inset-0 fixed z-50 opacity-100 pointer-events-auto';
   const dialogClasses =
-    'modal__dialog | overflow-hidden flex flex-col outline-none ring-4 ring-yellow-500 ring-offset-4 rounded-4xl';
+    'modal__dialog | overflow-hidden flex flex-col outline-none ring-4 ring-selected-border ring-offset-4 rounded-4xl';
 
   return createPortal(
     <div

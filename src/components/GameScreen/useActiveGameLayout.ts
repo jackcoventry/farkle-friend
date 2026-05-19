@@ -2,20 +2,22 @@
 
 import { useMemo, useState } from 'react';
 import { type Avatar, type AvatarId, avatarSet } from '@/domain/game/avatars';
-import type { GameFlowState, GameState, Player } from '@/domain/game/gameTypes';
+import type { GameFlowState, GameMode, Player, TurnResult } from '@/domain/game/gameTypes';
 
 type UseActiveGameLayoutArgs = {
   avatar: Avatar | undefined;
   currentPlayer: Player | null;
   flowState: GameFlowState;
-  state: GameState;
+  mode: GameMode;
+  pendingTurnResult: TurnResult | null;
 };
 
 export function useActiveGameLayout({
   avatar,
   currentPlayer,
   flowState,
-  state,
+  mode,
+  pendingTurnResult,
 }: UseActiveGameLayoutArgs) {
   const [isTurnCoachOpen, setIsTurnCoachOpen] = useState(false);
   const [showSidebarModal, setShowSidebarModal] = useState(false);
@@ -27,15 +29,14 @@ export function useActiveGameLayout({
   const showTurnInfoToggle =
     currentPlayer &&
     flowState === 'TURN_ACTIVE' &&
-    (state.settings.mode === 'dice' || state.settings.mode === 'manual') &&
-    !state.pendingTurnResult;
-  const turnInfoModalId =
-    state.settings.mode === 'manual' ? 'manual-turn-coach-modal' : 'dice-turn-coach-modal';
+    (mode === 'dice' || mode === 'manual') &&
+    !pendingTurnResult;
+  const turnInfoModalId = mode === 'manual' ? 'manual-turn-coach-modal' : 'dice-turn-coach-modal';
   const isActiveTurnLayout =
     currentPlayer &&
     flowState === 'TURN_ACTIVE' &&
-    !state.pendingTurnResult &&
-    (state.settings.mode === 'dice' || state.settings.mode === 'manual');
+    !pendingTurnResult &&
+    (mode === 'dice' || mode === 'manual');
 
   return {
     currentAvatar,
