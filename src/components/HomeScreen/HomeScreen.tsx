@@ -8,7 +8,7 @@ export function HomeScreen() {
 
   return (
     <div className="splash-screen bg-surface flex h-dvh items-center justify-center">
-      <div className="gap-md flex flex-col items-center">
+      <div className="splash-screen__content | gap-md flex flex-col items-center">
         <div className="home-screen__dice | p-xl mb-md bg-surface border-border rotate-12 rounded-full border-4">
           <DiceIcon count={6} />
         </div>

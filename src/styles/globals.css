@@ -17,9 +17,45 @@ body.modal-open {
   overflow: hidden;
 }
 
+.splash-screen {
+  overflow: hidden;
+  position: relative;
+}
+
+.splash-screen::before {
+  animation: splash-screen-reveal 0.45s ease-out forwards;
+  background: var(--color-surface);
+  content: '';
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.splash-screen__content {
+  position: relative;
+  z-index: 2;
+}
+
 @layer base {
   :focus-visible {
     @apply ring-selected-border ring-4 ring-offset-4 outline-none;
+  }
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateY(var(--spacing-2));
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes splash-screen-reveal {
+  to {
+    opacity: 0;
   }
 }
 
@@ -88,9 +124,14 @@ body.modal-open {
 
   .animate-bounce-in,
   .animate-fade-in,
-  .splash-screen {
+  .splash-screen,
+  .splash-screen::before {
     opacity: 1 !important;
     transform: none !important;
+  }
+
+  .splash-screen::before {
+    content: none;
   }
 
   .modal[data-variant='splash'] {
