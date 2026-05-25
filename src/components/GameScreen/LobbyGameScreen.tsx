@@ -1,5 +1,6 @@
 'use client';
 
+import { useI18n } from '@/i18n/I18nProvider';
 import type { KeyboardEvent, RefObject } from 'react';
 import { useRef, useState } from 'react';
 import Button from '@/components/Button/Button';
@@ -41,6 +42,7 @@ export function LobbyGameScreen({
   settingsTabRef,
   view,
 }: Readonly<LobbyGameScreenProps>) {
+  const { t } = useI18n();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const sidebarTriggerRef = useRef<HTMLButtonElement | null>(null);
   const closeSidebar = () => {
@@ -53,7 +55,7 @@ export function LobbyGameScreen({
       className="w-full justify-center"
       disabled={!view.readyToStart}
     >
-      Start game
+      {t('actions.start')}
     </Button>
   );
 
@@ -68,10 +70,8 @@ export function LobbyGameScreen({
             />
           ) : (
             <Panel>
-              <h2 className="font-heading-2">No players yet</h2>
-              <p className="text-text-muted mt-2xs">
-                Add at least two players, then start the game from the setup panel.
-              </p>
+              <h2 className="font-heading-2">{t('setup.noPlayersTitle')}</h2>
+              <p className="text-text-muted mt-2xs">{t('setup.noPlayersDescription')}</p>
             </Panel>
           )}
           <GameSetupSummary
@@ -102,10 +102,8 @@ export function LobbyGameScreen({
               />
             ) : (
               <Panel>
-                <h2 className="font-heading-2">No players yet</h2>
-                <p className="text-text-muted mt-2xs">
-                  Add at least two players, then start the game from the setup panel.
-                </p>
+                <h2 className="font-heading-2">{t('setup.noPlayersTitle')}</h2>
+                <p className="text-text-muted mt-2xs">{t('setup.noPlayersDescription')}</p>
               </Panel>
             )}
             <GameSetupSummary
@@ -126,13 +124,13 @@ export function LobbyGameScreen({
       <GameShell.Body>
         <div className="lobby-game-screen__main | gap-xl p-md mx-auto flex h-full w-full flex-col justify-start overflow-auto">
           <Panel className="lobby-start-panel | gap-lg grid">
-            <h2 className="font-heading-2 text-text">Ready?</h2>
+            <h2 className="font-heading-2 text-text">{t('setup.ready')}</h2>
             {startGameButton}
           </Panel>
           <div
             className="gap-xs grid grid-cols-2"
             role="tablist"
-            aria-label="Game setup"
+            aria-label={t('setup.gameSetup')}
           >
             <Button
               ref={playersTabRef}
@@ -148,7 +146,7 @@ export function LobbyGameScreen({
               size="small"
               icon="person-circle"
             >
-              Players
+              {t('setup.players')}
               {view.players.length ? <span className="ml-xs">({view.players.length})</span> : null}
             </Button>
             <Button
@@ -165,7 +163,7 @@ export function LobbyGameScreen({
               size="small"
               icon="gear"
             >
-              Settings
+              {t('settings.title')}
             </Button>
           </div>
 
@@ -198,7 +196,7 @@ export function LobbyGameScreen({
           ref={sidebarTriggerRef}
           size="small"
         >
-          Setup summary
+          {t('setup.summary')}
         </Button>
       </GameShell.MobileToolbar>
     </GameShell>

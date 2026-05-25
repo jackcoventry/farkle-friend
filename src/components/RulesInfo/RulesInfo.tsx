@@ -1,3 +1,6 @@
+'use client';
+
+import { useI18n } from '@/i18n/I18nProvider';
 import { scoringRuleExamples } from '@/domain/game/scoringRules';
 import DiceIcon from '@/components/DiceIcon/DiceIcon';
 import { Panel } from '@/components/Panel/Panel';
@@ -14,10 +17,45 @@ type RulesInfoSectionProps = {
   children?: React.ReactNode;
 };
 
+function getExampleTitleKey(title?: string) {
+  if (!title) return null;
+  const specialKeyByTitle = {
+    Straight: 'rules.straight',
+    'Three pairs': 'rules.threePairs',
+    'Two triples': 'rules.twoTriples',
+  } as const;
+  const specialKey = specialKeyByTitle[title as keyof typeof specialKeyByTitle];
+  if (specialKey) return { key: specialKey, values: undefined };
+
+  const match = title.match(/^(Single|Three|Four|Five|Six) (\d)s?$/);
+  if (!match) return null;
+
+  const [, count, face] = match;
+  const keyByCount = {
+    Single: 'rules.example.single',
+    Three: 'rules.example.three',
+    Four: 'rules.example.four',
+    Five: 'rules.example.five',
+    Six: 'rules.example.six',
+  } as const;
+
+  return {
+    key: keyByCount[count as keyof typeof keyByCount],
+    values: { face: Number(face) },
+  };
+}
+
 function RulesInfoRow({ dice = [], points = 0, title }: Readonly<RulesInfoRowProps>) {
+  const { t } = useI18n();
+  const translatedTitle = getExampleTitleKey(title);
+
   return (
     <div>
-      {title ? <h2 className="font-body-1 mb-xs">{title}</h2> : null}
+      {title ? (
+        <h2 className="font-body-1 mb-xs">
+          {translatedTitle ? t(translatedTitle.key, translatedTitle.values) : title}
+        </h2>
+      ) : null}
       <div className="gap-xs flex items-center">
         {dice.map((die, index) => (
           <span
@@ -28,7 +66,7 @@ function RulesInfoRow({ dice = [], points = 0, title }: Readonly<RulesInfoRowPro
           </span>
         ))}
         <span>=</span>
-        <span>{points} points</span>
+        <span>{t('rules.points', { points })}</span>
       </div>
     </div>
   );
@@ -44,12 +82,14 @@ function RulesInfoSection({ title, children }: Readonly<RulesInfoSectionProps>) 
 }
 
 function RulesInfo() {
+  const { t } = useI18n();
+
   return (
     <div className="gap-xl text-text flex flex-col">
       <div className="gap-lg grid md:grid-cols-2">
         <div className="gap-lg flex flex-col">
-          <RulesInfoSection title="Singles">
-            <p>Ones and fives score by themselves.</p>
+          <RulesInfoSection title={t('rules.singles')}>
+            <p>{t('rules.singlesDetail')}</p>
           </RulesInfoSection>
 
           {scoringRuleExamples.singles.map((example) => (
@@ -59,11 +99,8 @@ function RulesInfo() {
             />
           ))}
 
-          <RulesInfoSection title="Three of a kind">
-            <p>
-              If a three-of-a-kind is rolled, the value is 100 times that value, apart from three
-              1s, which is 1000 times
-            </p>
+          <RulesInfoSection title={t('rules.threeKind')}>
+            <p>{t('rules.threeKindDetail')}</p>
           </RulesInfoSection>
           {scoringRuleExamples.triples.map((example) => (
             <RulesInfoRow
@@ -73,11 +110,8 @@ function RulesInfo() {
           ))}
         </div>
         <div className="gap-lg flex flex-col">
-          <RulesInfoSection title="Four / five / six of a kind">
-            <p>
-              Whatever the triple value is, it is doubled for four, tripled for five and quadrupled
-              for six.
-            </p>
+          <RulesInfoSection title={t('rules.multiples')}>
+            <p>{t('rules.multiplesDetail')}</p>
           </RulesInfoSection>
           {scoringRuleExamples.multiples.map((example) => (
             <RulesInfoRow
@@ -86,32 +120,32 @@ function RulesInfo() {
             />
           ))}
 
-          <RulesInfoSection title="Straight">
-            <p>Using all 6 dice.</p>
+          <RulesInfoSection title={t('rules.straight')}>
+            <p>{t('rules.straightDetail')}</p>
           </RulesInfoSection>
           <RulesInfoRow {...scoringRuleExamples.specials[0]} />
-          <RulesInfoSection title="Three pairs">
-            <p>Any distinct pairs, using all six dice.</p>
+          <RulesInfoSection title={t('rules.threePairs')}>
+            <p>{t('rules.threePairsDetail')}</p>
           </RulesInfoSection>
           <RulesInfoRow {...scoringRuleExamples.specials[1]} />
 
-          <RulesInfoSection title="Two triples">
-            <p>Any distinct triples, using all six dice.</p>
+          <RulesInfoSection title={t('rules.twoTriples')}>
+            <p>{t('rules.twoTriplesDetail')}</p>
           </RulesInfoSection>
           <RulesInfoRow {...scoringRuleExamples.specials[2]} />
         </div>
       </div>
-      <RulesInfoSection title="Combination precedence">
-        <p>Some patterns override others:</p>
+      <RulesInfoSection title={t('rules.combinationPrecedence')}>
+        <p>{t('rules.patternsOverride')}</p>
         <ul className="gap-2xs grid list-inside list-disc">
-          <li>Straight / three pairs / two triples override lower patterns</li>
-          <li>Six of a kind is handled as a scaled multiple, not two triples!</li>
+          <li>{t('rules.overrideLowerPatterns')}</li>
+          <li>{t('rules.scaledMultiple')}</li>
         </ul>
       </RulesInfoSection>
       <Panel>
         <details className="dice-turn-table__coach-panel">
-          <summary className="font-body-1 cursor-pointer">Keyboard shortcuts</summary>
-          <p className="mt-xs">1-6 select dice, R roll, B bank, Enter end.</p>
+          <summary className="font-body-1 cursor-pointer">{t('rules.keyboardShortcuts')}</summary>
+          <p className="mt-xs">{t('rules.keyboardShortcutsDetail')}</p>
         </details>
       </Panel>
     </div>

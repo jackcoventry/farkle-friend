@@ -30,13 +30,15 @@ function getNextDefaultUsername(players: { username: string }[]) {
     playerNumber += 1;
   }
 
-  return `Player #${playerNumber}`;
+  return playerNumber;
 }
 
 function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
   const { state } = useGame();
   const { t } = useI18n();
-  const defaultUsername = getNextDefaultUsername(state.players);
+  const defaultUsername = t('player.defaultName', {
+    number: getNextDefaultUsername(state.players),
+  });
   const {
     control,
     handleSubmit,
@@ -94,7 +96,7 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
         className="form | gap-xl flex flex-col"
         onSubmit={handleSubmit(submitHandler)}
       >
-        <h2>Add Player</h2>
+        <h2>{t('player.add')}</h2>
         {!maxPlayersReached && (
           <>
             <Controller
@@ -106,13 +108,13 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
                     htmlFor="player-name"
                     className="sr-only"
                   >
-                    Player name
+                    {t('player.name')}
                   </label>
                   <input
                     id="player-name"
                     className="field-control"
                     {...field}
-                    placeholder="Enter player name..."
+                    placeholder={t('player.namePlaceholder')}
                     onFocus={(event) => {
                       if (!dirtyFields.username && event.currentTarget.value === defaultUsername) {
                         event.currentTarget.select();
@@ -143,7 +145,7 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
                   aria-describedby={fieldState.error ? 'player-avatar-error' : undefined}
                   aria-invalid={!!fieldState.error || undefined}
                 >
-                  <legend className="text-text mb-md">Choose an avatar</legend>
+                  <legend className="text-text mb-md">{t('player.chooseAvatar')}</legend>
 
                   <div className="avatar-list-grid | gap-sm sm:gap-md grid grid-cols-3 justify-items-center">
                     {avatarValues.map((option) => {
@@ -153,7 +155,10 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
                       return (
                         <label
                           key={option}
-                          aria-label={`Avatar ${avatar.name}${isAvatarInUse ? ' unavailable' : ''}`}
+                          aria-label={t(
+                            isAvatarInUse ? 'player.avatarUnavailable' : 'player.avatarLabel',
+                            { avatar: avatar.name }
+                          )}
                           className="avatar-list-option | transition-transform hover:scale-105"
                         >
                           <input
@@ -170,7 +175,7 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
                           <div className={classes}>
                             <AvatarImage
                               avatar={avatar}
-                              alt={`Avatar ${avatar.name}`}
+                              alt={t('player.avatarAlt', { avatar: avatar.name })}
                               className="h-auto w-full"
                             />
                           </div>

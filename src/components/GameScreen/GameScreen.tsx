@@ -1,5 +1,6 @@
 'use client';
 
+import { useI18n } from '@/i18n/I18nProvider';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { useGame } from '@/domain/game/GameProvider';
@@ -23,6 +24,7 @@ const GameFinishedModal = dynamic(() =>
 
 export function GameScreen() {
   const { state, dispatch } = useGame();
+  const { t } = useI18n();
   const [diceTurnMetrics, setDiceTurnMetrics] = useState<DiceTurnMetrics | null>(null);
   const { activeView, avatar, currentPlayer, flowState, lobbyView, nextPlayer, summary, winner } =
     useGameViewModel(state);
@@ -56,7 +58,7 @@ export function GameScreen() {
   if (flowState === 'FINISHED') {
     return (
       <main>
-        <h1 className="sr-only">Farkle Friend</h1>
+        <h1 className="sr-only">{t('game.title')}</h1>
         <GameFinishedModal
           onResetGame={actions.onResetGame}
           onResetPlayers={actions.onResetPlayers}

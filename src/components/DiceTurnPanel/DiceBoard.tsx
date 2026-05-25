@@ -1,3 +1,6 @@
+'use client';
+
+import { useI18n } from '@/i18n/I18nProvider';
 import type { DieValue } from '@/domain/game/dice';
 import DiceIcon from '@/components/DiceIcon/DiceIcon';
 import { Panel } from '@/components/Panel/Panel';
@@ -15,6 +18,8 @@ export function DiceBoard({
   onToggleDieSelection,
   selectedIndices,
 }: Readonly<DiceBoardProps>) {
+  const { t } = useI18n();
+
   return (
     <Panel className="dice-turn-table">
       <div className="flex h-full items-center justify-center overflow-visible">
@@ -23,9 +28,9 @@ export function DiceBoard({
             role="alert"
             className="dice-turn-table__farkle-alert | animate-bounce-in border-danger bg-danger-surface p-xl text-danger-contrast rounded-3xl border-4 text-center shadow-lg"
           >
-            <p className="font-sub-heading text-danger">Turn over</p>
-            <h2 className="font-heading text-danger">You have been Farkled!</h2>
-            <p className="mt-xs">No scoring dice were rolled. This turn scores 0 points.</p>
+            <p className="font-sub-heading text-danger">{t('turn.farkledStatus')}</p>
+            <h2 className="font-heading text-danger">{t('turn.farkledTitle')}</h2>
+            <p className="mt-xs">{t('turn.detail.farkle')}</p>
           </div>
         ) : null}
 

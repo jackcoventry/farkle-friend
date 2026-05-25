@@ -22,6 +22,14 @@ const spacingUtilities = {
   mb: 'margin-block-end',
 };
 
+const publicCssFontGroups = new Set(['title', 'body', 'button']);
+
+function isPublicCssThemeToken(token) {
+  if (token.path[0] !== 'font') return true;
+
+  return publicCssFontGroups.has(token.path[1]);
+}
+
 StyleDictionary.registerFormat({
   name: 'custom/css/spacing-utilities',
 
@@ -60,6 +68,7 @@ const sd = new StyleDictionary({
         {
           destination: 'tokens.theme.css',
           format: 'css/variables',
+          filter: isPublicCssThemeToken,
         },
         {
           destination: 'spacing.css',

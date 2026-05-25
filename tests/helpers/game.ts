@@ -16,7 +16,7 @@ export async function openSidebarIfNeeded(page: Page) {
 }
 
 export async function startGame(page: Page) {
-  await page.getByRole('button', { name: 'Start game' }).click();
+  await page.getByRole('button', { name: 'Start' }).click();
 }
 
 export async function addPlayersAndStartGame(page: Page) {

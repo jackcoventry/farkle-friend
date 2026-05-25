@@ -1,3 +1,6 @@
+'use client';
+
+import { useI18n } from '@/i18n/I18nProvider';
 import { AvatarId, avatarSet } from '@/domain/game/avatars';
 import { Player } from '@/domain/game/gameTypes';
 import { AvatarImage } from '@/components/AvatarImage/AvatarImage';
@@ -18,6 +21,8 @@ function PlayerList({
   players = [],
   targetScore,
 }: Readonly<PlayerListProps>) {
+  const { t } = useI18n();
+
   return (
     <ul className="player-list | gap-xs flex flex-col">
       {players.map((player) => {
@@ -44,7 +49,7 @@ function PlayerList({
               >
                 <AvatarImage
                   avatar={avatar}
-                  alt={`${player.username}'s ${avatar.name} avatar`}
+                  alt={t('player.avatarAlt', { avatar: avatar.name })}
                   className="h-auto w-full"
                 />
               </div>
@@ -60,22 +65,24 @@ function PlayerList({
                     <div className="gap-2xs flex flex-wrap">
                       {isActive ? (
                         <span className="bg-accent px-xs py-2xs text-accent-contrast rounded-full text-xs">
-                          Current
+                          {t('player.current')}
                         </span>
                       ) : null}
                       {isLeader && totalScore > 0 ? (
                         <span className="bg-control px-xs py-2xs text-control-text rounded-full text-xs">
-                          Leader
+                          {t('player.leader')}
                         </span>
                       ) : null}
                     </div>
                   ) : null}
                 </div>
-                <span className="text-text-muted block">{totalScore} points</span>
+                <span className="text-text-muted block">
+                  {t('common.points', { points: totalScore })}
+                </span>
                 {progress === null ? null : (
                   <div
                     className="bg-surface h-2 overflow-hidden rounded-full"
-                    aria-label={`${player.username} is ${progress}% of the way to the target score`}
+                    aria-label={t('player.progress', { player: player.username, progress })}
                     role="meter"
                     aria-valuemin={0}
                     aria-valuemax={100}
@@ -91,11 +98,11 @@ function PlayerList({
               {onRemovePlayer ? (
                 <button
                   type="button"
-                  aria-label={`Remove ${player.username}`}
+                  aria-label={t('actions.removePlayer', { player: player.username })}
                   className="px-sm py-xs text-text-muted hover:bg-surface focus-visible:outline-accent ml-auto cursor-pointer self-center rounded-lg text-sm focus-visible:outline-2"
                   onClick={() => onRemovePlayer(player.id)}
                 >
-                  Remove
+                  {t('actions.remove')}
                 </button>
               ) : null}
             </div>

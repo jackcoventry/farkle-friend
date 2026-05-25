@@ -1,3 +1,6 @@
+'use client';
+
+import { useI18n } from '@/i18n/I18nProvider';
 import Button from '@/components/Button/Button';
 
 type GameActionsProps = {
@@ -6,6 +9,8 @@ type GameActionsProps = {
 };
 
 export function GameActions({ onQuit, onRestart }: Readonly<GameActionsProps>) {
+  const { t } = useI18n();
+
   return (
     <section className="gap-xs mt-md flex flex-col">
       <div className="gap-xs flex flex-col">
@@ -14,14 +19,14 @@ export function GameActions({ onQuit, onRestart }: Readonly<GameActionsProps>) {
           className="justify-center"
           size="small"
         >
-          Restart game
+          {t('actions.restartGame')}
         </Button>
         <Button
           onClick={onQuit}
           className="justify-center"
           size="small"
         >
-          Quit to setup
+          {t('actions.quitToSetup')}
         </Button>
       </div>
     </section>

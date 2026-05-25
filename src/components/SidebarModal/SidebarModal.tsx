@@ -1,3 +1,4 @@
+import { useI18n } from '@/i18n/I18nProvider';
 import type { ReactNode, RefObject } from 'react';
 import Modal from '@/components/Modal/Modal';
 
@@ -20,6 +21,8 @@ export function SidebarModal({
   onClose,
   returnFocusRef,
 }: Readonly<SidebarModalProps>) {
+  const { t } = useI18n();
+
   return (
     <Modal
       id={id}
@@ -33,7 +36,7 @@ export function SidebarModal({
         className="game-menu-modal"
       >
         <Modal.Header>
-          <Modal.Title className="font-heading">Game menu</Modal.Title>
+          <Modal.Title className="font-heading">{t('actions.gameMenu')}</Modal.Title>
           <Modal.CloseButton ariaLabel={closeLabel} />
         </Modal.Header>
         <Modal.Content>{children}</Modal.Content>

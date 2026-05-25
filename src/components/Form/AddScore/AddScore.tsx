@@ -150,7 +150,7 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
                       id="turn-score"
                       className="border-border p-md text-text font-title-1 w-full appearance-none border-0 border-b-2 bg-transparent text-center"
                       {...field}
-                      placeholder="Enter your score..."
+                      placeholder={t('manualScore.scorePlaceholder')}
                       data-valid={errors?.value ? 'false' : 'true'}
                       aria-invalid={fieldState.error ? 'true' : undefined}
                       aria-describedby={fieldState.error ? 'turn-score-error' : undefined}
