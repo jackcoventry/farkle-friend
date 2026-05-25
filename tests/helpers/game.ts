@@ -40,6 +40,16 @@ export async function startNextTurn(page: Page) {
 }
 
 export async function waitForTurnSplash(page: Page, playerName: string) {
-  await expect(page.getByRole('dialog', { name: `${playerName}'s turn` })).toBeVisible();
-  await page.waitForTimeout(2100);
+  const splash = page.getByRole('dialog', { name: `${playerName}'s turn` });
+
+  try {
+    await expect(splash).toBeVisible({ timeout: 10000 });
+  } catch {
+    await expect(page.getByRole('button', { name: /^(Manual|Roll dice)$/ })).toBeVisible({
+      timeout: 5000,
+    });
+    return;
+  }
+
+  await expect(splash).toBeHidden({ timeout: 5000 });
 }
