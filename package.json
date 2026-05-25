@@ -26,7 +26,7 @@
     "test:e2e:static": "npm run build && STATIC_E2E=1 playwright test",
     "test:visual": "playwright test -c playwright.visual.config.ts",
     "test:visual:update": "playwright test -c playwright.visual.config.ts --update-snapshots",
-    "lh:ci": "npm run build && npx --yes @lhci/cli@0.15.1 autorun --config=./lighthouserc.mjs",
+    "lh:ci": "npm run build && npx --yes @lhci/cli@0.15.1 autorun --config=./lighthouserc.json",
     "prettier": "prettier --write \"src/**/*.{css,tsx,ts}\"",
     "format:check": "prettier --check \"src/**/*.{css,tsx,ts}\" \"tests/**/*.{ts,tsx}\" \"config/**/*.mjs\" \"*.{md,json,yml,ts,mjs}\" \".github/**/*.yml\"",
     "verify": "npm run format:check && npm run lint && npm run typecheck && npm test && npm run build",
