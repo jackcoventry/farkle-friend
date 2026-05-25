@@ -12,6 +12,7 @@ import GameShell from '@/components/GameShell/GameShell';
 import { Panel } from '@/components/Panel/Panel';
 import PlayerList from '@/components/PlayerList/PlayerList';
 import { SidebarModal } from '@/components/SidebarModal/SidebarModal';
+import './LobbyGameScreen.css';
 
 type LobbyScreen = 'players' | 'settings';
 
@@ -123,7 +124,7 @@ export function LobbyGameScreen({
       </SidebarModal>
 
       <GameShell.Body>
-        <div className="gap-xl p-md mx-auto flex h-full w-full max-w-[520px] flex-col justify-start overflow-auto">
+        <div className="lobby-game-screen__main | gap-xl p-md mx-auto flex h-full w-full flex-col justify-start overflow-auto">
           <Panel className="lobby-start-panel | gap-lg grid">
             <h2 className="font-heading-2 text-text">Ready?</h2>
             {startGameButton}

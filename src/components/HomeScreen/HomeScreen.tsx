@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Button from '@/components/Button/Button';
 import DiceIcon from '@/components/DiceIcon/DiceIcon';
+import './HomeScreen.css';
 
 export function HomeScreen() {
   const title = 'FARKLE!'.split('');
@@ -9,7 +10,7 @@ export function HomeScreen() {
     <div className="splash-screen bg-surface flex h-dvh items-center justify-center">
       <div className="gap-md flex flex-col items-center">
         <div
-          className="p-xl animate-fade-in mb-md bg-surface border-border h-[200px] w-[200px] rotate-12 rounded-full border-4 opacity-0"
+          className="home-screen__dice | p-xl animate-fade-in mb-md bg-surface border-border rotate-12 rounded-full border-4 opacity-0"
           style={{
             animationDelay: '1.45s',
           }}
@@ -37,7 +38,7 @@ export function HomeScreen() {
           ))}
         </h1>
         <div
-          className="animate-bounce-in gap-md px-lg flex w-full max-w-[320px] flex-col opacity-0 sm:px-0"
+          className="home-screen__actions | animate-bounce-in gap-md px-lg flex w-full flex-col opacity-0 sm:px-0"
           style={{
             animationDelay: '1.45s',
           }}

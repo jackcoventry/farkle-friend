@@ -6,6 +6,7 @@ import { formatScore } from '@/utils/formatScore';
 import type { Player, TurnResult } from '@/domain/game/gameTypes';
 import Button from '@/components/Button/Button';
 import { Panel } from '@/components/Panel/Panel';
+import './TurnResultPanel.css';
 
 const AUTO_ADVANCE_SECONDS = 3;
 
@@ -63,7 +64,7 @@ export function TurnResultPanel({
       ref={panelRef}
       aria-labelledby={titleId}
       aria-live="polite"
-      className="gap-xl p-xl m-auto flex w-full max-w-[560px] flex-col text-center"
+      className="turn-result-panel | gap-xl p-xl m-auto flex w-full flex-col text-center"
       onKeyDown={handleKeyDown}
       tabIndex={-1}
     >

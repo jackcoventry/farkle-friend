@@ -3,6 +3,7 @@ import React from 'react';
 import { DieValue, scoreSelectedDiceWithUsage, sortDiceValues } from '@/domain/game/dice';
 import Button from '@/components/Button/Button';
 import DiceIcon from '@/components/DiceIcon/DiceIcon';
+import './ScoreGenerator.css';
 
 type ScoreGeneratorProps = {
   className?: string;
@@ -65,7 +66,7 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
 
   return (
     <div className={`gap-lg grid ${className ?? ''}`}>
-      <div className="gap-lg mx-auto grid h-[200px] w-full grid-cols-6">
+      <div className="score-generator__dice-grid | gap-lg mx-auto grid w-full grid-cols-6">
         {dies.map((die) => {
           const classes = `enabled:hover:opacity-50 enabled:hover:scale-110 enabled:cursor-pointer transition-transform disabled:grayscale-50 disabled:cursor-not-allowed ${die === clicked ? 'enabled:hover:scale-120 ' : ''}`;
           return (
@@ -147,7 +148,7 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
             {sequenceItems.map((item, index) => (
               <li
                 key={item.id}
-                className="gap-xs border-border p-sm grid rounded-lg border sm:grid-cols-[auto_1fr_auto] sm:items-center"
+                className="score-generator__history-item | gap-xs border-border p-sm grid rounded-lg border sm:items-center"
               >
                 <span className="font-body-2">
                   {t('scoreGenerator.goLabel', { index: index + 1 })}

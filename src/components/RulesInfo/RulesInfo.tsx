@@ -1,6 +1,7 @@
 import { scoringRuleExamples } from '@/domain/game/scoringRules';
 import DiceIcon from '@/components/DiceIcon/DiceIcon';
 import { Panel } from '@/components/Panel/Panel';
+import './RulesInfo.css';
 
 type RulesInfoRowProps = {
   dice?: Array<1 | 2 | 3 | 4 | 5 | 6>;
@@ -20,7 +21,7 @@ function RulesInfoRow({ dice = [], points = 0, title }: Readonly<RulesInfoRowPro
       <div className="gap-xs flex items-center">
         {dice.map((die, index) => (
           <span
-            className="w-[28px] md:w-[50px]"
+            className="rules-info__die"
             key={`${die}_${index}`}
           >
             <DiceIcon count={die} />
