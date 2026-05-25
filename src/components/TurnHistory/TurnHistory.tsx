@@ -1,3 +1,6 @@
+'use client';
+
+import { useI18n } from '@/i18n/I18nProvider';
 import { formatScore } from '@/utils/formatScore';
 import { AvatarId, avatarSet } from '@/domain/game/avatars';
 import {
@@ -22,6 +25,7 @@ export function TurnHistory({
   targetScore,
   turns,
 }: Readonly<TurnHistoryProps>) {
+  const { t } = useI18n();
   const recentTurns = getRecentTurns(turns);
   const playerNames = getPlayerNameMap(players);
   const playersById = new Map(players.map((player) => [player.id, player]));
@@ -39,29 +43,29 @@ export function TurnHistory({
       {leader ? (
         <dl className="gap-xs border-border mb-sm pb-sm grid border-b">
           <div className="gap-sm flex justify-between">
-            <dt>Leader</dt>
+            <dt>{t('history.leader')}</dt>
             <dd className="text-accent truncate text-right">{leader.username}</dd>
           </div>
           <div className="gap-sm flex justify-between">
-            <dt>Needs</dt>
+            <dt>{t('history.needs')}</dt>
             <dd className="text-accent text-right">
               {formatScore(Math.max(0, targetScore - (leader.totalScore ?? 0)))}
             </dd>
           </div>
           {biggestTurn ? (
             <div className="gap-sm flex justify-between">
-              <dt>Biggest turn</dt>
+              <dt>{t('history.biggestTurn')}</dt>
               <dd className="text-accent truncate text-right">
-                {playerNames.get(biggestTurn.playerId) ?? 'Player'} +
+                {playerNames.get(biggestTurn.playerId) ?? t('common.player')} +
                 {formatScore(biggestTurn.score)}
               </dd>
             </div>
           ) : null}
           {lastFarkle ? (
             <div className="gap-sm flex justify-between">
-              <dt>Last farkle</dt>
+              <dt>{t('history.lastFarkle')}</dt>
               <dd className="text-accent truncate text-right">
-                {playerNames.get(lastFarkle.playerId) ?? 'Player'}
+                {playerNames.get(lastFarkle.playerId) ?? t('common.player')}
               </dd>
             </div>
           ) : null}
@@ -70,7 +74,7 @@ export function TurnHistory({
 
       {recentTurns.length > 0 ? (
         <>
-          <p className="font-heading-3 mb-xs">Recent events</p>
+          <p className="font-heading-3 mb-xs">{t('history.recentEvents')}</p>
           <ol className="gap-xs flex flex-col">
             {recentTurns.map((turn) => {
               const player = playersById.get(turn.playerId);
@@ -97,7 +101,8 @@ export function TurnHistory({
                       </span>
                     ) : null}
                     <span className="truncate">
-                      {playerNames.get(turn.playerId) ?? 'Player'} {isFarkle ? 'farkled' : 'banked'}
+                      {playerNames.get(turn.playerId) ?? t('common.player')}{' '}
+                      {isFarkle ? t('history.farkled') : t('history.banked')}
                     </span>
                   </span>
                   <span
@@ -105,7 +110,7 @@ export function TurnHistory({
                       isFarkle ? 'bg-danger text-danger-contrast' : 'text-accent'
                     }`}
                   >
-                    {isFarkle ? 'Farkle' : `+${formatScore(turn.score)}`}
+                    {isFarkle ? t('common.farkle') : `+${formatScore(turn.score)}`}
                   </span>
                 </li>
               );

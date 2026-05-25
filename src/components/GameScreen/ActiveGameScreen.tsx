@@ -1,5 +1,6 @@
 'use client';
 
+import { useI18n } from '@/i18n/I18nProvider';
 import type { Dispatch, SetStateAction } from 'react';
 import type { Avatar } from '@/domain/game/avatars';
 import type { GameAction } from '@/domain/game/gameReducer';
@@ -53,12 +54,16 @@ export function GameScreenSidebar({
   targetScore,
   turns,
 }: Readonly<GameScreenSidebarProps>) {
+  const { t } = useI18n();
+
   return (
     <>
       <GameShell.SidebarMain>
         <Panel>
           <details open>
-            <summary className="font-heading-2 text-text cursor-pointer">Scoreboard</summary>
+            <summary className="font-heading-2 text-text cursor-pointer">
+              {t('history.scoreboard')}
+            </summary>
             <div className="mt-sm">
               <PlayerList
                 players={summary.players}
@@ -72,7 +77,9 @@ export function GameScreenSidebar({
 
         <Panel>
           <details>
-            <summary className="font-heading-2 text-text cursor-pointer">Turn log</summary>
+            <summary className="font-heading-2 text-text cursor-pointer">
+              {t('history.turnLog')}
+            </summary>
             <div className="mt-sm">
               <TurnHistory
                 leadingPlayerId={summary.leadingPlayerId}
@@ -111,6 +118,7 @@ export function ActiveGameScreen({
   summary,
   view,
 }: Readonly<ActiveGameScreenProps>) {
+  const { t } = useI18n();
   const {
     currentAvatar,
     isActiveTurnLayout,
@@ -212,7 +220,7 @@ export function ActiveGameScreen({
                 />
               )
             ) : (
-              <p>No active player</p>
+              <p>{t('player.noActive')}</p>
             )}
           </div>
         </div>
@@ -229,7 +237,7 @@ export function ActiveGameScreen({
               onClick={() => setIsTurnCoachOpen((current) => !current)}
               icon="question-circle"
             >
-              {isTurnCoachOpen ? 'Hide turn info' : 'Turn info'}
+              {isTurnCoachOpen ? t('actions.hideTurnInfo') : t('actions.turnInfo')}
             </Button>
           ) : null}
           <Button
@@ -240,7 +248,7 @@ export function ActiveGameScreen({
             size="small"
             icon="three-dots-vertical"
           >
-            Game menu
+            {t('actions.gameMenu')}
           </Button>
         </div>
       </GameShell.MobileToolbar>

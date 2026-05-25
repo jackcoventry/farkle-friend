@@ -1,9 +1,13 @@
+'use client';
+
+import { useI18n } from '@/i18n/I18nProvider';
 import Link from 'next/link';
 import Button from '@/components/Button/Button';
 import DiceIcon from '@/components/DiceIcon/DiceIcon';
 import './HomeScreen.css';
 
 export function HomeScreen() {
+  const { t } = useI18n();
   const title = 'FARKLE!'.split('');
 
   return (
@@ -31,7 +35,7 @@ export function HomeScreen() {
               as="inline"
               size="large"
             >
-              Start
+              {t('actions.start')}
             </Button>
           </Link>
         </div>

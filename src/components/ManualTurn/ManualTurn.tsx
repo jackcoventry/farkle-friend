@@ -1,5 +1,6 @@
 'use client';
 
+import { useI18n } from '@/i18n/I18nProvider';
 import type React from 'react';
 import type { GameAction } from '@/domain/game/gameReducer';
 import type { GameState } from '@/domain/game/gameTypes';
@@ -25,9 +26,10 @@ export function ManualTurn({
   statusSlot,
 }: Readonly<ManualTurnProps>) {
   const { currentPlayer, isInProgress, commitTurnScore } = useTurnController(state, dispatch);
+  const { t } = useI18n();
 
   if (!isInProgress || !currentPlayer) {
-    return <p>No active player</p>;
+    return <p>{t('player.noActive')}</p>;
   }
 
   const onAddScoreFormSubmit = (data: AddScoreSchemaType) => {
@@ -48,14 +50,14 @@ export function ManualTurn({
   const coachContent = (
     <Panel
       className="dice-turn-table__coach-panel | gap-sm flex flex-wrap text-sm"
-      aria-label="Manual scoring guidance"
+      aria-label={t('manualScore.guidanceLabel')}
     >
       <div className="gap-xs flex min-w-0 flex-col">
-        <p className="font-heading-2">Manual scoring</p>
-        <p>Enter the turn score, then add it to bank the score and move on.</p>
+        <p className="font-heading-2">{t('manualScore.guidanceTitle')}</p>
+        <p>{t('manualScore.guidanceDetail')}</p>
       </div>
       <p className="bg-accent px-sm py-xs text-accent-contrast rounded-lg">
-        Use this mode when you are rolling physical dice.
+        {t('manualScore.physicalDiceHint')}
       </p>
     </Panel>
   );
@@ -66,7 +68,7 @@ export function ManualTurn({
         <AddScoreForm onSubmit={onAddScoreFormSubmit} />
         <aside
           className="dice-turn-rail | gap-xs lg:gap-sm -order-1 grid content-start overflow-visible"
-          aria-label="Turn information"
+          aria-label={t('turn.information')}
         >
           {statusSlot}
           <div className="hidden xl:grid">{coachContent}</div>
@@ -77,15 +79,15 @@ export function ManualTurn({
         id="manual-turn-coach-modal"
         isOpen={isCoachOpenOnMobile}
         onClose={onCloseMobileCoach}
-        ariaLabel="Turn information"
+        ariaLabel={t('turn.information')}
       >
         <Modal.Panel
           size="narrow"
           className="dice-turn-coach-modal"
         >
           <Modal.Header>
-            <Modal.Title className="font-heading">Turn information</Modal.Title>
-            <Modal.CloseButton ariaLabel="Close turn information" />
+            <Modal.Title className="font-heading">{t('turn.information')}</Modal.Title>
+            <Modal.CloseButton ariaLabel={t('turn.closeInformation')} />
           </Modal.Header>
           <Modal.Content>{coachContent}</Modal.Content>
         </Modal.Panel>

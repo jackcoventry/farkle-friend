@@ -1,3 +1,6 @@
+'use client';
+
+import { useI18n } from '@/i18n/I18nProvider';
 import { formatScore } from '@/utils/formatScore';
 import type { GamePreferences, GameSettings } from '@/domain/game/gameTypes';
 import Button from '@/components/Button/Button';
@@ -14,46 +17,53 @@ export function GameSetupSummary({
   preferences,
   settings,
 }: Readonly<GameSetupSummaryProps>) {
-  const modeLabel = settings.mode === 'dice' ? 'Dice rolling' : 'Manual scoring';
+  const { t } = useI18n();
+  const modeLabel = settings.mode === 'dice' ? t('setup.diceRolling') : t('setup.manualScoring');
 
   return (
     <Panel>
-      <h3 className="font-heading-2 mb-xs">Game setup</h3>
+      <h3 className="font-heading-2 mb-xs">{t('setup.gameSetup')}</h3>
       <dl className="gap-xs grid">
         <div className="gap-sm flex justify-between">
-          <dt>Mode</dt>
+          <dt>{t('settings.mode')}</dt>
           <dd className="text-accent text-right">{modeLabel}</dd>
         </div>
         <div className="gap-sm flex justify-between">
-          <dt>Target</dt>
+          <dt>{t('setup.target')}</dt>
           <dd className="text-accent text-right">{formatScore(settings.targetScore)}</dd>
         </div>
         <div className="gap-sm flex justify-between">
-          <dt>Turn hand-off</dt>
+          <dt>{t('settings.turnHandOff')}</dt>
           <dd className="text-accent text-right">
-            {settings.autoAdvanceTurns ? 'Auto' : 'Manual'}
+            {settings.autoAdvanceTurns ? t('settings.auto') : t('common.manual')}
           </dd>
         </div>
         <div className="gap-sm flex justify-between">
-          <dt>Combo hints</dt>
-          <dd className="text-accent text-right">{settings.showComboSuggestions ? 'On' : 'Off'}</dd>
+          <dt>{t('setup.comboHints')}</dt>
+          <dd className="text-accent text-right">
+            {settings.showComboSuggestions ? t('common.on') : t('common.off')}
+          </dd>
         </div>
         <div className="gap-sm flex justify-between">
-          <dt>Feedback</dt>
-          <dd className="text-accent text-right">{preferences.tableFeedback ? 'On' : 'Off'}</dd>
+          <dt>{t('setup.feedback')}</dt>
+          <dd className="text-accent text-right">
+            {preferences.tableFeedback ? t('common.on') : t('common.off')}
+          </dd>
         </div>
         <div className="gap-sm flex justify-between">
-          <dt>Animations</dt>
-          <dd className="text-accent text-right">{preferences.motionEnabled ? 'On' : 'Off'}</dd>
+          <dt>{t('preferences.animations')}</dt>
+          <dd className="text-accent text-right">
+            {preferences.motionEnabled ? t('common.on') : t('common.off')}
+          </dd>
         </div>
         <div className="gap-sm flex justify-between">
-          <dt>Theme</dt>
+          <dt>{t('common.theme')}</dt>
           <dd className="text-accent text-right">
             {preferences.theme === 'system'
-              ? 'System'
+              ? t('common.system')
               : preferences.theme === 'light'
-                ? 'Light'
-                : 'Dark'}
+                ? t('common.light')
+                : t('common.dark')}
           </dd>
         </div>
       </dl>
@@ -63,7 +73,7 @@ export function GameSetupSummary({
           onClick={onEditSettings}
           size="small"
         >
-          Edit settings
+          {t('actions.editSettings')}
         </Button>
       ) : null}
     </Panel>

@@ -1,5 +1,6 @@
 'use client';
 
+import { useI18n } from '@/i18n/I18nProvider';
 import React from 'react';
 import './GameShell.css';
 
@@ -16,6 +17,7 @@ type SidebarProps = SlotProps & {
 };
 
 export default function GameShell({ children }: Readonly<RootProps>) {
+  const { t } = useI18n();
   const extras: React.ReactNode[] = [];
   let sidebar, mobileToolbar, body;
 
@@ -40,7 +42,7 @@ export default function GameShell({ children }: Readonly<RootProps>) {
 
   return (
     <main className="game-shell | grid h-dvh min-h-dvh">
-      <h1 className="sr-only">Farkle Friend</h1>
+      <h1 className="sr-only">{t('game.title')}</h1>
       {sidebar}
       {extras}
       {body}
@@ -50,10 +52,12 @@ export default function GameShell({ children }: Readonly<RootProps>) {
 }
 
 GameShell.Sidebar = function Header({ children, isDesktop = false }: SidebarProps) {
+  const { t } = useI18n();
+
   return (
     <aside
       className={`game-shell__sidebar | p-md lg:p-xl bg-surface grid max-h-dvh min-h-0 overflow-hidden ${isDesktop ? 'hidden xl:flex xl:flex-col xl:justify-between' : ''}`}
-      aria-label="Game menu"
+      aria-label={t('actions.gameMenu')}
     >
       {children}
     </aside>

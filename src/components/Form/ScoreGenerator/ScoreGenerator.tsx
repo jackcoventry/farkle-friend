@@ -92,7 +92,7 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
           <div className="min-h-12">
             <ul
               className="gap-xs flex flex-wrap justify-center"
-              aria-label="Selected dice"
+              aria-label={t('scoreGenerator.selectedDice')}
             >
               {selectedItems.map((die, index) => (
                 <li

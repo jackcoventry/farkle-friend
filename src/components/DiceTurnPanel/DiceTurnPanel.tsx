@@ -1,5 +1,6 @@
 'use client';
 
+import { useI18n } from '@/i18n/I18nProvider';
 import { useCallback, useEffect } from 'react';
 import { useDiceKeyboardShortcuts } from '@/hooks/useDiceKeyboardShortcuts';
 import { getScoringCombinations } from '@/domain/game/dice';
@@ -39,6 +40,7 @@ export function DiceTurnPanel({
   statusSlot,
 }: Readonly<DiceTurnPanelProps>) {
   const { currentPlayer, commitTurnScore } = useTurnController(state, dispatch);
+  const { t } = useI18n();
 
   const dice = useDiceTurnController({
     phase: state.phase,
@@ -142,7 +144,7 @@ export function DiceTurnPanel({
   });
 
   if (!currentPlayer || !activeTurn) {
-    return <p>No active player</p>;
+    return <p>{t('player.noActive')}</p>;
   }
 
   const actionHintId = showTurnCoachAndSidebar && showActionHint ? 'dice-action-hint' : undefined;
@@ -183,14 +185,14 @@ export function DiceTurnPanel({
 
         <aside
           className="dice-turn-rail | gap-xs lg:gap-sm -order-1 grid content-start overflow-visible"
-          aria-label="Turn information"
+          aria-label={t('turn.information')}
         >
           {statusSlot}
           {showTurnCoachAndSidebar ? (
             <div
               id="dice-turn-coach"
               className="dice-turn-table__coach | gap-sm hidden content-start self-start overflow-auto xl:grid"
-              aria-label="Turn guidance"
+              aria-label={t('turn.guidance')}
             >
               {coachContent}
             </div>

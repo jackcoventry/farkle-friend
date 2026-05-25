@@ -1,3 +1,5 @@
+'use client';
+
 import { useI18n } from '@/i18n/I18nProvider';
 import { type ScoreBreakdownItem, type ScoringCombo, sortDiceValues } from '@/domain/game/dice';
 import type { DiceTurnCopy, DiceTurnText } from '@/domain/game/diceTurnPresenter';
@@ -35,7 +37,7 @@ export function DiceTurnCoach({
     <>
       <Panel
         className="dice-turn-table__coach-panel | gap-md flex flex-wrap"
-        aria-label="Turn status"
+        aria-label={t('turn.status')}
       >
         <p
           className="sr-only"
@@ -79,7 +81,7 @@ export function DiceTurnCoach({
       {showComboSuggestions && currentCombos.length > 0 ? (
         <Panel
           className="dice-turn-table__coach-panel"
-          aria-label="Scoring combinations"
+          aria-label={t('turn.scoringCombinations')}
         >
           <p className="font-body-1">{t('turn.comboSuggestions')}</p>
           <ul className="gap-2xs mt-xs grid text-sm">

@@ -1,3 +1,6 @@
+'use client';
+
+import { useI18n } from '@/i18n/I18nProvider';
 import { TurnActionCluster } from '@/components/TurnActionCluster/TurnActionCluster';
 
 type DiceTurnActionsProps = {
@@ -19,29 +22,31 @@ export function DiceTurnActions({
   onFinish,
   onRoll,
 }: Readonly<DiceTurnActionsProps>) {
+  const { t } = useI18n();
+
   return (
     <TurnActionCluster
       actions={[
         {
           ariaDescribedBy: actionHintId,
-          ariaLabel: 'Roll dice',
+          ariaLabel: t('actions.rollDice'),
           disabled: !canRoll,
           icon: 'dice',
-          label: 'Roll',
+          label: t('actions.roll'),
           onClick: onRoll,
         },
         {
           ariaDescribedBy: actionHintId,
           disabled: !canBank,
           icon: 'bank',
-          label: 'Bank',
+          label: t('actions.bank'),
           onClick: onBank,
         },
         {
           ariaDescribedBy: actionHintId,
           disabled: !canFinish,
           icon: 'rocket',
-          label: 'End turn',
+          label: t('actions.endTurn'),
           onClick: onFinish,
         },
       ]}
