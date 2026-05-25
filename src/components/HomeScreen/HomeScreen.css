@@ -1,0 +1,8 @@
+.home-screen__dice {
+  block-size: 200px;
+  inline-size: 200px;
+}
+
+.home-screen__actions {
+  max-inline-size: 320px;
+}

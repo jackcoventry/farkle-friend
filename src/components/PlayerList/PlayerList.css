@@ -1,0 +1,8 @@
+.player-list__avatar {
+  block-size: 60px;
+  inline-size: 60px;
+}
+
+.player-list__progress {
+  transition: inline-size 500ms ease-out;
+}

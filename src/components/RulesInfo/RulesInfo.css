@@ -1,0 +1,9 @@
+.rules-info__die {
+  inline-size: 28px;
+}
+
+@media (min-width: 48rem) {
+  .rules-info__die {
+    inline-size: 50px;
+  }
+}

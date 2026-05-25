@@ -15,6 +15,7 @@ import {
 import Button from '@/components/Button/Button';
 import { Panel } from '@/components/Panel/Panel';
 import Pill from '@/components/Pill/Pill';
+import './SettingsFields.css';
 
 type SettingsFieldProps = {
   control: Control<SettingsFormSchemaType>;
@@ -208,7 +209,7 @@ export function TargetScoreField({ control, errors, setValue }: Readonly<TargetS
               onChange={(value) => field.onChange(value.target.valueAsNumber)}
             />
 
-            <div className="gap-xs grid grid-cols-[repeat(auto-fit,minmax(7rem,1fr))]">
+            <div className="target-score-presets | gap-xs grid">
               {targetScorePresets.map((preset) => (
                 <Button
                   key={preset}

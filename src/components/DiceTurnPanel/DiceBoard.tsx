@@ -21,7 +21,7 @@ export function DiceBoard({
         {isFarkled ? (
           <div
             role="alert"
-            className="animate-bounce-in border-danger bg-danger-surface p-xl text-danger-contrast max-w-[560px] rounded-3xl border-4 text-center shadow-lg"
+            className="dice-turn-table__farkle-alert | animate-bounce-in border-danger bg-danger-surface p-xl text-danger-contrast rounded-3xl border-4 text-center shadow-lg"
           >
             <p className="font-sub-heading text-danger">Turn over</p>
             <h2 className="font-heading text-danger">You have been Farkled!</h2>
@@ -43,7 +43,7 @@ export function DiceBoard({
                   style={{
                     animationDelay: `${idx * 0.05}s`,
                   }}
-                  className={`animate-bounce-in p-2xs w-8 cursor-pointer rounded-lg opacity-0 transition-transform hover:z-10 hover:scale-105 sm:w-[100px] ${
+                  className={`dice-turn-die-button | animate-bounce-in p-2xs cursor-pointer rounded-lg opacity-0 transition-transform hover:z-10 hover:scale-105 ${
                     isSelected ? 'bg-selected ring-selected-border ring-4' : 'bg-transparent'
                   }`}
                 >
@@ -59,7 +59,7 @@ export function DiceBoard({
 
         {!isFarkled && !currentRoll ? (
           <div
-            className="dice-turn-table__empty | border-border aspect-square rounded-full border-2 border-dashed motion-safe:animate-[spin_100s_linear_infinite]"
+            className="dice-turn-table__empty | border-border aspect-square rounded-full border-2 border-dashed"
             aria-hidden="true"
           />
         ) : null}

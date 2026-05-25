@@ -2,6 +2,8 @@
   --turn-action-separator: rgb(255 255 255 / 0.42);
   --turn-action-separator-disabled: rgb(0 0 0 / 0.18);
   --turn-action-focus: var(--color-accent);
+
+  grid-template-columns: 1fr;
 }
 
 .turn-action-cluster__button {

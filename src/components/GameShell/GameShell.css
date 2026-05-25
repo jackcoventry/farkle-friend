@@ -1,0 +1,15 @@
+.game-shell {
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr auto;
+}
+
+.game-shell__sidebar {
+  grid-template-rows: minmax(0, 1fr) auto;
+}
+
+@media (min-width: 80rem) {
+  .game-shell {
+    grid-template-columns: 400px 1fr;
+    grid-template-rows: 1fr;
+  }
+}

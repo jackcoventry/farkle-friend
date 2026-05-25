@@ -7,6 +7,7 @@ import React from 'react';
 import { Controller, SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { AddScoreSchema, type AddScoreSchemaType } from '@/domain/game/formSchemas';
 import Button from '@/components/Button/Button';
+import '@/components/DiceTurnPanel/DiceTurnPanel.css';
 import ScoreGenerator from '@/components/Form/ScoreGenerator/ScoreGenerator';
 import Modal from '@/components/Modal/Modal';
 import { TurnActionCluster } from '@/components/TurnActionCluster/TurnActionCluster';
@@ -72,12 +73,12 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
     <>
       <form
         id={formId}
-        className="dice-turn-main | gap-sm grid h-full min-h-0 w-full grid-rows-[minmax(300px,1fr)_auto] xl:h-[calc(100dvh-var(--spacing-7))]"
+        className="dice-turn-main | gap-sm grid h-full min-h-0 w-full"
         onSubmit={handleSubmit(submitHandler)}
       >
         <div className="dice-turn-table | border-border p-md min-h-0 overflow-hidden rounded-3xl border">
           <div className="dice-turn-table__play | flex h-full items-start justify-center overflow-auto">
-            <div className="gap-lg grid w-full max-w-[680px] text-center">
+            <div className="dice-turn-table__play | gap-lg grid w-full text-center">
               <div className="gap-2xs grid">
                 <h2 className="text-text font-heading">{t('manualScore.buildRoundScore')}</h2>
                 <p

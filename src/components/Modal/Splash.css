@@ -1,0 +1,15 @@
+.splash-panel {
+  max-block-size: calc(100dvh - var(--spacing-5));
+  inline-size: min(500px, calc(100dvw - var(--spacing-5)));
+}
+
+.splash-avatar-frame,
+.splash-avatar,
+.splash-avatar-crown--large {
+  block-size: 200px;
+  inline-size: 200px;
+}
+
+.splash-avatar-frame {
+  max-inline-size: 200px;
+}

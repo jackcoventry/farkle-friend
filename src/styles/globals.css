@@ -17,25 +17,9 @@ body.modal-open {
   overflow: hidden;
 }
 
-.splash-screen {
-  animation: slide-in ease-in 0.5s forwards;
-  animation-delay: 0.5s;
-  opacity: 0;
-}
-
 @layer base {
   :focus-visible {
     @apply ring-selected-border ring-4 ring-offset-4 outline-none;
-  }
-}
-
-@keyframes slide-in {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
   }
 }
 
@@ -50,7 +34,6 @@ body.modal-open {
   }
 
   0% {
-    opacity: 0;
     transform: scale3d(0.3, 0.3, 0.3);
   }
 
@@ -63,7 +46,6 @@ body.modal-open {
   }
 
   60% {
-    opacity: 1;
     transform: scale3d(1.03, 1.03, 1.03);
   }
 

@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import './GameShell.css';
 
 type RootProps = {
   children: React.ReactNode;
@@ -38,7 +39,7 @@ export default function GameShell({ children }: Readonly<RootProps>) {
   });
 
   return (
-    <main className="game-shell | grid h-dvh min-h-dvh grid-cols-1 grid-rows-[1fr_auto] xl:grid-cols-[400px_1fr] xl:grid-rows-1">
+    <main className="game-shell | grid h-dvh min-h-dvh">
       <h1 className="sr-only">Farkle Friend</h1>
       {sidebar}
       {extras}
@@ -51,7 +52,7 @@ export default function GameShell({ children }: Readonly<RootProps>) {
 GameShell.Sidebar = function Header({ children, isDesktop = false }: SidebarProps) {
   return (
     <aside
-      className={`game-shell__sidebar | p-md lg:p-xl bg-surface grid max-h-dvh min-h-0 grid-rows-[minmax(0,1fr)_auto] overflow-hidden ${isDesktop ? 'hidden xl:flex xl:flex-col xl:justify-between' : ''}`}
+      className={`game-shell__sidebar | p-md lg:p-xl bg-surface grid max-h-dvh min-h-0 overflow-hidden ${isDesktop ? 'hidden xl:flex xl:flex-col xl:justify-between' : ''}`}
       aria-label="Game menu"
     >
       {children}

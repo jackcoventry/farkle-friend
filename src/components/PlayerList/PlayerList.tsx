@@ -1,6 +1,7 @@
 import { AvatarId, avatarSet } from '@/domain/game/avatars';
 import { Player } from '@/domain/game/gameTypes';
 import { AvatarImage } from '@/components/AvatarImage/AvatarImage';
+import './PlayerList.css';
 
 type PlayerListProps = {
   activePlayerId?: string;
@@ -39,7 +40,7 @@ function PlayerList({
           >
             <div className={classes}>
               <div
-                className={`p-xs flex h-[60px] w-[60px] shrink-0 items-center justify-center rounded-full border-2 ring ${avatar.color} `}
+                className={`player-list__avatar | p-xs flex shrink-0 items-center justify-center rounded-full border-2 ring ${avatar.color} `}
               >
                 <AvatarImage
                   avatar={avatar}
@@ -81,7 +82,7 @@ function PlayerList({
                     aria-valuenow={progress}
                   >
                     <div
-                      className="bg-accent h-full transition-[width] duration-500 ease-out"
+                      className="player-list__progress | bg-accent h-full"
                       style={{ width: `${progress}%` }}
                     />
                   </div>

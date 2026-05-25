@@ -1,0 +1,9 @@
+.score-generator__dice-grid {
+  block-size: 200px;
+}
+
+@media (min-width: 40rem) {
+  .score-generator__history-item {
+    grid-template-columns: auto 1fr auto;
+  }
+}
