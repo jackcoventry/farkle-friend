@@ -1,14 +1,10 @@
 import Image from 'next/image';
-import bank from '../../../public/bank.svg';
-import cancel from '../../../public/cancel.svg';
-import dice from '../../../public/dice.svg';
-import rocket from '../../../public/rocket.svg';
 
 export const imageMap = {
-  dice,
-  rocket,
-  bank,
-  cancel,
+  dice: { height: 312.184, src: '/dice.svg', width: 292.916 },
+  rocket: { height: 2780.48, src: '/rocket.svg', width: 2482.766 },
+  bank: { height: 461, src: '/bank.svg', width: 478 },
+  cancel: { height: 24, src: '/cancel.svg', width: 24 },
 } as const;
 
 export type ImageKey = keyof typeof imageMap;
@@ -20,12 +16,14 @@ type DynamicImageProps = {
 };
 
 export function DynamicImage({ alt, className, name }: Readonly<DynamicImageProps>) {
-  const src = imageMap[name];
+  const image = imageMap[name];
   return (
     <Image
-      src={src}
+      src={image.src}
       alt={alt ?? name}
       className={className}
+      height={image.height}
+      width={image.width}
     />
   );
 }
