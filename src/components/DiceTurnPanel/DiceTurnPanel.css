@@ -48,7 +48,7 @@
   inline-size: min(420px, calc(100dvw - var(--spacing-6)));
 }
 
-@media (min-width: 40rem) {
+@media (--breakpoint-sm-up) {
   .dice-turn-die-button {
     inline-size: 100px;
   }
@@ -78,7 +78,7 @@
   }
 }
 
-@media (min-width: 80rem) {
+@media (--breakpoint-xl-up) {
   .dice-turn-layout {
     grid-template-columns: minmax(0, 1fr) minmax(240px, 320px);
     grid-template-rows: 1fr;

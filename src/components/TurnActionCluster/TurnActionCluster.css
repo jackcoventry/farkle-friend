@@ -100,7 +100,7 @@
   }
 }
 
-@media (min-width: 48rem) {
+@media (--breakpoint-md-up) {
   .turn-action-cluster__button:first-child {
     border-top-left-radius: 50px;
     border-bottom-left-radius: 50px;
@@ -112,7 +112,7 @@
   }
 }
 
-@media (min-width: 80rem) {
+@media (--breakpoint-xl-up) {
   .turn-action-cluster__button {
     flex: 1 1 9rem;
   }
