@@ -1,14 +1,11 @@
-import postcssGlobalData from '@csstools/postcss-global-data';
-import customMedia from 'postcss-custom-media';
-
 const config = {
-  plugins: [
-    postcssGlobalData({
+  plugins: {
+    '@csstools/postcss-global-data': {
       files: ['./src/styles/breakpoints.css'],
-    }),
-    customMedia(),
-    '@tailwindcss/postcss',
-  ],
+    },
+    'postcss-custom-media': {},
+    '@tailwindcss/postcss': {},
+  },
 };
 
 export default config;
