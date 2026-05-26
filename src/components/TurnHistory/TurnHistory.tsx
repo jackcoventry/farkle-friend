@@ -91,7 +91,7 @@ export function TurnHistory({
                   <span className="gap-xs flex min-w-0 items-center">
                     {avatar ? (
                       <span
-                        className={`p-2xs flex h-5 w-5 shrink-0 items-center justify-center rounded-full ${avatar.color}`}
+                        className={`p-2xs flex h-5 w-5 shrink-0 items-center justify-center rounded-full ${avatar.swatchClassName}`}
                       >
                         <AvatarImage
                           avatar={avatar}

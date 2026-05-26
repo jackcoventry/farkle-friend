@@ -151,7 +151,7 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
                     {avatarValues.map((option) => {
                       const avatar = avatarSet[option];
                       const isAvatarInUse = avatarsInUse.includes(option);
-                      const classes = `avatar-list-image | cursor-pointer enabled:hover:opacity-85 rounded-full overflow-hidden flex items-center justify-center ${avatar.color}`;
+                      const classes = `avatar-list-image | cursor-pointer enabled:hover:opacity-85 rounded-full overflow-hidden flex items-center justify-center ${avatar.swatchClassName}`;
                       return (
                         <label
                           key={option}

@@ -1,0 +1,11 @@
+.foundation-page {
+  max-inline-size: 72rem;
+}
+
+.foundation-swatch {
+  background: var(--foundation-swatch-color);
+}
+
+.foundation-spacing-sample {
+  inline-size: var(--foundation-spacing-size);
+}

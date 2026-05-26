@@ -1,8 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
-import Image from 'next/image';
 import React, { useState } from 'react';
 import { expect, userEvent, within } from 'storybook/test';
 import { AvatarId, avatarSet } from '@/domain/game/avatars';
+import { AvatarImage } from '@/components/AvatarImage/AvatarImage';
 import Button from '@/components/Button/Button';
 import Modal from '@/components/Modal/Modal';
 import Splash from '@/components/Modal/Splash';
@@ -72,13 +72,11 @@ function NextPlayerModalStory() {
             title={`${player.username}'s turn`}
             image={
               <figure
-                className={`splash-avatar-frame | p-xl my-md mx-auto flex aspect-square items-center justify-center overflow-hidden rounded-full ${avatar.color}`}
+                className={`splash-avatar-frame | p-xl my-md mx-auto flex aspect-square items-center justify-center overflow-hidden rounded-full ${avatar.swatchClassName}`}
               >
-                <Image
-                  src={avatar.image}
+                <AvatarImage
+                  avatar={avatar}
                   alt={`${player.username}'s ${avatar.name} avatar`}
-                  width={200}
-                  height={200}
                   className="splash-avatar"
                 />
               </figure>
@@ -117,13 +115,11 @@ function WinnerModalStory() {
             title={`${player.username} wins!`}
             image={
               <figure
-                className={`splash-avatar-crown splash-avatar-crown--large | p-xl my-md relative mx-auto flex items-center justify-center rounded-full ${avatar.color}`}
+                className={`splash-avatar-crown splash-avatar-crown--large | p-xl my-md relative mx-auto flex items-center justify-center rounded-full ${avatar.swatchClassName}`}
               >
-                <Image
-                  src={avatar.image}
+                <AvatarImage
+                  avatar={avatar}
                   alt={`${player.username}'s ${avatar.name} avatar`}
-                  width={200}
-                  height={200}
                   className="splash-avatar"
                 />
               </figure>

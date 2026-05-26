@@ -45,7 +45,7 @@ function PlayerList({
           >
             <div className={classes}>
               <div
-                className={`player-list__avatar | p-xs flex shrink-0 items-center justify-center rounded-full border-2 ring ${avatar.color} `}
+                className={`player-list__avatar | p-xs flex shrink-0 items-center justify-center rounded-full border-2 ring ${avatar.swatchClassName} `}
               >
                 <AvatarImage
                   avatar={avatar}

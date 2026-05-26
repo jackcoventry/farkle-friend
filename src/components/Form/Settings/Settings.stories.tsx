@@ -15,7 +15,17 @@ type Story = StoryObj<typeof Settings>;
 const onSubmit = fn();
 
 const Template: Story = {
-  render: () => <Settings onSubmit={onSubmit} />,
+  render: () => (
+    <main className="bg-canvas p-lg min-h-dvh">
+      <Settings onSubmit={onSubmit} />
+    </main>
+  ),
 };
 
-export const Default = { ...Template, args: {} };
+export const Default = {
+  ...Template,
+  args: {},
+  parameters: {
+    layout: 'fullscreen',
+  },
+};

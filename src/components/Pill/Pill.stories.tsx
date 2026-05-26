@@ -14,13 +14,7 @@ type Story = StoryObj<typeof Pill>;
 
 const Template: Story = {
   render: (args) => (
-    <div
-      style={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        gap: '1rem',
-      }}
-    >
+    <div className="gap-md flex flex-wrap">
       <Pill {...args}>
         <Pill.Control>
           <input

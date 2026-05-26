@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import type { Avatar } from '@/domain/game/avatars';
+import './AvatarImage.css';
 
 type AvatarImageProps = {
   alt: string;

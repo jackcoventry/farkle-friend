@@ -15,7 +15,17 @@ type Story = StoryObj<typeof AddPlayer>;
 const onSubmit = fn();
 
 const Template: Story = {
-  render: () => <AddPlayer onSubmit={onSubmit} />,
+  render: () => (
+    <main className="bg-canvas p-lg min-h-dvh">
+      <AddPlayer onSubmit={onSubmit} />
+    </main>
+  ),
 };
 
-export const Default = { ...Template, args: {} };
+export const Default = {
+  ...Template,
+  args: {},
+  parameters: {
+    layout: 'fullscreen',
+  },
+};
