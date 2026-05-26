@@ -54,6 +54,7 @@ function createInitialState(): GameState {
 
 export function useGameState() {
   const [state, dispatch] = useReducer(reducer, undefined, createInitialState);
+  const [settingsReady, markSettingsReady] = useReducer(() => true, false);
   const hasSkippedInitialPersistRef = useRef(false);
 
   useEffect(() => {
@@ -72,6 +73,8 @@ export function useGameState() {
         settings: stored.settings,
       });
     }
+
+    markSettingsReady();
   }, []);
 
   useEffect(() => {
@@ -80,18 +83,17 @@ export function useGameState() {
       return;
     }
 
+    const storedSettings = {
+      preferences: state.preferences,
+      settings: state.settings,
+    };
+
     try {
-      window.localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify({
-          preferences: state.preferences,
-          settings: state.settings,
-        })
-      );
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(storedSettings));
     } catch {
       // Local storage can be unavailable in private or restricted browser modes.
     }
   }, [state.preferences, state.settings]);
 
-  return { state, dispatch };
+  return { dispatch, settingsReady, state };
 }

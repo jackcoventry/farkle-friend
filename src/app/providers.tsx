@@ -5,7 +5,11 @@ import { GameProvider } from '@/domain/game/GameProvider';
 import { ModalStackProvider } from '@/components/Modal/ModalStackContext';
 import { ServiceWorkerRegister } from '@/components/ServiceWorkerRegister/ServiceWorkerRegister';
 
-export function Providers({ children }: Readonly<{ children: React.ReactNode }>) {
+type ProvidersProps = {
+  children: React.ReactNode;
+};
+
+export function Providers({ children }: Readonly<ProvidersProps>) {
   return (
     <ModalStackProvider>
       <GameProvider>

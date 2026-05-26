@@ -48,6 +48,14 @@ export const ColorSplashSpinnerSuccess =
   "var(--theme-color-splash-spinner-success)";
 export const ColorSplashSpinnerTrack =
   "var(--theme-color-splash-spinner-track)";
+export const ColorGlassSurface = "var(--theme-color-glass-surface)";
+export const ColorGlassBorder = "var(--theme-color-glass-border)";
+export const ColorGradientBorderStart =
+  "var(--theme-color-gradient-border-start)";
+export const ColorGradientBorderEnd = "var(--theme-color-gradient-border-end)";
+export const ColorAmbientPrimary = "var(--theme-color-ambient-primary)";
+export const ColorAmbientSecondary = "var(--theme-color-ambient-secondary)";
+export const ColorAmbientTertiary = "var(--theme-color-ambient-tertiary)";
 export const ColorSun100 = "#eeddfd";
 export const ColorSun200 = "#dcbbfc";
 export const ColorSun300 = "#cb99fa";

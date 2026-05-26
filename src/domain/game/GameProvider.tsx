@@ -8,11 +8,16 @@ import type { GameState } from '@/domain/game/gameTypes';
 type GameContextValue = {
   state: GameState;
   dispatch: React.Dispatch<GameAction>;
+  settingsReady: boolean;
 };
 
 const GameContext = createContext<GameContextValue | null>(null);
 
-export function GameProvider({ children }: Readonly<{ children: React.ReactNode }>) {
+type GameProviderProps = {
+  children: React.ReactNode;
+};
+
+export function GameProvider({ children }: Readonly<GameProviderProps>) {
   const value = useGameState();
 
   useEffect(() => {
@@ -20,12 +25,25 @@ export function GameProvider({ children }: Readonly<{ children: React.ReactNode 
   }, [value.state.preferences.motionEnabled]);
 
   useEffect(() => {
+    const systemThemeQuery = window.matchMedia('(prefers-color-scheme: light)');
+    const syncSystemTheme = () => {
+      document.documentElement.dataset.systemTheme = systemThemeQuery.matches ? 'light' : 'dark';
+    };
+
+    syncSystemTheme();
+
     if (value.state.preferences.theme === 'system') {
       delete document.documentElement.dataset.theme;
-      return;
+      document.documentElement.dataset.themeReady = 'true';
+      systemThemeQuery.addEventListener('change', syncSystemTheme);
+
+      return () => {
+        systemThemeQuery.removeEventListener('change', syncSystemTheme);
+      };
     }
 
     document.documentElement.dataset.theme = value.state.preferences.theme;
+    document.documentElement.dataset.themeReady = 'true';
   }, [value.state.preferences.theme]);
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;

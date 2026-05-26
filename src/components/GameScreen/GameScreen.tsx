@@ -23,7 +23,7 @@ const GameFinishedModal = dynamic(() =>
 );
 
 export function GameScreen() {
-  const { state, dispatch } = useGame();
+  const { state, dispatch, settingsReady } = useGame();
   const { t } = useI18n();
   const [diceTurnMetrics, setDiceTurnMetrics] = useState<DiceTurnMetrics | null>(null);
   const { activeView, avatar, currentPlayer, flowState, lobbyView, nextPlayer, summary, winner } =
@@ -50,6 +50,7 @@ export function GameScreen() {
         onStartGame={actions.onStartGame}
         playersTabRef={playersTabRef}
         settingsTabRef={settingsTabRef}
+        settingsReady={settingsReady}
         view={lobbyView}
       />
     );

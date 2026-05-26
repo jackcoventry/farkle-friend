@@ -1,4 +1,9 @@
 body {
+  background:
+    radial-gradient(circle at top left, var(--color-ambient-primary), transparent 34rem),
+    radial-gradient(circle at 88% 12%, var(--color-ambient-secondary), transparent 28rem),
+    radial-gradient(circle at 50% 100%, var(--color-ambient-tertiary), transparent 32rem),
+    var(--color-canvas);
   font: var(--font-body-1);
 }
 

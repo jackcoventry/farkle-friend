@@ -31,6 +31,7 @@ describe('useGameState settings persistence', () => {
     const { result } = renderHook(() => useGameState());
 
     await waitFor(() => {
+      expect(result.current.settingsReady).toBe(true);
       expect(result.current.state.preferences).toMatchObject({
         locale: 'es',
         motionEnabled: false,
@@ -96,6 +97,10 @@ describe('useGameState settings persistence', () => {
 
   it('persists settings and preferences after updates', async () => {
     const { result } = renderHook(() => useGameState());
+
+    await waitFor(() => {
+      expect(result.current.settingsReady).toBe(true);
+    });
 
     act(() => {
       result.current.dispatch({
