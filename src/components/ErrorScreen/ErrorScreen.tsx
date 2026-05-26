@@ -1,7 +1,5 @@
 'use client';
 
-'use client';
-
 import { useI18n } from '@/i18n/I18nProvider';
 import Button from '@/components/Button/Button';
 import './ErrorScreen.css';

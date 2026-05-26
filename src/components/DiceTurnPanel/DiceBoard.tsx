@@ -22,7 +22,7 @@ export function DiceBoard({
 
   return (
     <Panel className="dice-turn-table">
-      <div className="flex h-full items-center justify-center overflow-visible">
+      <div className="dice-turn-board-viewport | flex h-full items-center justify-center">
         {isFarkled ? (
           <div
             role="alert"
@@ -35,7 +35,7 @@ export function DiceBoard({
         ) : null}
 
         {!isFarkled && currentRoll ? (
-          <div className="gap-sm sm:gap-lg flex flex-wrap justify-center">
+          <div className="dice-turn-dice-grid | gap-sm sm:gap-lg flex flex-wrap justify-center">
             {currentRoll.map((value, idx) => {
               const isSelected = selectedIndices.includes(idx);
               return (

@@ -1,10 +1,12 @@
 import Image from 'next/image';
 
+const iconDimension = 256;
+
 export const imageMap = {
-  dice: { height: 312.184, src: '/dice.svg', width: 292.916 },
-  rocket: { height: 2780.48, src: '/rocket.svg', width: 2482.766 },
-  bank: { height: 461, src: '/bank.svg', width: 478 },
-  cancel: { height: 24, src: '/cancel.svg', width: 24 },
+  dice: { src: '/dice.svg' },
+  rocket: { src: '/rocket.svg' },
+  bank: { src: '/bank.svg' },
+  cancel: { src: '/cancel.svg' },
 } as const;
 
 export type ImageKey = keyof typeof imageMap;
@@ -22,8 +24,9 @@ export function DynamicImage({ alt, className, name }: Readonly<DynamicImageProp
       src={image.src}
       alt={alt ?? name}
       className={className}
-      height={image.height}
-      width={image.width}
+      height={iconDimension}
+      style={{ objectFit: 'contain' }}
+      width={iconDimension}
     />
   );
 }

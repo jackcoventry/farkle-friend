@@ -64,10 +64,10 @@ export function ManualTurn({
 
   return (
     <div className="turn-frame | gap-xs lg:gap-sm grid h-full min-h-0 w-full">
-      <div className="dice-turn-layout | gap-xs lg:gap-md grid h-full min-h-0">
+      <div className="dice-turn-layout | gap-xs xl:gap-lg grid h-full min-h-0">
         <AddScoreForm onSubmit={onAddScoreFormSubmit} />
         <aside
-          className="dice-turn-rail | gap-xs lg:gap-sm -order-1 grid content-start overflow-visible"
+          className="dice-turn-rail | gap-xs lg:gap-lg grid content-start overflow-visible"
           aria-label={t('turn.information')}
         >
           {statusSlot}

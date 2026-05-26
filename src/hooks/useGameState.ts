@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, useRef } from 'react';
 import * as z from 'zod/mini';
 import { createInitialGameState } from '@/domain/game/gameLogic';
 import { reducer } from '@/domain/game/gameReducer';
@@ -49,28 +49,37 @@ function readStoredSettings(): StoredSettings | null {
 }
 
 function createInitialState(): GameState {
-  const initialState = createInitialGameState();
-  const stored = readStoredSettings();
-
-  if (!stored) return initialState;
-
-  return {
-    ...initialState,
-    preferences: {
-      ...initialState.preferences,
-      ...stored.preferences,
-    },
-    settings: {
-      ...initialState.settings,
-      ...stored.settings,
-    },
-  };
+  return createInitialGameState();
 }
 
 export function useGameState() {
   const [state, dispatch] = useReducer(reducer, undefined, createInitialState);
+  const hasSkippedInitialPersistRef = useRef(false);
 
   useEffect(() => {
+    const stored = readStoredSettings();
+
+    if (stored?.preferences) {
+      dispatch({
+        type: 'UPDATE_PREFERENCES',
+        preferences: stored.preferences,
+      });
+    }
+
+    if (stored?.settings) {
+      dispatch({
+        type: 'UPDATE_SETTINGS',
+        settings: stored.settings,
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!hasSkippedInitialPersistRef.current) {
+      hasSkippedInitialPersistRef.current = true;
+      return;
+    }
+
     try {
       window.localStorage.setItem(
         STORAGE_KEY,
