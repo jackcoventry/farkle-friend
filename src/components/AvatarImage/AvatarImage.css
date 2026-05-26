@@ -1,0 +1,27 @@
+.avatar-swatch--burger {
+  background: #ffe2d6;
+}
+
+.avatar-swatch--hotdog {
+  background: #fff0b3;
+}
+
+.avatar-swatch--noodles {
+  background: #dff6ff;
+}
+
+.avatar-swatch--pie {
+  background: #f2dcff;
+}
+
+.avatar-swatch--sandwich {
+  background: #e5f8cf;
+}
+
+.avatar-swatch--soup {
+  background: #daf7ef;
+}
+
+.avatar-swatch--fallback {
+  background: #e8edf5;
+}

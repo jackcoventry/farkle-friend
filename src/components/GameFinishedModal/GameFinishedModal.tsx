@@ -60,7 +60,7 @@ export function GameFinishedModal({
           title={winner ? t('game.winnerTitle', { player: winner.username }) : t('game.finished')}
           image={
             <figure
-              className={`splash-avatar-crown my-2xs p-sm relative mx-auto flex h-24 w-24 items-center justify-center rounded-full ${avatar?.color ?? 'bg-surface-muted'}`}
+              className={`splash-avatar-crown my-2xs p-sm relative mx-auto flex h-24 w-24 items-center justify-center rounded-full ${avatar?.swatchClassName ?? 'avatar-swatch--fallback'}`}
             >
               {avatar ? (
                 <AvatarImage

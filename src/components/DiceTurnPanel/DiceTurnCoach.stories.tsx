@@ -32,7 +32,7 @@ function CoachStory({ isModalOpen, ...args }: Readonly<CoachStoryArgs>) {
   }
 
   return (
-    <div className="dice-turn-table__coach max-w-sm">
+    <div className="dice-turn-table__coach gap-lg flex max-w-sm flex-col">
       <DiceTurnCoach {...args} />
     </div>
   );
