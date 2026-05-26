@@ -1,18 +1,26 @@
+@custom-media --dice-turn-compact-rail (min-width: 48rem) and (max-width: 79.99rem) and (max-height: 820px);
+
 .dice-turn-layout {
+  --dice-turn-board-min-block-size: 300px;
+  --dice-turn-rail-compact-min: 220px;
+  --dice-turn-rail-compact-max: 280px;
+  --dice-turn-rail-wide-min: 240px;
+  --dice-turn-rail-wide-max: 320px;
+
   grid-template-columns: 1fr;
   grid-template-rows: auto minmax(0, 1fr);
 }
 
 .dice-turn-board-stack,
 .dice-turn-main {
-  grid-template-rows: minmax(300px, 1fr) auto;
+  grid-template-rows: minmax(var(--dice-turn-board-min-block-size), 1fr) auto;
 }
 
 .dice-turn-table {
   background:
     radial-gradient(circle at 30% 20%, rgb(255 255 255 / 0.22), transparent 28%),
     linear-gradient(135deg, var(--color-surface-raised), var(--color-canvas));
-  min-height: 300px;
+  min-height: var(--dice-turn-board-min-block-size);
 }
 
 .dice-turn-table__play {
@@ -66,9 +74,11 @@
   }
 }
 
-@media (min-width: 48rem) and (max-width: 79.99rem) and (max-height: 820px) {
+@media (--dice-turn-compact-rail) {
   .dice-turn-layout {
-    grid-template-columns: minmax(0, 1fr) minmax(220px, 280px) !important;
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(var(--dice-turn-rail-compact-min), var(--dice-turn-rail-compact-max)) !important;
     grid-template-rows: minmax(0, 1fr) !important;
   }
 
@@ -80,7 +90,9 @@
 
 @media (--breakpoint-xl-up) {
   .dice-turn-layout {
-    grid-template-columns: minmax(0, 1fr) minmax(240px, 320px);
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(var(--dice-turn-rail-wide-min), var(--dice-turn-rail-wide-max));
     grid-template-rows: 1fr;
   }
 

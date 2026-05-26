@@ -1,7 +1,13 @@
+@custom-media --turn-actions-stacked (min-width: 80rem) and (min-height: 821px);
+@custom-media --turn-actions-horizontal (min-width: 48rem) and (max-width: 79.99rem),
+  (min-width: 80rem) and (max-height: 820px);
+
 .turn-action-cluster {
   --turn-action-separator: rgb(255 255 255 / 0.42);
   --turn-action-separator-disabled: rgb(0 0 0 / 0.18);
   --turn-action-focus: var(--color-accent);
+  --turn-action-horizontal-min: 7.5rem;
+  --turn-action-stacked-label-max: 8.5rem;
 
   grid-template-columns: 1fr;
 }
@@ -67,10 +73,13 @@
   word-break: normal;
 }
 
-@media (min-width: 48rem) and (max-width: 79.99rem), (min-width: 80rem) and (max-height: 820px) {
+@media (--turn-actions-horizontal) {
   .turn-action-cluster {
     border-radius: 999px;
-    grid-template-columns: repeat(var(--turn-action-count, 3), minmax(7.5rem, 1fr)) !important;
+    grid-template-columns: repeat(
+      var(--turn-action-count, 3),
+      minmax(var(--turn-action-horizontal-min), 1fr)
+    ) !important;
   }
 
   .turn-action-cluster__button {
@@ -125,13 +134,13 @@
   }
 }
 
-@media (min-width: 80rem) and (min-height: 821px) {
+@media (--turn-actions-stacked) {
   .turn-action-cluster__button {
     flex-direction: column;
   }
 
   .turn-action-cluster__label {
-    max-inline-size: 8.5rem;
+    max-inline-size: var(--turn-action-stacked-label-max);
   }
 }
 

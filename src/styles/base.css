@@ -1,0 +1,13 @@
+body {
+  font: var(--font-body-1);
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+@layer base {
+  :focus-visible {
+    @apply ring-selected-border ring-4 ring-offset-4 outline-none;
+  }
+}
