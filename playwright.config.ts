@@ -14,7 +14,7 @@ export default defineConfig({
   },
   webServer: {
     command: isStaticE2E
-      ? `PORT=${port} HOST=${host} npm run preview`
+      ? `PORT=${port} HOST=${host} npm run start`
       : `npm run dev -- --hostname ${host} --port ${port}`,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,

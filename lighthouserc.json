@@ -5,7 +5,7 @@
       "settings": {
         "chromeFlags": "--no-sandbox"
       },
-      "startServerCommand": "PORT=4173 HOST=127.0.0.1 npm run preview",
+      "startServerCommand": "PORT=4173 HOST=127.0.0.1 npm run start",
       "startServerReadyPattern": "Serving",
       "startServerReadyTimeout": 120000,
       "url": ["http://127.0.0.1:4173/", "http://127.0.0.1:4173/game/"]
