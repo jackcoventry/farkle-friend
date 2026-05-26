@@ -167,6 +167,34 @@
     "splash-spinner-track": {
       "$type": "color",
       "$value": "var(--theme-color-splash-spinner-track)"
+    },
+    "glass-surface": {
+      "$type": "color",
+      "$value": "var(--theme-color-glass-surface)"
+    },
+    "glass-border": {
+      "$type": "color",
+      "$value": "var(--theme-color-glass-border)"
+    },
+    "gradient-border-start": {
+      "$type": "color",
+      "$value": "var(--theme-color-gradient-border-start)"
+    },
+    "gradient-border-end": {
+      "$type": "color",
+      "$value": "var(--theme-color-gradient-border-end)"
+    },
+    "ambient-primary": {
+      "$type": "color",
+      "$value": "var(--theme-color-ambient-primary)"
+    },
+    "ambient-secondary": {
+      "$type": "color",
+      "$value": "var(--theme-color-ambient-secondary)"
+    },
+    "ambient-tertiary": {
+      "$type": "color",
+      "$value": "var(--theme-color-ambient-tertiary)"
     }
   }
 }

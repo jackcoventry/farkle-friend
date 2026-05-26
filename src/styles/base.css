@@ -1,5 +1,19 @@
+html:not([data-theme-ready='true']) {
+  background: #0d1020;
+}
+
+html:not([data-theme-ready='true']) body {
+  opacity: 0;
+}
+
 body {
+  background:
+    radial-gradient(circle at top left, var(--color-ambient-primary), transparent 34rem),
+    radial-gradient(circle at 88% 12%, var(--color-ambient-secondary), transparent 28rem),
+    radial-gradient(circle at 50% 100%, var(--color-ambient-tertiary), transparent 32rem),
+    var(--color-canvas);
   font: var(--font-body-1);
+  transition: opacity 160ms ease;
 }
 
 body.modal-open {

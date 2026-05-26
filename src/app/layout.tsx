@@ -8,6 +8,8 @@ export { metadata };
 
 const themeBootstrapScript = `
 (() => {
+  const root = document.documentElement;
+
   try {
     const raw = window.localStorage.getItem('farkle-friend-settings');
     if (!raw) return;
@@ -15,7 +17,6 @@ const themeBootstrapScript = `
     const preferences = JSON.parse(raw)?.preferences;
     const theme = preferences?.theme;
     const motionEnabled = preferences?.motionEnabled;
-    const root = document.documentElement;
 
     if (theme === 'light' || theme === 'dark') {
       root.dataset.theme = theme;
@@ -26,6 +27,8 @@ const themeBootstrapScript = `
     }
   } catch {
     // Ignore invalid or unavailable storage; React will apply defaults after hydration.
+  } finally {
+    root.dataset.themeReady = 'true';
   }
 })();
 `;

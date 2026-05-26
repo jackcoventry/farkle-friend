@@ -45,6 +45,13 @@
   --color-splash-spinner-warning: var(--theme-color-splash-spinner-warning);
   --color-splash-spinner-success: var(--theme-color-splash-spinner-success);
   --color-splash-spinner-track: var(--theme-color-splash-spinner-track);
+  --color-glass-surface: var(--theme-color-glass-surface);
+  --color-glass-border: var(--theme-color-glass-border);
+  --color-gradient-border-start: var(--theme-color-gradient-border-start);
+  --color-gradient-border-end: var(--theme-color-gradient-border-end);
+  --color-ambient-primary: var(--theme-color-ambient-primary);
+  --color-ambient-secondary: var(--theme-color-ambient-secondary);
+  --color-ambient-tertiary: var(--theme-color-ambient-tertiary);
   --color-sun-100: #eeddfd;
   --color-sun-200: #dcbbfc;
   --color-sun-300: #cb99fa;

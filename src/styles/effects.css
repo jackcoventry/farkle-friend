@@ -1,3 +1,11 @@
 @theme {
   --shadow-offset-solid-style: 0.075em 0.125em 0 0;
 }
+
+.ambient-canvas {
+  background:
+    radial-gradient(circle at 14% 12%, var(--color-ambient-primary), transparent 28rem),
+    radial-gradient(circle at 92% 8%, var(--color-ambient-secondary), transparent 26rem),
+    radial-gradient(circle at 50% 100%, var(--color-ambient-tertiary), transparent 30rem),
+    var(--color-canvas);
+}

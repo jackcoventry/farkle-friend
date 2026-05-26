@@ -81,7 +81,11 @@ GameShell.SidebarFooter = function SidebarFooter({ children }: SlotProps) {
 };
 
 GameShell.MobileToolbar = function MobileToolbar({ children }: SlotProps) {
-  return <nav className="bg-canvas p-xs flex justify-between xl:hidden">{children}</nav>;
+  return (
+    <nav className="game-shell__mobile-toolbar | bg-canvas p-xs flex justify-between xl:hidden">
+      {children}
+    </nav>
+  );
 };
 
 GameShell.Body = function Body({ children }: SlotProps) {

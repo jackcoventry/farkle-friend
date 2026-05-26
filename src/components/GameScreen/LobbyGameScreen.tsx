@@ -27,8 +27,25 @@ type LobbyGameScreenProps = {
   onStartGame: () => void;
   playersTabRef: RefObject<HTMLButtonElement | null>;
   settingsTabRef: RefObject<HTMLButtonElement | null>;
+  settingsReady: boolean;
   view: LobbyGameView;
 };
+
+function GameSetupSummarySkeleton() {
+  return (
+    <Panel
+      aria-hidden="true"
+      className="gap-md grid"
+    >
+      <div className="bg-surface-muted h-5 w-32 rounded-full" />
+      <div className="gap-sm grid">
+        <div className="bg-surface-muted h-4 w-full rounded-full" />
+        <div className="bg-surface-muted h-4 w-10/12 rounded-full" />
+        <div className="bg-surface-muted h-4 w-8/12 rounded-full" />
+      </div>
+    </Panel>
+  );
+}
 
 export function LobbyGameScreen({
   lobbyScreen,
@@ -40,6 +57,7 @@ export function LobbyGameScreen({
   onStartGame,
   playersTabRef,
   settingsTabRef,
+  settingsReady,
   view,
 }: Readonly<LobbyGameScreenProps>) {
   const { t } = useI18n();
@@ -74,11 +92,15 @@ export function LobbyGameScreen({
               <p className="text-text-muted mt-2xs">{t('setup.noPlayersDescription')}</p>
             </Panel>
           )}
-          <GameSetupSummary
-            preferences={view.preferences}
-            settings={view.settings}
-            onEditSettings={() => onSelectLobbyScreen('settings')}
-          />
+          {settingsReady ? (
+            <GameSetupSummary
+              preferences={view.preferences}
+              settings={view.settings}
+              onEditSettings={() => onSelectLobbyScreen('settings')}
+            />
+          ) : (
+            <GameSetupSummarySkeleton />
+          )}
         </GameShell.SidebarMain>
         <GameShell.SidebarFooter>
           <Footer />
@@ -106,14 +128,18 @@ export function LobbyGameScreen({
                 <p className="text-text-muted mt-2xs">{t('setup.noPlayersDescription')}</p>
               </Panel>
             )}
-            <GameSetupSummary
-              preferences={view.preferences}
-              settings={view.settings}
-              onEditSettings={() => {
-                setIsSidebarOpen(false);
-                onSelectLobbyScreen('settings');
-              }}
-            />
+            {settingsReady ? (
+              <GameSetupSummary
+                preferences={view.preferences}
+                settings={view.settings}
+                onEditSettings={() => {
+                  setIsSidebarOpen(false);
+                  onSelectLobbyScreen('settings');
+                }}
+              />
+            ) : (
+              <GameSetupSummarySkeleton />
+            )}
           </GameShell.SidebarMain>
           <GameShell.SidebarFooter>
             <Footer />
