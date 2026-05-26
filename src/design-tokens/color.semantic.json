@@ -119,6 +119,54 @@
     "selected-contrast": {
       "$type": "color",
       "$value": "var(--theme-color-selected-contrast)"
+    },
+    "focus-ring-surface": {
+      "$type": "color",
+      "$value": "var(--theme-color-focus-ring-surface)"
+    },
+    "focus-ring-accent": {
+      "$type": "color",
+      "$value": "var(--theme-color-focus-ring-accent)"
+    },
+    "dice-surface": {
+      "$type": "color",
+      "$value": "var(--theme-color-dice-surface)"
+    },
+    "dice-border": {
+      "$type": "color",
+      "$value": "var(--theme-color-dice-border)"
+    },
+    "dice-pip": {
+      "$type": "color",
+      "$value": "var(--theme-color-dice-pip)"
+    },
+    "dice-disabled-surface": {
+      "$type": "color",
+      "$value": "var(--theme-color-dice-disabled-surface)"
+    },
+    "dice-disabled-pip": {
+      "$type": "color",
+      "$value": "var(--theme-color-dice-disabled-pip)"
+    },
+    "dice-active-ring": {
+      "$type": "color",
+      "$value": "var(--theme-color-dice-active-ring)"
+    },
+    "splash-spinner-idle": {
+      "$type": "color",
+      "$value": "var(--theme-color-splash-spinner-idle)"
+    },
+    "splash-spinner-warning": {
+      "$type": "color",
+      "$value": "var(--theme-color-splash-spinner-warning)"
+    },
+    "splash-spinner-success": {
+      "$type": "color",
+      "$value": "var(--theme-color-splash-spinner-success)"
+    },
+    "splash-spinner-track": {
+      "$type": "color",
+      "$value": "var(--theme-color-splash-spinner-track)"
     }
   }
 }

@@ -32,6 +32,18 @@
   --theme-color-selected: #fef3c7;
   --theme-color-selected-border: #facc15;
   --theme-color-selected-contrast: #111827;
+  --theme-color-focus-ring-surface: #ffffff;
+  --theme-color-focus-ring-accent: #facc15;
+  --theme-color-dice-surface: #ffffff;
+  --theme-color-dice-border: #000000;
+  --theme-color-dice-pip: #ef4444;
+  --theme-color-dice-disabled-surface: #9ca3af;
+  --theme-color-dice-disabled-pip: #e5e7eb;
+  --theme-color-dice-active-ring: #b91c1c;
+  --theme-color-splash-spinner-idle: #f0fdf4;
+  --theme-color-splash-spinner-warning: #fef2f2;
+  --theme-color-splash-spinner-success: #fefce8;
+  --theme-color-splash-spinner-track: #ffffff;
 }
 
 @media (prefers-color-scheme: light) {
@@ -68,6 +80,18 @@
     --theme-color-selected: #fef3c7;
     --theme-color-selected-border: #ca8a04;
     --theme-color-selected-contrast: #111827;
+    --theme-color-focus-ring-surface: #ffffff;
+    --theme-color-focus-ring-accent: #facc15;
+    --theme-color-dice-surface: #ffffff;
+    --theme-color-dice-border: #000000;
+    --theme-color-dice-pip: #ef4444;
+    --theme-color-dice-disabled-surface: #9ca3af;
+    --theme-color-dice-disabled-pip: #e5e7eb;
+    --theme-color-dice-active-ring: #b91c1c;
+    --theme-color-splash-spinner-idle: #f0fdf4;
+    --theme-color-splash-spinner-warning: #fef2f2;
+    --theme-color-splash-spinner-success: #fefce8;
+    --theme-color-splash-spinner-track: #ffffff;
   }
 }
 
@@ -104,4 +128,16 @@
   --theme-color-selected: #fef3c7;
   --theme-color-selected-border: #ca8a04;
   --theme-color-selected-contrast: #111827;
+  --theme-color-focus-ring-surface: #ffffff;
+  --theme-color-focus-ring-accent: #facc15;
+  --theme-color-dice-surface: #ffffff;
+  --theme-color-dice-border: #000000;
+  --theme-color-dice-pip: #ef4444;
+  --theme-color-dice-disabled-surface: #9ca3af;
+  --theme-color-dice-disabled-pip: #e5e7eb;
+  --theme-color-dice-active-ring: #b91c1c;
+  --theme-color-splash-spinner-idle: #f0fdf4;
+  --theme-color-splash-spinner-warning: #fef2f2;
+  --theme-color-splash-spinner-success: #fefce8;
+  --theme-color-splash-spinner-track: #ffffff;
 }

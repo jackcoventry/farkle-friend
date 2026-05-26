@@ -101,8 +101,8 @@
 .pill-input:focus-visible + .pill-box {
   outline: none;
   box-shadow:
-    0 0 0 4px var(--color-white),
-    0 0 0 8px var(--color-yellow-500);
+    0 0 0 4px var(--color-focus-ring-surface),
+    0 0 0 8px var(--color-focus-ring-accent);
 }
 
 .pill-input:disabled + .pill-box {

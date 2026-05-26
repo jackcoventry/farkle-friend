@@ -1,8 +1,8 @@
 :root {
-  --dice-color-bg: var(--color-white);
-  --dice-color-border: var(--color-black);
-  --dice-color-dot: var(--color-red-500);
-  --dice-color-dot-border: var(--color-red-500);
+  --dice-color-bg: var(--color-dice-surface);
+  --dice-color-border: var(--color-dice-border);
+  --dice-color-dot: var(--color-dice-pip);
+  --dice-color-dot-border: var(--color-dice-pip);
 }
 
 .dice-icon {
@@ -11,18 +11,18 @@
 }
 
 .dice-icon[data-state='disabled'] {
-  --dice-color-bg: var(--color-gray-400);
+  --dice-color-bg: var(--color-dice-disabled-surface);
 }
 
 .dice-icon[data-state='disabled'] .dice-dot {
-  --dice-color-dot: var(--color-gray-200);
-  --dice-color-dot-border: var(--color-gray-200);
+  --dice-color-dot: var(--color-dice-disabled-pip);
+  --dice-color-dot-border: var(--color-dice-disabled-pip);
 }
 
 .dice-icon[data-state='active'] {
   box-shadow:
-    0 0 0 2px white,
-    0 0 0 6px var(--color-red-700);
+    0 0 0 2px var(--color-focus-ring-surface),
+    0 0 0 6px var(--color-dice-active-ring);
 }
 
 .dice-dot {

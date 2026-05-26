@@ -3,8 +3,8 @@
   outline: none;
   border-radius: 100%;
   box-shadow:
-    0 0 0 4px var(--color-white),
-    0 0 0 8px var(--color-yellow-500);
+    0 0 0 4px var(--color-focus-ring-surface),
+    0 0 0 8px var(--color-focus-ring-accent);
 }
 
 .avatar-list-input:disabled + .avatar-list-image {
