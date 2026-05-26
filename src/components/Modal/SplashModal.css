@@ -5,16 +5,16 @@
 }
 
 :root {
-  --splash-spinner-color-primary: var(--color-green-50);
-  --splash-spinner-color-secondary: var(--color-white);
+  --splash-spinner-color-primary: var(--color-splash-spinner-idle);
+  --splash-spinner-color-secondary: var(--color-splash-spinner-track);
 }
 
 .modal[data-theme='warning'] {
-  --splash-spinner-color-primary: var(--color-red-50);
+  --splash-spinner-color-primary: var(--color-splash-spinner-warning);
 }
 
 .modal[data-theme='success'] {
-  --splash-spinner-color-primary: var(--color-yellow-50);
+  --splash-spinner-color-primary: var(--color-splash-spinner-success);
 }
 
 .modal[data-variant='splash'] {

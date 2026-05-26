@@ -32,6 +32,22 @@ export const ColorDangerContrast = "var(--theme-color-danger-contrast)";
 export const ColorSelected = "var(--theme-color-selected)";
 export const ColorSelectedBorder = "var(--theme-color-selected-border)";
 export const ColorSelectedContrast = "var(--theme-color-selected-contrast)";
+export const ColorFocusRingSurface = "var(--theme-color-focus-ring-surface)";
+export const ColorFocusRingAccent = "var(--theme-color-focus-ring-accent)";
+export const ColorDiceSurface = "var(--theme-color-dice-surface)";
+export const ColorDiceBorder = "var(--theme-color-dice-border)";
+export const ColorDicePip = "var(--theme-color-dice-pip)";
+export const ColorDiceDisabledSurface =
+  "var(--theme-color-dice-disabled-surface)";
+export const ColorDiceDisabledPip = "var(--theme-color-dice-disabled-pip)";
+export const ColorDiceActiveRing = "var(--theme-color-dice-active-ring)";
+export const ColorSplashSpinnerIdle = "var(--theme-color-splash-spinner-idle)";
+export const ColorSplashSpinnerWarning =
+  "var(--theme-color-splash-spinner-warning)";
+export const ColorSplashSpinnerSuccess =
+  "var(--theme-color-splash-spinner-success)";
+export const ColorSplashSpinnerTrack =
+  "var(--theme-color-splash-spinner-track)";
 export const ColorSun100 = "#eeddfd";
 export const ColorSun200 = "#dcbbfc";
 export const ColorSun300 = "#cb99fa";

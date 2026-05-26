@@ -45,16 +45,13 @@ StyleDictionary.registerFormat({
       const variableName = `--spacing-${tokenKey}`;
 
       return Object.entries(spacingUtilities).map(([classPrefix, property]) => {
-        return `  .${classPrefix}-${semanticName} {
-    ${property}: var(${variableName});
-  }`;
+        return `@utility ${classPrefix}-${semanticName} {
+  ${property}: var(${variableName});
+}`;
       });
     });
 
-    return `@layer utilities {
-${classes.join('\n\n')}
-}
-`;
+    return `${classes.join('\n\n')}\n`;
   },
 });
 
