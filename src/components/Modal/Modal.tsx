@@ -12,6 +12,7 @@ import { createPortal } from 'react-dom';
 import Button from '@/components/Button/Button';
 import './Modal.css';
 import { MODAL_PORTAL_ROOT_ID, useModalStack } from './ModalStackContext';
+import './SplashModal.css';
 
 const FOCUSABLE_SELECTORS = [
   'a[href]',

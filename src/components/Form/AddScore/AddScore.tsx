@@ -11,6 +11,7 @@ import '@/components/DiceTurnPanel/DiceTurnPanel.css';
 import ScoreGenerator from '@/components/Form/ScoreGenerator/ScoreGenerator';
 import Modal from '@/components/Modal/Modal';
 import { TurnActionCluster } from '@/components/TurnActionCluster/TurnActionCluster';
+import './AddScore.css';
 
 export type { AddScoreSchemaType };
 export type AddScoreFormResult = {
@@ -77,8 +78,8 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
         onSubmit={handleSubmit(submitHandler)}
       >
         <div className="dice-turn-table | border-border p-md min-h-0 overflow-hidden rounded-3xl border">
-          <div className="dice-turn-table__play | flex h-full items-start justify-center overflow-auto">
-            <div className="dice-turn-table__play | gap-lg grid w-full text-center">
+          <div className="manual-score-panel__scroll | mx-auto flex h-full items-start justify-center">
+            <div className="manual-score-panel__content | gap-lg grid w-full text-center">
               <div className="gap-2xs grid">
                 <h2 className="text-text font-heading">{t('manualScore.buildRoundScore')}</h2>
                 <p

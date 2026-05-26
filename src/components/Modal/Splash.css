@@ -1,15 +1,32 @@
 .splash-panel {
-  max-block-size: calc(100dvh - var(--spacing-5));
-  inline-size: min(500px, calc(100dvw - var(--spacing-5)));
+  --splash-panel-gutter: var(--spacing-5);
+  --splash-panel-max-inline-size: 500px;
+  --splash-avatar-size: 200px;
+
+  max-block-size: calc(100dvh - var(--splash-panel-gutter));
+  inline-size: min(var(--splash-panel-max-inline-size), calc(100dvw - var(--splash-panel-gutter)));
 }
 
 .splash-avatar-frame,
 .splash-avatar,
 .splash-avatar-crown--large {
-  block-size: 200px;
-  inline-size: 200px;
+  block-size: var(--splash-avatar-size);
+  inline-size: var(--splash-avatar-size);
 }
 
 .splash-avatar-frame {
-  max-inline-size: 200px;
+  max-inline-size: var(--splash-avatar-size);
+}
+
+.splash-avatar-crown::after {
+  background-image: url('../../../public/crown.svg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  block-size: 30%;
+  content: '';
+  inline-size: 50%;
+  inset-block-start: -4%;
+  inset-inline-start: -10%;
+  position: absolute;
+  transform: rotate(-44deg);
 }

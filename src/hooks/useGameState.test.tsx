@@ -30,17 +30,19 @@ describe('useGameState settings persistence', () => {
 
     const { result } = renderHook(() => useGameState());
 
-    expect(result.current.state.preferences).toMatchObject({
-      locale: 'es',
-      motionEnabled: false,
-      tableFeedback: true,
-      theme: 'dark',
-    });
-    expect(result.current.state.settings).toMatchObject({
-      autoAdvanceTurns: true,
-      mode: 'manual',
-      targetScore: 10000,
-      showComboSuggestions: true,
+    await waitFor(() => {
+      expect(result.current.state.preferences).toMatchObject({
+        locale: 'es',
+        motionEnabled: false,
+        tableFeedback: true,
+        theme: 'dark',
+      });
+      expect(result.current.state.settings).toMatchObject({
+        autoAdvanceTurns: true,
+        mode: 'manual',
+        targetScore: 10000,
+        showComboSuggestions: true,
+      });
     });
   });
 

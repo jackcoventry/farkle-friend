@@ -1,0 +1,95 @@
+@keyframes slide-in {
+  from {
+    transform: translateY(var(--spacing-2));
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes splash-screen-reveal {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes bounce-in {
+  from,
+  20%,
+  40%,
+  60%,
+  80%,
+  to {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  20% {
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+
+  40% {
+    transform: scale3d(0.9, 0.9, 0.9);
+  }
+
+  60% {
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
+
+  80% {
+    transform: scale3d(0.97, 0.97, 0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+.animate-bounce-in {
+  animation: bounce-in 0.4s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: slide-in 0.4s ease-out forwards;
+}
+
+:root[data-motion='off'] *,
+:root[data-motion='off'] *::before,
+:root[data-motion='off'] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  scroll-behavior: auto !important;
+  transition-duration: 0.001ms !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .animate-bounce-in,
+  .animate-fade-in,
+  .splash-screen,
+  .splash-screen::before {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .splash-screen::before {
+    content: none;
+  }
+
+  .modal[data-variant='splash'] {
+    animation: none !important;
+  }
+}

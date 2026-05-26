@@ -2,7 +2,7 @@
   inline-size: 28px;
 }
 
-@media (min-width: 48rem) {
+@media (--breakpoint-md-up) {
   .rules-info__die {
     inline-size: 50px;
   }

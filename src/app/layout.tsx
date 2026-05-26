@@ -1,3 +1,4 @@
+import Script from 'next/script';
 import '@/styles/globals.css';
 import { appFontClassName } from './appFonts';
 import { metadata } from './appMetadata';
@@ -41,7 +42,11 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeBootstrapScript }} />
+        <Script
+          id="theme-bootstrap"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: themeBootstrapScript }}
+        />
       </head>
       <body>
         <Providers>{children}</Providers>
