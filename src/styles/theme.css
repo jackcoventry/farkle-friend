@@ -54,7 +54,7 @@
 }
 
 @media (prefers-color-scheme: light) {
-  :root:not([data-theme]) {
+  :root[data-system-theme='light']:not([data-theme]) {
     color-scheme: light;
 
     --theme-color-canvas: #f7f8ff;

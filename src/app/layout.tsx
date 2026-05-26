@@ -11,6 +11,11 @@ const themeBootstrapScript = `
   const root = document.documentElement;
 
   try {
+    const systemTheme = window.matchMedia('(prefers-color-scheme: light)').matches
+      ? 'light'
+      : 'dark';
+    root.dataset.systemTheme = systemTheme;
+
     const raw = window.localStorage.getItem('farkle-friend-settings');
     if (!raw) return;
 

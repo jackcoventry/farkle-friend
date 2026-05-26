@@ -25,10 +25,21 @@ export function GameProvider({ children }: Readonly<GameProviderProps>) {
   }, [value.state.preferences.motionEnabled]);
 
   useEffect(() => {
+    const systemThemeQuery = window.matchMedia('(prefers-color-scheme: light)');
+    const syncSystemTheme = () => {
+      document.documentElement.dataset.systemTheme = systemThemeQuery.matches ? 'light' : 'dark';
+    };
+
+    syncSystemTheme();
+
     if (value.state.preferences.theme === 'system') {
       delete document.documentElement.dataset.theme;
       document.documentElement.dataset.themeReady = 'true';
-      return;
+      systemThemeQuery.addEventListener('change', syncSystemTheme);
+
+      return () => {
+        systemThemeQuery.removeEventListener('change', syncSystemTheme);
+      };
     }
 
     document.documentElement.dataset.theme = value.state.preferences.theme;
