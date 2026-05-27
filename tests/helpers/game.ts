@@ -36,7 +36,7 @@ export async function expectTurnResult(page: Page, nextPlayerName: string) {
 }
 
 export async function startNextTurn(page: Page) {
-  await page.getByRole('button', { name: 'Start turn' }).click();
+  await page.getByRole('button', { name: 'Start' }).click();
 }
 
 export async function waitForTurnSplash(page: Page, playerName: string) {

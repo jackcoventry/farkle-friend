@@ -3,6 +3,7 @@
 import { useI18n } from '@/i18n/I18nProvider';
 import type { KeyboardEvent, RefObject } from 'react';
 import { useRef, useState } from 'react';
+import { useBreakpoint } from '@/hooks/useBreakpoint';
 import Button from '@/components/Button/Button';
 import Footer from '@/components/Footer/Footer';
 import AddPlayerForm, { type AddPlayerFormSchemaType } from '@/components/Form/AddPlayer/AddPlayer';
@@ -61,6 +62,8 @@ export function LobbyGameScreen({
   view,
 }: Readonly<LobbyGameScreenProps>) {
   const { t } = useI18n();
+  const { isAtLeast } = useBreakpoint();
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const sidebarTriggerRef = useRef<HTMLButtonElement | null>(null);
   const closeSidebar = () => {
@@ -137,7 +140,7 @@ export function LobbyGameScreen({
       </SidebarModal>
 
       <GameShell.Body>
-        <div className="lobby-game-screen__main | gap-xl p-md mx-auto flex h-full w-full flex-col justify-start overflow-auto">
+        <div className="lobby-game-screen__main | gap-md xl:gap-xl p-md mx-auto flex h-full w-full flex-col justify-start overflow-auto">
           <div
             className="gap-xs grid grid-cols-2"
             role="tablist"
@@ -217,7 +220,7 @@ export function LobbyGameScreen({
               type="button"
               onClick={onStartGame}
               className="w-full justify-center"
-              disabled={!view.readyToStart}
+              disabled={!settingsReady || !view.readyToStart}
               variant="secondary"
             >
               {t('actions.start')}
@@ -227,16 +230,20 @@ export function LobbyGameScreen({
       </GameShell.Body>
 
       <GameShell.MobileToolbar>
-        <Button
-          aria-controls="lobby-sidebar-modal"
-          aria-expanded={isSidebarOpen}
-          icon="three-dots-vertical"
-          onClick={() => setIsSidebarOpen(true)}
-          ref={sidebarTriggerRef}
-          size="small"
-        >
-          {t('setup.summary')}
-        </Button>
+        <div className="gap-xs flex w-full justify-end">
+          <Button
+            aria-controls="lobby-sidebar-modal"
+            aria-expanded={isSidebarOpen}
+            ariaLabel={t('setup.summary')}
+            icon="three-dots-vertical"
+            iconOnly={!isAtLeast('lg')}
+            onClick={() => setIsSidebarOpen(true)}
+            ref={sidebarTriggerRef}
+            size="small"
+          >
+            {t('setup.summary')}
+          </Button>
+        </div>
       </GameShell.MobileToolbar>
     </GameShell>
   );

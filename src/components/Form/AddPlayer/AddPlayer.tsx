@@ -142,12 +142,13 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
               control={control}
               render={({ field, fieldState }) => (
                 <fieldset
+                  className="avatar-list-fieldset"
                   aria-describedby={fieldState.error ? 'player-avatar-error' : undefined}
                   aria-invalid={!!fieldState.error || undefined}
                 >
                   <legend className="text-text mb-md">{t('player.chooseAvatar')}</legend>
 
-                  <div className="avatar-list-grid | gap-sm sm:gap-md grid grid-cols-3 justify-items-center">
+                  <div className="avatar-list-grid">
                     {avatarValues.map((option) => {
                       const avatar = avatarSet[option];
                       const isAvatarInUse = avatarsInUse.includes(option);

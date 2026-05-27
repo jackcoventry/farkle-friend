@@ -68,15 +68,15 @@ export function TurnResultPanel({
       onKeyDown={handleKeyDown}
       tabIndex={-1}
     >
-      <dl className="gap-sm grid text-left sm:grid-cols-3">
+      <dl className="gap-sm grid grid-cols-2 text-left">
         <div className="bg-surface-muted border-border p-md rounded-lg border">
           <dt className="font-body-1">{t('turnResult.turnScore')}</dt>
           <dd className="font-heading-2 text-text">{formatScore(result.score)}</dd>
         </div>
-        <div className="bg-surface-muted border-border p-md rounded-lg border">
+        {/* <div className="bg-surface-muted border-border p-md rounded-lg border">
           <dt className="font-body-1">{t('turnResult.previousTotal')}</dt>
           <dd className="font-heading-2">{formatScore(result.previousTotal)}</dd>
-        </div>
+        </div> */}
         <div className="bg-surface-muted border-border p-md rounded-lg border">
           <dt className="font-body-1">{t('turnResult.newTotal')}</dt>
           <dd className="font-heading-2 text-accent">{formatScore(result.newTotal)}</dd>
@@ -84,7 +84,7 @@ export function TurnResultPanel({
       </dl>
       <div>
         <p className="font-sub-heading">{t('turnResult.turnEnded')}</p>
-        <p className="font-heading text-accent">
+        <p className="font-body text-accent">
           {result.isGameWinner
             ? t('turnResult.reachedTarget', { player: currentPlayer.username })
             : t('turnResult.nextUp', {
@@ -103,7 +103,7 @@ export function TurnResultPanel({
       <Button
         onClick={onAdvanceTurn}
         className="justify-center"
-        size="large"
+        size="default"
       >
         {actionText}
       </Button>

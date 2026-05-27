@@ -189,7 +189,7 @@ export const messages = {
     'turn.title.readyToRoll': 'Ready to roll',
     'turnResult.autoAdvance': 'Advancing automatically in {seconds}...',
     'turnResult.newTotal': 'New total',
-    'turnResult.nextPlayer': 'Start turn',
+    'turnResult.nextPlayer': 'Start',
     'turnResult.nextUp': '{player} is up next!',
     'turnResult.previousTotal': 'Previous total',
     'turnResult.reachedTarget': '{player} reached the target score.',
