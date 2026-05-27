@@ -19,7 +19,6 @@ function makeResult(partial: Partial<TurnResult>): TurnResult {
   return {
     playerId: partial.playerId ?? 'p1',
     score: partial.score ?? 100,
-    previousTotal: partial.previousTotal ?? 0,
     newTotal: partial.newTotal ?? 100,
     isGameWinner: partial.isGameWinner ?? false,
   } as TurnResult;
@@ -42,8 +41,6 @@ describe('TurnResultPanel', () => {
 
     expect(screen.getByText('Turn score')).toBeInTheDocument();
     expect(screen.getByText('50')).toBeInTheDocument();
-    expect(screen.getByText('Previous total')).toBeInTheDocument();
-    expect(screen.getByText('100')).toBeInTheDocument();
     expect(screen.getByText('New total')).toBeInTheDocument();
     expect(screen.getByText('150')).toBeInTheDocument();
     expect(screen.getByText('Turn complete')).toBeInTheDocument();
