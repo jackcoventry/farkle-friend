@@ -234,7 +234,7 @@ export function ActiveGameScreen({
             <Button
               aria-controls={turnInfoModalId}
               aria-expanded={isTurnCoachOpen}
-              aria-label={isTurnCoachOpen ? t('actions.hideTurnInfo') : t('actions.turnInfo')}
+              ariaLabel={isTurnCoachOpen ? t('actions.hideTurnInfo') : t('actions.turnInfo')}
               className="justify-center"
               size="small"
               onClick={() => setIsTurnCoachOpen((current) => !current)}
@@ -247,7 +247,7 @@ export function ActiveGameScreen({
           <Button
             aria-controls="active-game-sidebar-modal"
             aria-expanded={showSidebarModal}
-            aria-label={t('actions.gameMenu')}
+            ariaLabel={t('actions.gameMenu')}
             className="justify-center"
             onClick={() => setShowSidebarModal(true)}
             size="small"

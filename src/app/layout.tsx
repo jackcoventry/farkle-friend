@@ -19,9 +19,10 @@ const themeBootstrapScript = `
     const raw = window.localStorage.getItem('farkle-friend-settings');
     if (!raw) return;
 
-    const preferences = JSON.parse(raw)?.preferences;
-    const theme = preferences?.theme;
-    const motionEnabled = preferences?.motionEnabled;
+    const storedSettings = JSON.parse(raw);
+    const preferences = storedSettings && storedSettings.preferences;
+    const theme = preferences && preferences.theme;
+    const motionEnabled = preferences && preferences.motionEnabled;
 
     if (theme === 'light' || theme === 'dark') {
       root.dataset.theme = theme;
@@ -30,7 +31,7 @@ const themeBootstrapScript = `
     if (typeof motionEnabled === 'boolean') {
       root.dataset.motion = motionEnabled ? 'on' : 'off';
     }
-  } catch {
+  } catch (error) {
     // Ignore invalid or unavailable storage; React will apply defaults after hydration.
   } finally {
     root.dataset.themeReady = 'true';

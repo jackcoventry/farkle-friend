@@ -69,6 +69,9 @@ function createMatchMediaMock() {
   vi.stubGlobal(
     'matchMedia',
     vi.fn((query: string) => {
+      const existingMediaQueryList = mediaQueries.get(query);
+      if (existingMediaQueryList) return existingMediaQueryList;
+
       const mediaQueryList = createMediaQueryList(query);
 
       mediaQueries.set(query, mediaQueryList);

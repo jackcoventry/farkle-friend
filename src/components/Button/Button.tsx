@@ -6,7 +6,7 @@ import React from 'react';
 type ButtonA11yProps =
   | {
       ariaLabel: string;
-      iconOnly: true;
+      iconOnly: boolean;
     }
   | {
       ariaLabel?: string;
