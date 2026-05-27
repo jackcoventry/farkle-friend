@@ -2,6 +2,7 @@
 
 import { useI18n } from '@/i18n/I18nProvider';
 import type { Dispatch, SetStateAction } from 'react';
+import { useBreakpoint } from '@/hooks/useBreakpoint';
 import type { Avatar } from '@/domain/game/avatars';
 import type { GameAction } from '@/domain/game/gameReducer';
 import type { GameFlowState, GameState, GameSummary, Player } from '@/domain/game/gameTypes';
@@ -55,7 +56,6 @@ export function GameScreenSidebar({
   turns,
 }: Readonly<GameScreenSidebarProps>) {
   const { t } = useI18n();
-
   return (
     <>
       <GameShell.SidebarMain>
@@ -119,6 +119,8 @@ export function ActiveGameScreen({
   view,
 }: Readonly<ActiveGameScreenProps>) {
   const { t } = useI18n();
+  const { isAtLeast } = useBreakpoint();
+
   const {
     currentAvatar,
     isActiveTurnLayout,
@@ -227,15 +229,17 @@ export function ActiveGameScreen({
       </GameShell.Body>
 
       <GameShell.MobileToolbar>
-        <div className={`gap-xs grid w-full ${showTurnInfoToggle ? 'grid-cols-2' : 'grid-cols-1'}`}>
+        <div className="gap-xs flex w-full justify-end">
           {showTurnInfoToggle ? (
             <Button
               aria-controls={turnInfoModalId}
               aria-expanded={isTurnCoachOpen}
+              ariaLabel={isTurnCoachOpen ? t('actions.hideTurnInfo') : t('actions.turnInfo')}
               className="justify-center"
               size="small"
               onClick={() => setIsTurnCoachOpen((current) => !current)}
               icon="question-circle"
+              iconOnly={!isAtLeast('lg')}
             >
               {isTurnCoachOpen ? t('actions.hideTurnInfo') : t('actions.turnInfo')}
             </Button>
@@ -243,10 +247,12 @@ export function ActiveGameScreen({
           <Button
             aria-controls="active-game-sidebar-modal"
             aria-expanded={showSidebarModal}
+            ariaLabel={t('actions.gameMenu')}
             className="justify-center"
             onClick={() => setShowSidebarModal(true)}
             size="small"
             icon="three-dots-vertical"
+            iconOnly={!isAtLeast('lg')}
           >
             {t('actions.gameMenu')}
           </Button>

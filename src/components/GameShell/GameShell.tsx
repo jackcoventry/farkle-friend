@@ -56,7 +56,7 @@ GameShell.Sidebar = function Header({ children, isDesktop = false }: SidebarProp
 
   return (
     <aside
-      className={`game-shell__sidebar | p-md lg:p-xl bg-surface grid max-h-dvh min-h-0 overflow-hidden ${isDesktop ? 'hidden xl:flex xl:flex-col xl:justify-between' : ''}`}
+      className={`game-shell__sidebar | p-md sm:p-lg bg-surface max-h-dvh min-h-0 overflow-auto ${isDesktop ? 'hidden xl:flex xl:flex-col xl:justify-between' : ''}`}
       aria-label={t('actions.gameMenu')}
     >
       {children}
@@ -66,7 +66,7 @@ GameShell.Sidebar = function Header({ children, isDesktop = false }: SidebarProp
 
 GameShell.SidebarMain = function SidebarMain({ children }: SlotProps) {
   return (
-    <div className="game-shell__sidebar-main | gap-xl pr-2xs flex min-h-0 flex-col overflow-auto">
+    <div className="game-shell__sidebar-main | gap-xl flex min-h-0 flex-col overflow-auto">
       {children}
     </div>
   );

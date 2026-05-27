@@ -37,6 +37,7 @@ export function DiceTurnActions({
         },
         {
           ariaDescribedBy: actionHintId,
+          ariaLabel: t('actions.bank'),
           disabled: !canBank,
           icon: 'bank',
           label: t('actions.bank'),
@@ -44,6 +45,7 @@ export function DiceTurnActions({
         },
         {
           ariaDescribedBy: actionHintId,
+          ariaLabel: t('actions.endTurn'),
           disabled: !canFinish,
           icon: 'rocket',
           label: t('actions.endTurn'),

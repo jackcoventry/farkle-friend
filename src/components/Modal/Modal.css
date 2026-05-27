@@ -29,4 +29,5 @@
 .game-menu-modal .game-shell__sidebar {
   block-size: 100%;
   max-block-size: none;
+  padding-inline: var(--spacing-0);
 }

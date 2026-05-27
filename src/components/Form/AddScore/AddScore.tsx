@@ -104,17 +104,20 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
             {
               icon: 'dice',
               label: t('actions.manual'),
+              ariaLabel: t('actions.manual'),
               onClick: () => setShowManualEntry(true),
             },
             {
               disabled: scoreValue === 0,
               icon: 'cancel',
               label: t('actions.reset'),
+              ariaLabel: t('actions.reset'),
               onClick: handleResetTotal,
             },
             {
               icon: 'rocket',
               label: t('actions.submit'),
+              ariaLabel: t('actions.submit'),
               type: 'submit',
             },
           ]}

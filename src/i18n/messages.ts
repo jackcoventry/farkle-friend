@@ -18,7 +18,7 @@ export const messages = {
     'actions.roll': 'Roll',
     'actions.rollDice': 'Roll dice',
     'actions.bank': 'Bank',
-    'actions.endTurn': 'End turn',
+    'actions.endTurn': 'End',
     'actions.submit': 'Submit',
     'actions.submitScore': 'Submit score',
     'actions.start': 'Start',

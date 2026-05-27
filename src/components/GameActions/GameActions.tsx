@@ -25,6 +25,7 @@ export function GameActions({ onQuit, onRestart }: Readonly<GameActionsProps>) {
           onClick={onQuit}
           className="justify-center"
           size="small"
+          variant="secondary"
         >
           {t('actions.quitToSetup')}
         </Button>

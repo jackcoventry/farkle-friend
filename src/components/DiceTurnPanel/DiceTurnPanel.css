@@ -68,12 +68,16 @@
 }
 
 .dice-turn-rail {
-  order: -1;
+  order: 1;
 }
 
 @media (--breakpoint-sm-up) {
   .dice-turn-die-button {
     inline-size: 100px;
+  }
+
+  .dice-turn-rail {
+    order: -1;
   }
 }
 

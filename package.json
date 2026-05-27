@@ -6,8 +6,24 @@
   "engines": {
     "node": ">=22 <23"
   },
+  "browserslist": {
+    "production": [
+      "chrome >= 90",
+      "edge >= 90",
+      "firefox >= 90",
+      "ios_saf >= 14",
+      "safari >= 14"
+    ],
+    "development": [
+      "chrome >= 90",
+      "edge >= 90",
+      "firefox >= 90",
+      "ios_saf >= 14",
+      "safari >= 14"
+    ]
+  },
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --webpack",
     "analyze": "ANALYZE=true next build --webpack",
     "build": "next build",
     "start": "node config/static-server.mjs out",
@@ -29,7 +45,8 @@
     "format:check": "prettier --check \"src/**/*.{css,tsx,ts}\" \"tests/**/*.{ts,tsx}\" \"config/**/*.mjs\" \"*.{md,json,yml,ts,mjs}\" \".github/**/*.yml\"",
     "audit:security": "npm audit --audit-level=high",
     "verify": "npm run format:check && npm run lint && npm run typecheck && npm test && npm run build",
-    "storybook": "storybook dev -p 6006"
+    "storybook": "storybook dev -p 6006",
+    "prepare": "husky"
   },
   "dependencies": {
     "next": "^16.2.4",
@@ -55,6 +72,7 @@
     "eslint": "^9",
     "eslint-config-next": "^16.2.4",
     "eslint-plugin-jsx-a11y": "^6.10.2",
+    "husky": "^9.1.7",
     "jsdom": "^29.1.0",
     "postcss": "^8.5.15",
     "postcss-custom-media": "^12.0.1",

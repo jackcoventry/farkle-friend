@@ -17,6 +17,11 @@ type GameProviderProps = {
   children: React.ReactNode;
 };
 
+type LegacyMediaQueryList = MediaQueryList & {
+  addListener?: (listener: (event: MediaQueryListEvent) => void) => void;
+  removeListener?: (listener: (event: MediaQueryListEvent) => void) => void;
+};
+
 export function GameProvider({ children }: Readonly<GameProviderProps>) {
   const value = useGameState();
 
@@ -25,7 +30,9 @@ export function GameProvider({ children }: Readonly<GameProviderProps>) {
   }, [value.state.preferences.motionEnabled]);
 
   useEffect(() => {
-    const systemThemeQuery = window.matchMedia('(prefers-color-scheme: light)');
+    const systemThemeQuery: LegacyMediaQueryList = window.matchMedia(
+      '(prefers-color-scheme: light)'
+    );
     const syncSystemTheme = () => {
       document.documentElement.dataset.systemTheme = systemThemeQuery.matches ? 'light' : 'dark';
     };
@@ -35,10 +42,19 @@ export function GameProvider({ children }: Readonly<GameProviderProps>) {
     if (value.state.preferences.theme === 'system') {
       delete document.documentElement.dataset.theme;
       document.documentElement.dataset.themeReady = 'true';
-      systemThemeQuery.addEventListener('change', syncSystemTheme);
+
+      if (typeof systemThemeQuery.addEventListener === 'function') {
+        systemThemeQuery.addEventListener('change', syncSystemTheme);
+      } else {
+        systemThemeQuery.addListener?.(syncSystemTheme);
+      }
 
       return () => {
-        systemThemeQuery.removeEventListener('change', syncSystemTheme);
+        if (typeof systemThemeQuery.removeEventListener === 'function') {
+          systemThemeQuery.removeEventListener('change', syncSystemTheme);
+        } else {
+          systemThemeQuery.removeListener?.(syncSystemTheme);
+        }
       };
     }
 

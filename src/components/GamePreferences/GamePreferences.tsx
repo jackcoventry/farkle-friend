@@ -40,7 +40,7 @@ export function GamePreferences({ className }: Readonly<GamePreferencesProps>) {
       <Button
         type="button"
         size="small"
-        variant="primary"
+        variant="secondary"
         onClick={() => setIsOpen(true)}
         icon="three-dots-vertical"
         iconOnly

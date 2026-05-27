@@ -66,17 +66,6 @@ export function LobbyGameScreen({
   const closeSidebar = () => {
     setIsSidebarOpen(false);
   };
-  const startGameButton = (
-    <Button
-      type="button"
-      onClick={onStartGame}
-      className="w-full justify-center"
-      disabled={!view.readyToStart}
-    >
-      {t('actions.start')}
-    </Button>
-  );
-
   return (
     <GameShell key="lobby">
       <GameShell.Sidebar isDesktop>
@@ -149,10 +138,6 @@ export function LobbyGameScreen({
 
       <GameShell.Body>
         <div className="lobby-game-screen__main | gap-xl p-md mx-auto flex h-full w-full flex-col justify-start overflow-auto">
-          <Panel className="lobby-start-panel | gap-lg grid">
-            <h2 className="font-heading-2 text-text">{t('setup.ready')}</h2>
-            {startGameButton}
-          </Panel>
           <div
             className="gap-xs grid grid-cols-2"
             role="tablist"
@@ -210,6 +195,34 @@ export function LobbyGameScreen({
               <Settings onSubmit={onSettingsSubmit} />
             </div>
           )}
+          <Panel className="lobby-start-panel | gap-lg grid">
+            <div className="flex justify-between">
+              <h2 className="font-heading-2 text-text">{t('setup.ready')}</h2>
+
+              <span className="gap-xs inline-flex items-center">
+                <svg
+                  aria-hidden="true"
+                  className="icon"
+                  width="1.25em"
+                  height="1.25em"
+                  fill="currentColor"
+                >
+                  <use xlinkHref={`/icons/icons.svg#person-circle`} />
+                </svg>
+                <span>{view.players.length}</span>
+              </span>
+            </div>
+
+            <Button
+              type="button"
+              onClick={onStartGame}
+              className="w-full justify-center"
+              disabled={!view.readyToStart}
+              variant="secondary"
+            >
+              {t('actions.start')}
+            </Button>
+          </Panel>
         </div>
       </GameShell.Body>
 
