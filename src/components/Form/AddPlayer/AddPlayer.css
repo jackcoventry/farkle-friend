@@ -15,6 +15,16 @@
 .avatar-list-grid {
   --avatar-list-size: clamp(4rem, 22vw, 6.25rem);
   --avatar-list-padding: clamp(0.625rem, 3vw, 1rem);
+
+  inline-size: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--spacing-4);
+  justify-items: center;
+}
+
+.avatar-list-fieldset {
+  min-inline-size: 0;
 }
 
 .avatar-list-option,
@@ -23,6 +33,56 @@
   inline-size: var(--avatar-list-size);
 }
 
+.avatar-list-option {
+  scroll-snap-align: start;
+}
+
 .avatar-list-image {
   padding: var(--avatar-list-padding);
+}
+
+@media (max-width: 39.999rem) {
+  .avatar-list-grid {
+    --avatar-list-edge-space: max(var(--spacing-3), 0.375rem);
+
+    grid-auto-columns: var(--avatar-list-size);
+    grid-auto-flow: column;
+    grid-template-columns: none;
+    gap: var(--spacing-4);
+    contain: paint;
+    justify-content: start;
+    justify-items: stretch;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: var(--avatar-list-edge-space);
+    scroll-padding-inline: var(--avatar-list-edge-space);
+    scroll-snap-type: inline proximity;
+    scrollbar-width: none;
+    touch-action: pan-x;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .avatar-list-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .avatar-list-grid {
+      scrollbar-width: thin;
+    }
+
+    .avatar-list-grid::-webkit-scrollbar {
+      display: block;
+      block-size: var(--spacing-2);
+    }
+
+    .avatar-list-grid::-webkit-scrollbar-thumb {
+      background: var(--color-border-strong);
+      border-radius: 999px;
+    }
+
+    .avatar-list-grid::-webkit-scrollbar-track {
+      background: transparent;
+    }
+  }
 }

@@ -27,6 +27,7 @@
     "analyze": "ANALYZE=true next build --webpack",
     "build": "next build",
     "start": "node config/static-server.mjs out",
+    "start:phone": "npm run build && HOST=0.0.0.0 PORT=4173 npm run start",
     "tokens": "node config/style-dictionary.mjs",
     "icon:tokens": "node src/scripts/generate-icons.mjs",
     "icons": "npm run icon:tokens && svg-sprite --config svg.json --log=info \"src/icons/*.svg\"",

@@ -16,6 +16,7 @@
 }
 
 .turn-action-cluster__button {
+  flex: 1 1 9rem;
   min-block-size: 3.75rem;
   min-inline-size: 0;
   transition:
@@ -26,11 +27,11 @@
 
 .turn-action-cluster__button::before {
   background: var(--turn-action-separator);
-  block-size: 1px;
+  block-size: calc(100% - var(--spacing-4));
   content: '';
-  inline-size: calc(100% - var(--spacing-6));
-  inset-block-start: 0;
-  inset-inline-start: var(--spacing-3);
+  inline-size: 1px;
+  inset-inline-start: 0;
+  inset-block-start: var(--spacing-2);
   position: absolute;
 }
 
@@ -118,24 +119,7 @@
   }
 }
 
-@media (--breakpoint-xl-up) {
-  .turn-action-cluster__button {
-    flex: 1 1 9rem;
-  }
-
-  .turn-action-cluster__button::before {
-    block-size: calc(100% - var(--spacing-4));
-    inline-size: 1px;
-    inset-block-start: var(--spacing-2);
-    inset-inline-start: 0;
-  }
-}
-
 @media (--turn-actions-stacked) {
-  .turn-action-cluster__button {
-    flex-direction: column;
-  }
-
   .turn-action-cluster__label {
     max-inline-size: var(--turn-action-stacked-label-max);
   }

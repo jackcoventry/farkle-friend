@@ -48,7 +48,7 @@ describe('TurnResultPanel', () => {
     expect(screen.getByText('150')).toBeInTheDocument();
     expect(screen.getByText('Turn complete')).toBeInTheDocument();
     expect(screen.getByText('Grace is up next!')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Start turn' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Start' })).toBeInTheDocument();
   });
 
   it('calls onAdvanceTurn when the action button is clicked', async () => {
@@ -64,7 +64,7 @@ describe('TurnResultPanel', () => {
       />
     );
 
-    await user.click(screen.getByRole('button', { name: 'Start turn' }));
+    await user.click(screen.getByRole('button', { name: 'Start' }));
     expect(onAdvanceTurn).toHaveBeenCalledTimes(1);
   });
 

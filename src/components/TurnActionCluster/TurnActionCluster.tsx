@@ -40,7 +40,7 @@ export function TurnActionCluster({
           type={action.type ?? 'button'}
           aria-describedby={action.ariaDescribedBy}
           aria-label={action.ariaLabel}
-          className="turn-action-cluster__button | text-action-contrast bg-action gap-xs p-sm disabled:bg-surface-disabled disabled:text-text-muted relative flex cursor-pointer items-center justify-center focus-visible:z-10 disabled:cursor-not-allowed"
+          className="turn-action-cluster__button | text-action-contrast bg-action gap-xs p-sm disabled:bg-surface-disabled disabled:text-text-muted relative flex cursor-pointer flex-col items-center justify-center focus-visible:z-10 disabled:cursor-not-allowed"
           disabled={action.disabled}
           onClick={action.onClick}
         >
@@ -53,9 +53,7 @@ export function TurnActionCluster({
               alt=""
             />
           </span>
-          <span className="turn-action-cluster__label | hidden text-center sm:block">
-            {action.label}
-          </span>
+          <span className="turn-action-cluster__label | text-center">{action.label}</span>
         </button>
       ))}
     </div>
