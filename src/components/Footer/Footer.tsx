@@ -27,8 +27,7 @@ function Footer() {
   return (
     <>
       <footer className="text-text mt-auto flex flex-col">
-        <div className="items-between flex">
-          <span className="font-sub-heading text-center">FARKLE!</span>
+        <div className="items-between flex flex-col-reverse sm:flex-col">
           <div className="gap-sm ml-auto flex items-center">
             <Button
               type="button"

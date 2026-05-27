@@ -6,10 +6,13 @@
   --turn-action-separator: rgb(255 255 255 / 0.42);
   --turn-action-separator-disabled: rgb(0 0 0 / 0.18);
   --turn-action-focus: var(--color-accent);
-  --turn-action-horizontal-min: 7.5rem;
+  --turn-action-horizontal-min: 5rem;
   --turn-action-stacked-label-max: 8.5rem;
 
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(
+    var(--turn-action-count, 3),
+    minmax(var(--turn-action-horizontal-min), 1fr)
+  );
 }
 
 .turn-action-cluster__button {
@@ -64,7 +67,7 @@
 }
 
 .turn-action-cluster__label {
-  font: var(--font-title-2);
+  font: var(--font-button-small);
   max-inline-size: 100%;
   overflow-wrap: normal;
   text-wrap: balance;
@@ -74,10 +77,6 @@
 @media (--turn-actions-horizontal) {
   .turn-action-cluster {
     border-radius: 999px;
-    grid-template-columns: repeat(
-      var(--turn-action-count, 3),
-      minmax(var(--turn-action-horizontal-min), 1fr)
-    );
   }
 
   .turn-action-cluster__button {
