@@ -195,7 +195,7 @@ test('mid-height tablet dice layout keeps full controls visible', async ({ page 
 
   const bodyBox = await page.locator('.game-shell__body').boundingBox();
   const controlsBox = await page.locator('.turn-action-cluster').boundingBox();
-  const endTurnBox = await page.getByRole('button', { name: 'End turn' }).boundingBox();
+  const endTurnBox = await page.getByRole('button', { name: 'End' }).boundingBox();
 
   expect(controlsBox?.height).toBeGreaterThanOrEqual(56);
   expect(endTurnBox?.height).toBeGreaterThanOrEqual(48);
