@@ -88,19 +88,19 @@ export function DiceTurnCoach({
             {currentCombos.slice(0, 5).map((combo, index) => (
               <li
                 key={index}
-                className="grid w-full grid-cols-2"
+                className="flex w-full justify-between"
               >
+                <span className="text-accent text-right">
+                  {t('turn.pts', { score: combo.score })}
+                </span>
                 <span className="gap-2xs flex">
                   {sortDiceValues(combo.dice).map((die, dieIndex) => (
                     <DiceIcon
                       key={`${die}-${dieIndex}`}
                       count={die}
-                      className="w-5"
+                      className="w-6"
                     />
                   ))}
-                </span>
-                <span className="text-accent text-right">
-                  {t('turn.pts', { score: combo.score })}
                 </span>
               </li>
             ))}

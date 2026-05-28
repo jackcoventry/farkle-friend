@@ -156,7 +156,7 @@ export function LobbyGameScreen({
               tabIndex={lobbyScreen === 'players' ? 0 : -1}
               onClick={() => onSelectLobbyScreen('players')}
               onKeyDown={onLobbyTabKeyDown}
-              variant={lobbyScreen === 'players' ? 'primary' : 'secondary'}
+              disabled={lobbyScreen === 'players'}
               size="small"
               icon="person-circle"
             >
@@ -173,7 +173,7 @@ export function LobbyGameScreen({
               tabIndex={lobbyScreen === 'settings' ? 0 : -1}
               onClick={() => onSelectLobbyScreen('settings')}
               onKeyDown={onLobbyTabKeyDown}
-              variant={lobbyScreen === 'settings' ? 'primary' : 'secondary'}
+              disabled={lobbyScreen === 'settings'}
               size="small"
               icon="gear"
             >
