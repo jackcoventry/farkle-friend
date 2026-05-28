@@ -48,14 +48,14 @@ const Template: Story = {
           type="button"
           size="small"
           variant="secondary"
-          icon="bank"
+          icon="question-circle"
         >
           Turn info
         </Button>
         <Button
           type="button"
           size="small"
-          icon="dice"
+          icon="arrow-right"
         >
           Roll
         </Button>

@@ -26,7 +26,7 @@ export function DiceBoard({
         {isFarkled ? (
           <div
             role="alert"
-            className="dice-turn-table__farkle-alert | animate-bounce-in border-danger bg-danger-surface p-xl text-danger-contrast rounded-3xl border-4 text-center shadow-lg"
+            className="dice-turn-table__farkle-alert | border-danger bg-danger-surface p-xl text-danger-contrast rounded-3xl border-4 text-center shadow-lg"
           >
             <p className="font-sub-heading text-danger">{t('turn.farkledTitle')}</p>
             <p className="mt-xs">{t('turn.detail.farkle')}</p>

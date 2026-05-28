@@ -97,7 +97,7 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
               {selectedItems.map((die, index) => (
                 <li
                   key={`${die}-${index}`}
-                  className="w-7"
+                  className="w-6"
                 >
                   <DiceIcon count={die} />
                 </li>
@@ -160,7 +160,7 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
                   {sortDiceValues(item.dice).map((die, dieIndex) => (
                     <span
                       key={`${item.id}-${die}-${dieIndex}`}
-                      className="w-6"
+                      className="w-7"
                     >
                       <DiceIcon count={die} />
                     </span>

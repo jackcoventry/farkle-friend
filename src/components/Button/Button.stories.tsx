@@ -22,12 +22,15 @@ const meta: Meta<ButtonProps> = {
       control: { type: 'radio' },
     },
     iconPosition: {
-      options: ['left', 'right', 'top'],
+      options: ['left', 'right'],
       control: { type: 'radio' },
     },
     icon: {
-      options: icons.icons,
+      options: [undefined, ...icons.icons],
       control: { type: 'select' },
+      labels: {
+        undefined: 'None',
+      },
     },
   },
 };
@@ -43,7 +46,7 @@ export const Playground: Story = {
   ...Template,
   args: {
     as: 'button',
-    icon: 'dice',
+    icon: 'arrow-right',
     onClick: fn(),
   },
 };
@@ -53,7 +56,7 @@ export const Variants: Story = {
     <div className="gap-md flex flex-wrap items-center">
       <Button
         type="button"
-        icon="dice"
+        icon="arrow-right"
         onClick={fn()}
       >
         Roll dice
@@ -61,7 +64,7 @@ export const Variants: Story = {
       <Button
         type="button"
         variant="secondary"
-        icon="bank"
+        icon="bag"
         onClick={fn()}
       >
         Bank points
@@ -69,7 +72,7 @@ export const Variants: Story = {
       <Button
         type="button"
         disabled
-        icon="rocket"
+        icon="clock"
       >
         End turn
       </Button>
@@ -97,7 +100,7 @@ export const Sizes: Story = {
       <Button
         type="button"
         size="large"
-        icon="rocket"
+        icon="arrow-right"
         onClick={fn()}
       >
         Large
@@ -111,14 +114,14 @@ export const IconButtons: Story = {
     <div className="gap-md flex flex-wrap items-center">
       <Button
         type="button"
-        icon="dice"
+        icon="arrow-right"
         iconOnly
         ariaLabel="Roll dice"
         onClick={fn()}
       />
       <Button
         type="button"
-        icon="bank"
+        icon="bag"
         iconOnly
         ariaLabel="Bank score"
         variant="secondary"
@@ -127,7 +130,7 @@ export const IconButtons: Story = {
       <Button
         as="a"
         href="/game"
-        icon="rocket"
+        icon="arrow-right"
       >
         New game
       </Button>

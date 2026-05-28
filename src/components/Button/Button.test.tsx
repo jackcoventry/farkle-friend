@@ -206,6 +206,30 @@ describe('Button (polymorphic)', () => {
 
     const svg = button.querySelector('svg.icon');
     expect(svg).not.toBeNull();
+    expect(button.querySelector('[data-slot="button-icon"]')).not.toBeNull();
+  });
+
+  it('does not render the icon wrapper when no icon is provided', () => {
+    render(<Button>No icon</Button>);
+
+    const button = screen.getByRole('button', { name: 'No icon' });
+    expect(button.querySelector('[data-slot="button-icon"]')).toBeNull();
+    expect(button.querySelector('svg.icon')).toBeNull();
+  });
+
+  it('does not render the icon wrapper for empty or unknown icon names', () => {
+    render(
+      <>
+        <Button icon="">Empty icon</Button>
+        <Button icon="dice">Unknown icon</Button>
+      </>
+    );
+
+    const emptyIconButton = screen.getByRole('button', { name: 'Empty icon' });
+    const unknownIconButton = screen.getByRole('button', { name: 'Unknown icon' });
+
+    expect(emptyIconButton.querySelector('[data-slot="button-icon"]')).toBeNull();
+    expect(unknownIconButton.querySelector('[data-slot="button-icon"]')).toBeNull();
   });
 
   it('sets data attributes for size, variant, and iconPosition', () => {

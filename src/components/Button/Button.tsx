@@ -1,3 +1,4 @@
+import icons from '@/design-tokens/icons.json';
 import React from 'react';
 
 /* -----------------------------
@@ -83,6 +84,16 @@ type InlineOnlyProps = {
 ----------------------------- */
 export type ButtonProps = CommonProps & (ButtonOnlyProps | AnchorOnlyProps | InlineOnlyProps);
 
+const buttonIconNames = new Set<string>(icons.icons);
+
+function getRenderableIconName(icon: string | undefined) {
+  const iconName = icon?.trim();
+
+  if (!iconName || !buttonIconNames.has(iconName)) return undefined;
+
+  return iconName;
+}
+
 function getVariantClasses(variant: CommonProps['variant']) {
   if (variant === 'secondary') {
     return 'border-control-border shadow-control-shadow active:shadow-none active:translate-px bg-control text-control-text hover:bg-control-hover hover:border-accent shadow-offset-solid-style';
@@ -141,13 +152,18 @@ function renderButtonContent({
   icon?: string;
   iconOnly: boolean;
 }) {
+  const iconName = getRenderableIconName(icon);
+
   return (
     <>
       {children && !iconOnly && (
         <span className="content | flex w-full items-center justify-center">{children}</span>
       )}
-      {icon && (
-        <span className="inline-flex items-center">
+      {iconName && (
+        <span
+          className="inline-flex items-center"
+          data-slot="button-icon"
+        >
           <svg
             aria-hidden="true"
             className="icon"
@@ -155,7 +171,7 @@ function renderButtonContent({
             height="1.25em"
             fill="currentColor"
           >
-            <use xlinkHref={`/icons/icons.svg#${icon}`} />
+            <use xlinkHref={`/icons/icons.svg#${iconName}`} />
           </svg>
         </span>
       )}
