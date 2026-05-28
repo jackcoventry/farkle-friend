@@ -18,7 +18,7 @@ const meta: Meta<ButtonProps> = {
       control: { type: 'radio' },
     },
     variant: {
-      options: ['primary', 'secondary'],
+      options: ['primary', 'secondary', 'tertiary'],
       control: { type: 'radio' },
     },
     iconPosition: {
@@ -68,6 +68,14 @@ export const Variants: Story = {
         onClick={fn()}
       >
         Bank points
+      </Button>
+      <Button
+        type="button"
+        variant="tertiary"
+        icon="close"
+        onClick={fn()}
+      >
+        Cancel
       </Button>
       <Button
         type="button"

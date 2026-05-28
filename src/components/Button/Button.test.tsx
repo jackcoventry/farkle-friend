@@ -257,6 +257,17 @@ describe('Button (polymorphic)', () => {
     expect(button.className).toContain('text-control-text');
   });
 
+  it('applies primary-like inverted colors for tertiary style', () => {
+    render(<Button variant="tertiary">Tertiary</Button>);
+
+    const button = screen.getByRole('button', { name: 'Tertiary' });
+    expect(button).toHaveAttribute('data-variant', 'tertiary');
+    expect(button.className).toContain('border-action-border');
+    expect(button.className).toContain('bg-accent-hover');
+    expect(button.className).toContain('hover:bg-accent');
+    expect(button.className).toContain('shadow-accent-shadow');
+  });
+
   it('applies secondary styling to anchor and inline variants', () => {
     render(
       <>

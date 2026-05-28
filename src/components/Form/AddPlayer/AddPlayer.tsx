@@ -93,7 +93,7 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
   return (
     <Panel className="form-wrapper | self-center">
       <form
-        className="form | gap-xl flex flex-col"
+        className="form | gap-sm lg:gap-xl flex flex-col"
         onSubmit={handleSubmit(submitHandler)}
       >
         <h2>{t('player.add')}</h2>

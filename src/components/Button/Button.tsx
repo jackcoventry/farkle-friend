@@ -20,7 +20,7 @@ type CommonProps = ButtonA11yProps & {
   icon?: string;
   iconPosition?: 'left' | 'right';
   size?: 'default' | 'small' | 'large';
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary' | 'tertiary';
 };
 
 /* -----------------------------
@@ -95,6 +95,10 @@ function getRenderableIconName(icon: string | undefined) {
 }
 
 function getVariantClasses(variant: CommonProps['variant']) {
+  if (variant === 'tertiary') {
+    return 'border-border shadow-accent-shadow active:shadow-none active:translate-px bg-surface-muted text-text hover:bg-accent-muted hover:border-accent shadow-offset-solid-style';
+  }
+
   if (variant === 'secondary') {
     return 'border-control-border shadow-control-shadow active:shadow-none active:translate-px bg-control text-control-text hover:bg-control-hover hover:border-accent shadow-offset-solid-style';
   }

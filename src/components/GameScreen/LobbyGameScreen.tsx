@@ -2,7 +2,7 @@
 
 import { useI18n } from '@/i18n/I18nProvider';
 import type { KeyboardEvent, RefObject } from 'react';
-import { useRef, useState } from 'react';
+import { useRef, useState, useSyncExternalStore } from 'react';
 import { useBreakpoint } from '@/hooks/useBreakpoint';
 import Button from '@/components/Button/Button';
 import Footer from '@/components/Footer/Footer';
@@ -31,6 +31,10 @@ type LobbyGameScreenProps = {
   settingsReady: boolean;
   view: LobbyGameView;
 };
+
+const subscribeToHydration = () => () => undefined;
+const getClientHydrationSnapshot = () => true;
+const getServerHydrationSnapshot = () => false;
 
 function GameSetupSummarySkeleton() {
   return (
@@ -64,8 +68,15 @@ export function LobbyGameScreen({
   const { t } = useI18n();
   const { isAtLeast } = useBreakpoint();
 
+  const hasHydrated = useSyncExternalStore(
+    subscribeToHydration,
+    getClientHydrationSnapshot,
+    getServerHydrationSnapshot
+  );
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const sidebarTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const startDisabled = hasHydrated ? !settingsReady || !view.readyToStart : false;
+
   const closeSidebar = () => {
     setIsSidebarOpen(false);
   };
@@ -156,7 +167,7 @@ export function LobbyGameScreen({
               tabIndex={lobbyScreen === 'players' ? 0 : -1}
               onClick={() => onSelectLobbyScreen('players')}
               onKeyDown={onLobbyTabKeyDown}
-              disabled={lobbyScreen === 'players'}
+              variant={lobbyScreen === 'players' ? 'primary' : 'tertiary'}
               size="small"
               icon="person-circle"
             >
@@ -173,7 +184,7 @@ export function LobbyGameScreen({
               tabIndex={lobbyScreen === 'settings' ? 0 : -1}
               onClick={() => onSelectLobbyScreen('settings')}
               onKeyDown={onLobbyTabKeyDown}
-              disabled={lobbyScreen === 'settings'}
+              variant={lobbyScreen === 'settings' ? 'primary' : 'tertiary'}
               size="small"
               icon="gear"
             >
@@ -198,7 +209,7 @@ export function LobbyGameScreen({
               <Settings onSubmit={onSettingsSubmit} />
             </div>
           )}
-          <Panel className="lobby-start-panel | gap-lg grid">
+          <Panel className="lobby-start-panel | gap-lg hidden lg:grid">
             <div className="flex justify-between">
               <h2 className="font-heading-2 text-text">{t('setup.ready')}</h2>
 
@@ -218,9 +229,13 @@ export function LobbyGameScreen({
 
             <Button
               type="button"
-              onClick={onStartGame}
+              onClick={() => {
+                if (!settingsReady || !view.readyToStart) return;
+
+                onStartGame();
+              }}
               className="w-full justify-center"
-              disabled={!settingsReady || !view.readyToStart}
+              disabled={startDisabled}
               variant="secondary"
             >
               {t('actions.start')}
@@ -230,7 +245,35 @@ export function LobbyGameScreen({
       </GameShell.Body>
 
       <GameShell.MobileToolbar>
-        <div className="gap-xs flex w-full justify-end">
+        <div className="gap-sm flex w-full justify-end">
+          <span className="gap-xs inline-flex items-center lg:hidden">
+            <svg
+              aria-hidden="true"
+              className="icon"
+              width="1.25em"
+              height="1.25em"
+              fill="currentColor"
+            >
+              <use xlinkHref={`/icons/icons.svg#person-circle`} />
+            </svg>
+            <span>{view.players.length}</span>
+          </span>
+
+          <Button
+            type="button"
+            onClick={() => {
+              if (!settingsReady || !view.readyToStart) return;
+
+              onStartGame();
+            }}
+            className="w-full justify-center lg:hidden"
+            disabled={startDisabled}
+            variant="secondary"
+            size="small"
+          >
+            {t('actions.start')}
+          </Button>
+
           <Button
             aria-controls="lobby-sidebar-modal"
             aria-expanded={isSidebarOpen}
