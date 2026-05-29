@@ -3,7 +3,7 @@
 import { useI18n } from '@/i18n/I18nProvider';
 import { translateValidationMessage } from '@/i18n/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useGame } from '@/domain/game/GameProvider';
 import { avatarSet, avatarValues } from '@/domain/game/avatars';
@@ -36,6 +36,7 @@ function getNextDefaultUsername(players: { username: string }[]) {
 function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
   const { state } = useGame();
   const { t } = useI18n();
+  const avatarListRef = useRef<HTMLDivElement | null>(null);
   const defaultUsername = t('player.defaultName', {
     number: getNextDefaultUsername(state.players),
   });
@@ -67,6 +68,23 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
     setValue('username', defaultUsername);
   }, [defaultUsername, dirtyFields.username, setValue]);
 
+  useLayoutEffect(() => {
+    const resetAvatarListScroll = () => {
+      if (!avatarListRef.current) return;
+
+      avatarListRef.current.scrollLeft = 0;
+    };
+
+    resetAvatarListScroll();
+    window.addEventListener('pageshow', resetAvatarListScroll);
+    const animationFrameId = window.requestAnimationFrame(resetAvatarListScroll);
+
+    return () => {
+      window.cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('pageshow', resetAvatarListScroll);
+    };
+  }, []);
+
   const submitHandler = (data: { username: string; avatar: number }) => {
     const duplicateName = state.players.some(
       (player) => player.username.trim().toLowerCase() === data.username.trim().toLowerCase()
@@ -94,6 +112,7 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
     <Panel className="form-wrapper | self-center">
       <form
         className="form | gap-sm lg:gap-xl flex flex-col"
+        autoComplete="off"
         onSubmit={handleSubmit(submitHandler)}
       >
         <h2>{t('player.add')}</h2>
@@ -113,6 +132,7 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
                   <input
                     id="player-name"
                     className="field-control"
+                    autoComplete="off"
                     {...field}
                     placeholder={t('player.namePlaceholder')}
                     onFocus={(event) => {
@@ -148,7 +168,10 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
                 >
                   <legend className="text-text mb-md">{t('player.chooseAvatar')}</legend>
 
-                  <div className="avatar-list-grid">
+                  <div
+                    ref={avatarListRef}
+                    className="avatar-list-grid"
+                  >
                     {avatarValues.map((option) => {
                       const avatar = avatarSet[option];
                       const isAvatarInUse = avatarsInUse.includes(option);
@@ -170,7 +193,8 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
                             onChange={() => field.onChange(option)}
                             onBlur={field.onBlur}
                             ref={field.ref}
-                            className="avatar-list-input | sr-only"
+                            className="avatar-list-input"
+                            autoComplete="off"
                             disabled={isAvatarInUse}
                           />
                           <div className={classes}>

@@ -5,7 +5,7 @@ import type { KeyboardEvent, RefObject } from 'react';
 import { useRef, useState, useSyncExternalStore } from 'react';
 import { useBreakpoint } from '@/hooks/useBreakpoint';
 import Button from '@/components/Button/Button';
-import Footer from '@/components/Footer/Footer';
+import { Footer } from '@/components/Footer/Footer';
 import AddPlayerForm, { type AddPlayerFormSchemaType } from '@/components/Form/AddPlayer/AddPlayer';
 import Settings, { type SettingsFormSchemaType } from '@/components/Form/Settings/Settings';
 import type { LobbyGameView } from '@/components/GameScreen/useGameViewModel';

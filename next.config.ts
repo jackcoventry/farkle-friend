@@ -11,6 +11,7 @@ function getAllowedDevOrigins(): string[] | undefined {
         .map((s) => s.trim())
         .filter(Boolean)
     : [];
+  const loopbackOrigins = ['127.0.0.1', '::1'];
   const localOrigins = Object.values(networkInterfaces())
     .flat()
     .filter(
@@ -18,7 +19,7 @@ function getAllowedDevOrigins(): string[] | undefined {
         networkInterface?.family === 'IPv4' && !networkInterface.internal
     )
     .map((networkInterface) => networkInterface.address);
-  const origins = [...new Set([...configuredOrigins, ...localOrigins])];
+  const origins = [...new Set([...configuredOrigins, ...loopbackOrigins, ...localOrigins])];
 
   return origins.length ? origins : undefined;
 }

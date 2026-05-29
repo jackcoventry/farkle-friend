@@ -2,6 +2,7 @@
 
 .dice-turn-layout {
   --dice-turn-board-min-block-size: 300px;
+  --dice-turn-board-short-min-block-size: 220px;
   --dice-turn-rail-compact-min: 220px;
   --dice-turn-rail-compact-max: 280px;
   --dice-turn-rail-wide-min: 240px;
@@ -55,11 +56,12 @@
       transparent 53%
     );
   animation: dice-turn-table-spin 100s linear infinite;
+  max-inline-size: 100%;
   width: min(16rem, 70%);
 }
 
 .dice-turn-die-button {
-  inline-size: var(--spacing-8);
+  inline-size: var(--spacing-7);
 }
 
 .dice-turn-coach-modal {
@@ -72,7 +74,7 @@
 
 @media (--breakpoint-sm-up) {
   .dice-turn-die-button {
-    inline-size: 100px;
+    inline-size: var(--spacing-8);
   }
 
   .dice-turn-rail {
@@ -106,6 +108,75 @@
   }
 }
 
+@media (max-height: 520px) and (max-width: 79.99rem) {
+  .turn-frame,
+  .dice-turn-layout,
+  .dice-turn-board-stack,
+  .dice-turn-main {
+    block-size: auto;
+    height: auto;
+    min-block-size: max-content;
+    min-height: max-content;
+  }
+
+  .turn-frame,
+  .dice-turn-layout {
+    grid-template-rows: auto auto;
+  }
+
+  .dice-turn-board-stack,
+  .dice-turn-main {
+    grid-template-rows: minmax(var(--dice-turn-board-short-min-block-size), auto) auto;
+  }
+
+  .dice-turn-table {
+    min-height: var(--dice-turn-board-short-min-block-size);
+  }
+
+  .dice-turn-rail {
+    min-block-size: max-content;
+  }
+
+  .dice-turn-table__empty {
+    width: min(10rem, 70%);
+  }
+}
+
+@media (max-height: 520px) and (max-width: 47.99rem) {
+  .turn-frame,
+  .dice-turn-layout {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dice-turn-layout {
+    gap: var(--spacing-2);
+  }
+
+  .dice-turn-board-stack,
+  .dice-turn-main {
+    grid-template-rows: var(--dice-turn-board-short-min-block-size) auto;
+  }
+
+  .dice-turn-table {
+    block-size: var(--dice-turn-board-short-min-block-size);
+  }
+
+  .dice-turn-board-viewport {
+    overflow: auto;
+  }
+}
+
+@media (max-height: 380px) and (max-width: 47.99rem) {
+  .dice-turn-layout {
+    --dice-turn-board-short-min-block-size: 200px;
+  }
+
+  .dice-turn-table__empty {
+    width: min(8.5rem, 70%);
+  }
+}
+
 @media (--breakpoint-xl-up) {
   .dice-turn-layout {
     grid-template-columns:
@@ -123,5 +194,9 @@
   .dice-turn-rail {
     order: 2;
     overflow: auto;
+  }
+
+  .dice-turn-die-button {
+    inline-size: 100px;
   }
 }

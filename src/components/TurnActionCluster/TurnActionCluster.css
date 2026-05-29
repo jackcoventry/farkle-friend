@@ -13,11 +13,12 @@
     var(--turn-action-count, 3),
     minmax(var(--turn-action-horizontal-min), 1fr)
   );
+  min-block-size: 6rem;
 }
 
 .turn-action-cluster__button {
   flex: 1 1 9rem;
-  min-block-size: 3.75rem;
+  min-block-size: 6rem;
   min-inline-size: 0;
   transition:
     background-color 160ms ease,
@@ -78,11 +79,45 @@
 @media (--turn-actions-horizontal) {
   .turn-action-cluster {
     border-radius: 999px;
+    min-block-size: 4.5rem;
   }
 
   .turn-action-cluster__button {
     gap: var(--spacing-1);
-    min-block-size: 3.5rem;
+    min-block-size: 4.5rem;
+    padding: var(--spacing-2);
+  }
+
+  .turn-action-cluster__button::before {
+    block-size: calc(100% - var(--spacing-4));
+    inline-size: 1px;
+    inset-block-start: var(--spacing-2);
+    inset-inline-start: 0;
+  }
+
+  .turn-action-cluster__icon {
+    padding: var(--spacing-1);
+  }
+
+  .turn-action-cluster__icon img {
+    block-size: 1.25rem;
+    inline-size: 1.25rem;
+  }
+
+  .turn-action-cluster__label {
+    font: var(--font-button-small);
+  }
+}
+
+@media (max-height: 520px) and (max-width: 47.99rem) {
+  .turn-action-cluster {
+    border-radius: 999px;
+    min-block-size: 4.5rem;
+  }
+
+  .turn-action-cluster__button {
+    gap: var(--spacing-1);
+    min-block-size: 4.5rem;
     padding: var(--spacing-2);
   }
 

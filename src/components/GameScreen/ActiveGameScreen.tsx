@@ -8,7 +8,7 @@ import type { GameAction } from '@/domain/game/gameReducer';
 import type { GameFlowState, GameState, GameSummary, Player } from '@/domain/game/gameTypes';
 import Button from '@/components/Button/Button';
 import { type DiceTurnMetrics, DiceTurnPanel } from '@/components/DiceTurnPanel/DiceTurnPanel';
-import Footer from '@/components/Footer/Footer';
+import { Footer } from '@/components/Footer/Footer';
 import { GameActions } from '@/components/GameActions/GameActions';
 import { GameStatusBar } from '@/components/GameScreen/GameStatusBar';
 import { useActiveGameLayout } from '@/components/GameScreen/useActiveGameLayout';
@@ -93,11 +93,12 @@ export function GameScreenSidebar({
       </GameShell.SidebarMain>
 
       <GameShell.SidebarFooter>
-        <GameActions
-          onQuit={onQuit}
-          onRestart={onRestart}
-        />
-        <Footer />
+        <Footer>
+          <GameActions
+            onQuit={onQuit}
+            onRestart={onRestart}
+          />
+        </Footer>
       </GameShell.SidebarFooter>
     </>
   );

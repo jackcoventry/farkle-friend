@@ -26,8 +26,18 @@
   min-block-size: 0;
 }
 
-.game-menu-modal .game-shell__sidebar {
-  block-size: 100%;
-  max-block-size: none;
+.game-menu-modal .modal-panel__content {
+  overflow-x: hidden;
   padding-inline: var(--spacing-0);
+}
+
+.game-menu-modal .game-shell__sidebar {
+  block-size: auto;
+  max-block-size: none;
+  overflow: visible;
+  padding-inline: var(--spacing-2);
+}
+
+.game-menu-modal .game-shell__sidebar-main {
+  overflow: visible;
 }
