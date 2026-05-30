@@ -6,7 +6,7 @@ import {
   scoreSelectedDice,
   scoreSelectedDiceWithUsage,
   sortDiceValues,
-} from './dice';
+} from '@/domain/game/dice';
 
 describe('dice scoring', () => {
   it('rolls dice with an injectable random source', () => {

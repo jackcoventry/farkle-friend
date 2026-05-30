@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { gameSounds, playGameSound } from './gameAudio';
-import type { GameSoundConfig } from './gameAudio';
+import { gameSounds, playGameSound } from '@/domain/game/gameAudio';
+import type { GameSoundConfig } from '@/domain/game/gameAudio';
 
 const originalSelectSound = gameSounds.select;
 const originalAudio = globalThis.Audio;

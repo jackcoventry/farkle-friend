@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { useDiceKeyboardShortcuts } from './useDiceKeyboardShortcuts';
+import { useDiceKeyboardShortcuts } from '@/hooks/useDiceKeyboardShortcuts';
 
 function renderShortcuts(overrides: Partial<Parameters<typeof useDiceKeyboardShortcuts>[0]> = {}) {
   const handlers = {
