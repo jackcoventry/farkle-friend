@@ -1,5 +1,4 @@
 .manual-score-panel__scroll {
   max-inline-size: 680px;
   min-block-size: 0;
-  overflow: auto;
 }

@@ -22,7 +22,7 @@ export function DiceBoard({
 
   return (
     <Panel className="dice-turn-table">
-      <div className="dice-turn-board-viewport | flex h-full items-center justify-center">
+      <div className="dice-turn-board-viewport | p-sm flex h-full items-center justify-center overflow-visible">
         {isFarkled ? (
           <div
             role="alert"

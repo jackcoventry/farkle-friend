@@ -4,7 +4,6 @@
 }
 
 .game-shell__sidebar {
-  background: var(--color-surface);
   backdrop-filter: blur(18px) saturate(1.14);
   grid-template-rows: minmax(0, 1fr) auto;
 }
