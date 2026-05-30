@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { useBreakpoint } from './useBreakpoint';
+import { useBreakpoint } from '@/hooks/useBreakpoint';
 
 type BreakpointName = 'base' | 'sm' | 'md' | 'lg' | 'xl';
 

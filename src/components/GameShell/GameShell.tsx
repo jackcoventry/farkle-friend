@@ -56,7 +56,7 @@ GameShell.Sidebar = function Header({ children, isDesktop = false }: SidebarProp
 
   return (
     <aside
-      className={`game-shell__sidebar | p-md sm:p-lg bg-surface max-h-dvh min-h-0 overflow-auto ${isDesktop ? 'hidden xl:flex xl:flex-col xl:justify-between' : ''}`}
+      className={`game-shell__sidebar | bg-surface p-md sm:p-lg max-h-dvh min-h-0 overflow-auto ${isDesktop ? 'hidden xl:flex xl:flex-col xl:justify-between' : ''}`}
       aria-label={t('actions.gameMenu')}
     >
       {children}

@@ -1,6 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { getGameSummary } from '@/domain/game/gameLogic';
-import { createInitialGameState } from '@/domain/game/gameLogic';
+import { createInitialGameState, getGameSummary } from '@/domain/game/gameLogic';
 import { reducer } from '@/domain/game/gameReducer';
 import { getCurrentPlayer, getGameFlowState } from '@/domain/game/gameSelectors';
 import type { GameState } from '@/domain/game/gameTypes';

@@ -78,7 +78,7 @@ export function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
         onSubmit={handleSubmit(submitHandler)}
       >
         <div className="dice-turn-table | border-border p-md min-h-0 overflow-hidden rounded-3xl border">
-          <div className="manual-score-panel__scroll | mx-auto flex h-full items-start justify-center">
+          <div className="manual-score-panel__scroll | mx-auto flex h-full items-start justify-center overflow-auto">
             <div className="manual-score-panel__content | gap-lg px-lg grid w-full text-center">
               <div className="gap-2xs grid">
                 <h2 className="text-text font-heading">{t('manualScore.buildRoundScore')}</h2>

@@ -4,7 +4,7 @@ import {
   bankDiceFromCurrentRoll,
   rollInActiveTurn,
   startActiveTurn,
-} from './turnLogic';
+} from '@/domain/game/turnLogic';
 
 describe('turn logic', () => {
   it('rolls an active turn with an injectable random source', () => {

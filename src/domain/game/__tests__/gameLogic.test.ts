@@ -6,7 +6,7 @@ import {
   getGameSummary,
   recordTurn,
   startGame,
-} from './gameLogic';
+} from '@/domain/game/gameLogic';
 
 describe('game logic', () => {
   it('creates a complete initial game state', () => {

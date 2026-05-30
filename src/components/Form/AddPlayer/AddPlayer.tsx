@@ -170,7 +170,7 @@ export function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
 
                   <div
                     ref={avatarListRef}
-                    className="avatar-list-grid"
+                    className="avatar-list-grid | gap-lg grid justify-items-center"
                   >
                     {avatarValues.map((option) => {
                       const avatar = avatarSet[option];
@@ -183,7 +183,7 @@ export function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
                             isAvatarInUse ? 'player.avatarUnavailable' : 'player.avatarLabel',
                             { avatar: avatar.name }
                           )}
-                          className="avatar-list-option | transition-transform hover:scale-105"
+                          className="avatar-list-option | relative transition-transform hover:scale-105"
                         >
                           <input
                             type="radio"

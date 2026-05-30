@@ -27,10 +27,7 @@
   --avatar-list-padding: clamp(0.625rem, 3vw, 1rem);
 
   inline-size: 100%;
-  display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--spacing-4);
-  justify-items: center;
 }
 
 .avatar-list-fieldset {
@@ -44,7 +41,6 @@
 }
 
 .avatar-list-option {
-  position: relative;
   scroll-snap-align: start;
 }
 

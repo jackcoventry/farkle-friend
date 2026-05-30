@@ -31,8 +31,6 @@
 
 .dice-turn-board-viewport {
   min-block-size: 0;
-  overflow: visible;
-  padding: var(--spacing-2);
 }
 
 .dice-turn-dice-grid {
