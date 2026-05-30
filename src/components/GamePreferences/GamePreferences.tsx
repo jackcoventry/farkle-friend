@@ -5,9 +5,9 @@ import { type Locale, localeLabels, locales } from '@/i18n/locales';
 import { useState } from 'react';
 import { useGame } from '@/domain/game/GameProvider';
 import type { ThemePreference } from '@/domain/game/gameTypes';
-import Button from '@/components/Button/Button';
-import Modal from '@/components/Modal/Modal';
-import Pill from '@/components/Pill/Pill';
+import { Button } from '@/components/Button/Button';
+import { Modal } from '@/components/Modal/Modal';
+import { Pill } from '@/components/Pill/Pill';
 
 type GamePreferencesProps = {
   className?: string;

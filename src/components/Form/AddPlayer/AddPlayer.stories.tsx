@@ -1,23 +1,23 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
-import AddPlayer from '@/components/Form/AddPlayer/AddPlayer';
+import { AddPlayerForm } from '@/components/Form/AddPlayer/AddPlayer';
 
-const meta: Meta<typeof AddPlayer> = {
+const meta: Meta<typeof AddPlayerForm> = {
   title: 'Components/Form/Add Player',
-  component: AddPlayer,
+  component: AddPlayerForm,
   tags: ['autodocs'],
   args: {},
 };
 export default meta;
 
-type Story = StoryObj<typeof AddPlayer>;
+type Story = StoryObj<typeof AddPlayerForm>;
 
 const onSubmit = fn();
 
 const Template: Story = {
   render: () => (
     <main className="bg-canvas p-lg min-h-dvh">
-      <AddPlayer onSubmit={onSubmit} />
+      <AddPlayerForm onSubmit={onSubmit} />
     </main>
   ),
 };

@@ -4,18 +4,6 @@
       "1": {
         "$type": "fontFamily",
         "$value": [
-          "Nunito",
-          "system-ui",
-          "-apple-system",
-          "Segoe UI",
-          "Helvetica Neue",
-          "Arial",
-          "sans-serif"
-        ]
-      },
-      "2": {
-        "$type": "fontFamily",
-        "$value": [
           "Outfit",
           "system-ui",
           "-apple-system",
@@ -72,6 +60,9 @@
       },
       "4": {
         "$value": 1.1
+      },
+      "5": {
+        "$value": 0.925
       }
     },
     "letter-spacing": {
@@ -110,7 +101,7 @@
       },
       "2": {
         "$value": {
-          "fontFamily": "{font.family.2}",
+          "fontFamily": "{font.family.1}",
           "fontWeight": "{font.weight.1}",
           "fontSize": "{font.size.3}",
           "lineHeight": "{font.line-height.4}"
@@ -135,7 +126,7 @@
           "fontFamily": "{font.family.1}",
           "fontWeight": "{font.weight.1}",
           "fontSize": "{font.size.clamp}",
-          "lineHeight": "{font.line-height.4}"
+          "lineHeight": "{font.line-height.5}"
         },
         "$extensions": {
           "$targetElement": "h1"
@@ -146,7 +137,7 @@
       "$type": "typography",
       "1": {
         "$value": {
-          "fontFamily": "{font.family.2}",
+          "fontFamily": "{font.family.1}",
           "fontWeight": "{font.weight.1}",
           "fontSize": "{font.size.2}",
           "lineHeight": "{font.line-height.1}"
@@ -160,7 +151,7 @@
       "$type": "typography",
       "1": {
         "$value": {
-          "fontFamily": "{font.family.2}",
+          "fontFamily": "{font.family.1}",
           "fontWeight": "{font.weight.2}",
           "fontSize": "{font.size.2}",
           "lineHeight": "{font.line-height.1}"
@@ -168,7 +159,7 @@
       },
       "2": {
         "$value": {
-          "fontFamily": "{font.family.2}",
+          "fontFamily": "{font.family.1}",
           "fontWeight": "{font.weight.2}",
           "fontSize": "{font.size.3}",
           "lineHeight": "{font.line-height.1}"
@@ -176,7 +167,7 @@
       },
       "3": {
         "$value": {
-          "fontFamily": "{font.family.2}",
+          "fontFamily": "{font.family.1}",
           "fontWeight": "{font.weight.2}",
           "fontSize": "{font.size.4}",
           "lineHeight": "{font.line-height.1}"

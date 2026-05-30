@@ -2,21 +2,24 @@
 
 import { useI18n } from '@/i18n/I18nProvider';
 import dynamic from 'next/dynamic';
-import { useState } from 'react';
-import Button from '@/components/Button/Button';
+import { PropsWithChildren, useState } from 'react';
+import { Button } from '@/components/Button/Button';
 import { GamePreferences } from '@/components/GamePreferences/GamePreferences';
-import Modal from '@/components/Modal/Modal';
+import { Modal } from '@/components/Modal/Modal';
 
-const RulesInfo = dynamic(() => import('@/components/RulesInfo/RulesInfo'), {
-  loading: () => <RulesLoading />,
-});
+const RulesInfo = dynamic(
+  () => import('@/components/RulesInfo/RulesInfo').then((mod) => mod.RulesInfo),
+  {
+    loading: () => <RulesLoading />,
+  }
+);
 
 function RulesLoading() {
   const { t } = useI18n();
   return <p className="text-text-muted">{t('footer.loadingRules')}</p>;
 }
 
-function Footer() {
+export function Footer({ children }: Readonly<PropsWithChildren>) {
   const [showRulesModal, setShowRulesModal] = useState<boolean>(false);
   const { t } = useI18n();
 
@@ -28,7 +31,7 @@ function Footer() {
     <>
       <footer className="text-text gap-md mt-auto flex flex-col">
         <div className="items-between flex flex-col-reverse sm:flex-col">
-          <div className="gap-sm ml-auto flex items-center">
+          <div className="gap-sm flex justify-between">
             <Button
               type="button"
               onClick={handleShowRulesModal}
@@ -36,12 +39,15 @@ function Footer() {
               ariaLabel={t('footer.rulesOpen')}
               className="items-center"
               size="small"
+              variant="secondary"
             />
+            {children}
             <GamePreferences />
           </div>
         </div>
 
-        <div>
+        <div className="flex justify-between">
+          <span>Farkle Friend</span>
           <a
             href="https://jrc.codes"
             target="_blank"
@@ -71,5 +77,3 @@ function Footer() {
     </>
   );
 }
-
-export default Footer;

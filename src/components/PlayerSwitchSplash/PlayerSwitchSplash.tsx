@@ -5,8 +5,8 @@ import { type Avatar } from '@/domain/game/avatars';
 import { playGameSound } from '@/domain/game/gameAudio';
 import type { Player } from '@/domain/game/gameTypes';
 import { AvatarImage } from '@/components/AvatarImage/AvatarImage';
-import Modal from '@/components/Modal/Modal';
-import Splash from '@/components/Modal/Splash';
+import { Modal } from '@/components/Modal/Modal';
+import { Splash } from '@/components/Modal/Splash';
 
 type PlayerSwitchSplashProps = {
   avatar: Avatar;

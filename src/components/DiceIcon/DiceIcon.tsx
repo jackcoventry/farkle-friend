@@ -6,7 +6,7 @@ type DiceIconProps = {
   state?: 'default' | 'disabled' | 'active';
 };
 
-function DiceIcon({ className, count = 1, state }: Readonly<DiceIconProps>) {
+export function DiceIcon({ className, count = 1, state }: Readonly<DiceIconProps>) {
   let classes = 'dice-icon | aspect-square grid relative rounded-lg';
   if (className) {
     classes += ` ${className}`;
@@ -28,5 +28,3 @@ function DiceIcon({ className, count = 1, state }: Readonly<DiceIconProps>) {
     </div>
   );
 }
-
-export default DiceIcon;

@@ -1,15 +1,15 @@
-import React from 'react';
+import { ReactNode } from 'react';
 import './Splash.css';
 
 type SplashProps = {
-  children?: React.ReactNode;
+  children?: ReactNode;
   className?: string;
-  image: React.ReactNode;
+  image: ReactNode;
   title: string;
   text?: string;
 };
 
-function Splash({ title, text, image, children, className = '' }: Readonly<SplashProps>) {
+export function Splash({ title, text, image, children, className = '' }: Readonly<SplashProps>) {
   return (
     <div
       className={`splash-panel | bg-surface-raised text-text gap-md p-lg sm:p-3xl flex flex-col overflow-auto rounded-3xl text-center shadow-lg ${className}`}
@@ -21,5 +21,3 @@ function Splash({ title, text, image, children, className = '' }: Readonly<Splas
     </div>
   );
 }
-
-export default Splash;

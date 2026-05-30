@@ -1,12 +1,12 @@
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React, { useState } from 'react';
+import { ReactElement, useState } from 'react';
 import { describe, expect, it, vi } from 'vitest';
-import Modal from './Modal';
+import { Modal } from './Modal';
 import { ModalStackProvider } from './ModalStackContext';
 
-function renderWithProvider(ui: React.ReactElement) {
+function renderWithProvider(ui: ReactElement) {
   return render(<ModalStackProvider>{ui}</ModalStackProvider>);
 }
 

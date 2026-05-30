@@ -14,7 +14,7 @@ type PlayerListProps = {
   targetScore?: number;
 };
 
-function PlayerList({
+export function PlayerList({
   activePlayerId,
   leadingPlayerId,
   onRemovePlayer,
@@ -112,5 +112,3 @@ function PlayerList({
     </ul>
   );
 }
-
-export default PlayerList;

@@ -6,8 +6,8 @@ import type { GameAction } from '@/domain/game/gameReducer';
 import type { GameState } from '@/domain/game/gameTypes';
 import { useTurnController } from '@/domain/game/useTurnController';
 import '@/components/DiceTurnPanel/DiceTurnPanel.css';
-import AddScoreForm, { AddScoreSchemaType } from '@/components/Form/AddScore/AddScore';
-import Modal from '@/components/Modal/Modal';
+import { AddScoreForm, AddScoreSchemaType } from '@/components/Form/AddScore/AddScore';
+import { Modal } from '@/components/Modal/Modal';
 import { Panel } from '@/components/Panel/Panel';
 
 type ManualTurnProps = {

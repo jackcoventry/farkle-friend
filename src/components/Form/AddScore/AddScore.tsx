@@ -3,13 +3,13 @@
 import { useI18n } from '@/i18n/I18nProvider';
 import { translateValidationMessage } from '@/i18n/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
-import React from 'react';
+import { useCallback, useId, useState } from 'react';
 import { Controller, SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { AddScoreSchema, type AddScoreSchemaType } from '@/domain/game/formSchemas';
-import Button from '@/components/Button/Button';
+import { Button } from '@/components/Button/Button';
 import '@/components/DiceTurnPanel/DiceTurnPanel.css';
-import ScoreGenerator from '@/components/Form/ScoreGenerator/ScoreGenerator';
-import Modal from '@/components/Modal/Modal';
+import { ScoreGenerator } from '@/components/Form/ScoreGenerator/ScoreGenerator';
+import { Modal } from '@/components/Modal/Modal';
 import { TurnActionCluster } from '@/components/TurnActionCluster/TurnActionCluster';
 import './AddScore.css';
 
@@ -22,9 +22,9 @@ type AddScoreFormProps = {
   onSubmit: SubmitHandler<AddScoreSchemaType>;
 };
 
-function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
+export function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
   const { t } = useI18n();
-  const formId = React.useId();
+  const formId = useId();
   const {
     control,
     handleSubmit,
@@ -46,11 +46,11 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
     setShowManualEntry(false);
   };
 
-  const [showManualEntry, setShowManualEntry] = React.useState(false);
-  const [scoreGeneratorResetKey, setScoreGeneratorResetKey] = React.useState(0);
+  const [showManualEntry, setShowManualEntry] = useState(false);
+  const [scoreGeneratorResetKey, setScoreGeneratorResetKey] = useState(0);
   const scoreValue = useWatch({ control, name: 'value' }) ?? 0;
 
-  const onChange = React.useCallback(
+  const onChange = useCallback(
     (score: number) => {
       setValue('value', score, {
         shouldDirty: true,
@@ -79,7 +79,7 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
       >
         <div className="dice-turn-table | border-border p-md min-h-0 overflow-hidden rounded-3xl border">
           <div className="manual-score-panel__scroll | mx-auto flex h-full items-start justify-center">
-            <div className="manual-score-panel__content | gap-lg grid w-full text-center">
+            <div className="manual-score-panel__content | gap-lg px-lg grid w-full text-center">
               <div className="gap-2xs grid">
                 <h2 className="text-text font-heading">{t('manualScore.buildRoundScore')}</h2>
                 <p
@@ -188,5 +188,3 @@ function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
     </>
   );
 }
-
-export default AddScoreForm;

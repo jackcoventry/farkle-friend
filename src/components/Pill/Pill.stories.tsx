@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, within } from 'storybook/test';
-import Pill from '@/components/Pill/Pill';
+import { Pill } from '@/components/Pill/Pill';
 
 const meta: Meta<typeof Pill> = {
   title: 'Components/Pill',

@@ -61,10 +61,10 @@
   --color-sun-700: #6609be;
   --color-sun-800: #44067f;
   --color-sun-900: #22033f;
-  --font-title-1: 400 32px/1.1 Nunito, system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --font-title-1: 400 32px/1.1 Outfit, system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   --font-title-2: 400 24px/1.1 Outfit, system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-  --font-title-3: 400 40px/1.5 Nunito, system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-  --font-title-mega: 400 clamp(3rem, -0.875rem + 8.333vw, 10rem)/1.1 Nunito, system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --font-title-3: 400 40px/1.5 Outfit, system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --font-title-mega: 400 clamp(3rem, -0.875rem + 8.333vw, 10rem)/0.925 Outfit, system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   --font-body-1: 400 18px/1.5 Outfit, system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   --font-button-1: 700 18px/1.5 Outfit, system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   --font-button-2: 700 24px/1.5 Outfit, system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;

@@ -66,15 +66,6 @@ export const ColorSun700 = "#6609be";
 export const ColorSun800 = "#44067f";
 export const ColorSun900 = "#22033f";
 export const FontFamily1 = [
-  "Nunito",
-  "system-ui",
-  "-apple-system",
-  "Segoe UI",
-  "Helvetica Neue",
-  "Arial",
-  "sans-serif",
-];
-export const FontFamily2 = [
   "Outfit",
   "system-ui",
   "-apple-system",
@@ -95,13 +86,14 @@ export const FontLineHeight1 = 1.5;
 export const FontLineHeight2 = 1.75;
 export const FontLineHeight3 = 1.25;
 export const FontLineHeight4 = 1.1;
+export const FontLineHeight5 = 0.925;
 export const FontLetterSpacing1 = "0";
 export const FontLetterSpacing2 = "1px";
 export const FontWeight1 = 400;
 export const FontWeight2 = 700;
 export const FontTitle1 = {
   fontFamily: [
-    "Nunito",
+    "Outfit",
     "system-ui",
     "-apple-system",
     "Segoe UI",
@@ -129,7 +121,7 @@ export const FontTitle2 = {
 };
 export const FontTitle3 = {
   fontFamily: [
-    "Nunito",
+    "Outfit",
     "system-ui",
     "-apple-system",
     "Segoe UI",
@@ -143,7 +135,7 @@ export const FontTitle3 = {
 };
 export const FontTitleMega = {
   fontFamily: [
-    "Nunito",
+    "Outfit",
     "system-ui",
     "-apple-system",
     "Segoe UI",
@@ -153,7 +145,7 @@ export const FontTitleMega = {
   ],
   fontWeight: 400,
   fontSize: "clamp(3rem, -0.875rem + 8.333vw, 10rem)",
-  lineHeight: 1.1,
+  lineHeight: 0.925,
 };
 export const FontBody1 = {
   fontFamily: [

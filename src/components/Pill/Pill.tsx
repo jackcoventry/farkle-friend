@@ -1,31 +1,38 @@
-import React from 'react';
+import {
+  Children,
+  InputHTMLAttributes,
+  ReactElement,
+  ReactNode,
+  cloneElement,
+  isValidElement,
+} from 'react';
 import './Pill.css';
 
 type PillProps = {
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
 };
 
 type PillLabelProps = {
-  children: React.ReactNode;
+  children: ReactNode;
   htmlFor: string;
   className?: string;
 };
 
 type PillControlProps = {
-  children: React.ReactElement<React.InputHTMLAttributes<HTMLInputElement>>;
+  children: ReactElement<InputHTMLAttributes<HTMLInputElement>>;
 };
 
 function mergeClassNames(...classNames: Array<string | undefined>) {
   return classNames.filter(Boolean).join(' ');
 }
 
-export default function Pill({ children, className }: Readonly<PillProps>) {
-  let control: React.ReactElement | undefined;
-  let label: React.ReactElement | undefined;
+export function Pill({ children, className }: Readonly<PillProps>) {
+  let control: ReactElement | undefined;
+  let label: ReactElement | undefined;
 
-  React.Children.forEach(children, (child) => {
-    if (!React.isValidElement(child)) return;
+  Children.forEach(children, (child) => {
+    if (!isValidElement(child)) return;
 
     if (child.type === Pill.Control) control = child;
     if (child.type === Pill.Label) label = child;
@@ -40,11 +47,11 @@ export default function Pill({ children, className }: Readonly<PillProps>) {
 }
 
 Pill.Control = function PillControl({ children }: Readonly<PillControlProps>) {
-  if (!React.isValidElement<React.InputHTMLAttributes<HTMLInputElement>>(children)) {
+  if (!isValidElement<InputHTMLAttributes<HTMLInputElement>>(children)) {
     return null;
   }
 
-  return React.cloneElement(children, {
+  return cloneElement(children, {
     className: mergeClassNames('pill-input', children.props.className),
   });
 };

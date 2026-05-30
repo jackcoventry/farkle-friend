@@ -1,7 +1,7 @@
 import icons from '@/design-tokens/icons.json';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
-import Button from '@/components/Button/Button';
+import { Button } from '@/components/Button/Button';
 import type { ButtonProps } from '@/components/Button/Button';
 
 const meta: Meta<ButtonProps> = {
@@ -18,7 +18,7 @@ const meta: Meta<ButtonProps> = {
       control: { type: 'radio' },
     },
     variant: {
-      options: ['primary', 'secondary'],
+      options: ['primary', 'secondary', 'tertiary'],
       control: { type: 'radio' },
     },
     iconPosition: {
@@ -63,11 +63,19 @@ export const Variants: Story = {
       </Button>
       <Button
         type="button"
-        variant="secondary"
+        variant="primary"
         icon="bag"
         onClick={fn()}
       >
         Bank points
+      </Button>
+      <Button
+        type="button"
+        variant="tertiary"
+        icon="close"
+        onClick={fn()}
+      >
+        Cancel
       </Button>
       <Button
         type="button"
@@ -86,7 +94,7 @@ export const Sizes: Story = {
       <Button
         type="button"
         size="small"
-        variant="secondary"
+        variant="primary"
         onClick={fn()}
       >
         Small
@@ -124,7 +132,7 @@ export const IconButtons: Story = {
         icon="bag"
         iconOnly
         ariaLabel="Bank score"
-        variant="secondary"
+        variant="primary"
         onClick={fn()}
       />
       <Button

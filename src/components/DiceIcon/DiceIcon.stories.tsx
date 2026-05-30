@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import DiceIcon from '@/components/DiceIcon/DiceIcon';
+import { DiceIcon } from '@/components/DiceIcon/DiceIcon';
 
 const meta: Meta<typeof DiceIcon> = {
   title: 'Components/Dice Icon',

@@ -1068,41 +1068,6 @@ module.exports = {
         key: "{font.family.1}",
         $type: "fontFamily",
         $value: [
-          "Nunito",
-          "system-ui",
-          "-apple-system",
-          "Segoe UI",
-          "Helvetica Neue",
-          "Arial",
-          "sans-serif",
-        ],
-        filePath: "src/design-tokens/font.json",
-        isSource: true,
-        original: {
-          $type: "fontFamily",
-          $value: [
-            "Nunito",
-            "system-ui",
-            "-apple-system",
-            "Segoe UI",
-            "Helvetica Neue",
-            "Arial",
-            "sans-serif",
-          ],
-          key: "{font.family.1}",
-        },
-        name: "FontFamily1",
-        attributes: {
-          category: "font",
-          type: "family",
-          item: "1",
-        },
-        path: ["font", "family", "1"],
-      },
-      2: {
-        key: "{font.family.2}",
-        $type: "fontFamily",
-        $value: [
           "Outfit",
           "system-ui",
           "-apple-system",
@@ -1124,15 +1089,15 @@ module.exports = {
             "Arial",
             "sans-serif",
           ],
-          key: "{font.family.2}",
+          key: "{font.family.1}",
         },
-        name: "FontFamily2",
+        name: "FontFamily1",
         attributes: {
           category: "font",
           type: "family",
-          item: "2",
+          item: "1",
         },
-        path: ["font", "family", "2"],
+        path: ["font", "family", "1"],
       },
     },
     size: {
@@ -1358,6 +1323,23 @@ module.exports = {
         },
         path: ["font", "line-height", "4"],
       },
+      5: {
+        key: "{font.line-height.5}",
+        $value: 0.925,
+        filePath: "src/design-tokens/font.json",
+        isSource: true,
+        original: {
+          $value: 0.925,
+          key: "{font.line-height.5}",
+        },
+        name: "FontLineHeight5",
+        attributes: {
+          category: "font",
+          type: "line-height",
+          item: "5",
+        },
+        path: ["font", "line-height", "5"],
+      },
     },
     "letter-spacing": {
       1: {
@@ -1444,7 +1426,7 @@ module.exports = {
         key: "{font.title.1}",
         $value: {
           fontFamily: [
-            "Nunito",
+            "Outfit",
             "system-ui",
             "-apple-system",
             "Segoe UI",
@@ -1509,7 +1491,7 @@ module.exports = {
         $type: "typography",
         original: {
           $value: {
-            fontFamily: "{font.family.2}",
+            fontFamily: "{font.family.1}",
             fontWeight: "{font.weight.1}",
             fontSize: "{font.size.3}",
             lineHeight: "{font.line-height.4}",
@@ -1532,7 +1514,7 @@ module.exports = {
         key: "{font.title.3}",
         $value: {
           fontFamily: [
-            "Nunito",
+            "Outfit",
             "system-ui",
             "-apple-system",
             "Segoe UI",
@@ -1575,7 +1557,7 @@ module.exports = {
         key: "{font.title.mega}",
         $value: {
           fontFamily: [
-            "Nunito",
+            "Outfit",
             "system-ui",
             "-apple-system",
             "Segoe UI",
@@ -1585,7 +1567,7 @@ module.exports = {
           ],
           fontWeight: 400,
           fontSize: "clamp(3rem, -0.875rem + 8.333vw, 10rem)",
-          lineHeight: 1.1,
+          lineHeight: 0.925,
         },
         $extensions: {
           $targetElement: "h1",
@@ -1598,7 +1580,7 @@ module.exports = {
             fontFamily: "{font.family.1}",
             fontWeight: "{font.weight.1}",
             fontSize: "{font.size.clamp}",
-            lineHeight: "{font.line-height.4}",
+            lineHeight: "{font.line-height.5}",
           },
           $extensions: {
             $targetElement: "h1",
@@ -1640,7 +1622,7 @@ module.exports = {
         $type: "typography",
         original: {
           $value: {
-            fontFamily: "{font.family.2}",
+            fontFamily: "{font.family.1}",
             fontWeight: "{font.weight.1}",
             fontSize: "{font.size.2}",
             lineHeight: "{font.line-height.1}",
@@ -1682,7 +1664,7 @@ module.exports = {
         $type: "typography",
         original: {
           $value: {
-            fontFamily: "{font.family.2}",
+            fontFamily: "{font.family.1}",
             fontWeight: "{font.weight.2}",
             fontSize: "{font.size.2}",
             lineHeight: "{font.line-height.1}",
@@ -1719,7 +1701,7 @@ module.exports = {
         $type: "typography",
         original: {
           $value: {
-            fontFamily: "{font.family.2}",
+            fontFamily: "{font.family.1}",
             fontWeight: "{font.weight.2}",
             fontSize: "{font.size.3}",
             lineHeight: "{font.line-height.1}",
@@ -1756,7 +1738,7 @@ module.exports = {
         $type: "typography",
         original: {
           $value: {
-            fontFamily: "{font.family.2}",
+            fontFamily: "{font.family.1}",
             fontWeight: "{font.weight.2}",
             fontSize: "{font.size.4}",
             lineHeight: "{font.line-height.1}",

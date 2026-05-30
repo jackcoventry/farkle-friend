@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import type { Player } from '@/domain/game/gameTypes';
-import PlayerList from './PlayerList';
+import { PlayerList } from './PlayerList';
 
 function makePlayer(partial: Partial<Player>): Player {
   return {

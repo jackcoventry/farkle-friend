@@ -6,17 +6,17 @@ import { useBreakpoint } from '@/hooks/useBreakpoint';
 import type { Avatar } from '@/domain/game/avatars';
 import type { GameAction } from '@/domain/game/gameReducer';
 import type { GameFlowState, GameState, GameSummary, Player } from '@/domain/game/gameTypes';
-import Button from '@/components/Button/Button';
+import { Button } from '@/components/Button/Button';
 import { type DiceTurnMetrics, DiceTurnPanel } from '@/components/DiceTurnPanel/DiceTurnPanel';
-import Footer from '@/components/Footer/Footer';
+import { Footer } from '@/components/Footer/Footer';
 import { GameActions } from '@/components/GameActions/GameActions';
 import { GameStatusBar } from '@/components/GameScreen/GameStatusBar';
 import { useActiveGameLayout } from '@/components/GameScreen/useActiveGameLayout';
 import type { ActiveGameView } from '@/components/GameScreen/useGameViewModel';
-import GameShell from '@/components/GameShell/GameShell';
+import { GameShell } from '@/components/GameShell/GameShell';
 import { ManualTurn } from '@/components/ManualTurn/ManualTurn';
 import { Panel } from '@/components/Panel/Panel';
-import PlayerList from '@/components/PlayerList/PlayerList';
+import { PlayerList } from '@/components/PlayerList/PlayerList';
 import { PlayerSwitchSplash } from '@/components/PlayerSwitchSplash/PlayerSwitchSplash';
 import { SidebarModal } from '@/components/SidebarModal/SidebarModal';
 import { TurnHistory } from '@/components/TurnHistory/TurnHistory';
@@ -93,11 +93,12 @@ export function GameScreenSidebar({
       </GameShell.SidebarMain>
 
       <GameShell.SidebarFooter>
-        <GameActions
-          onQuit={onQuit}
-          onRestart={onRestart}
-        />
-        <Footer />
+        <Footer>
+          <GameActions
+            onQuit={onQuit}
+            onRestart={onRestart}
+          />
+        </Footer>
       </GameShell.SidebarFooter>
     </>
   );

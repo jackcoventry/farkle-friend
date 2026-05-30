@@ -1,8 +1,8 @@
 import { useI18n } from '@/i18n/I18nProvider';
 import React from 'react';
 import { DieValue, scoreSelectedDiceWithUsage, sortDiceValues } from '@/domain/game/dice';
-import Button from '@/components/Button/Button';
-import DiceIcon from '@/components/DiceIcon/DiceIcon';
+import { Button } from '@/components/Button/Button';
+import { DiceIcon } from '@/components/DiceIcon/DiceIcon';
 import './ScoreGenerator.css';
 
 type ScoreGeneratorProps = {
@@ -17,7 +17,11 @@ type ScoreSequenceItem = {
   score: number;
 };
 
-function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGeneratorProps>) {
+export function ScoreGenerator({
+  className,
+  onChange,
+  resetKey = 0,
+}: Readonly<ScoreGeneratorProps>) {
   const { t } = useI18n();
   const dies = Array.from({ length: 6 }, (_, i) => (i + 1) as DieValue);
   const nextSequenceIdRef = React.useRef(0);
@@ -178,4 +182,3 @@ function ScoreGenerator({ className, onChange, resetKey = 0 }: Readonly<ScoreGen
     </div>
   );
 }
-export default ScoreGenerator;
