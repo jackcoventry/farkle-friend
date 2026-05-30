@@ -1,10 +1,10 @@
-import React from 'react';
+import { ReactNode } from 'react';
 import './Splash.css';
 
 type SplashProps = {
-  children?: React.ReactNode;
+  children?: ReactNode;
   className?: string;
-  image: React.ReactNode;
+  image: ReactNode;
   title: string;
   text?: string;
 };

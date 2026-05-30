@@ -27,7 +27,7 @@ export function GameActions({ onQuit, onRestart }: Readonly<GameActionsProps>) {
         onClick={onQuit}
         className="justify-center"
         size="small"
-        variant="secondary"
+        variant="primary"
         ariaLabel={t('actions.quitToSetup')}
         icon="exit"
         iconOnly

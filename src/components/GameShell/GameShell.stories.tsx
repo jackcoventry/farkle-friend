@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import Button from '@/components/Button/Button';
-import GameShell from '@/components/GameShell/GameShell';
-import PlayerList from '@/components/PlayerList/PlayerList';
+import { Button } from '@/components/Button/Button';
+import { GameShell } from '@/components/GameShell/GameShell';
+import { PlayerList } from '@/components/PlayerList/PlayerList';
 
 const meta: Meta<typeof GameShell> = {
   title: 'Components/Game Shell',

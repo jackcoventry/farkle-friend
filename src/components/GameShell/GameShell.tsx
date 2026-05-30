@@ -1,15 +1,15 @@
 'use client';
 
 import { useI18n } from '@/i18n/I18nProvider';
-import React from 'react';
+import { Children, ReactNode, isValidElement } from 'react';
 import './GameShell.css';
 
 type RootProps = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 type SlotProps = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 type SidebarProps = SlotProps & {
@@ -18,11 +18,11 @@ type SidebarProps = SlotProps & {
 
 export function GameShell({ children }: Readonly<RootProps>) {
   const { t } = useI18n();
-  const extras: React.ReactNode[] = [];
+  const extras: ReactNode[] = [];
   let sidebar, mobileToolbar, body;
 
-  React.Children.forEach(children, (child) => {
-    if (!React.isValidElement(child)) return;
+  Children.forEach(children, (child) => {
+    if (!isValidElement(child)) return;
 
     if (child.type === GameShell.Sidebar) {
       sidebar = child;

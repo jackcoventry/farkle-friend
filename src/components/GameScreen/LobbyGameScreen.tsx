@@ -236,7 +236,7 @@ export function LobbyGameScreen({
               }}
               className="w-full justify-center"
               disabled={startDisabled}
-              variant="secondary"
+              variant="primary"
             >
               {t('actions.start')}
             </Button>
@@ -268,7 +268,7 @@ export function LobbyGameScreen({
             }}
             className="w-full justify-center lg:hidden"
             disabled={startDisabled}
-            variant="secondary"
+            variant="primary"
             size="small"
           >
             {t('actions.start')}
@@ -283,6 +283,7 @@ export function LobbyGameScreen({
             onClick={() => setIsSidebarOpen(true)}
             ref={sidebarTriggerRef}
             size="small"
+            variant="secondary"
           >
             {t('setup.summary')}
           </Button>

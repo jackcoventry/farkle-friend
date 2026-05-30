@@ -2,7 +2,7 @@ import { renderWithProviders } from '@/test/renderWithProviders';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
-import ScoreGenerator from './ScoreGenerator';
+import { ScoreGenerator } from './ScoreGenerator';
 
 describe('ScoreGenerator', () => {
   it('builds a round total from multiple scoring goes', async () => {

@@ -39,6 +39,7 @@ export function Footer({ children }: Readonly<PropsWithChildren>) {
               ariaLabel={t('footer.rulesOpen')}
               className="items-center"
               size="small"
+              variant="secondary"
             />
             {children}
             <GamePreferences />

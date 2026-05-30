@@ -1,11 +1,11 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { expect, userEvent, within } from 'storybook/test';
 import { AvatarId, avatarSet } from '@/domain/game/avatars';
 import { AvatarImage } from '@/components/AvatarImage/AvatarImage';
-import Button from '@/components/Button/Button';
-import Modal from '@/components/Modal/Modal';
-import Splash from '@/components/Modal/Splash';
+import { Button } from '@/components/Button/Button';
+import { Modal } from '@/components/Modal/Modal';
+import { Splash } from '@/components/Modal/Splash';
 
 const meta: Meta<typeof Modal> = {
   title: 'Components/Modal',

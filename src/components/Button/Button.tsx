@@ -109,10 +109,10 @@ function getVariantClasses(variant: CommonProps['variant']) {
   }
 
   if (variant === 'secondary') {
-    return 'border-control-border shadow-control-shadow active:shadow-none active:translate-px bg-control text-control-text hover:bg-control-hover hover:border-accent shadow-offset-solid-style';
+    return 'border-accent shadow-accent-shadow active:shadow-none active:translate-px bg-accent text-accent-contrast hover:bg-accent-hover hover:border-action-border shadow-offset-solid-style';
   }
 
-  return 'border-accent shadow-accent-shadow active:shadow-none active:translate-px bg-accent text-accent-contrast hover:bg-accent-hover hover:border-action-border shadow-offset-solid-style';
+  return 'border-control-border shadow-control-shadow active:shadow-none active:translate-px bg-control text-control-text hover:bg-control-hover hover:border-accent shadow-offset-solid-style';
 }
 
 function getButtonClasses({

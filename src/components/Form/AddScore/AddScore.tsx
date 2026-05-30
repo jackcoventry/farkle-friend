@@ -3,7 +3,7 @@
 import { useI18n } from '@/i18n/I18nProvider';
 import { translateValidationMessage } from '@/i18n/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
-import React from 'react';
+import { useCallback, useId, useState } from 'react';
 import { Controller, SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { AddScoreSchema, type AddScoreSchemaType } from '@/domain/game/formSchemas';
 import { Button } from '@/components/Button/Button';
@@ -24,7 +24,7 @@ type AddScoreFormProps = {
 
 export function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
   const { t } = useI18n();
-  const formId = React.useId();
+  const formId = useId();
   const {
     control,
     handleSubmit,
@@ -46,11 +46,11 @@ export function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
     setShowManualEntry(false);
   };
 
-  const [showManualEntry, setShowManualEntry] = React.useState(false);
-  const [scoreGeneratorResetKey, setScoreGeneratorResetKey] = React.useState(0);
+  const [showManualEntry, setShowManualEntry] = useState(false);
+  const [scoreGeneratorResetKey, setScoreGeneratorResetKey] = useState(0);
   const scoreValue = useWatch({ control, name: 'value' }) ?? 0;
 
-  const onChange = React.useCallback(
+  const onChange = useCallback(
     (score: number) => {
       setValue('value', score, {
         shouldDirty: true,

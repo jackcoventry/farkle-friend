@@ -226,6 +226,7 @@ export function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
               type="submit"
               className="justify-center"
               disabled={maxPlayersReached}
+              variant="secondary"
             >
               Add
             </Button>

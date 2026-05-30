@@ -34,10 +34,6 @@
   inline-size: fit-content;
 }
 
-.home-screen__actions {
-  inline-size: min(100%, 22rem);
-}
-
 .home-screen__preview {
   background:
     linear-gradient(var(--color-surface-raised), var(--color-surface-raised)) padding-box,

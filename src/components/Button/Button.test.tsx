@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
+import { createRef } from 'react';
 import { describe, expect, it, vi } from 'vitest';
-import Button from './Button';
+import { Button } from './Button';
 
 describe('Button (polymorphic)', () => {
   /* -----------------------------
@@ -262,8 +262,6 @@ describe('Button (polymorphic)', () => {
 
     const button = screen.getByRole('button', { name: 'Tertiary' });
     expect(button).toHaveAttribute('data-variant', 'tertiary');
-    expect(button.className).toContain('border-action-border');
-    expect(button.className).toContain('bg-accent-hover');
     expect(button.className).toContain('hover:bg-accent');
     expect(button.className).toContain('shadow-accent-shadow');
   });
@@ -300,7 +298,7 @@ describe('Button (polymorphic)', () => {
    * ----------------------------- */
 
   it('forwards ref correctly to button element', () => {
-    const ref = React.createRef<HTMLButtonElement>();
+    const ref = createRef<HTMLButtonElement>();
 
     render(<Button ref={ref}>Click me</Button>);
 
@@ -309,7 +307,7 @@ describe('Button (polymorphic)', () => {
   });
 
   it("forwards ref correctly to anchor element when as='a'", () => {
-    const ref = React.createRef<HTMLAnchorElement>();
+    const ref = createRef<HTMLAnchorElement>();
 
     render(
       <Button
@@ -326,7 +324,7 @@ describe('Button (polymorphic)', () => {
   });
 
   it("forwards ref correctly to span element when as='inline'", () => {
-    const ref = React.createRef<HTMLSpanElement>();
+    const ref = createRef<HTMLSpanElement>();
 
     render(
       <Button

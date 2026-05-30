@@ -2,15 +2,12 @@
 
 import { useI18n } from '@/i18n/I18nProvider';
 import Link from 'next/link';
-import { useBreakpoint } from '@/hooks/useBreakpoint';
 import { Button } from '@/components/Button/Button';
 import { DiceIcon } from '@/components/DiceIcon/DiceIcon';
 import './HomeScreen.css';
 
 export function HomeScreen() {
   const { t } = useI18n();
-  const { isAtLeast } = useBreakpoint();
-  const buttonSize = isAtLeast('lg') ? 'large' : 'default';
 
   return (
     <main className="splash-screen | bg-surface relative min-h-dvh overflow-auto">
@@ -24,12 +21,11 @@ export function HomeScreen() {
               <h1 className="home-screen__title | font-mega text-text">Farkle Friend!</h1>
               <p className="home-screen__intro | font-body text-text-muted">{t('home.intro')}</p>
             </div>
-            <div className="home-screen__actions | gap-md flex flex-col sm:flex-row">
+            <div className="home-screen__actions | gap-md flex flex-col">
               <Link href="/game">
                 <Button
                   as="inline"
-                  size={buttonSize || 'large'}
-                  variant="secondary"
+                  variant="primary"
                 >
                   {t('actions.start')}
                 </Button>

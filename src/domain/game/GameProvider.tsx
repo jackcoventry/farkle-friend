@@ -1,20 +1,20 @@
 'use client';
 
-import React, { createContext, useContext, useEffect } from 'react';
+import { Dispatch, ReactNode, createContext, useContext, useEffect } from 'react';
 import { useGameState } from '@/hooks/useGameState';
 import type { GameAction } from '@/domain/game/gameReducer';
 import type { GameState } from '@/domain/game/gameTypes';
 
 type GameContextValue = {
   state: GameState;
-  dispatch: React.Dispatch<GameAction>;
+  dispatch: Dispatch<GameAction>;
   settingsReady: boolean;
 };
 
 const GameContext = createContext<GameContextValue | null>(null);
 
 type GameProviderProps = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 type LegacyMediaQueryList = MediaQueryList & {

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useEffect, useMemo } from 'react';
+import { ReactNode, createContext, useContext, useEffect, useMemo } from 'react';
 import { useGame } from '@/domain/game/GameProvider';
 import { type Locale, defaultLocale } from './locales';
 import { MessageKey, MessageValues, messages } from './messages';
@@ -26,7 +26,7 @@ function formatMessage(message: string, values?: MessageValues) {
   });
 }
 
-export function I18nProvider({ children }: Readonly<{ children: React.ReactNode }>) {
+export function I18nProvider({ children }: Readonly<{ children: ReactNode }>) {
   const { state } = useGame();
   const locale = state.preferences.locale ?? defaultLocale;
 

@@ -1,7 +1,9 @@
-import React, {
+import {
   KeyboardEvent,
+  MouseEvent,
   ReactNode,
   RefObject,
+  createContext,
   useCallback,
   useContext,
   useEffect,
@@ -56,7 +58,7 @@ type ModalContextValue = {
   close: () => void;
 };
 
-const ModalContext = React.createContext<ModalContextValue | null>(null);
+const ModalContext = createContext<ModalContextValue | null>(null);
 
 function useModalContext(componentName: string): ModalContextValue {
   const ctx = useContext(ModalContext);
@@ -191,7 +193,7 @@ function ModalRoot({
     }
   };
 
-  const handleOverlayClick = (event: React.MouseEvent<HTMLDivElement>) => {
+  const handleOverlayClick = (event: MouseEvent<HTMLDivElement>) => {
     if (!isOpen || !isTopMost) return;
     if (event.target === event.currentTarget) {
       onClose?.();

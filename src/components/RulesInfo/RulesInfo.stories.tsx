@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import RulesInfo from '@/components/RulesInfo/RulesInfo';
+import { RulesInfo } from '@/components/RulesInfo/RulesInfo';
 
 const meta: Meta<typeof RulesInfo> = {
   title: 'Components/Rules Info',

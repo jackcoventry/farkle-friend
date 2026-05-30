@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
-import ScoreGenerator from './ScoreGenerator';
+import { ScoreGenerator } from './ScoreGenerator';
 
 const meta: Meta<typeof ScoreGenerator> = {
   title: 'Components/Form/Score Generator',
