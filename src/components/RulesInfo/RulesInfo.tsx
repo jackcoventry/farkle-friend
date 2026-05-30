@@ -2,7 +2,7 @@
 
 import { useI18n } from '@/i18n/I18nProvider';
 import { scoringRuleExamples } from '@/domain/game/scoringRules';
-import DiceIcon from '@/components/DiceIcon/DiceIcon';
+import { DiceIcon } from '@/components/DiceIcon/DiceIcon';
 import { Panel } from '@/components/Panel/Panel';
 import './RulesInfo.css';
 
@@ -81,7 +81,7 @@ function RulesInfoSection({ title, children }: Readonly<RulesInfoSectionProps>) 
   );
 }
 
-function RulesInfo() {
+export function RulesInfo() {
   const { t } = useI18n();
 
   return (
@@ -151,5 +151,3 @@ function RulesInfo() {
     </div>
   );
 }
-
-export default RulesInfo;

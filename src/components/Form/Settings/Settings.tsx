@@ -6,7 +6,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useGame } from '@/domain/game/GameProvider';
 import { SettingsFormSchema, type SettingsFormSchemaType } from '@/domain/game/formSchemas';
 import { GameMode, ThemePreference } from '@/domain/game/gameTypes';
-import Button from '@/components/Button/Button';
+import { Button } from '@/components/Button/Button';
 import {
   ComboSuggestionsField,
   LanguageField,
@@ -27,7 +27,7 @@ type SettingsFormProps = {
   onSubmit: SubmitHandler<SettingsFormSchemaType>;
 };
 
-function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
+export function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
   const { state } = useGame();
   const { t } = useI18n();
 
@@ -96,5 +96,3 @@ function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
     </div>
   );
 }
-
-export default Settings;

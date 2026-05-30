@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import React from 'react';
 import { describe, expect, it } from 'vitest';
-import DiceIcon from './DiceIcon';
+import { DiceIcon } from '@/components/DiceIcon/DiceIcon';
 
 describe('DiceIcon', () => {
   it('renders role img with accessible label', () => {

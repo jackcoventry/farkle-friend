@@ -20,7 +20,7 @@ function mergeClassNames(...classNames: Array<string | undefined>) {
   return classNames.filter(Boolean).join(' ');
 }
 
-export default function Pill({ children, className }: Readonly<PillProps>) {
+export function Pill({ children, className }: Readonly<PillProps>) {
   let control: React.ReactElement | undefined;
   let label: React.ReactElement | undefined;
 

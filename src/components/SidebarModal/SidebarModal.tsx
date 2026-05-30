@@ -1,6 +1,6 @@
 import { useI18n } from '@/i18n/I18nProvider';
 import type { ReactNode, RefObject } from 'react';
-import Modal from '@/components/Modal/Modal';
+import { Modal } from '@/components/Modal/Modal';
 
 type SidebarModalProps = {
   ariaLabel: string;

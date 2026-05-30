@@ -7,9 +7,9 @@ import { AvatarId, avatarSet } from '@/domain/game/avatars';
 import { playGameSound } from '@/domain/game/gameAudio';
 import type { Player, Turn } from '@/domain/game/gameTypes';
 import { AvatarImage } from '@/components/AvatarImage/AvatarImage';
-import Button from '@/components/Button/Button';
-import Modal from '@/components/Modal/Modal';
-import Splash from '@/components/Modal/Splash';
+import { Button } from '@/components/Button/Button';
+import { Modal } from '@/components/Modal/Modal';
+import { Splash } from '@/components/Modal/Splash';
 
 type GameFinishedModalProps = {
   onResetGame: () => void;

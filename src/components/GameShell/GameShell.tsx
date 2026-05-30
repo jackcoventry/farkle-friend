@@ -16,7 +16,7 @@ type SidebarProps = SlotProps & {
   isDesktop?: boolean;
 };
 
-export default function GameShell({ children }: Readonly<RootProps>) {
+export function GameShell({ children }: Readonly<RootProps>) {
   const { t } = useI18n();
   const extras: React.ReactNode[] = [];
   let sidebar, mobileToolbar, body;

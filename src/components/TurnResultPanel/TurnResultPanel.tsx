@@ -4,7 +4,7 @@ import { useI18n } from '@/i18n/I18nProvider';
 import { useEffect, useId, useRef, useState } from 'react';
 import { formatScore } from '@/utils/formatScore';
 import type { Player, TurnResult } from '@/domain/game/gameTypes';
-import Button from '@/components/Button/Button';
+import { Button } from '@/components/Button/Button';
 import { Panel } from '@/components/Panel/Panel';
 import './TurnResultPanel.css';
 

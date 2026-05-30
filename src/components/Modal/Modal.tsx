@@ -9,7 +9,7 @@ import React, {
   useRef,
 } from 'react';
 import { createPortal } from 'react-dom';
-import Button from '@/components/Button/Button';
+import { Button } from '@/components/Button/Button';
 import './Modal.css';
 import { MODAL_PORTAL_ROOT_ID, useModalStack } from './ModalStackContext';
 import './SplashModal.css';
@@ -373,8 +373,8 @@ const Modal = Object.assign(ModalRoot, {
   Footer: ModalFooter,
 });
 
-export default Modal;
 export {
+  Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,

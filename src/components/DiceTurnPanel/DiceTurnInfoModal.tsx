@@ -2,7 +2,7 @@
 
 import { useI18n } from '@/i18n/I18nProvider';
 import type { ReactNode } from 'react';
-import Modal from '@/components/Modal/Modal';
+import { Modal } from '@/components/Modal/Modal';
 
 type DiceTurnInfoModalProps = {
   children: ReactNode;

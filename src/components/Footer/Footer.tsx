@@ -3,13 +3,16 @@
 import { useI18n } from '@/i18n/I18nProvider';
 import dynamic from 'next/dynamic';
 import { PropsWithChildren, useState } from 'react';
-import Button from '@/components/Button/Button';
+import { Button } from '@/components/Button/Button';
 import { GamePreferences } from '@/components/GamePreferences/GamePreferences';
-import Modal from '@/components/Modal/Modal';
+import { Modal } from '@/components/Modal/Modal';
 
-const RulesInfo = dynamic(() => import('@/components/RulesInfo/RulesInfo'), {
-  loading: () => <RulesLoading />,
-});
+const RulesInfo = dynamic(
+  () => import('@/components/RulesInfo/RulesInfo').then((mod) => mod.RulesInfo),
+  {
+    loading: () => <RulesLoading />,
+  }
+);
 
 function RulesLoading() {
   const { t } = useI18n();

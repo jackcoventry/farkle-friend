@@ -2,7 +2,7 @@
 
 import { useI18n } from '@/i18n/I18nProvider';
 import type { DieValue } from '@/domain/game/dice';
-import DiceIcon from '@/components/DiceIcon/DiceIcon';
+import { DiceIcon } from '@/components/DiceIcon/DiceIcon';
 import { Panel } from '@/components/Panel/Panel';
 
 type DiceBoardProps = {

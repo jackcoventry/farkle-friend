@@ -1,5 +1,14 @@
 import icons from '@/design-tokens/icons.json';
-import React from 'react';
+import {
+  AnchorHTMLAttributes,
+  ButtonHTMLAttributes,
+  HTMLAttributeAnchorTarget,
+  HTMLAttributes,
+  MouseEventHandler,
+  ReactNode,
+  Ref,
+  forwardRef,
+} from 'react';
 
 /* -----------------------------
    COMMON PROPS
@@ -15,7 +24,7 @@ type ButtonA11yProps =
     };
 
 type CommonProps = ButtonA11yProps & {
-  children?: React.ReactNode;
+  children?: ReactNode;
   className?: string;
   icon?: string;
   iconPosition?: 'left' | 'right';
@@ -29,10 +38,10 @@ type CommonProps = ButtonA11yProps & {
 type ButtonOnlyProps = {
   as?: 'button';
   disabled?: boolean;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
   type?: 'button' | 'submit' | 'reset';
 } & Omit<
-  React.ButtonHTMLAttributes<HTMLButtonElement>,
+  ButtonHTMLAttributes<HTMLButtonElement>,
   'type' | 'onClick' | 'disabled' | 'className' | 'children' | 'aria-label'
 >;
 
@@ -43,12 +52,12 @@ type AnchorOnlyProps = {
   as: 'a';
   disabled?: never;
   href: string;
-  onClick?: React.MouseEventHandler<HTMLAnchorElement>;
+  onClick?: MouseEventHandler<HTMLAnchorElement>;
   rel?: string;
-  target?: React.HTMLAttributeAnchorTarget;
+  target?: HTMLAttributeAnchorTarget;
   type?: never;
 } & Omit<
-  React.AnchorHTMLAttributes<HTMLAnchorElement>,
+  AnchorHTMLAttributes<HTMLAnchorElement>,
   'onClick' | 'className' | 'children' | 'aria-label'
 >;
 
@@ -67,7 +76,7 @@ type InlineOnlyProps = {
   tabIndex?: never;
   role?: never;
 } & Omit<
-  React.HTMLAttributes<HTMLSpanElement>,
+  HTMLAttributes<HTMLSpanElement>,
   | 'className'
   | 'children'
   | 'aria-label'
@@ -139,7 +148,7 @@ function getComputedAriaLabel({
   iconOnly,
 }: {
   ariaLabel?: string;
-  children?: React.ReactNode;
+  children?: ReactNode;
   iconOnly: boolean;
 }) {
   if (ariaLabel) return ariaLabel;
@@ -152,7 +161,7 @@ function renderButtonContent({
   icon,
   iconOnly,
 }: {
-  children?: React.ReactNode;
+  children?: ReactNode;
   icon?: string;
   iconOnly: boolean;
 }) {
@@ -183,7 +192,7 @@ function renderButtonContent({
   );
 }
 
-const Button = React.forwardRef<
+export const Button = forwardRef<
   HTMLButtonElement | HTMLAnchorElement | HTMLSpanElement,
   Readonly<ButtonProps>
 >(function ButtonRoot(props, ref) {
@@ -218,7 +227,7 @@ const Button = React.forwardRef<
         data-icon-position={iconPosition}
         data-size={size}
         data-variant={variant}
-        ref={ref as React.Ref<HTMLSpanElement>}
+        ref={ref as Ref<HTMLSpanElement>}
         {...inlineRest}
       >
         {content}
@@ -248,7 +257,7 @@ const Button = React.forwardRef<
         onClick={onClick}
         rel={relSafe}
         target={target}
-        ref={ref as React.Ref<HTMLAnchorElement>}
+        ref={ref as Ref<HTMLAnchorElement>}
         {...anchorRest}
       >
         {content}
@@ -272,12 +281,10 @@ const Button = React.forwardRef<
       onClick={onClick}
       type={type}
       disabled={disabled}
-      ref={ref as React.Ref<HTMLButtonElement>}
+      ref={ref as Ref<HTMLButtonElement>}
       {...buttonRest}
     >
       {content}
     </button>
   );
 });
-
-export default Button;

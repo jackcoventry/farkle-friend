@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
-import Footer from './Footer';
+import { Footer } from './Footer';
 
 vi.mock('next/dynamic', () => ({
   default: () => {

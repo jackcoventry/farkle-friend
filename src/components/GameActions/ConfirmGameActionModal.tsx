@@ -1,8 +1,8 @@
 'use client';
 
 import { useI18n } from '@/i18n/I18nProvider';
-import Button from '@/components/Button/Button';
-import Modal from '@/components/Modal/Modal';
+import { Button } from '@/components/Button/Button';
+import { Modal } from '@/components/Modal/Modal';
 
 export type ConfirmGameAction = 'quit' | 'restart' | null;
 

@@ -12,9 +12,9 @@ import {
   targetScorePresets,
   themePreferences,
 } from '@/domain/game/formSchemas';
-import Button from '@/components/Button/Button';
+import { Button } from '@/components/Button/Button';
 import { Panel } from '@/components/Panel/Panel';
-import Pill from '@/components/Pill/Pill';
+import { Pill } from '@/components/Pill/Pill';
 import './SettingsFields.css';
 
 type SettingsFieldProps = {

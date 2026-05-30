@@ -9,7 +9,7 @@ import { useGame } from '@/domain/game/GameProvider';
 import { avatarSet, avatarValues } from '@/domain/game/avatars';
 import { AddPlayerFormSchema, type AddPlayerFormSchemaType } from '@/domain/game/formSchemas';
 import { AvatarImage } from '@/components/AvatarImage/AvatarImage';
-import Button from '@/components/Button/Button';
+import { Button } from '@/components/Button/Button';
 import { Panel } from '@/components/Panel/Panel';
 import './AddPlayer.css';
 
@@ -33,7 +33,7 @@ function getNextDefaultUsername(players: { username: string }[]) {
   return playerNumber;
 }
 
-function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
+export function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
   const { state } = useGame();
   const { t } = useI18n();
   const avatarListRef = useRef<HTMLDivElement | null>(null);
@@ -235,5 +235,3 @@ function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
     </Panel>
   );
 }
-
-export default AddPlayerForm;

@@ -1358,6 +1358,23 @@ module.exports = {
         },
         path: ["font", "line-height", "4"],
       },
+      5: {
+        key: "{font.line-height.5}",
+        $value: 0.925,
+        filePath: "src/design-tokens/font.json",
+        isSource: true,
+        original: {
+          $value: 0.925,
+          key: "{font.line-height.5}",
+        },
+        name: "FontLineHeight5",
+        attributes: {
+          category: "font",
+          type: "line-height",
+          item: "5",
+        },
+        path: ["font", "line-height", "5"],
+      },
     },
     "letter-spacing": {
       1: {
@@ -1585,7 +1602,7 @@ module.exports = {
           ],
           fontWeight: 400,
           fontSize: "clamp(3rem, -0.875rem + 8.333vw, 10rem)",
-          lineHeight: 1.1,
+          lineHeight: 0.925,
         },
         $extensions: {
           $targetElement: "h1",
@@ -1598,7 +1615,7 @@ module.exports = {
             fontFamily: "{font.family.1}",
             fontWeight: "{font.weight.1}",
             fontSize: "{font.size.clamp}",
-            lineHeight: "{font.line-height.4}",
+            lineHeight: "{font.line-height.5}",
           },
           $extensions: {
             $targetElement: "h1",

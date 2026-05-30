@@ -72,6 +72,9 @@
       },
       "4": {
         "$value": 1.1
+      },
+      "5": {
+        "$value": 0.925
       }
     },
     "letter-spacing": {
@@ -135,7 +138,7 @@
           "fontFamily": "{font.family.1}",
           "fontWeight": "{font.weight.1}",
           "fontSize": "{font.size.clamp}",
-          "lineHeight": "{font.line-height.4}"
+          "lineHeight": "{font.line-height.5}"
         },
         "$extensions": {
           "$targetElement": "h1"

@@ -95,6 +95,7 @@ export const FontLineHeight1 = 1.5;
 export const FontLineHeight2 = 1.75;
 export const FontLineHeight3 = 1.25;
 export const FontLineHeight4 = 1.1;
+export const FontLineHeight5 = 0.925;
 export const FontLetterSpacing1 = "0";
 export const FontLetterSpacing2 = "1px";
 export const FontWeight1 = 400;
@@ -153,7 +154,7 @@ export const FontTitleMega = {
   ],
   fontWeight: 400,
   fontSize: "clamp(3rem, -0.875rem + 8.333vw, 10rem)",
-  lineHeight: 1.1,
+  lineHeight: 0.925,
 };
 export const FontBody1 = {
   fontFamily: [
