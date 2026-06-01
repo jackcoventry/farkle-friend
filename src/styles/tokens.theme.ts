@@ -131,7 +131,7 @@ export const FontTitle3 = {
   ],
   fontWeight: 400,
   fontSize: "40px",
-  lineHeight: 1.5,
+  lineHeight: 1.25,
 };
 export const FontTitleMega = {
   fontFamily: [

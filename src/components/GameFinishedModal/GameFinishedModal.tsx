@@ -135,6 +135,7 @@ export function GameFinishedModal({
             onClick={onResetGame}
             className="justify-center"
             size="small"
+            variant="secondary"
           >
             {t('actions.playAgain')}
           </Button>

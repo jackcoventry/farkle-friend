@@ -1524,7 +1524,7 @@ module.exports = {
           ],
           fontWeight: 400,
           fontSize: "40px",
-          lineHeight: 1.5,
+          lineHeight: 1.25,
         },
         $extensions: {
           $targetElement: "h3",
@@ -1537,7 +1537,7 @@ module.exports = {
             fontFamily: "{font.family.1}",
             fontWeight: "{font.weight.1}",
             fontSize: "{font.size.5}",
-            lineHeight: "{font.line-height.1}",
+            lineHeight: "{font.line-height.3}",
           },
           $extensions: {
             $targetElement: "h3",

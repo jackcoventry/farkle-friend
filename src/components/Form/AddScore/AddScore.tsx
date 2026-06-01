@@ -90,9 +90,9 @@ export function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
                 </p>
               </div>
               <ScoreGenerator
+                key={scoreGeneratorResetKey}
                 className="pb-xs"
                 onChange={onChange}
-                resetKey={scoreGeneratorResetKey}
               />
             </div>
           </div>

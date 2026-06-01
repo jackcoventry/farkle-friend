@@ -2,3 +2,13 @@
 @custom-media --breakpoint-md-up (min-width: 48rem);
 @custom-media --breakpoint-lg-up (min-width: 64rem);
 @custom-media --breakpoint-xl-up (min-width: 80rem);
+
+@custom-media --game-rail-compact (min-width: 48rem) and (max-width: 79.99rem) and (max-height: 820px);
+@custom-media --game-board-short (max-height: 520px) and (max-width: 79.99rem);
+@custom-media --game-board-short-narrow (max-height: 520px) and (max-width: 47.99rem);
+@custom-media --game-board-very-short-narrow (max-height: 380px) and (max-width: 47.99rem);
+
+@custom-media --turn-actions-stacked (min-width: 80rem) and (min-height: 821px);
+@custom-media --turn-actions-compact (min-width: 48rem) and (max-width: 79.99rem),
+  (min-width: 80rem) and (max-height: 820px),
+  (max-height: 520px) and (max-width: 47.99rem);

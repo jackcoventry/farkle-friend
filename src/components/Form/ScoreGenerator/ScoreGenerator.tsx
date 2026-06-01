@@ -1,5 +1,5 @@
 import { useI18n } from '@/i18n/I18nProvider';
-import React from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { DieValue, scoreSelectedDiceWithUsage, sortDiceValues } from '@/domain/game/dice';
 import { Button } from '@/components/Button/Button';
 import { DiceIcon } from '@/components/DiceIcon/DiceIcon';
@@ -8,7 +8,6 @@ import './ScoreGenerator.css';
 type ScoreGeneratorProps = {
   className?: string;
   onChange: (score: number) => void;
-  resetKey?: number;
 };
 
 type ScoreSequenceItem = {
@@ -17,17 +16,13 @@ type ScoreSequenceItem = {
   score: number;
 };
 
-export function ScoreGenerator({
-  className,
-  onChange,
-  resetKey = 0,
-}: Readonly<ScoreGeneratorProps>) {
+export function ScoreGenerator({ className, onChange }: Readonly<ScoreGeneratorProps>) {
   const { t } = useI18n();
   const dies = Array.from({ length: 6 }, (_, i) => (i + 1) as DieValue);
-  const nextSequenceIdRef = React.useRef(0);
-  const [selectedItems, setSelectedItems] = React.useState<DieValue[]>([]);
-  const [sequenceItems, setSequenceItems] = React.useState<ScoreSequenceItem[]>([]);
-  const [clicked, setClicked] = React.useState<DieValue>();
+  const nextSequenceIdRef = useRef(0);
+  const [selectedItems, setSelectedItems] = useState<DieValue[]>([]);
+  const [sequenceItems, setSequenceItems] = useState<ScoreSequenceItem[]>([]);
+  const [clicked, setClicked] = useState<DieValue>();
   const selectedScoring =
     selectedItems.length > 0
       ? scoreSelectedDiceWithUsage(selectedItems)
@@ -39,14 +34,9 @@ export function ScoreGenerator({
     selectedScoring.usedCount === selectedItems.length;
   const roundTotal = sequenceItems.reduce((total, item) => total + item.score, 0);
 
-  React.useEffect(() => {
+  useEffect(() => {
     onChange(roundTotal);
   }, [onChange, roundTotal]);
-
-  React.useEffect(() => {
-    setSequenceItems([]);
-    setSelectedItems([]);
-  }, [resetKey]);
 
   const handleClick = (die: DieValue) => {
     setClicked(die);

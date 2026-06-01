@@ -82,7 +82,7 @@ export function TurnResultPanel({
           <dd className="font-heading-2 text-accent">{formatScore(result.newTotal)}</dd>
         </div>
       </dl>
-      <div>
+      <div className="gap-sm flex flex-col">
         <p className="font-sub-heading">{t('turnResult.turnEnded')}</p>
         <p className="font-body text-accent">
           {result.isGameWinner

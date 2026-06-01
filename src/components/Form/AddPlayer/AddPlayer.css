@@ -25,9 +25,24 @@
 .avatar-list-grid {
   --avatar-list-size: clamp(4rem, 22vw, 6.25rem);
   --avatar-list-padding: clamp(0.625rem, 3vw, 1rem);
+  --avatar-list-gap: var(--spacing-3);
 
   inline-size: 100%;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  contain: paint;
+  gap: var(--avatar-list-gap);
+  grid-auto-columns: calc((100% - (var(--avatar-list-gap) * 2)) / 3);
+  grid-auto-flow: column;
+  grid-template-columns: none;
+  justify-content: start;
+  justify-items: center;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-block: var(--spacing-3);
+  scroll-padding-inline: 0;
+  scroll-snap-type: inline proximity;
+  scrollbar-width: none;
+  touch-action: pan-x;
+  -webkit-overflow-scrolling: touch;
 }
 
 .avatar-list-fieldset {
@@ -41,65 +56,63 @@
 }
 
 .avatar-list-option {
+  inline-size: 100%;
   scroll-snap-align: start;
 }
 
 .avatar-list-image {
+  block-size: min(var(--avatar-list-size), calc(100% - var(--spacing-4)));
+  inline-size: min(var(--avatar-list-size), calc(100% - var(--spacing-4)));
+  margin-inline: auto;
   padding: var(--avatar-list-padding);
 }
 
-@media (max-width: 39.999rem) {
+.avatar-list-grid::-webkit-scrollbar {
+  display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
   .avatar-list-grid {
-    --avatar-list-gap: var(--spacing-3);
-
-    grid-auto-columns: calc((100% - (var(--avatar-list-gap) * 2)) / 3);
-    grid-auto-flow: column;
-    grid-template-columns: none;
-    gap: var(--avatar-list-gap);
-    contain: paint;
-    justify-content: start;
-    justify-items: center;
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding-block: var(--spacing-3);
-    scroll-padding-inline: 0;
-    scroll-snap-type: inline proximity;
-    scrollbar-width: none;
-    touch-action: pan-x;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .avatar-list-option {
-    inline-size: 100%;
-  }
-
-  .avatar-list-image {
-    block-size: min(var(--avatar-list-size), calc(100% - var(--spacing-4)));
-    inline-size: min(var(--avatar-list-size), calc(100% - var(--spacing-4)));
-    margin-inline: auto;
+    scrollbar-width: thin;
   }
 
   .avatar-list-grid::-webkit-scrollbar {
-    display: none;
+    display: block;
+    block-size: var(--spacing-2);
   }
 
-  @media (hover: hover) and (pointer: fine) {
-    .avatar-list-grid {
-      scrollbar-width: thin;
-    }
+  .avatar-list-grid::-webkit-scrollbar-thumb {
+    background: var(--color-border-strong);
+    border-radius: 999px;
+  }
 
-    .avatar-list-grid::-webkit-scrollbar {
-      display: block;
-      block-size: var(--spacing-2);
-    }
+  .avatar-list-grid::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
 
-    .avatar-list-grid::-webkit-scrollbar-thumb {
-      background: var(--color-border-strong);
-      border-radius: 999px;
-    }
+@media (--breakpoint-sm-up) {
+  .avatar-list-grid {
+    contain: none;
+    gap: var(--spacing-5);
+    grid-auto-columns: auto;
+    grid-auto-flow: row;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    justify-content: normal;
+    overflow: visible;
+    padding-block: 0;
+    scroll-snap-type: none;
+    scrollbar-width: auto;
+    touch-action: auto;
+  }
 
-    .avatar-list-grid::-webkit-scrollbar-track {
-      background: transparent;
-    }
+  .avatar-list-option,
+  .avatar-list-image {
+    inline-size: var(--avatar-list-size);
+  }
+
+  .avatar-list-image {
+    block-size: var(--avatar-list-size);
+    margin-inline: 0;
   }
 }

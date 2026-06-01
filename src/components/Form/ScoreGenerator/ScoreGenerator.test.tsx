@@ -9,7 +9,12 @@ describe('ScoreGenerator', () => {
     const user = userEvent.setup();
     const onChange = vi.fn();
 
-    const { rerender } = renderWithProviders(<ScoreGenerator onChange={onChange} />);
+    const { rerender } = renderWithProviders(
+      <ScoreGenerator
+        key={0}
+        onChange={onChange}
+      />
+    );
 
     const one = screen.getByRole('button', { name: 'Add die showing 1' });
     await user.click(one);
@@ -27,8 +32,8 @@ describe('ScoreGenerator', () => {
 
     rerender(
       <ScoreGenerator
+        key={1}
         onChange={onChange}
-        resetKey={1}
       />
     );
 
