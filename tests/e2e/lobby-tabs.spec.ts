@@ -1,7 +1,8 @@
 import { expect, test } from '@playwright/test';
+import { gotoApp } from '../helpers/navigation';
 
 test('lobby tabs support roving tabindex + arrow/Home/End navigation', async ({ page }) => {
-  await page.goto('/game/');
+  await gotoApp(page, '/game/');
 
   const tablist = page.getByRole('tablist', { name: 'Game setup' });
   const playersTab = tablist.getByRole('tab', { name: 'Players' });

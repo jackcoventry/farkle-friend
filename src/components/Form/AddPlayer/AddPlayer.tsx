@@ -40,8 +40,10 @@ export function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
   const defaultUsername = t('player.defaultName', {
     number: getNextDefaultUsername(state.players),
   });
+  const previousDefaultUsernameRef = useRef(defaultUsername);
   const {
     control,
+    getValues,
     handleSubmit,
     formState: { dirtyFields, errors },
     reset,
@@ -63,10 +65,19 @@ export function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
   const maxPlayersReached = Boolean(state.players.length === 6);
 
   useEffect(() => {
+    const previousDefaultUsername = previousDefaultUsernameRef.current;
+    previousDefaultUsernameRef.current = defaultUsername;
+
     if (dirtyFields.username) return;
 
+    const currentUsername = getValues('username');
+    const canReplaceUsername =
+      currentUsername === '' || currentUsername === previousDefaultUsername;
+
+    if (!canReplaceUsername) return;
+
     setValue('username', defaultUsername);
-  }, [defaultUsername, dirtyFields.username, setValue]);
+  }, [defaultUsername, dirtyFields.username, getValues, setValue]);
 
   useLayoutEffect(() => {
     const resetAvatarListScroll = () => {
