@@ -222,7 +222,7 @@ function ModalRoot({
       data-variant={variantAttr}
       data-theme={themeAttr}
       onClick={handleOverlayClick}
-      role="none"
+      role="presentation"
       className={rootClasses}
     >
       {/* Dialog owns Escape and Tab handling for the focus trap. */}
