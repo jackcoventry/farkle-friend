@@ -13,6 +13,8 @@ import { Button } from '@/components/Button/Button';
 import { Panel } from '@/components/Panel/Panel';
 import './AddPlayer.css';
 
+const maxPlayers = avatarValues.length;
+
 export type { AddPlayerFormSchemaType };
 export type AddPlayerFormResult = {
   message: string;
@@ -62,7 +64,7 @@ export function AddPlayerForm({ onSubmit }: Readonly<AddPlayerFormProps>) {
     acc.push(currentItem?.avatar);
     return acc;
   }, []);
-  const maxPlayersReached = Boolean(state.players.length === 6);
+  const maxPlayersReached = state.players.length >= maxPlayers;
 
   useEffect(() => {
     const previousDefaultUsername = previousDefaultUsernameRef.current;

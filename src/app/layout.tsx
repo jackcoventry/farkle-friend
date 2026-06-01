@@ -54,6 +54,7 @@ export default function RootLayout({
         <Script
           id="theme-bootstrap"
           strategy="beforeInteractive"
+          // Fixed inline bootstrap only reads localStorage and media state to avoid theme flash.
           dangerouslySetInnerHTML={{ __html: themeBootstrapScript }}
         />
       </head>
