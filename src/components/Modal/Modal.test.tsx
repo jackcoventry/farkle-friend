@@ -221,6 +221,45 @@ describe('Modal (compound API)', () => {
     expect(openButton).toHaveFocus();
   });
 
+  it('restores focus to an aria-controls trigger when the modal opened without a focused trigger', async () => {
+    const user = userEvent.setup();
+
+    function Harness() {
+      const [open, setOpen] = useState(true);
+
+      return (
+        <>
+          <button
+            type="button"
+            aria-controls="controlled-modal"
+          >
+            Trigger with controls
+          </button>
+          <Modal
+            id="controlled-modal"
+            isOpen={open}
+            onClose={() => setOpen(false)}
+            ariaLabel="Controlled modal"
+          >
+            <Modal.Header>
+              <Modal.Title>Controlled modal</Modal.Title>
+              <Modal.CloseButton />
+            </Modal.Header>
+            <Modal.Body>
+              <button>Inside modal</button>
+            </Modal.Body>
+          </Modal>
+        </>
+      );
+    }
+
+    renderWithProvider(<Harness />);
+
+    await user.keyboard('{Escape}');
+
+    expect(screen.getByRole('button', { name: 'Trigger with controls' })).toHaveFocus();
+  });
+
   it('focuses the dialog itself when no tabbable children exist', async () => {
     const user = userEvent.setup();
 
@@ -254,6 +293,64 @@ describe('Modal (compound API)', () => {
 
     const dialog = screen.getByRole('dialog', { name: 'Empty modal' });
     expect(dialog).toHaveAttribute('tabindex', '-1');
+    expect(dialog).toHaveFocus();
+  });
+
+  it('keeps focus trapped inside the modal when tabbing', async () => {
+    const user = userEvent.setup();
+
+    renderWithProvider(
+      <Modal
+        isOpen
+        ariaLabel="Keyboard modal"
+      >
+        <Modal.Header>
+          <Modal.Title>Keyboard modal</Modal.Title>
+          <Modal.CloseButton />
+        </Modal.Header>
+        <Modal.Body>
+          <button>First action</button>
+          <button>Second action</button>
+        </Modal.Body>
+      </Modal>
+    );
+
+    const closeButton = screen.getByRole('button', { name: 'Close dialog' });
+    const firstAction = screen.getByRole('button', { name: 'First action' });
+    const secondAction = screen.getByRole('button', { name: 'Second action' });
+
+    expect(closeButton).toHaveFocus();
+
+    await user.keyboard('{Tab}');
+    expect(firstAction).toHaveFocus();
+
+    await user.keyboard('{Tab}');
+    expect(secondAction).toHaveFocus();
+
+    await user.keyboard('{Tab}');
+    expect(closeButton).toHaveFocus();
+
+    await user.keyboard('{Shift>}{Tab}{/Shift}');
+    expect(secondAction).toHaveFocus();
+  });
+
+  it('prevents tab from escaping an empty modal', async () => {
+    renderWithProvider(
+      <Modal
+        isOpen
+        ariaLabel="Empty modal"
+      >
+        <Modal.Body>
+          <p>No controls here</p>
+        </Modal.Body>
+      </Modal>
+    );
+
+    const dialog = screen.getByRole('dialog', { name: 'Empty modal' });
+    expect(dialog).toHaveFocus();
+
+    fireEvent.keyDown(dialog, { key: 'Tab' });
+
     expect(dialog).toHaveFocus();
   });
 
@@ -357,5 +454,51 @@ describe('Modal (compound API)', () => {
 
     await user.click(screen.getByRole('button', { name: 'Close standard modal' }));
     expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
+  it('applies modal variant and theme attributes, and renders footer content', () => {
+    renderWithProvider(
+      <Modal
+        isOpen
+        ariaLabel="Themed modal"
+        id="themed-modal"
+        variant="splash"
+        theme="warning"
+      >
+        <Modal.Panel
+          size="wide"
+          className="custom-panel-class"
+        >
+          <Modal.Header className="custom-header-class">
+            <Modal.Title>Themed modal</Modal.Title>
+          </Modal.Header>
+          <Modal.Content className="custom-content-class">
+            <p>Modal content</p>
+          </Modal.Content>
+          <Modal.Footer>
+            <button type="button">Footer action</button>
+          </Modal.Footer>
+        </Modal.Panel>
+      </Modal>
+    );
+
+    const overlay = document.getElementById('themed-modal');
+    expect(overlay).toHaveAttribute('data-variant', 'splash');
+    expect(overlay).toHaveAttribute('data-theme', 'warning');
+    expect(document.querySelector('.modal-panel--wide')).not.toBeNull();
+    expect(document.querySelector('.custom-panel-class')).not.toBeNull();
+    expect(document.querySelector('.custom-header-class')).not.toBeNull();
+    expect(document.querySelector('.custom-content-class')).not.toBeNull();
+    expect(screen.getByRole('button', { name: 'Footer action' })).toBeInTheDocument();
+  });
+
+  it('throws when compound subcomponents are rendered outside Modal', () => {
+    expect(() => render(<Modal.Title>Broken title</Modal.Title>)).toThrow(
+      'Modal.Title must be used within <Modal>'
+    );
+
+    expect(() => render(<Modal.CloseButton />)).toThrow(
+      'Modal.CloseButton must be used within <Modal>'
+    );
   });
 });
