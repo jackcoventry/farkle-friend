@@ -1,8 +1,9 @@
 import { expect, test } from '@playwright/test';
 import { startGame, waitForTurnSplash } from '../helpers/game';
+import { gotoApp } from '../helpers/navigation';
 
 test('dice keyboard shortcuts work without hijacking form typing', async ({ page }) => {
-  await page.goto('/game/');
+  await gotoApp(page, '/game/');
 
   const nameInput = page.getByLabel('Player name');
   await nameInput.focus();

@@ -1,12 +1,13 @@
 import { expect, test } from '@playwright/test';
 import { collectBrowserConsoleIssues } from '../helpers/console';
 import { addTwoPlayers, startGame, waitForTurnSplash } from '../helpers/game';
+import { gotoApp } from '../helpers/navigation';
 
 test('core game screens do not emit browser console issues', async ({ page }) => {
   const consoleIssues = collectBrowserConsoleIssues(page);
 
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('/game/');
+  await gotoApp(page, '/game/');
   await page.getByRole('button', { name: 'Setup summary' }).click();
 
   const setupDialog = page.getByRole('dialog', { name: 'Game setup summary' });

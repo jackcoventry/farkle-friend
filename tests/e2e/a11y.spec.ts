@@ -10,6 +10,7 @@ import {
   startNextTurn,
   waitForTurnSplash,
 } from '../helpers/game';
+import { gotoApp } from '../helpers/navigation';
 
 async function expectNoA11yViolations(page: Page) {
   const results = await new AxeBuilder({ page }).analyze();
@@ -17,14 +18,14 @@ async function expectNoA11yViolations(page: Page) {
 }
 
 test('lobby has no detectable accessibility violations', async ({ page }) => {
-  await page.goto('/game/');
+  await gotoApp(page, '/game/');
   await expect(page.getByRole('heading', { name: 'Add player' })).toBeVisible();
 
   await expectNoA11yViolations(page);
 });
 
 test('active dice turn has no detectable accessibility violations', async ({ page }) => {
-  await page.goto('/game/');
+  await gotoApp(page, '/game/');
   await addPlayersAndStartGame(page);
   await waitForTurnSplash(page, 'Ada');
 
@@ -34,7 +35,7 @@ test('active dice turn has no detectable accessibility violations', async ({ pag
 test('turn result and finished modal have no detectable accessibility violations', async ({
   page,
 }) => {
-  await page.goto('/game/');
+  await gotoApp(page, '/game/');
   await page.getByRole('tab', { name: 'Settings' }).click();
   await page.getByRole('radio', { name: 'manual', exact: true }).check();
   await page.getByLabel('Point target').fill('500');
@@ -56,7 +57,7 @@ test('turn result and finished modal have no detectable accessibility violations
 });
 
 test('confirmation modal has no detectable accessibility violations', async ({ page }) => {
-  await page.goto('/game/');
+  await gotoApp(page, '/game/');
   await addPlayersAndStartGame(page);
   await waitForTurnSplash(page, 'Ada');
 

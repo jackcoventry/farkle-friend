@@ -8,15 +8,16 @@ import {
   startNextTurn,
   waitForTurnSplash,
 } from '../helpers/game';
+import { gotoApp } from '../helpers/navigation';
 
 test('players can start a manual game, score turns, and reset for new players', async ({
   page,
 }) => {
-  await page.goto('/');
+  await gotoApp(page, '/');
 
   await page.getByRole('link', { name: 'Start' }).click();
 
-  await expect(page.getByRole('button', { name: 'Start' })).toBeDisabled();
+  await expect(page.getByRole('button', { name: 'Start', exact: true })).toBeDisabled();
 
   await page.getByRole('tab', { name: 'Settings' }).click();
   await page.getByRole('radio', { name: 'manual', exact: true }).check();
@@ -24,7 +25,7 @@ test('players can start a manual game, score turns, and reset for new players', 
   await page.getByRole('button', { name: 'Save' }).click();
 
   await addTwoPlayers(page);
-  await expect(page.getByRole('button', { name: 'Start' })).toBeEnabled();
+  await expect(page.getByRole('button', { name: 'Start', exact: true })).toBeEnabled();
   await startGame(page);
 
   await expect(page.getByText("Ada's turn")).toBeVisible();
@@ -45,7 +46,7 @@ test('players can start a manual game, score turns, and reset for new players', 
 });
 
 test('lobby setup tabs support keyboard navigation', async ({ page }) => {
-  await page.goto('/game/');
+  await gotoApp(page, '/game/');
 
   await page.getByRole('tab', { name: 'Players' }).focus();
   await page.keyboard.press('ArrowRight');
@@ -60,7 +61,7 @@ test('lobby setup tabs support keyboard navigation', async ({ page }) => {
 });
 
 test('auto-advance setting moves to the next player after a turn result', async ({ page }) => {
-  await page.goto('/game/');
+  await gotoApp(page, '/game/');
   await page.getByRole('tab', { name: 'Settings' }).click();
   await page.getByRole('radio', { name: 'manual', exact: true }).check();
   await page.getByLabel('Auto').check();
@@ -75,7 +76,7 @@ test('auto-advance setting moves to the next player after a turn result', async 
 });
 
 test('sound and animation preferences can be changed during a game', async ({ page }) => {
-  await page.goto('/game/');
+  await gotoApp(page, '/game/');
   await page.getByRole('tab', { name: 'Settings' }).click();
   await page.getByRole('radio', { name: 'manual', exact: true }).check();
   await page.getByRole('button', { name: 'Save' }).click();
@@ -97,7 +98,7 @@ test('sound and animation preferences can be changed during a game', async ({ pa
 
 test('mobile setup sidebar opens in a modal', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('/game/');
+  await gotoApp(page, '/game/');
 
   await expect(page.getByRole('dialog', { name: 'Game setup summary' })).toBeHidden();
 
@@ -122,7 +123,7 @@ test('short mobile dice layout keeps dice inside a larger board', async ({ page 
     };
   });
 
-  await page.goto('/game/');
+  await gotoApp(page, '/game/');
   await addTwoPlayers(page);
   await startGame(page);
   await waitForTurnSplash(page, 'Ada');
@@ -153,7 +154,7 @@ test('short tablet dice layout keeps controls below the board', async ({ page })
     };
   });
 
-  await page.goto('/game/');
+  await gotoApp(page, '/game/');
   await addTwoPlayers(page);
   await startGame(page);
   await waitForTurnSplash(page, 'Ada');
@@ -187,7 +188,7 @@ test('mid-height tablet dice layout keeps full controls visible', async ({ page 
     };
   });
 
-  await page.goto('/game/');
+  await gotoApp(page, '/game/');
   await addTwoPlayers(page);
   await startGame(page);
   await waitForTurnSplash(page, 'Ada');
@@ -206,7 +207,7 @@ test('mid-height tablet dice layout keeps full controls visible', async ({ page 
 
 test('active game menu modal fits within a short viewport', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 692 });
-  await page.goto('/game/');
+  await gotoApp(page, '/game/');
   await addTwoPlayers(page);
   await startGame(page);
   await waitForTurnSplash(page, 'Ada');

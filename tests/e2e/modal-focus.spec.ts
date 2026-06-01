@@ -1,4 +1,5 @@
 import { type Locator, expect, test } from '@playwright/test';
+import { gotoApp } from '../helpers/navigation';
 
 async function expectFocusedWithin(locator: Locator) {
   await expect
@@ -10,7 +11,7 @@ async function expectFocusedWithin(locator: Locator) {
 
 test('setup modal manages focus and returns it to the trigger', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('/game/');
+  await gotoApp(page, '/game/');
 
   const trigger = page.getByRole('button', { name: 'Setup summary' });
   await trigger.focus();
@@ -38,7 +39,7 @@ test('setup modal manages focus and returns it to the trigger', async ({ page })
 
 test('escape closes only the top-most nested modal', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('/game/');
+  await gotoApp(page, '/game/');
 
   await page.getByRole('button', { name: 'Setup summary' }).click();
   const setupDialog = page.getByRole('dialog', { name: 'Game setup summary' });
