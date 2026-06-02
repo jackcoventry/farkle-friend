@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/next';
 import Script from 'next/script';
 import '@/styles/globals.css';
 import { appFontClassName } from './appFonts';
@@ -60,6 +61,7 @@ export default function RootLayout({
       </head>
       <body>
         <Providers>{children}</Providers>
+        {process.env.VERCEL_ENV === 'production' ? <Analytics /> : null}
       </body>
     </html>
   );
