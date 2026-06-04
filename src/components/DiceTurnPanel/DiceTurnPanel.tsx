@@ -153,6 +153,8 @@ export function DiceTurnPanel({
       actionHint={actionHint}
       actionHintId={actionHintId}
       currentCombos={currentCombos}
+      currentRoll={currentRoll}
+      hasSelectedDice={hasSelectedDice}
       selectedBreakdown={dice.selectedBreakdown}
       showActionHint={showActionHint}
       showComboSuggestions={state.settings.showComboSuggestions}

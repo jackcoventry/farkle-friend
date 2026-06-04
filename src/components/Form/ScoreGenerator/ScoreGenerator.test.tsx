@@ -23,11 +23,13 @@ describe('ScoreGenerator', () => {
     await user.click(screen.getByRole('button', { name: 'Add throw' }));
 
     await user.click(screen.getByRole('button', { name: 'Add die showing 5' }));
+    expect(screen.getByRole('status')).toHaveTextContent('Current throw total: 50');
     await user.click(screen.getByRole('button', { name: 'Add throw' }));
 
     expect(screen.getByText('Throw 1')).toBeInTheDocument();
     expect(screen.getByText('Throw 2')).toBeInTheDocument();
     expect(screen.getByText(/1050/)).toBeInTheDocument();
+    expect(screen.getByRole('status')).toBeEmptyDOMElement();
     expect(onChange).toHaveBeenLastCalledWith(1050);
 
     rerender(

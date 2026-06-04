@@ -34,7 +34,26 @@ export function TurnResultPanel({
   const secondsRemaining = Math.max(0, Math.ceil((autoAdvanceDeadline - now) / 1000));
 
   useEffect(() => {
-    panelRef.current?.focus();
+    let frame = 0;
+    let attempts = 0;
+
+    const focusPanel = () => {
+      const panel = panelRef.current;
+      if (!panel) return;
+
+      panel.focus();
+      attempts += 1;
+
+      if (document.activeElement !== panel && attempts < 5) {
+        frame = globalThis.requestAnimationFrame(focusPanel);
+      }
+    };
+
+    focusPanel();
+
+    return () => {
+      if (frame) globalThis.cancelAnimationFrame(frame);
+    };
   }, [result.playerId, result.score]);
 
   useEffect(() => {
@@ -63,7 +82,6 @@ export function TurnResultPanel({
     <Panel
       ref={panelRef}
       aria-labelledby={titleId}
-      aria-live="polite"
       className="turn-result-panel | gap-xl p-xl m-auto flex w-full flex-col text-center"
       onKeyDown={handleKeyDown}
       tabIndex={-1}
@@ -83,7 +101,12 @@ export function TurnResultPanel({
         </div>
       </dl>
       <div className="gap-sm flex flex-col">
-        <p className="font-sub-heading">{t('turnResult.turnEnded')}</p>
+        <h2
+          id={titleId}
+          className="font-sub-heading"
+        >
+          {t('turnResult.turnEnded')}
+        </h2>
         <p className="font-body text-accent">
           {result.isGameWinner
             ? t('turnResult.reachedTarget', { player: currentPlayer.username })

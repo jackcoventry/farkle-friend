@@ -43,7 +43,11 @@ describe('TurnResultPanel', () => {
     expect(screen.getByText('50')).toBeInTheDocument();
     expect(screen.getByText('New total')).toBeInTheDocument();
     expect(screen.getByText('150')).toBeInTheDocument();
-    expect(screen.getByText('Turn complete')).toBeInTheDocument();
+    const title = screen.getByRole('heading', { name: 'Turn complete' });
+    const panel = title.closest('section');
+
+    expect(panel).toHaveAttribute('aria-labelledby', title.id);
+    expect(panel).not.toHaveAttribute('aria-live');
     expect(screen.getByText('Grace is up next!')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Start' })).toBeInTheDocument();
   });
@@ -121,7 +125,7 @@ describe('TurnResultPanel', () => {
       />
     );
 
-    // Panel is a <section> with tabIndex=-1; find by its role via aria-live wrapper
+    // Panel is a <section> with tabIndex=-1; find it from its accessible heading.
     const panel = screen.getByText('Turn complete').closest('section');
     expect(panel).not.toBeNull();
     panel?.focus();

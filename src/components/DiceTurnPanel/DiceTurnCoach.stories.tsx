@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import type { ScoreBreakdownItem, ScoringCombo } from '@/domain/game/dice';
+import type { DieValue, ScoreBreakdownItem, ScoringCombo } from '@/domain/game/dice';
 import type { DiceTurnCopy, DiceTurnText } from '@/domain/game/diceTurnPresenter';
 import { DiceTurnCoach } from '@/components/DiceTurnPanel/DiceTurnCoach';
 import { DiceTurnInfoModal } from '@/components/DiceTurnPanel/DiceTurnInfoModal';
@@ -9,6 +9,8 @@ import './DiceTurnPanel.css';
 type CoachStoryArgs = {
   actionHint: DiceTurnText | null;
   currentCombos: ScoringCombo[];
+  currentRoll: DieValue[] | null;
+  hasSelectedDice: boolean;
   isModalOpen: boolean;
   selectedBreakdown: ScoreBreakdownItem[];
   showActionHint: boolean;
@@ -49,6 +51,8 @@ const meta: Meta<typeof CoachStory> = {
       { dice: [5], indices: [3], score: 50 },
       { dice: [1, 5], indices: [0, 3], score: 150 },
     ],
+    currentRoll: [1, 2, 3, 4, 5, 6],
+    hasSelectedDice: false,
     isModalOpen: false,
     selectedBreakdown: [],
     showActionHint: true,
@@ -72,6 +76,7 @@ export const Default: Story = {};
 export const InvalidSelection: Story = {
   args: {
     actionHint: { key: 'turn.action.deselectInvalid' },
+    hasSelectedDice: true,
     showSelectionStatus: true,
     turnCopy: {
       detail: { key: 'turn.detail.invalidSelection' },
@@ -85,6 +90,7 @@ export const InvalidSelection: Story = {
 export const HotDice: Story = {
   args: {
     actionHint: { key: 'turn.detail.hotDice' },
+    currentRoll: null,
     selectedBreakdown: [{ label: 'Straight', score: 1500 }],
     showSelectionStatus: true,
     turnCopy: {
@@ -100,6 +106,7 @@ export const Farkle: Story = {
   args: {
     actionHint: { key: 'turn.action.endFarkle' },
     currentCombos: [],
+    currentRoll: [2, 2, 3, 3, 4, 6],
     showComboSuggestions: false,
     showSelectionStatus: true,
     turnCopy: {

@@ -34,7 +34,7 @@ describe('TurnHistory', () => {
   });
 
   it('shows leader and needs summary when leader exists', () => {
-    render(
+    const { container } = render(
       <TurnHistory
         leadingPlayerId="p1"
         players={[makePlayer('p1', 'Ada', 900)]}
@@ -46,6 +46,7 @@ describe('TurnHistory', () => {
     expect(screen.getByText('Leader')).toBeInTheDocument();
     expect(screen.getByText('Ada')).toBeInTheDocument();
     expect(screen.getByText('Needs')).toBeInTheDocument();
+    expect(container.querySelector('section')).not.toHaveAttribute('aria-live');
   });
 
   it('renders recent events including farkle', () => {

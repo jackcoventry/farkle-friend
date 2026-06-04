@@ -168,6 +168,7 @@ export const messages = {
     'turn.action.endFarkle': 'End the turn to score 0 and move to the next player.',
     'turn.action.selectedNoScore': 'Selected dice do not score yet.',
     'turn.action.selectDice': 'Tap dice to select them, or use keys 1-6.',
+    'turn.announcement.roll': 'Rolled {dice}. {guidance}',
     'turn.comboSuggestions': 'Possible scoring dice',
     'turn.closeInformation': 'Close turn information',
     'turn.farkledTitle': 'You have been Farkled!',
@@ -422,6 +423,7 @@ export const messages = {
     'turn.action.endFarkle': 'Termina el turno para puntuar 0 y pasar al siguiente jugador.',
     'turn.action.selectedNoScore': 'Los dados seleccionados todavía no puntúan.',
     'turn.action.selectDice': 'Toca dados para seleccionarlos, o usa las teclas 1-6.',
+    'turn.announcement.roll': 'Tirada: {dice}. {guidance}',
     'turn.comboSuggestions': 'Dados puntuables posibles',
     'turn.closeInformation': 'Cerrar información del turno',
     'turn.farkledTitle': 'Has hecho Farkle!',
@@ -516,5 +518,7 @@ export function isMessageKey(value: unknown): value is MessageKey {
 }
 
 export function getMessagePlaceholders(message: string) {
-  return Array.from(message.matchAll(/\{(\w+)\}/g), (match) => match[1]).sort();
+  return Array.from(message.matchAll(/\{(\w+)\}/g), (match) => match[1]).sort((a, b) =>
+    a.localeCompare(b)
+  );
 }
