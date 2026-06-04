@@ -15,7 +15,7 @@ test('players can start a manual game, score turns, and reset for new players', 
 }) => {
   await gotoApp(page, '/');
 
-  await page.getByRole('link', { name: 'Start' }).click();
+  await page.getByRole('link', { name: 'Start a game' }).click();
 
   await expect(page.getByRole('button', { name: 'Start', exact: true })).toBeDisabled();
 

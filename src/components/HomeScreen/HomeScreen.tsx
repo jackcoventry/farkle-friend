@@ -13,7 +13,7 @@ export function HomeScreen() {
     <main className="splash-screen | bg-surface relative min-h-dvh overflow-auto">
       <div className="splash-screen__content | gap-xl px-md py-xl lg:px-lg relative mx-auto grid min-h-dvh w-full items-center">
         <section className="home-screen__hero | gap-xl grid items-center">
-          <div className="home-screen__intro | gap-md flex flex-col">
+          <div className="home-screen__intro | gap-md mx-auto flex flex-col">
             <div className="home-screen__kicker | text-accent inline-flex items-center rounded-full px-4 py-2">
               {t('home.kicker')}
             </div>
@@ -27,7 +27,7 @@ export function HomeScreen() {
                   as="inline"
                   variant="primary"
                 >
-                  {t('actions.start')}
+                  {t('home.startGame')}
                 </Button>
               </Link>
             </div>
