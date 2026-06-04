@@ -36,10 +36,10 @@ type StoredSettings = {
 };
 
 function readStoredSettings(): StoredSettings | null {
-  if (typeof window === 'undefined') return null;
+  if (!globalThis.window) return null;
 
   try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
+    const raw = globalThis.localStorage.getItem(STORAGE_KEY);
     if (!raw) return null;
     const parsed = storedSettingsSchema.safeParse(JSON.parse(raw));
     return parsed.success ? parsed.data : null;
@@ -89,7 +89,7 @@ export function useGameState() {
     };
 
     try {
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(storedSettings));
+      globalThis.localStorage.setItem(STORAGE_KEY, JSON.stringify(storedSettings));
     } catch {
       // Local storage can be unavailable in private or restricted browser modes.
     }

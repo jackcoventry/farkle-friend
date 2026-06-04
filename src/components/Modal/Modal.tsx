@@ -8,6 +8,7 @@ import {
   useContext,
   useEffect,
   useId,
+  useMemo,
   useRef,
 } from 'react';
 import { createPortal } from 'react-dom';
@@ -148,9 +149,9 @@ function ModalRoot({
     };
 
     restoreFocus();
-    const timeout = window.setTimeout(restoreFocus, 50);
+    const timeout = globalThis.setTimeout(restoreFocus, 50);
 
-    return () => window.clearTimeout(timeout);
+    return () => globalThis.clearTimeout(timeout);
   }, [id, isOpen, returnFocusRef]);
 
   useEffect(() => {
@@ -200,16 +201,21 @@ function ModalRoot({
     }
   };
 
-  if (!isOpen || typeof document === 'undefined') return null;
+  const close = useCallback(() => {
+    onClose?.();
+  }, [onClose]);
 
-  const close = () => onClose?.();
+  const contextValue = useMemo<ModalContextValue>(
+    () => ({
+      titleId,
+      close,
+    }),
+    [close, titleId]
+  );
+
+  if (!isOpen || typeof document === 'undefined') return null;
   const variantAttr = variant ?? 'modal';
   const themeAttr = theme ?? 'default';
-  const contextValue: ModalContextValue = {
-    titleId,
-    close,
-  };
-
   const ariaLabelledBy = ariaLabel ? undefined : titleId;
   const rootClasses =
     'modal modal__overlay | p-sm items-center justify-center bg-overlay flex inset-0 fixed z-50 opacity-100 pointer-events-auto';

@@ -1,7 +1,12 @@
 'use client';
 
 import { useI18n } from '@/i18n/I18nProvider';
-import { type ScoreBreakdownItem, type ScoringCombo, sortDiceValues } from '@/domain/game/dice';
+import {
+  type DieValue,
+  type ScoreBreakdownItem,
+  type ScoringCombo,
+  sortDiceValues,
+} from '@/domain/game/dice';
 import type { DiceTurnCopy, DiceTurnText } from '@/domain/game/diceTurnPresenter';
 import { DiceIcon } from '@/components/DiceIcon/DiceIcon';
 import { Panel } from '@/components/Panel/Panel';
@@ -10,7 +15,9 @@ type DiceTurnCoachProps = {
   actionHint: DiceTurnText | null;
   actionHintId?: string;
   currentCombos: ScoringCombo[];
+  currentRoll: DieValue[] | null;
   selectedBreakdown: ScoreBreakdownItem[];
+  hasSelectedDice: boolean;
   showActionHint: boolean;
   showComboSuggestions: boolean;
   showSelectionStatus: boolean;
@@ -21,7 +28,9 @@ export function DiceTurnCoach({
   actionHint,
   actionHintId,
   currentCombos,
+  currentRoll,
   selectedBreakdown,
+  hasSelectedDice,
   showActionHint,
   showComboSuggestions,
   showSelectionStatus,
@@ -32,6 +41,15 @@ export function DiceTurnCoach({
   const detail = t(turnCopy.detail.key, turnCopy.detail.values);
   const selectedStatus = t(turnCopy.selectedStatus.key, turnCopy.selectedStatus.values);
   const translatedActionHint = actionHint ? t(actionHint.key, actionHint.values) : null;
+  const announcement =
+    currentRoll && !hasSelectedDice
+      ? t('turn.announcement.roll', {
+          dice: currentRoll.join(', '),
+          guidance: translatedActionHint ?? title,
+        })
+      : translatedActionHint
+        ? `${title}. ${translatedActionHint}`
+        : title;
 
   return (
     <>
@@ -45,7 +63,7 @@ export function DiceTurnCoach({
           aria-live="polite"
           aria-atomic="true"
         >
-          {translatedActionHint ? `${title}. ${translatedActionHint}` : title}
+          {announcement}
         </p>
         <div className="gap-xs flex min-w-0 flex-col">
           <p className="font-heading-2">{title}</p>

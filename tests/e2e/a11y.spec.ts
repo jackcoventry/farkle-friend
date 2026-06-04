@@ -29,6 +29,9 @@ test('active dice turn has no detectable accessibility violations', async ({ pag
   await addPlayersAndStartGame(page);
   await waitForTurnSplash(page, 'Ada');
 
+  await page.getByRole('button', { name: 'Roll dice' }).click();
+  await expect(page.getByRole('status')).toContainText('Rolled');
+
   await expectNoA11yViolations(page);
 });
 
@@ -47,6 +50,10 @@ test('turn result and finished modal have no detectable accessibility violations
 
   await enterManualScore(page, '50');
   await expectTurnResult(page, 'Grace');
+  const resultPanel = page.getByRole('region', { name: 'Turn complete' });
+
+  await expect(resultPanel).toBeFocused();
+  await expect(resultPanel).not.toHaveAttribute('aria-live');
   await expectNoA11yViolations(page);
 
   await startNextTurn(page);

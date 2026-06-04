@@ -36,10 +36,7 @@ export function TurnHistory({
   if (recentTurns.length === 0 && !leader) return null;
 
   return (
-    <section
-      className="surface-callout | bg-surface-muted border-border text-text p-md rounded-xl border"
-      aria-live="polite"
-    >
+    <section className="surface-callout | bg-surface-muted border-border text-text p-md rounded-xl border">
       {leader ? (
         <dl className="gap-xs border-border mb-sm pb-sm grid border-b">
           <div className="gap-sm flex justify-between">

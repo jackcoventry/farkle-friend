@@ -2,10 +2,9 @@ import { Analytics } from '@vercel/analytics/next';
 import Script from 'next/script';
 import '@/styles/globals.css';
 import { appFontClassName } from './appFonts';
-import { metadata } from './appMetadata';
 import { Providers } from './providers';
 
-export { metadata };
+export { metadata } from './appMetadata';
 
 const themeBootstrapScript = `
 (() => {

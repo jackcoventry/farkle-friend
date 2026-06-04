@@ -215,8 +215,7 @@ export const Button = forwardRef<
       INLINE SPAN
   ----------------------------- */
   if (props.as === 'inline') {
-    const { as, ...inlineRest } = rest as InlineOnlyProps;
-    void as;
+    const { ...inlineRest } = rest as InlineOnlyProps;
 
     const classes = getButtonClasses({ className, iconPosition, size, variant });
 
@@ -227,7 +226,7 @@ export const Button = forwardRef<
         data-icon-position={iconPosition}
         data-size={size}
         data-variant={variant}
-        ref={ref as Ref<HTMLSpanElement>}
+        ref={ref}
         {...inlineRest}
       >
         {content}
@@ -239,8 +238,7 @@ export const Button = forwardRef<
       ANCHOR
   ----------------------------- */
   if (props.as === 'a') {
-    const { as, href, target, rel, onClick, ...anchorRest } = rest as AnchorOnlyProps;
-    void as;
+    const { href, target, rel, onClick, ...anchorRest } = rest as AnchorOnlyProps;
 
     const relSafe = target === '_blank' ? rel || 'noopener noreferrer' : rel;
 

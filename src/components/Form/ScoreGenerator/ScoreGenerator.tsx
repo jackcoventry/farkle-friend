@@ -23,6 +23,7 @@ export function ScoreGenerator({ className, onChange }: Readonly<ScoreGeneratorP
   const [selectedItems, setSelectedItems] = useState<DieValue[]>([]);
   const [sequenceItems, setSequenceItems] = useState<ScoreSequenceItem[]>([]);
   const [clicked, setClicked] = useState<DieValue>();
+  const [selectionAnnouncement, setSelectionAnnouncement] = useState('');
   const selectedScoring =
     selectedItems.length > 0
       ? scoreSelectedDiceWithUsage(selectedItems)
@@ -39,8 +40,12 @@ export function ScoreGenerator({ className, onChange }: Readonly<ScoreGeneratorP
   }, [onChange, roundTotal]);
 
   const handleClick = (die: DieValue) => {
+    const nextSelectedItems = [...selectedItems, die];
+    const nextScore = scoreSelectedDiceWithUsage(nextSelectedItems).score;
+
     setClicked(die);
-    setSelectedItems([...selectedItems, die]);
+    setSelectedItems(nextSelectedItems);
+    setSelectionAnnouncement(t('scoreGenerator.currentGo', { score: nextScore }));
     setTimeout(() => setClicked(undefined), 200);
   };
 
@@ -56,6 +61,7 @@ export function ScoreGenerator({ className, onChange }: Readonly<ScoreGeneratorP
       },
     ]);
     setSelectedItems([]);
+    setSelectionAnnouncement('');
   };
 
   return (
@@ -100,11 +106,14 @@ export function ScoreGenerator({ className, onChange }: Readonly<ScoreGeneratorP
           </div>
         ) : null}
 
+        <p className="font-heading-2">{t('scoreGenerator.currentGo', { score: selectedScore })}</p>
         <p
-          className="font-heading-2"
+          className="sr-only"
+          role="status"
           aria-live="polite"
+          aria-atomic="true"
         >
-          {t('scoreGenerator.currentGo', { score: selectedScore })}
+          {selectionAnnouncement}
         </p>
         {selectedItems.length > 0 && !selectionIsValid ? (
           <p
@@ -120,7 +129,10 @@ export function ScoreGenerator({ className, onChange }: Readonly<ScoreGeneratorP
             type="button"
             variant="secondary"
             disabled={selectedItems.length === 0}
-            onClick={() => setSelectedItems([])}
+            onClick={() => {
+              setSelectedItems([]);
+              setSelectionAnnouncement('');
+            }}
             size="small"
           >
             {t('actions.clear')}
