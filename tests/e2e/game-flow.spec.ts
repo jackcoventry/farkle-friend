@@ -31,7 +31,16 @@ test('players can start a manual game, score turns, and reset for new players', 
   await expect(page.getByText("Ada's turn")).toBeVisible();
   await waitForTurnSplash(page, 'Ada');
 
-  await enterManualScore(page, '50');
+  await page.getByRole('button', { name: 'Manual' }).click();
+  const adaScoreDialog = page.getByRole('dialog', { name: 'Enter score for Ada' });
+  await expect(adaScoreDialog).toBeVisible();
+  await expect(adaScoreDialog.getByText("Enter Ada's total round score")).toBeVisible();
+  const adaScoreInput = adaScoreDialog.getByLabel('Turn score');
+  await expect(adaScoreInput).toHaveAttribute('type', 'text');
+  await expect(adaScoreInput).toHaveAttribute('inputmode', 'numeric');
+  await adaScoreInput.fill('50');
+  await adaScoreDialog.getByRole('button', { name: 'Submit score' }).click();
+
   await expectTurnResult(page, 'Grace');
   await startNextTurn(page);
 
@@ -43,6 +52,87 @@ test('players can start a manual game, score turns, and reset for new players', 
 
   await page.getByRole('button', { name: 'New players' }).click();
   await expect(page.getByRole('heading', { name: 'Add player' })).toBeVisible();
+});
+
+test('mobile manual scoring keeps dice readable and entry tied to the active player', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await gotoApp(page, '/game/');
+  await page.getByRole('tab', { name: 'Settings' }).click();
+  await page.getByRole('radio', { name: 'manual', exact: true }).check();
+  await page.getByRole('button', { name: 'Save' }).click();
+
+  await addPlayersAndStartGame(page);
+  await waitForTurnSplash(page, 'Ada');
+
+  const firstDie = page.getByRole('button', { name: 'Add die showing 1' });
+  const firstDieBox = await firstDie.boundingBox();
+  expect(firstDieBox?.width).toBeGreaterThanOrEqual(72);
+  expect(firstDieBox?.height).toBeGreaterThanOrEqual(72);
+
+  await page.getByRole('button', { name: 'Manual' }).click();
+  const scoreDialog = page.getByRole('dialog', { name: 'Enter score for Ada' });
+  await expect(scoreDialog).toBeVisible();
+  await expect(scoreDialog.getByText("Enter Ada's total round score")).toBeVisible();
+});
+
+test('desktop manual scoring shows all dice without horizontal scrolling', async ({ page }) => {
+  await gotoApp(page, '/game/');
+  await page.getByRole('tab', { name: 'Settings' }).click();
+  await page.getByRole('radio', { name: 'manual', exact: true }).check();
+  await page.getByRole('button', { name: 'Save' }).click();
+
+  await addPlayersAndStartGame(page);
+  await waitForTurnSplash(page, 'Ada');
+
+  const diceLayout = await page.locator('.score-generator__dice-grid').evaluate((grid) => {
+    const gridBox = grid.getBoundingClientRect();
+    const dice = [...grid.querySelectorAll('button')].map((button) => {
+      const box = button.getBoundingClientRect();
+      return {
+        bottom: box.bottom,
+        height: box.height,
+        left: box.left,
+        right: box.right,
+        top: box.top,
+        width: box.width,
+      };
+    });
+
+    return {
+      dice,
+      grid: {
+        bottom: gridBox.bottom,
+        left: gridBox.left,
+        right: gridBox.right,
+        top: gridBox.top,
+      },
+      scrollWidth: grid.scrollWidth,
+      width: grid.clientWidth,
+    };
+  });
+
+  expect(diceLayout.dice).toHaveLength(6);
+  expect(diceLayout.scrollWidth).toBeLessThanOrEqual(diceLayout.width);
+  const diceByRow = diceLayout.dice.reduce<number[]>((rows, die) => {
+    const existingRowIndex = rows.findIndex((rowTop) => Math.abs(rowTop - die.top) < 2);
+    if (existingRowIndex === -1) {
+      return [...rows, die.top];
+    }
+
+    return rows;
+  }, []);
+  const rowCounts = diceByRow.map(
+    (rowTop) => diceLayout.dice.filter((die) => Math.abs(rowTop - die.top) < 2).length
+  );
+  expect(rowCounts).toEqual(rowCounts.length === 1 ? [6] : [3, 3]);
+  for (const die of diceLayout.dice) {
+    expect(die.width).toBeGreaterThanOrEqual(72);
+    expect(die.height).toBeGreaterThanOrEqual(72);
+    expect(die.left).toBeGreaterThanOrEqual(diceLayout.grid.left);
+    expect(die.right).toBeLessThanOrEqual(diceLayout.grid.right);
+  }
 });
 
 test('lobby setup tabs support keyboard navigation', async ({ page }) => {

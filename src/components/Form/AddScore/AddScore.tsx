@@ -20,9 +20,10 @@ export type AddScoreFormResult = {
 
 type AddScoreFormProps = {
   onSubmit: SubmitHandler<AddScoreSchemaType>;
+  playerName: string;
 };
 
-export function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
+export function AddScoreForm({ onSubmit, playerName }: Readonly<AddScoreFormProps>) {
   const { t } = useI18n();
   const formId = useId();
   const {
@@ -126,7 +127,7 @@ export function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
       <Modal
         isOpen={Boolean(showManualEntry)}
         onClose={() => setShowManualEntry(false)}
-        ariaLabel={t('manualScore.enterManually')}
+        ariaLabel={t('manualScore.enterManuallyFor', { player: playerName })}
         variant="modal"
       >
         <Modal.Panel size="narrow">
@@ -138,7 +139,7 @@ export function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
           </Modal.Header>
           <Modal.Content>
             <div className="gap-xl grid text-center">
-              <p> {t('manualScore.enterRoundScore')}</p>
+              <p>{t('manualScore.enterRoundScoreFor', { player: playerName })}</p>
               <Controller
                 name="value"
                 control={control}
@@ -158,10 +159,15 @@ export function AddScoreForm({ onSubmit }: Readonly<AddScoreFormProps>) {
                       data-valid={errors?.value ? 'false' : 'true'}
                       aria-invalid={fieldState.error ? 'true' : undefined}
                       aria-describedby={fieldState.error ? 'turn-score-error' : undefined}
-                      type="number"
-                      min={0}
-                      onChange={(value) => field.onChange(value.target.valueAsNumber)}
-                      value={field.value}
+                      type="text"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      onChange={(event) => {
+                        const nextValue = event.target.value;
+                        if (!/^\d*$/.test(nextValue)) return;
+                        field.onChange(nextValue === '' ? 0 : Number(nextValue));
+                      }}
+                      value={field.value === 0 ? '' : String(field.value)}
                     />
                     {fieldState.error ? (
                       <p

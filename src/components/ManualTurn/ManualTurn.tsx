@@ -65,7 +65,10 @@ export function ManualTurn({
   return (
     <div className="turn-frame | gap-xs lg:gap-sm grid h-full min-h-0 w-full">
       <div className="dice-turn-layout | gap-xs xl:gap-lg grid h-full min-h-0">
-        <AddScoreForm onSubmit={onAddScoreFormSubmit} />
+        <AddScoreForm
+          onSubmit={onAddScoreFormSubmit}
+          playerName={currentPlayer.username}
+        />
         <aside
           className="dice-turn-rail | gap-xs lg:gap-lg grid content-start overflow-visible"
           aria-label={t('turn.information')}

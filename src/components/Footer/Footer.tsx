@@ -35,7 +35,7 @@ export function Footer({ children }: Readonly<PropsWithChildren>) {
             <Button
               type="button"
               onClick={handleShowRulesModal}
-              icon="question-circle"
+              icon="list-checked"
               ariaLabel={t('footer.rulesOpen')}
               className="items-center"
               size="small"
