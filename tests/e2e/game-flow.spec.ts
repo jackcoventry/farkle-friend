@@ -71,6 +71,25 @@ test('mobile manual scoring keeps dice readable and entry tied to the active pla
   expect(firstDieBox?.width).toBeGreaterThanOrEqual(72);
   expect(firstDieBox?.height).toBeGreaterThanOrEqual(72);
 
+  const mobileDiceLayout = await page.locator('.manual-score-panel__scroll').evaluate((panel) => {
+    const diceGrid = panel.querySelector('.score-generator__dice-grid');
+    return {
+      diceGridClientWidth: diceGrid?.clientWidth ?? 0,
+      diceGridScrollWidth: diceGrid?.scrollWidth ?? 0,
+      panelClientHeight: panel.clientHeight,
+      panelClientWidth: panel.clientWidth,
+      panelScrollHeight: panel.scrollHeight,
+      panelScrollWidth: panel.scrollWidth,
+    };
+  });
+  expect(mobileDiceLayout.diceGridScrollWidth).toBeLessThanOrEqual(
+    mobileDiceLayout.diceGridClientWidth
+  );
+  expect(mobileDiceLayout.panelScrollWidth).toBeLessThanOrEqual(mobileDiceLayout.panelClientWidth);
+  expect(mobileDiceLayout.panelScrollHeight).toBeLessThanOrEqual(
+    mobileDiceLayout.panelClientHeight
+  );
+
   await page.getByRole('button', { name: 'Manual' }).click();
   const scoreDialog = page.getByRole('dialog', { name: 'Enter score for Ada' });
   await expect(scoreDialog).toBeVisible();
