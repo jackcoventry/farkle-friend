@@ -3,16 +3,17 @@
 }
 
 .score-generator__dice-grid {
-  --score-generator-die-size: clamp(4.75rem, 26vw, 6rem);
-  --score-generator-grid-gap: var(--spacing-3);
+  --score-generator-grid-gap: var(--spacing-2);
 
   gap: var(--score-generator-grid-gap);
-  grid-template-columns: repeat(3, var(--score-generator-die-size));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .score-generator__die-button {
   aspect-ratio: 1;
-  inline-size: var(--score-generator-die-size);
+  inline-size: 100%;
+  max-inline-size: 5.75rem;
+  justify-self: center;
 }
 
 @container (min-width: 32.25rem) {
@@ -21,9 +22,7 @@
   }
 
   .score-generator__die-button {
-    inline-size: 100%;
     max-inline-size: 6.25rem;
-    justify-self: center;
   }
 }
 

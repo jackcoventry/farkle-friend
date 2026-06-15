@@ -27,7 +27,7 @@ test('winner modal layout remains stable', async ({ page }) => {
   await page.getByRole('tab', { name: 'Settings' }).click();
   await page.getByRole('radio', { name: 'manual', exact: true }).check();
   await page.getByLabel('Point target').fill('500');
-  await page.getByRole('button', { name: 'Save' }).click();
+  await page.getByRole('tab', { name: 'Players' }).click();
 
   await addTwoPlayers(page);
   await startGame(page);
@@ -46,7 +46,7 @@ test('manual score sequence layout remains stable', async ({ page }) => {
   await page.goto('/game/');
   await page.getByRole('tab', { name: 'Settings' }).click();
   await page.getByRole('radio', { name: 'manual', exact: true }).check();
-  await page.getByRole('button', { name: 'Save' }).click();
+  await page.getByRole('tab', { name: 'Players' }).click();
 
   await addTwoPlayers(page);
   await startGame(page);

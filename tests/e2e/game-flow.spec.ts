@@ -22,7 +22,8 @@ test('players can start a manual game, score turns, and reset for new players', 
   await page.getByRole('tab', { name: 'Settings' }).click();
   await page.getByRole('radio', { name: 'manual', exact: true }).check();
   await page.getByLabel('Point target').fill('500');
-  await page.getByRole('button', { name: 'Save' }).click();
+  await expect(page.getByRole('button', { name: 'Save' })).toBeHidden();
+  await page.getByRole('tab', { name: 'Players' }).click();
 
   await addTwoPlayers(page);
   await expect(page.getByRole('button', { name: 'Start', exact: true })).toBeEnabled();
@@ -61,7 +62,7 @@ test('mobile manual scoring keeps dice readable and entry tied to the active pla
   await gotoApp(page, '/game/');
   await page.getByRole('tab', { name: 'Settings' }).click();
   await page.getByRole('radio', { name: 'manual', exact: true }).check();
-  await page.getByRole('button', { name: 'Save' }).click();
+  await page.getByRole('tab', { name: 'Players' }).click();
 
   await addPlayersAndStartGame(page);
   await waitForTurnSplash(page, 'Ada');
@@ -70,6 +71,25 @@ test('mobile manual scoring keeps dice readable and entry tied to the active pla
   const firstDieBox = await firstDie.boundingBox();
   expect(firstDieBox?.width).toBeGreaterThanOrEqual(72);
   expect(firstDieBox?.height).toBeGreaterThanOrEqual(72);
+
+  const mobileDiceLayout = await page.locator('.manual-score-panel__scroll').evaluate((panel) => {
+    const diceGrid = panel.querySelector('.score-generator__dice-grid');
+    return {
+      diceGridClientWidth: diceGrid?.clientWidth ?? 0,
+      diceGridScrollWidth: diceGrid?.scrollWidth ?? 0,
+      panelClientHeight: panel.clientHeight,
+      panelClientWidth: panel.clientWidth,
+      panelScrollHeight: panel.scrollHeight,
+      panelScrollWidth: panel.scrollWidth,
+    };
+  });
+  expect(mobileDiceLayout.diceGridScrollWidth).toBeLessThanOrEqual(
+    mobileDiceLayout.diceGridClientWidth
+  );
+  expect(mobileDiceLayout.panelScrollWidth).toBeLessThanOrEqual(mobileDiceLayout.panelClientWidth);
+  expect(mobileDiceLayout.panelScrollHeight).toBeLessThanOrEqual(
+    mobileDiceLayout.panelClientHeight
+  );
 
   await page.getByRole('button', { name: 'Manual' }).click();
   const scoreDialog = page.getByRole('dialog', { name: 'Enter score for Ada' });
@@ -81,7 +101,7 @@ test('desktop manual scoring shows all dice without horizontal scrolling', async
   await gotoApp(page, '/game/');
   await page.getByRole('tab', { name: 'Settings' }).click();
   await page.getByRole('radio', { name: 'manual', exact: true }).check();
-  await page.getByRole('button', { name: 'Save' }).click();
+  await page.getByRole('tab', { name: 'Players' }).click();
 
   await addPlayersAndStartGame(page);
   await waitForTurnSplash(page, 'Ada');
@@ -155,7 +175,7 @@ test('auto-advance setting moves to the next player after a turn result', async 
   await page.getByRole('tab', { name: 'Settings' }).click();
   await page.getByRole('radio', { name: 'manual', exact: true }).check();
   await page.getByLabel('Auto').check();
-  await page.getByRole('button', { name: 'Save' }).click();
+  await page.getByRole('tab', { name: 'Players' }).click();
 
   await addPlayersAndStartGame(page);
   await waitForTurnSplash(page, 'Ada');
@@ -169,7 +189,7 @@ test('sound and animation preferences can be changed during a game', async ({ pa
   await gotoApp(page, '/game/');
   await page.getByRole('tab', { name: 'Settings' }).click();
   await page.getByRole('radio', { name: 'manual', exact: true }).check();
-  await page.getByRole('button', { name: 'Save' }).click();
+  await page.getByRole('tab', { name: 'Players' }).click();
 
   await addPlayersAndStartGame(page);
   await waitForTurnSplash(page, 'Ada');

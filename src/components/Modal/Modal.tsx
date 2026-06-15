@@ -269,7 +269,9 @@ function cx(...classes: Array<string | undefined | false>) {
  */
 function ModalHeader({ children, className }: Readonly<ModalSlot>) {
   return (
-    <header className={cx('modal-panel__header', 'flex items-center justify-between', className)}>
+    <header
+      className={cx('modal-panel__header', 'gap-md flex items-center justify-between', className)}
+    >
       {children}
     </header>
   );

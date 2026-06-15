@@ -31,22 +31,23 @@ export function Footer({ children }: Readonly<PropsWithChildren>) {
     <>
       <footer className="text-text gap-md mt-auto flex flex-col">
         <div className="items-between flex flex-col-reverse sm:flex-col">
-          <div className="gap-sm flex justify-between">
+          <div className="gap-sm grid grid-cols-2 sm:flex sm:justify-between">
             <Button
               type="button"
               onClick={handleShowRulesModal}
               icon="list-checked"
+              iconOnly
               ariaLabel={t('footer.rulesOpen')}
-              className="items-center"
               size="small"
               variant="secondary"
+              className="justify-center"
             />
             {children}
-            <GamePreferences />
+            <GamePreferences className="justify-center" />
           </div>
         </div>
 
-        <div className="flex justify-between">
+        <div className="sm:flex sm:justify-between">
           <span>Farkle Friend</span>
           <a
             href="https://jrc.codes"
