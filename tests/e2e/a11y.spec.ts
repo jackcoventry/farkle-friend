@@ -42,7 +42,7 @@ test('turn result and finished modal have no detectable accessibility violations
   await page.getByRole('tab', { name: 'Settings' }).click();
   await page.getByRole('radio', { name: 'manual', exact: true }).check();
   await page.getByLabel('Point target').fill('500');
-  await page.getByRole('button', { name: 'Save' }).click();
+  await page.getByRole('tab', { name: 'Players' }).click();
 
   await addTwoPlayers(page);
   await startGame(page);

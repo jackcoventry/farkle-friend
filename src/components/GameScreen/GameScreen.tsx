@@ -28,15 +28,9 @@ export function GameScreen() {
   const [diceTurnMetrics, setDiceTurnMetrics] = useState<DiceTurnMetrics | null>(null);
   const { activeView, avatar, currentPlayer, flowState, lobbyView, nextPlayer, summary, winner } =
     useGameViewModel(state);
-  const {
-    lobbyScreen,
-    onLobbyTabKeyDown,
-    playersTabRef,
-    selectLobbyScreen,
-    setLobbyScreen,
-    settingsTabRef,
-  } = useLobbyTabs();
-  const actions = useGameActions({ dispatch, setLobbyScreen, state });
+  const { lobbyScreen, onLobbyTabKeyDown, playersTabRef, selectLobbyScreen, settingsTabRef } =
+    useLobbyTabs();
+  const actions = useGameActions({ dispatch, state });
 
   if (flowState === 'LOBBY') {
     return (

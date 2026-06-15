@@ -22,7 +22,8 @@ test('players can start a manual game, score turns, and reset for new players', 
   await page.getByRole('tab', { name: 'Settings' }).click();
   await page.getByRole('radio', { name: 'manual', exact: true }).check();
   await page.getByLabel('Point target').fill('500');
-  await page.getByRole('button', { name: 'Save' }).click();
+  await expect(page.getByRole('button', { name: 'Save' })).toBeHidden();
+  await page.getByRole('tab', { name: 'Players' }).click();
 
   await addTwoPlayers(page);
   await expect(page.getByRole('button', { name: 'Start', exact: true })).toBeEnabled();
@@ -61,7 +62,7 @@ test('mobile manual scoring keeps dice readable and entry tied to the active pla
   await gotoApp(page, '/game/');
   await page.getByRole('tab', { name: 'Settings' }).click();
   await page.getByRole('radio', { name: 'manual', exact: true }).check();
-  await page.getByRole('button', { name: 'Save' }).click();
+  await page.getByRole('tab', { name: 'Players' }).click();
 
   await addPlayersAndStartGame(page);
   await waitForTurnSplash(page, 'Ada');
@@ -100,7 +101,7 @@ test('desktop manual scoring shows all dice without horizontal scrolling', async
   await gotoApp(page, '/game/');
   await page.getByRole('tab', { name: 'Settings' }).click();
   await page.getByRole('radio', { name: 'manual', exact: true }).check();
-  await page.getByRole('button', { name: 'Save' }).click();
+  await page.getByRole('tab', { name: 'Players' }).click();
 
   await addPlayersAndStartGame(page);
   await waitForTurnSplash(page, 'Ada');
@@ -174,7 +175,7 @@ test('auto-advance setting moves to the next player after a turn result', async 
   await page.getByRole('tab', { name: 'Settings' }).click();
   await page.getByRole('radio', { name: 'manual', exact: true }).check();
   await page.getByLabel('Auto').check();
-  await page.getByRole('button', { name: 'Save' }).click();
+  await page.getByRole('tab', { name: 'Players' }).click();
 
   await addPlayersAndStartGame(page);
   await waitForTurnSplash(page, 'Ada');
@@ -188,7 +189,7 @@ test('sound and animation preferences can be changed during a game', async ({ pa
   await gotoApp(page, '/game/');
   await page.getByRole('tab', { name: 'Settings' }).click();
   await page.getByRole('radio', { name: 'manual', exact: true }).check();
-  await page.getByRole('button', { name: 'Save' }).click();
+  await page.getByRole('tab', { name: 'Players' }).click();
 
   await addPlayersAndStartGame(page);
   await waitForTurnSplash(page, 'Ada');

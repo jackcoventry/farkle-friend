@@ -1,6 +1,6 @@
 'use client';
 
-import type { Dispatch, SetStateAction } from 'react';
+import type { Dispatch } from 'react';
 import { useCallback, useState } from 'react';
 import { useWarnBeforeUnload } from '@/hooks/useWarnBeforeUnload';
 import type { GameAction } from '@/domain/game/gameReducer';
@@ -9,15 +9,13 @@ import type { GameState } from '@/domain/game/gameTypes';
 import type { AddPlayerFormSchemaType } from '@/components/Form/AddPlayer/AddPlayer';
 import type { SettingsFormSchemaType } from '@/components/Form/Settings/Settings';
 import type { ConfirmGameAction } from '@/components/GameActions/ConfirmGameActionModal';
-import type { LobbyScreen } from './useLobbyTabs';
 
 type UseGameActionsArgs = {
   dispatch: Dispatch<GameAction>;
-  setLobbyScreen: Dispatch<SetStateAction<LobbyScreen>>;
   state: GameState;
 };
 
-export function useGameActions({ dispatch, setLobbyScreen, state }: UseGameActionsArgs) {
+export function useGameActions({ dispatch, state }: UseGameActionsArgs) {
   const [confirmAction, setConfirmAction] = useState<ConfirmGameAction>(null);
 
   useWarnBeforeUnload(shouldWarnBeforeUnload(state));
@@ -50,9 +48,8 @@ export function useGameActions({ dispatch, setLobbyScreen, state }: UseGameActio
           theme,
         },
       });
-      setLobbyScreen('players');
     },
-    [dispatch, setLobbyScreen]
+    [dispatch]
   );
 
   const onResetGame = useCallback(() => {

@@ -2,11 +2,10 @@
 
 import { useI18n } from '@/i18n/I18nProvider';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useEffect, useMemo, useRef } from 'react';
+import { SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { useGame } from '@/domain/game/GameProvider';
 import { SettingsFormSchema, type SettingsFormSchemaType } from '@/domain/game/formSchemas';
-import { GameMode, ThemePreference } from '@/domain/game/gameTypes';
-import { Button } from '@/components/Button/Button';
 import {
   ComboSuggestionsField,
   LanguageField,
@@ -30,16 +29,8 @@ type SettingsFormProps = {
 export function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
   const { state } = useGame();
   const { t } = useI18n();
-
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-    reset,
-    setValue,
-  } = useForm<SettingsFormSchemaType>({
-    resolver: zodResolver(SettingsFormSchema),
-    defaultValues: {
+  const defaultValues = useMemo<SettingsFormSchemaType>(
+    () => ({
       autoAdvanceTurns: state.settings.autoAdvanceTurns,
       locale: state.preferences.locale,
       mode: state.settings.mode,
@@ -48,29 +39,48 @@ export function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
       showComboSuggestions: state.settings.showComboSuggestions,
       tableFeedback: state.preferences.tableFeedback,
       theme: state.preferences.theme,
-    },
-    mode: 'onBlur',
+    }),
+    [
+      state.preferences.locale,
+      state.preferences.motionEnabled,
+      state.preferences.tableFeedback,
+      state.preferences.theme,
+      state.settings.autoAdvanceTurns,
+      state.settings.mode,
+      state.settings.showComboSuggestions,
+      state.settings.targetScore,
+    ]
+  );
+
+  const {
+    control,
+    formState: { errors },
+    setValue,
+  } = useForm<SettingsFormSchemaType>({
+    resolver: zodResolver(SettingsFormSchema),
+    defaultValues,
+    mode: 'onChange',
   });
 
-  const submitHandler = (data: {
-    autoAdvanceTurns: boolean;
-    locale: SettingsFormSchemaType['locale'];
-    mode: GameMode;
-    motionEnabled: boolean;
-    targetScore: number;
-    showComboSuggestions: boolean;
-    tableFeedback: boolean;
-    theme: ThemePreference;
-  }) => {
-    onSubmit(data);
-    reset();
-  };
+  const watchedSettings = useWatch({ control });
+  const lastSavedSettingsRef = useRef(JSON.stringify(defaultValues));
+
+  useEffect(() => {
+    const result = SettingsFormSchema.safeParse(watchedSettings);
+    if (!result.success) return;
+
+    const serializedSettings = JSON.stringify(result.data);
+    if (serializedSettings === lastSavedSettingsRef.current) return;
+
+    lastSavedSettingsRef.current = serializedSettings;
+    onSubmit(result.data);
+  }, [onSubmit, watchedSettings]);
 
   return (
     <div className="form-wrapper | border-accent p-md bg-surface max-w-full self-center rounded-4xl border">
       <form
         className="form | gap-xl flex flex-col"
-        onSubmit={handleSubmit(submitHandler)}
+        onSubmit={(event) => event.preventDefault()}
       >
         <h2 className="font-heading-2 text-text">{t('settings.title')}</h2>
         <TurnHandOffField control={control} />
@@ -85,13 +95,6 @@ export function Settings({ onSubmit }: Readonly<SettingsFormProps>) {
         <SoundFeedbackField control={control} />
         <MotionField control={control} />
         <ThemeField control={control} />
-
-        <Button
-          type="submit"
-          className="justify-center"
-        >
-          {t('settings.save')}
-        </Button>
       </form>
     </div>
   );
