@@ -1,5 +1,30 @@
+.score-generator {
+  container-type: inline-size;
+}
+
 .score-generator__dice-grid {
-  block-size: 200px;
+  --score-generator-die-size: clamp(4.75rem, 26vw, 6rem);
+  --score-generator-grid-gap: var(--spacing-3);
+
+  gap: var(--score-generator-grid-gap);
+  grid-template-columns: repeat(3, var(--score-generator-die-size));
+}
+
+.score-generator__die-button {
+  aspect-ratio: 1;
+  inline-size: var(--score-generator-die-size);
+}
+
+@container (min-width: 32.25rem) {
+  .score-generator__dice-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .score-generator__die-button {
+    inline-size: 100%;
+    max-inline-size: 6.25rem;
+    justify-self: center;
+  }
 }
 
 @media (--breakpoint-sm-up) {

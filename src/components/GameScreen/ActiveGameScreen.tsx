@@ -235,14 +235,14 @@ export function ActiveGameScreen({
             <Button
               aria-controls={turnInfoModalId}
               aria-expanded={isTurnCoachOpen}
-              ariaLabel={isTurnCoachOpen ? t('actions.hideTurnInfo') : t('actions.turnInfo')}
+              ariaLabel={t('actions.turnInfo')}
               className="justify-center"
               size="small"
               onClick={() => setIsTurnCoachOpen((current) => !current)}
               icon="question-circle"
               iconOnly={!isAtLeast('lg')}
             >
-              {isTurnCoachOpen ? t('actions.hideTurnInfo') : t('actions.turnInfo')}
+              {t('actions.turnInfo')}
             </Button>
           ) : null}
           <Button

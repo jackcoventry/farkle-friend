@@ -65,10 +65,10 @@ export function ScoreGenerator({ className, onChange }: Readonly<ScoreGeneratorP
   };
 
   return (
-    <div className={`gap-lg grid ${className ?? ''}`}>
-      <div className="score-generator__dice-grid | gap-lg mx-auto grid w-full grid-cols-6">
+    <div className={`score-generator | gap-lg grid ${className ?? ''}`}>
+      <div className="score-generator__dice-grid | mx-auto grid w-full justify-center">
         {dies.map((die) => {
-          const classes = `enabled:hover:opacity-50 enabled:hover:scale-110 enabled:cursor-pointer transition-transform disabled:grayscale-50 disabled:cursor-not-allowed ${die === clicked ? 'enabled:hover:scale-120 ' : ''}`;
+          const classes = `score-generator__die-button | enabled:hover:opacity-50 enabled:hover:scale-110 enabled:cursor-pointer transition-transform disabled:grayscale-50 disabled:cursor-not-allowed ${die === clicked ? 'enabled:hover:scale-120 ' : ''}`;
           return (
             <button
               key={die}
