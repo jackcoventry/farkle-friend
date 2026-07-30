@@ -79,7 +79,7 @@
     "prettier-plugin-tailwindcss": "^0.8.0",
     "react-hook-form": "^7.67.0",
     "storybook": "^10.4.5",
-    "style-dictionary": "^5.1.1",
+    "style-dictionary": "^5.4.4",
     "svg-sprite": "^2.0.4",
     "tailwindcss": "^4",
     "typescript": "^5",
