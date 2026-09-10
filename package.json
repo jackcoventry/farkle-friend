@@ -83,7 +83,7 @@
     "svg-sprite": "^2.0.4",
     "tailwindcss": "^4",
     "typescript": "^5",
-    "vitest": "^4.0.15",
+    "vitest": "^4.1.11",
     "zod": "^4.1.13"
   },
   "overrides": {
